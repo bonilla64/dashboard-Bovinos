@@ -2,7 +2,7 @@
 
 Esta aplicación web le dice a un ganadero de Casanare a qué subasta, feria o frigorífico le conviene llevar su lote de ganado. Para cada destino tiene en cuenta el precio por kilo, el flete, los peajes y el peso que pierden los animales en el viaje.
 
-**Úsela en línea, sin instalar nada:** https://dgg6h7zw76-glitch.github.io/dashboard-Bovinos/
+**Úsela en línea, sin instalar nada:** https://bonilla64.github.io/dashboard-Bovinos/
 
 Funciona en el celular, la tableta o el computador, en cualquier navegador actual (Chrome, Edge, Firefox o Safari).
 
@@ -25,7 +25,7 @@ Funciona en el celular, la tableta o el computador, en cualquier navegador actua
 
 ## 1. Usarla en línea
 
-1. Abra https://dgg6h7zw76-glitch.github.io/dashboard-Bovinos/ en el navegador.
+1. Abra https://bonilla64.github.io/dashboard-Bovinos/ en el navegador.
 2. Si la va a usar seguido en el celular, puede agregarla a la pantalla de inicio:
    - En Android con Chrome: menú ⋮ → **Agregar a la pantalla principal**.
    - En iPhone con Safari: botón **Compartir** → **Agregar a inicio**.
@@ -60,7 +60,7 @@ Cada comando debe mostrar un número de versión. En algunos equipos el segundo 
 
 1. **Descargue el proyecto.** En la terminal:
    ```bash
-   git clone https://github.com/dgg6h7zw76-glitch/dashboard-Bovinos.git
+   git clone https://github.com/bonilla64/dashboard-Bovinos.git
    cd dashboard-Bovinos
    ```
    Si no quiere usar Git: en la página del repositorio, botón verde **Code → Download ZIP**, descomprima el archivo y abra la terminal dentro de la carpeta.
