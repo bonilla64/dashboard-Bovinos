@@ -1,0 +1,1220 @@
+openapi: 3.1.0
+info:
+  title: API del Simulador de Destinos Ganaderos desde Yopal
+  version: 0.2.0
+  summary: Compara destinos de venta de un lote de ganado combinando precio por kilo, ruta, flete, peajes y merma.
+  description: |
+    Contrato de la API del proyecto (Entrega 2, Tecnologías Web 2026-B, Unitrópico).
+
+    Reglas comunes a toda la API:
+
+    - Todas las fechas y horas se expresan en ISO 8601 con zona horaria de Colombia (`-05:00`).
+    - Los valores monetarios son pesos colombianos (COP) enteros, sin decimales.
+    - Las geometrías viajan en GeoJSON con coordenadas `[longitud, latitud]` (EPSG:4326).
+    - Los listados son paginados con `pagina` y `por_pagina` y devuelven el objeto `datos` + metadatos.
+    - Todo error, sin excepción, responde con el esquema `Error`.
+
+    Fórmula que aplica `POST /simulaciones` para cada destino:
+
+    ```
+    peso_vendido_kg      = peso_total_kg × (1 − merma_pct / 100)
+    flete_cop            = distancia_km × flete_km_cop × factor_dificultad
+    costo_logistico_cop  = flete_cop + peajes_cop
+    ingreso_bruto_cop    = peso_vendido_kg × precio_kg_cop
+    utilidad_neta_cop    = ingreso_bruto_cop − costo_logistico_cop
+    ```
+  license:
+    name: MIT
+    identifier: MIT
+servers:
+  - url: http://localhost:3000/api/v1
+    description: Servidor local (se implementa en la Entrega 3)
+  - url: http://127.0.0.1:4010
+    description: Servidor simulado con Prism (npx @stoplight/prism-cli mock api/openapi.yaml)
+# Sin autenticación en la Entrega 2. En la Entrega 3 se agrega un esquema bearer (JWT)
+# para las operaciones de escritura; ver docs/decisiones.md (D-07).
+security: []
+tags:
+  - name: Productores
+    description: Personas que registran lotes para vender.
+  - name: Lotes
+    description: Grupos de animales que se quieren comercializar.
+  - name: Destinos
+    description: Subastas, ferias, frigoríficos y plantas de beneficio candidatos.
+  - name: Precios
+    description: Precio de compra por kilogramo en cada destino, por categoría y fecha.
+  - name: Rutas
+    description: Trayecto vial desde el origen (Yopal) hasta cada destino, con su geometría.
+  - name: Simulaciones
+    description: Cálculo comparativo de utilidad de un lote en varios destinos.
+
+paths:
+  /productores:
+    get:
+      tags: [Productores]
+      operationId: listarProductores
+      summary: Lista los productores registrados
+      parameters:
+        - $ref: "#/components/parameters/Pagina"
+        - $ref: "#/components/parameters/PorPagina"
+        - name: municipio
+          in: query
+          description: Filtra por municipio de residencia.
+          schema: { type: string, maxLength: 60 }
+          example: Yopal
+      responses:
+        "200":
+          description: Página de productores
+          content:
+            application/json:
+              schema: { $ref: "#/components/schemas/ListaProductores" }
+              example:
+                datos:
+                  - id: cd3b83ce-114a-5624-bde0-0c482a535db2
+                    nombre_completo: Hernando Rincón Barrera
+                    municipio: Yopal
+                    telefono: "3124587710"
+                    correo: hernando.rincon@correo.co
+                    creado_en: "2026-09-10T09:00:00-05:00"
+                    actualizado_en: "2026-09-10T09:00:00-05:00"
+                pagina: 1
+                por_pagina: 20
+                total: 1
+        "400": { $ref: "#/components/responses/PeticionInvalida" }
+    post:
+      tags: [Productores]
+      operationId: crearProductor
+      summary: Registra un productor
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema: { $ref: "#/components/schemas/ProductorEntrada" }
+            example:
+              nombre_completo: Luz Marina Cárdenas Pérez
+              municipio: Aguazul
+              telefono: "3208841325"
+              correo: null
+      responses:
+        "201":
+          description: Productor creado
+          headers:
+            Location: { $ref: "#/components/headers/Location" }
+          content:
+            application/json:
+              schema: { $ref: "#/components/schemas/Productor" }
+              example:
+                id: 2f3b8c51-6c0e-5b1a-9d77-0a3f4a1b2c11
+                nombre_completo: Luz Marina Cárdenas Pérez
+                municipio: Aguazul
+                telefono: "3208841325"
+                correo: null
+                creado_en: "2026-09-29T10:12:00-05:00"
+                actualizado_en: "2026-09-29T10:12:00-05:00"
+        "400": { $ref: "#/components/responses/PeticionInvalida" }
+        "422": { $ref: "#/components/responses/ValidacionFallida" }
+
+  /productores/{productor_id}:
+    parameters:
+      - $ref: "#/components/parameters/ProductorId"
+    get:
+      tags: [Productores]
+      operationId: obtenerProductor
+      summary: Obtiene un productor
+      responses:
+        "200":
+          description: Productor encontrado
+          content:
+            application/json:
+              schema: { $ref: "#/components/schemas/Productor" }
+              example:
+                id: cd3b83ce-114a-5624-bde0-0c482a535db2
+                nombre_completo: Hernando Rincón Barrera
+                municipio: Yopal
+                telefono: "3124587710"
+                correo: hernando.rincon@correo.co
+                creado_en: "2026-09-10T09:00:00-05:00"
+                actualizado_en: "2026-09-10T09:00:00-05:00"
+        "400": { $ref: "#/components/responses/PeticionInvalida" }
+        "404": { $ref: "#/components/responses/NoEncontrado" }
+
+  /lotes:
+    get:
+      tags: [Lotes]
+      operationId: listarLotes
+      summary: Lista los lotes, con filtros
+      parameters:
+        - $ref: "#/components/parameters/Pagina"
+        - $ref: "#/components/parameters/PorPagina"
+        - name: productor_id
+          in: query
+          schema: { type: string, format: uuid }
+        - name: estado
+          in: query
+          schema: { $ref: "#/components/schemas/EstadoLote" }
+        - name: categoria
+          in: query
+          schema: { $ref: "#/components/schemas/Categoria" }
+        - name: orden
+          in: query
+          description: Campo de ordenamiento; el prefijo `-` indica descendente.
+          schema:
+            type: string
+            enum: [creado_en, -creado_en, peso_total_kg, -peso_total_kg]
+            default: -creado_en
+      responses:
+        "200":
+          description: Página de lotes
+          content:
+            application/json:
+              schema: { $ref: "#/components/schemas/ListaLotes" }
+              examples:
+                conDatos:
+                  summary: Un lote de novillos en Yopal
+                  value:
+                    datos:
+                      - id: 9bad2b17-c8e0-57f7-ac48-2d1cf99ad088
+                        productor_id: cd3b83ce-114a-5624-bde0-0c482a535db2
+                        nombre: Novillos cebados de septiembre
+                        cantidad_animales: 30
+                        peso_promedio_kg: 452.0
+                        peso_total_kg: 13560.0
+                        categoria: novillo_gordo
+                        raza: Brahman comercial
+                        finca: Finca La Esperanza
+                        municipio_origen: Yopal
+                        estado: simulado
+                        creado_en: "2026-09-14T07:30:00-05:00"
+                        actualizado_en: "2026-09-14T07:30:00-05:00"
+                    pagina: 1
+                    por_pagina: 20
+                    total: 1
+                vacio:
+                  summary: Sin lotes que coincidan con el filtro
+                  value:
+                    datos: []
+                    pagina: 1
+                    por_pagina: 20
+                    total: 0
+        "400": { $ref: "#/components/responses/PeticionInvalida" }
+    post:
+      tags: [Lotes]
+      operationId: crearLote
+      summary: Registra un lote ganadero
+      description: El servidor calcula `peso_total_kg` y asigna `estado = disponible`.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema: { $ref: "#/components/schemas/LoteEntrada" }
+            example:
+              productor_id: cd3b83ce-114a-5624-bde0-0c482a535db2
+              nombre: Novillos cebados de septiembre
+              cantidad_animales: 30
+              peso_promedio_kg: 452.0
+              categoria: novillo_gordo
+              raza: Brahman comercial
+              finca: Finca La Esperanza
+              municipio_origen: Yopal
+      responses:
+        "201":
+          description: Lote creado
+          headers:
+            Location: { $ref: "#/components/headers/Location" }
+          content:
+            application/json:
+              schema: { $ref: "#/components/schemas/Lote" }
+              examples:
+                creado: { $ref: "#/components/examples/LoteNovillosNuevo" }
+        "400": { $ref: "#/components/responses/PeticionInvalida" }
+        "422":
+          description: Algún campo no cumple las reglas del lote
+          content:
+            application/json:
+              schema: { $ref: "#/components/schemas/Error" }
+              example:
+                codigo: VALIDACION_FALLIDA
+                mensaje: El lote tiene campos con valores no permitidos.
+                detalles:
+                  - campo: cantidad_animales
+                    problema: Debe ser un entero entre 1 y 200.
+                  - campo: peso_promedio_kg
+                    problema: Debe estar entre 80 y 900 kg.
+
+  /lotes/{lote_id}:
+    parameters:
+      - $ref: "#/components/parameters/LoteId"
+    get:
+      tags: [Lotes]
+      operationId: obtenerLote
+      summary: Obtiene un lote
+      responses:
+        "200":
+          description: Lote encontrado
+          content:
+            application/json:
+              schema: { $ref: "#/components/schemas/Lote" }
+              examples:
+                lote: { $ref: "#/components/examples/LoteNovillos" }
+        "400": { $ref: "#/components/responses/PeticionInvalida" }
+        "404": { $ref: "#/components/responses/NoEncontrado" }
+    patch:
+      tags: [Lotes]
+      operationId: actualizarLote
+      summary: Modifica uno o varios campos de un lote
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema: { $ref: "#/components/schemas/LoteCambios" }
+            example:
+              cantidad_animales: 28
+              peso_promedio_kg: 458.0
+      responses:
+        "200":
+          description: Lote actualizado
+          content:
+            application/json:
+              schema: { $ref: "#/components/schemas/Lote" }
+              example:
+                id: 9bad2b17-c8e0-57f7-ac48-2d1cf99ad088
+                productor_id: cd3b83ce-114a-5624-bde0-0c482a535db2
+                nombre: Novillos cebados de septiembre
+                cantidad_animales: 28
+                peso_promedio_kg: 458.0
+                peso_total_kg: 12824.0
+                categoria: novillo_gordo
+                raza: Brahman comercial
+                finca: Finca La Esperanza
+                municipio_origen: Yopal
+                estado: simulado
+                creado_en: "2026-09-14T07:30:00-05:00"
+                actualizado_en: "2026-09-29T11:02:00-05:00"
+        "400": { $ref: "#/components/responses/PeticionInvalida" }
+        "404": { $ref: "#/components/responses/NoEncontrado" }
+        "422": { $ref: "#/components/responses/ValidacionFallida" }
+    delete:
+      tags: [Lotes]
+      operationId: eliminarLote
+      summary: Elimina un lote que aún no tiene simulaciones
+      responses:
+        "204":
+          description: Lote eliminado
+        "404": { $ref: "#/components/responses/NoEncontrado" }
+        "409":
+          description: El lote tiene simulaciones asociadas y no se puede eliminar
+          content:
+            application/json:
+              schema: { $ref: "#/components/schemas/Error" }
+              example:
+                codigo: CONFLICTO
+                mensaje: El lote tiene 2 simulaciones guardadas. Márquelo como vendido en lugar de eliminarlo.
+                detalles: []
+
+  /destinos:
+    get:
+      tags: [Destinos]
+      operationId: listarDestinos
+      summary: Lista los destinos de comercialización
+      description: |
+        Admite un filtro espacial: si se envían `cerca_lat`, `cerca_lon` y `radio_km`, solo devuelve
+        destinos dentro de ese radio (en la Entrega 3 se resuelve con `ST_DWithin` de PostGIS).
+      parameters:
+        - $ref: "#/components/parameters/Pagina"
+        - $ref: "#/components/parameters/PorPagina"
+        - name: tipo
+          in: query
+          schema: { $ref: "#/components/schemas/TipoDestino" }
+        - name: departamento
+          in: query
+          schema: { type: string, maxLength: 60 }
+          example: Casanare
+        - name: activo
+          in: query
+          schema: { type: boolean, default: true }
+        - name: cerca_lat
+          in: query
+          schema: { type: number, minimum: -4.3, maximum: 13.5 }
+          example: 5.3371
+        - name: cerca_lon
+          in: query
+          schema: { type: number, minimum: -82, maximum: -66 }
+          example: -72.3959
+        - name: radio_km
+          in: query
+          schema: { type: number, exclusiveMinimum: 0, maximum: 1500 }
+          example: 300
+      responses:
+        "200":
+          description: Página de destinos
+          content:
+            application/json:
+              schema: { $ref: "#/components/schemas/ListaDestinos" }
+              example:
+                datos:
+                  - id: acca0ef8-f855-5505-b81b-25833e792ff1
+                    nombre: Subasta Ganadera de Yopal
+                    tipo: subasta
+                    municipio: Yopal
+                    departamento: Casanare
+                    ubicacion: { type: Point, coordinates: [-72.4102, 5.3265] }
+                    activo: true
+                    creado_en: "2026-09-01T08:00:00-05:00"
+                    actualizado_en: "2026-09-01T08:00:00-05:00"
+                  - id: 52bbc2f4-901c-5ff0-a08a-5f8f08f91fa1
+                    nombre: Frigorífico Guadalupe
+                    tipo: frigorifico
+                    municipio: Bogotá
+                    departamento: Bogotá D.C.
+                    ubicacion: { type: Point, coordinates: [-74.154, 4.587] }
+                    activo: true
+                    creado_en: "2026-09-01T08:00:00-05:00"
+                    actualizado_en: "2026-09-01T08:00:00-05:00"
+                pagina: 1
+                por_pagina: 20
+                total: 2
+        "400": { $ref: "#/components/responses/PeticionInvalida" }
+        "422":
+          description: Filtro espacial incompleto
+          content:
+            application/json:
+              schema: { $ref: "#/components/schemas/Error" }
+              example:
+                codigo: VALIDACION_FALLIDA
+                mensaje: El filtro espacial requiere cerca_lat, cerca_lon y radio_km juntos.
+                detalles:
+                  - campo: radio_km
+                    problema: Falta el parámetro.
+
+  /destinos/{destino_id}:
+    parameters:
+      - $ref: "#/components/parameters/DestinoId"
+    get:
+      tags: [Destinos]
+      operationId: obtenerDestino
+      summary: Obtiene un destino
+      responses:
+        "200":
+          description: Destino encontrado
+          content:
+            application/json:
+              schema: { $ref: "#/components/schemas/Destino" }
+              example:
+                id: 52bbc2f4-901c-5ff0-a08a-5f8f08f91fa1
+                nombre: Frigorífico Guadalupe
+                tipo: frigorifico
+                municipio: Bogotá
+                departamento: Bogotá D.C.
+                ubicacion: { type: Point, coordinates: [-74.154, 4.587] }
+                activo: true
+                creado_en: "2026-09-01T08:00:00-05:00"
+                actualizado_en: "2026-09-01T08:00:00-05:00"
+        "400": { $ref: "#/components/responses/PeticionInvalida" }
+        "404": { $ref: "#/components/responses/NoEncontrado" }
+
+  /destinos/{destino_id}/precios:
+    parameters:
+      - $ref: "#/components/parameters/DestinoId"
+    get:
+      tags: [Precios]
+      operationId: listarPreciosDestino
+      summary: Historial de precios por kilogramo de un destino
+      parameters:
+        - name: categoria
+          in: query
+          schema: { $ref: "#/components/schemas/Categoria" }
+        - name: desde
+          in: query
+          schema: { type: string, format: date }
+          example: "2026-09-01"
+        - name: hasta
+          in: query
+          schema: { type: string, format: date }
+          example: "2026-09-30"
+      responses:
+        "200":
+          description: Precios del destino ordenados por fecha descendente
+          content:
+            application/json:
+              schema:
+                type: array
+                items: { $ref: "#/components/schemas/PrecioMercado" }
+              example:
+                - id: d6f79498-451a-5491-a3a3-b42aa7a861ed
+                  destino_id: 52bbc2f4-901c-5ff0-a08a-5f8f08f91fa1
+                  categoria: novillo_gordo
+                  precio_kg_cop: 11300
+                  fecha: "2026-09-28"
+                  fuente: Estimación del equipo con base en referencias públicas de precio de ganado gordo (valor ilustrativo)
+                  creado_en: "2026-09-28T07:00:00-05:00"
+                  actualizado_en: "2026-09-28T07:00:00-05:00"
+                - id: 40e9a9da-5bdd-5d6c-93b6-0694c3d8800e
+                  destino_id: 52bbc2f4-901c-5ff0-a08a-5f8f08f91fa1
+                  categoria: vaca_gorda
+                  precio_kg_cop: 9720
+                  fecha: "2026-09-28"
+                  fuente: Estimación del equipo con base en referencias públicas de precio de ganado gordo (valor ilustrativo)
+                  creado_en: "2026-09-28T07:00:00-05:00"
+                  actualizado_en: "2026-09-28T07:00:00-05:00"
+        "400": { $ref: "#/components/responses/PeticionInvalida" }
+        "404": { $ref: "#/components/responses/NoEncontrado" }
+    post:
+      tags: [Precios]
+      operationId: registrarPrecio
+      summary: Registra el precio del día para una categoría en el destino
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema: { $ref: "#/components/schemas/PrecioMercadoEntrada" }
+            example:
+              categoria: novillo_gordo
+              precio_kg_cop: 11350
+              fecha: "2026-09-29"
+              fuente: Llamada telefónica al comprador del frigorífico
+      responses:
+        "201":
+          description: Precio registrado
+          headers:
+            Location: { $ref: "#/components/headers/Location" }
+          content:
+            application/json:
+              schema: { $ref: "#/components/schemas/PrecioMercado" }
+              example:
+                id: 7a0d2c3e-2b8f-5f4e-8a61-3c9d0e1f2a44
+                destino_id: 52bbc2f4-901c-5ff0-a08a-5f8f08f91fa1
+                categoria: novillo_gordo
+                precio_kg_cop: 11350
+                fecha: "2026-09-29"
+                fuente: Llamada telefónica al comprador del frigorífico
+                creado_en: "2026-09-29T07:40:00-05:00"
+                actualizado_en: "2026-09-29T07:40:00-05:00"
+        "400": { $ref: "#/components/responses/PeticionInvalida" }
+        "404": { $ref: "#/components/responses/NoEncontrado" }
+        "409":
+          description: Ya existe un precio para esa categoría, destino y fecha
+          content:
+            application/json:
+              schema: { $ref: "#/components/schemas/Error" }
+              example:
+                codigo: CONFLICTO
+                mensaje: Ya hay un precio de novillo_gordo para Frigorífico Guadalupe el 2026-09-29.
+                detalles:
+                  - campo: fecha
+                    problema: Combinación destino + categoría + fecha repetida.
+        "422": { $ref: "#/components/responses/ValidacionFallida" }
+
+  /rutas:
+    get:
+      tags: [Rutas]
+      operationId: listarRutas
+      summary: Lista las rutas desde el origen, con su geometría
+      parameters:
+        - name: destino_id
+          in: query
+          schema: { type: string, format: uuid }
+        - name: max_distancia_km
+          in: query
+          schema: { type: number, exclusiveMinimum: 0 }
+          example: 400
+      responses:
+        "200":
+          description: Rutas encontradas
+          content:
+            application/json:
+              schema:
+                type: array
+                items: { $ref: "#/components/schemas/Ruta" }
+              examples:
+                villavicencio:
+                  summary: Ruta Yopal → Villavicencio
+                  value:
+                    - id: 5ec2ea46-db9d-525b-8417-462de2b24a6a
+                      destino_id: 6b8211cf-49f9-5354-925a-ec5edb230ee1
+                      origen_nombre: Yopal (centro de acopio)
+                      origen: { type: Point, coordinates: [-72.3959, 5.3371] }
+                      distancia_km: 266.0
+                      tiempo_horas: 5.1
+                      peajes_cop: 85000
+                      factor_dificultad: 1.1
+                      merma_pct: 3.0
+                      geometria:
+                        type: LineString
+                        coordinates: [[-72.3959, 5.3371], [-72.5471, 5.1731], [-72.8958, 4.8766], [-72.9281, 4.6094], [-72.9654, 4.5756], [-73.4868, 4.2699], [-73.6266, 4.142]]
+                      fuente: manual
+                      creado_en: "2026-09-01T08:00:00-05:00"
+                      actualizado_en: "2026-09-26T10:15:00-05:00"
+        "400": { $ref: "#/components/responses/PeticionInvalida" }
+
+  /rutas/{ruta_id}:
+    parameters:
+      - name: ruta_id
+        in: path
+        required: true
+        schema: { type: string, format: uuid }
+        example: 5ec2ea46-db9d-525b-8417-462de2b24a6a
+    get:
+      tags: [Rutas]
+      operationId: obtenerRuta
+      summary: Obtiene una ruta con su geometría GeoJSON
+      responses:
+        "200":
+          description: Ruta encontrada
+          content:
+            application/json:
+              schema: { $ref: "#/components/schemas/Ruta" }
+              examples:
+                villavicencio: { $ref: "#/components/examples/RutaVillavicencio" }
+        "400": { $ref: "#/components/responses/PeticionInvalida" }
+        "404": { $ref: "#/components/responses/NoEncontrado" }
+
+  /simulaciones:
+    get:
+      tags: [Simulaciones]
+      operationId: listarSimulaciones
+      summary: Historial de simulaciones
+      parameters:
+        - $ref: "#/components/parameters/Pagina"
+        - $ref: "#/components/parameters/PorPagina"
+        - name: lote_id
+          in: query
+          schema: { type: string, format: uuid }
+        - name: desde
+          in: query
+          schema: { type: string, format: date }
+          example: "2026-09-01"
+      responses:
+        "200":
+          description: Página de simulaciones, de la más reciente a la más antigua
+          content:
+            application/json:
+              schema: { $ref: "#/components/schemas/ListaSimulaciones" }
+              examples:
+                conDatos:
+                  summary: Una simulación de novillos con dos destinos
+                  value:
+                    datos:
+                      - id: 5d2a9c1e-0b7f-5e3a-9c44-1f6e8d2a7b90
+                        lote_id: 9bad2b17-c8e0-57f7-ac48-2d1cf99ad088
+                        flete_km_cop: 6500
+                        mejor_destino_id: 52bbc2f4-901c-5ff0-a08a-5f8f08f91fa1
+                        creado_en: "2026-09-14T16:20:00-05:00"
+                        actualizado_en: "2026-09-14T16:20:00-05:00"
+                        resultados:
+                          - id: 8e1f3a5b-7c9d-5e2f-a4b6-c8d0e2f4a6b8
+                            simulacion_id: 5d2a9c1e-0b7f-5e3a-9c44-1f6e8d2a7b90
+                            destino_id: 52bbc2f4-901c-5ff0-a08a-5f8f08f91fa1
+                            ruta_id: a69ac042-f646-50e2-88bd-b4f76f38c169
+                            distancia_km: 382.0
+                            tiempo_horas: 8.4
+                            merma_pct: 4.5
+                            peso_vendido_kg: 12949.8
+                            precio_kg_cop: 11300
+                            flete_cop: 3103750
+                            peajes_cop: 110000
+                            costo_logistico_cop: 3213750
+                            ingreso_bruto_cop: 146332740
+                            utilidad_neta_cop: 143118990
+                            posicion: 1
+                            creado_en: "2026-09-14T16:20:00-05:00"
+                            actualizado_en: "2026-09-14T16:20:00-05:00"
+                          - id: 9f2a4b6c-8d0e-5f3a-b5c7-d9e1f3a5b7c9
+                            simulacion_id: 5d2a9c1e-0b7f-5e3a-9c44-1f6e8d2a7b90
+                            destino_id: acca0ef8-f855-5505-b81b-25833e792ff1
+                            ruta_id: 58503f72-33aa-5dc3-a8fa-e39abddb9eea
+                            distancia_km: 9.5
+                            tiempo_horas: 0.3
+                            merma_pct: 0.5
+                            peso_vendido_kg: 13492.2
+                            precio_kg_cop: 10400
+                            flete_cop: 61750
+                            peajes_cop: 0
+                            costo_logistico_cop: 61750
+                            ingreso_bruto_cop: 140318880
+                            utilidad_neta_cop: 140257130
+                            posicion: 2
+                            creado_en: "2026-09-14T16:20:00-05:00"
+                            actualizado_en: "2026-09-14T16:20:00-05:00"
+                    pagina: 1
+                    por_pagina: 20
+                    total: 1
+                vacio:
+                  summary: Productor sin simulaciones
+                  value:
+                    datos: []
+                    pagina: 1
+                    por_pagina: 20
+                    total: 0
+        "400": { $ref: "#/components/responses/PeticionInvalida" }
+    post:
+      tags: [Simulaciones]
+      operationId: crearSimulacion
+      summary: Calcula y guarda la comparación de destinos para un lote
+      description: |
+        Calcula la utilidad neta del lote en cada destino de `destino_ids`, ordena los resultados
+        de mayor a menor utilidad (`posicion` 1 es el mejor) y guarda `mejor_destino_id`.
+        Responde 422 si algún destino no tiene precio vigente para la categoría del lote o no tiene ruta.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema: { $ref: "#/components/schemas/SimulacionEntrada" }
+            example:
+              lote_id: 9bad2b17-c8e0-57f7-ac48-2d1cf99ad088
+              flete_km_cop: 7000
+              destino_ids:
+                - acca0ef8-f855-5505-b81b-25833e792ff1
+                - 6b8211cf-49f9-5354-925a-ec5edb230ee1
+                - 52bbc2f4-901c-5ff0-a08a-5f8f08f91fa1
+                - 15bf935c-dea7-52e8-a312-228463fe5aef
+      responses:
+        "201":
+          description: Simulación calculada y guardada
+          headers:
+            Location: { $ref: "#/components/headers/Location" }
+          content:
+            application/json:
+              schema: { $ref: "#/components/schemas/Simulacion" }
+              examples:
+                novillos: { $ref: "#/components/examples/SimulacionNovillos" }
+        "400": { $ref: "#/components/responses/PeticionInvalida" }
+        "404":
+          description: El lote no existe
+          content:
+            application/json:
+              schema: { $ref: "#/components/schemas/Error" }
+              example:
+                codigo: NO_ENCONTRADO
+                mensaje: No existe un lote con id 00000000-0000-4000-8000-000000000000.
+                detalles:
+                  - campo: lote_id
+                    problema: Lote inexistente.
+        "422":
+          description: Los datos no permiten calcular la simulación
+          content:
+            application/json:
+              schema: { $ref: "#/components/schemas/Error" }
+              example:
+                codigo: VALIDACION_FALLIDA
+                mensaje: No se puede calcular la utilidad para uno de los destinos elegidos.
+                detalles:
+                  - campo: destino_ids[2]
+                    problema: Planta de beneficio de Cúcuta no tiene precio vigente para vaca_gorda.
+
+  /simulaciones/{simulacion_id}:
+    parameters:
+      - name: simulacion_id
+        in: path
+        required: true
+        schema: { type: string, format: uuid }
+        example: d014a3b6-e98c-5057-a5c1-37dcf2aebb6b
+    get:
+      tags: [Simulaciones]
+      operationId: obtenerSimulacion
+      summary: Obtiene una simulación con el desglose por destino
+      responses:
+        "200":
+          description: Simulación encontrada
+          content:
+            application/json:
+              schema: { $ref: "#/components/schemas/Simulacion" }
+              examples:
+                novillos: { $ref: "#/components/examples/SimulacionNovillos" }
+        "400": { $ref: "#/components/responses/PeticionInvalida" }
+        "404": { $ref: "#/components/responses/NoEncontrado" }
+
+components:
+  parameters:
+    Pagina:
+      name: pagina
+      in: query
+      description: Número de página, empezando en 1.
+      schema: { type: integer, minimum: 1, default: 1 }
+    PorPagina:
+      name: por_pagina
+      in: query
+      description: Registros por página.
+      schema: { type: integer, minimum: 1, maximum: 100, default: 20 }
+    ProductorId:
+      name: productor_id
+      in: path
+      required: true
+      schema: { type: string, format: uuid }
+      example: cd3b83ce-114a-5624-bde0-0c482a535db2
+    LoteId:
+      name: lote_id
+      in: path
+      required: true
+      schema: { type: string, format: uuid }
+      example: 9bad2b17-c8e0-57f7-ac48-2d1cf99ad088
+    DestinoId:
+      name: destino_id
+      in: path
+      required: true
+      schema: { type: string, format: uuid }
+      example: 52bbc2f4-901c-5ff0-a08a-5f8f08f91fa1
+
+  headers:
+    Location:
+      description: URL del recurso recién creado.
+      schema: { type: string, format: uri-reference }
+
+  responses:
+    PeticionInvalida:
+      description: La petición está mal formada (JSON inválido, parámetro con tipo equivocado o UUID mal escrito)
+      content:
+        application/json:
+          schema: { $ref: "#/components/schemas/Error" }
+          example:
+            codigo: PETICION_INVALIDA
+            mensaje: Hay parámetros con formato no válido.
+            detalles:
+              - campo: lote_id
+                problema: Se esperaba un UUID y se recibió "lote-1".
+    NoEncontrado:
+      description: El recurso no existe
+      content:
+        application/json:
+          schema: { $ref: "#/components/schemas/Error" }
+          example:
+            codigo: NO_ENCONTRADO
+            mensaje: El recurso solicitado no existe.
+            detalles: []
+    ValidacionFallida:
+      description: El cuerpo es JSON válido pero algún campo incumple las reglas de negocio
+      content:
+        application/json:
+          schema: { $ref: "#/components/schemas/Error" }
+          example:
+            codigo: VALIDACION_FALLIDA
+            mensaje: Hay campos con valores no permitidos.
+            detalles:
+              - campo: precio_kg_cop
+                problema: Debe estar entre 3000 y 30000 COP.
+
+  examples:
+    LoteNovillos:
+      summary: Lote de 30 novillos en Yopal
+      value:
+        id: 9bad2b17-c8e0-57f7-ac48-2d1cf99ad088
+        productor_id: cd3b83ce-114a-5624-bde0-0c482a535db2
+        nombre: Novillos cebados de septiembre
+        cantidad_animales: 30
+        peso_promedio_kg: 452.0
+        peso_total_kg: 13560.0
+        categoria: novillo_gordo
+        raza: Brahman comercial
+        finca: Finca La Esperanza
+        municipio_origen: Yopal
+        estado: simulado
+        creado_en: "2026-09-14T07:30:00-05:00"
+        actualizado_en: "2026-09-14T07:30:00-05:00"
+    LoteNovillosNuevo:
+      summary: Lote recién creado
+      value:
+        id: 9bad2b17-c8e0-57f7-ac48-2d1cf99ad088
+        productor_id: cd3b83ce-114a-5624-bde0-0c482a535db2
+        nombre: Novillos cebados de septiembre
+        cantidad_animales: 30
+        peso_promedio_kg: 452.0
+        peso_total_kg: 13560.0
+        categoria: novillo_gordo
+        raza: Brahman comercial
+        finca: Finca La Esperanza
+        municipio_origen: Yopal
+        estado: disponible
+        creado_en: "2026-09-14T07:30:00-05:00"
+        actualizado_en: "2026-09-14T07:30:00-05:00"
+    RutaVillavicencio:
+      summary: Ruta Yopal → Villavicencio por la Marginal de la Selva
+      value:
+        id: 5ec2ea46-db9d-525b-8417-462de2b24a6a
+        destino_id: 6b8211cf-49f9-5354-925a-ec5edb230ee1
+        origen_nombre: Yopal (centro de acopio)
+        origen: { type: Point, coordinates: [-72.3959, 5.3371] }
+        distancia_km: 266.0
+        tiempo_horas: 5.1
+        peajes_cop: 85000
+        factor_dificultad: 1.1
+        merma_pct: 3.0
+        geometria:
+          type: LineString
+          coordinates: [[-72.3959, 5.3371], [-72.5471, 5.1731], [-72.8958, 4.8766], [-72.9281, 4.6094], [-72.9654, 4.5756], [-73.4868, 4.2699], [-73.6266, 4.142]]
+        fuente: manual
+        creado_en: "2026-09-01T08:00:00-05:00"
+        actualizado_en: "2026-09-26T10:15:00-05:00"
+    SimulacionNovillos:
+      summary: 30 novillos (13.560 kg), flete de 7.000 COP/km, 4 destinos
+      value:
+        id: d014a3b6-e98c-5057-a5c1-37dcf2aebb6b
+        lote_id: 9bad2b17-c8e0-57f7-ac48-2d1cf99ad088
+        flete_km_cop: 7000
+        mejor_destino_id: 52bbc2f4-901c-5ff0-a08a-5f8f08f91fa1
+        creado_en: "2026-09-19T08:25:00-05:00"
+        actualizado_en: "2026-09-19T08:25:00-05:00"
+        resultados:
+          - id: 200c89eb-f7c0-52d9-9da4-dd8cf561c65e
+            simulacion_id: d014a3b6-e98c-5057-a5c1-37dcf2aebb6b
+            destino_id: 52bbc2f4-901c-5ff0-a08a-5f8f08f91fa1
+            ruta_id: a69ac042-f646-50e2-88bd-b4f76f38c169
+            distancia_km: 382.0
+            tiempo_horas: 8.4
+            merma_pct: 4.5
+            peso_vendido_kg: 12949.8
+            precio_kg_cop: 11300
+            flete_cop: 3342500
+            peajes_cop: 110000
+            costo_logistico_cop: 3452500
+            ingreso_bruto_cop: 146332740
+            utilidad_neta_cop: 142880240
+            posicion: 1
+            creado_en: "2026-09-19T08:25:00-05:00"
+            actualizado_en: "2026-09-19T08:25:00-05:00"
+          - id: 2e85a1a3-fbba-5a59-a438-35bbd6154c5e
+            simulacion_id: d014a3b6-e98c-5057-a5c1-37dcf2aebb6b
+            destino_id: acca0ef8-f855-5505-b81b-25833e792ff1
+            ruta_id: 58503f72-33aa-5dc3-a8fa-e39abddb9eea
+            distancia_km: 9.5
+            tiempo_horas: 0.3
+            merma_pct: 0.5
+            peso_vendido_kg: 13492.2
+            precio_kg_cop: 10400
+            flete_cop: 66500
+            peajes_cop: 0
+            costo_logistico_cop: 66500
+            ingreso_bruto_cop: 140318880
+            utilidad_neta_cop: 140252380
+            posicion: 2
+            creado_en: "2026-09-19T08:25:00-05:00"
+            actualizado_en: "2026-09-19T08:25:00-05:00"
+          - id: e157a897-5d2f-595b-bbff-ca440b72652b
+            simulacion_id: d014a3b6-e98c-5057-a5c1-37dcf2aebb6b
+            destino_id: 15bf935c-dea7-52e8-a312-228463fe5aef
+            ruta_id: 9e8d2db5-62af-5aff-9e08-4f15f793f377
+            distancia_km: 791.0
+            tiempo_horas: 16.5
+            merma_pct: 7.0
+            peso_vendido_kg: 12610.8
+            precio_kg_cop: 11600
+            flete_cop: 7751800
+            peajes_cop: 210000
+            costo_logistico_cop: 7961800
+            ingreso_bruto_cop: 146285280
+            utilidad_neta_cop: 138323480
+            posicion: 3
+            creado_en: "2026-09-19T08:25:00-05:00"
+            actualizado_en: "2026-09-19T08:25:00-05:00"
+          - id: c1cb1beb-5763-5430-b57e-5ef6f6747f5f
+            simulacion_id: d014a3b6-e98c-5057-a5c1-37dcf2aebb6b
+            destino_id: 6b8211cf-49f9-5354-925a-ec5edb230ee1
+            ruta_id: 5ec2ea46-db9d-525b-8417-462de2b24a6a
+            distancia_km: 266.0
+            tiempo_horas: 5.1
+            merma_pct: 3.0
+            peso_vendido_kg: 13153.2
+            precio_kg_cop: 10600
+            flete_cop: 2048200
+            peajes_cop: 85000
+            costo_logistico_cop: 2133200
+            ingreso_bruto_cop: 139423920
+            utilidad_neta_cop: 137290720
+            posicion: 4
+            creado_en: "2026-09-19T08:25:00-05:00"
+            actualizado_en: "2026-09-19T08:25:00-05:00"
+
+  schemas:
+    Error:
+      type: object
+      description: Forma única de todos los errores de la API.
+      required: [codigo, mensaje, detalles]
+      properties:
+        codigo:
+          type: string
+          enum: [PETICION_INVALIDA, NO_ENCONTRADO, CONFLICTO, VALIDACION_FALLIDA, SERVICIO_EXTERNO_NO_DISPONIBLE, ERROR_INTERNO]
+          description: Código estable, pensado para que el cliente decida qué mostrar.
+        mensaje:
+          type: string
+          description: Texto comprensible para el usuario final, en español.
+        detalles:
+          type: array
+          description: Un elemento por campo con problema. Lista vacía si el error no es de un campo.
+          items:
+            type: object
+            required: [campo, problema]
+            properties:
+              campo: { type: string }
+              problema: { type: string }
+
+    Paginacion:
+      type: object
+      required: [pagina, por_pagina, total]
+      properties:
+        pagina: { type: integer, minimum: 1 }
+        por_pagina: { type: integer, minimum: 1, maximum: 100 }
+        total: { type: integer, minimum: 0 }
+
+    Marcas:
+      type: object
+      description: Campos de control presentes en toda entidad.
+      required: [creado_en, actualizado_en]
+      properties:
+        creado_en: { type: string, format: date-time, readOnly: true }
+        actualizado_en: { type: string, format: date-time, readOnly: true }
+
+    PuntoGeoJSON:
+      type: object
+      required: [type, coordinates]
+      properties:
+        type: { type: string, const: Point }
+        coordinates:
+          type: array
+          description: "[longitud, latitud] en EPSG:4326 (primero longitud, como exige GeoJSON)"
+          minItems: 2
+          maxItems: 2
+          items: { type: number, minimum: -180, maximum: 180 }
+
+    LineaGeoJSON:
+      type: object
+      required: [type, coordinates]
+      properties:
+        type: { type: string, const: LineString }
+        coordinates:
+          type: array
+          minItems: 2
+          items:
+            type: array
+            minItems: 2
+            maxItems: 2
+            items: { type: number }
+
+    Categoria:
+      type: string
+      description: Categoría comercial del animal; define qué precio se aplica.
+      enum: [novillo_gordo, vaca_gorda, novillo_levante, ternero_destete, toro]
+
+    EstadoLote:
+      type: string
+      enum: [disponible, simulado, vendido]
+
+    TipoDestino:
+      type: string
+      enum: [subasta, feria, frigorifico, planta_beneficio]
+
+    FuenteRuta:
+      type: string
+      description: De dónde salió la ruta. `respaldo_linea_recta` se usa si OSRM no responde.
+      enum: [osrm, manual, respaldo_linea_recta]
+
+    # ---------- Productor ----------
+    ProductorEntrada:
+      type: object
+      required: [nombre_completo, municipio]
+      properties:
+        nombre_completo: { type: string, minLength: 3, maxLength: 120 }
+        municipio: { type: string, minLength: 2, maxLength: 60 }
+        telefono:
+          type: [string, "null"]
+          pattern: "^3[0-9]{9}$"
+          description: Celular colombiano de 10 dígitos.
+        correo:
+          type: [string, "null"]
+          format: email
+          maxLength: 120
+    Productor:
+      allOf:
+        - type: object
+          required: [id]
+          properties:
+            id: { type: string, format: uuid, readOnly: true }
+        - $ref: "#/components/schemas/ProductorEntrada"
+        - $ref: "#/components/schemas/Marcas"
+    ListaProductores:
+      allOf:
+        - $ref: "#/components/schemas/Paginacion"
+        - type: object
+          required: [datos]
+          properties:
+            datos:
+              type: array
+              items: { $ref: "#/components/schemas/Productor" }
+
+    # ---------- Lote ----------
+    LoteEntrada:
+      type: object
+      required: [productor_id, nombre, cantidad_animales, peso_promedio_kg, categoria, municipio_origen]
+      properties:
+        productor_id: { type: string, format: uuid }
+        nombre: { type: string, minLength: 3, maxLength: 80 }
+        cantidad_animales: { type: integer, minimum: 1, maximum: 200 }
+        peso_promedio_kg: { type: number, minimum: 80, maximum: 900, multipleOf: 0.1 }
+        categoria: { $ref: "#/components/schemas/Categoria" }
+        raza: { type: [string, "null"], maxLength: 40 }
+        finca: { type: [string, "null"], maxLength: 80 }
+        municipio_origen: { type: string, minLength: 2, maxLength: 60 }
+    LoteCambios:
+      type: object
+      minProperties: 1
+      properties:
+        nombre: { type: string, minLength: 3, maxLength: 80 }
+        cantidad_animales: { type: integer, minimum: 1, maximum: 200 }
+        peso_promedio_kg: { type: number, minimum: 80, maximum: 900, multipleOf: 0.1 }
+        categoria: { $ref: "#/components/schemas/Categoria" }
+        raza: { type: [string, "null"], maxLength: 40 }
+        finca: { type: [string, "null"], maxLength: 80 }
+        municipio_origen: { type: string, minLength: 2, maxLength: 60 }
+        estado: { $ref: "#/components/schemas/EstadoLote" }
+    Lote:
+      allOf:
+        - type: object
+          required: [id, peso_total_kg, estado]
+          properties:
+            id: { type: string, format: uuid, readOnly: true }
+            peso_total_kg:
+              type: number
+              readOnly: true
+              description: Calculado por la base de datos (cantidad_animales × peso_promedio_kg).
+            estado: { $ref: "#/components/schemas/EstadoLote" }
+        - $ref: "#/components/schemas/LoteEntrada"
+        - $ref: "#/components/schemas/Marcas"
+    ListaLotes:
+      allOf:
+        - $ref: "#/components/schemas/Paginacion"
+        - type: object
+          required: [datos]
+          properties:
+            datos:
+              type: array
+              items: { $ref: "#/components/schemas/Lote" }
+
+    # ---------- Destino ----------
+    Destino:
+      type: object
+      required: [id, nombre, tipo, municipio, departamento, ubicacion, activo, creado_en, actualizado_en]
+      properties:
+        id: { type: string, format: uuid, readOnly: true }
+        nombre: { type: string, maxLength: 100 }
+        tipo: { $ref: "#/components/schemas/TipoDestino" }
+        municipio: { type: string, maxLength: 60 }
+        departamento: { type: string, maxLength: 60 }
+        ubicacion: { $ref: "#/components/schemas/PuntoGeoJSON" }
+        activo: { type: boolean, default: true }
+        creado_en: { type: string, format: date-time, readOnly: true }
+        actualizado_en: { type: string, format: date-time, readOnly: true }
+    ListaDestinos:
+      allOf:
+        - $ref: "#/components/schemas/Paginacion"
+        - type: object
+          required: [datos]
+          properties:
+            datos:
+              type: array
+              items: { $ref: "#/components/schemas/Destino" }
+
+    # ---------- Precio ----------
+    PrecioMercadoEntrada:
+      type: object
+      required: [categoria, precio_kg_cop, fecha, fuente]
+      properties:
+        categoria: { $ref: "#/components/schemas/Categoria" }
+        precio_kg_cop: { type: integer, minimum: 3000, maximum: 30000 }
+        fecha: { type: string, format: date }
+        fuente: { type: string, minLength: 3, maxLength: 160 }
+    PrecioMercado:
+      allOf:
+        - type: object
+          required: [id, destino_id]
+          properties:
+            id: { type: string, format: uuid, readOnly: true }
+            destino_id: { type: string, format: uuid, readOnly: true }
+        - $ref: "#/components/schemas/PrecioMercadoEntrada"
+        - $ref: "#/components/schemas/Marcas"
+
+    # ---------- Ruta ----------
+    Ruta:
+      type: object
+      required: [id, destino_id, origen_nombre, origen, distancia_km, tiempo_horas, peajes_cop, factor_dificultad, merma_pct, geometria, fuente, creado_en, actualizado_en]
+      properties:
+        id: { type: string, format: uuid, readOnly: true }
+        destino_id: { type: string, format: uuid }
+        origen_nombre: { type: string, maxLength: 80 }
+        origen: { $ref: "#/components/schemas/PuntoGeoJSON" }
+        distancia_km: { type: number, minimum: 0, maximum: 3000 }
+        tiempo_horas: { type: number, minimum: 0, maximum: 72 }
+        peajes_cop: { type: integer, minimum: 0 }
+        factor_dificultad:
+          type: number
+          minimum: 1
+          maximum: 2
+          description: Recargo del flete por relieve y estado de la vía (1.00 = vía plana).
+        merma_pct:
+          type: number
+          minimum: 0
+          maximum: 15
+          description: Pérdida de peso estimada del animal durante el viaje, en porcentaje.
+        geometria: { $ref: "#/components/schemas/LineaGeoJSON" }
+        fuente: { $ref: "#/components/schemas/FuenteRuta" }
+        creado_en: { type: string, format: date-time, readOnly: true }
+        actualizado_en: { type: string, format: date-time, readOnly: true }
+
+    # ---------- Simulación ----------
+    SimulacionEntrada:
+      type: object
+      required: [lote_id, flete_km_cop, destino_ids]
+      properties:
+        lote_id: { type: string, format: uuid }
+        flete_km_cop:
+          type: integer
+          minimum: 1000
+          maximum: 50000
+          description: Valor del flete por kilómetro para el camión completo.
+        destino_ids:
+          type: array
+          description: Destinos a comparar. No es columna; cada uno genera una fila en resultado_simulacion.
+          minItems: 2
+          maxItems: 15
+          uniqueItems: true
+          items: { type: string, format: uuid }
+    ResultadoSimulacion:
+      type: object
+      required: [id, simulacion_id, destino_id, ruta_id, distancia_km, tiempo_horas, merma_pct, peso_vendido_kg, precio_kg_cop, flete_cop, peajes_cop, costo_logistico_cop, ingreso_bruto_cop, utilidad_neta_cop, posicion, creado_en, actualizado_en]
+      properties:
+        id: { type: string, format: uuid, readOnly: true }
+        simulacion_id: { type: string, format: uuid }
+        destino_id: { type: string, format: uuid }
+        ruta_id: { type: string, format: uuid }
+        distancia_km: { type: number, minimum: 0 }
+        tiempo_horas: { type: number, minimum: 0 }
+        merma_pct: { type: number, minimum: 0, maximum: 15 }
+        peso_vendido_kg: { type: number, minimum: 0 }
+        precio_kg_cop: { type: integer, minimum: 0 }
+        flete_cop: { type: integer, minimum: 0 }
+        peajes_cop: { type: integer, minimum: 0 }
+        costo_logistico_cop: { type: integer, minimum: 0 }
+        ingreso_bruto_cop: { type: integer, minimum: 0 }
+        utilidad_neta_cop: { type: integer, description: Puede ser negativa si el costo supera el ingreso. }
+        posicion: { type: integer, minimum: 1, description: 1 = destino con mayor utilidad. }
+        creado_en: { type: string, format: date-time, readOnly: true }
+        actualizado_en: { type: string, format: date-time, readOnly: true }
+    Simulacion:
+      type: object
+      required: [id, lote_id, flete_km_cop, mejor_destino_id, resultados, creado_en, actualizado_en]
+      properties:
+        id: { type: string, format: uuid, readOnly: true }
+        lote_id: { type: string, format: uuid }
+        flete_km_cop: { type: integer, minimum: 1000, maximum: 50000 }
+        mejor_destino_id: { type: string, format: uuid }
+        resultados:
+          type: array
+          description: Filas de resultado_simulacion, ordenadas por posicion.
+          items: { $ref: "#/components/schemas/ResultadoSimulacion" }
+        creado_en: { type: string, format: date-time, readOnly: true }
+        actualizado_en: { type: string, format: date-time, readOnly: true }
+    ListaSimulaciones:
+      allOf:
+        - $ref: "#/components/schemas/Paginacion"
+        - type: object
+          required: [datos]
+          properties:
+            datos:
+              type: array
+              items: { $ref: "#/components/schemas/Simulacion" }

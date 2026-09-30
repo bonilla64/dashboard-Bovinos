@@ -1,0 +1,19 @@
+# Valida api/openapi.yaml en cada pull request que lo modifique.
+name: Validar contrato OpenAPI
+
+on:
+  pull_request:
+    paths: ["api/**"]
+  push:
+    branches: [main]
+    paths: ["api/**"]
+
+jobs:
+  validar:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+      - run: npx --yes @redocly/cli@1 lint api/openapi.yaml

@@ -1,0 +1,28 @@
+# Dependencias
+node_modules/
+.pnpm-store/
+
+# Variables de entorno: NUNCA se versionan. Solo .env.example
+.env
+.env.*
+!.env.example
+
+# Sistema operativo y editores
+.DS_Store
+Thumbs.db
+desktop.ini
+.vscode/
+.idea/
+*.swp
+
+# Registros y temporales
+*.log
+npm-debug.log*
+tmp/
+dist/
+coverage/
+
+# Python (herramientas auxiliares y versión de escritorio anterior)
+__pycache__/
+*.pyc
+.venv/

@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="es-CO">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Historial de simulaciones · Simulador de Destinos Ganaderos</title>
+  <meta name="description" content="Consulte las comparaciones de destinos que ya hizo para sus lotes de ganado.">
+  <meta name="theme-color" content="#143e2e">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='6' fill='%23143e2e'/%3E%3Cpath d='M9 22 L16 10 L24 14' stroke='%23e3b23c' stroke-width='3' fill='none' stroke-linecap='round'/%3E%3Ccircle cx='9' cy='22' r='3.5' fill='%23fff'/%3E%3C/svg%3E">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:wght@400;700&display=swap">
+  <link rel="stylesheet" href="css/estilos.css">
+</head>
+<body data-pagina="historial">
+  <a class="saltar" href="#contenido">Saltar al contenido</a>
+
+  <header class="cabecera">
+    <div class="cabecera__dentro">
+      <a class="marca" href="index.html">
+        <svg width="36" height="36" viewBox="0 0 32 32" aria-hidden="true" focusable="false"><rect width="32" height="32" rx="6" fill="#1f5c45"/><path d="M9 22 L16 10 L24 14" stroke="#e3b23c" stroke-width="3" fill="none" stroke-linecap="round"/><circle cx="9" cy="22" r="3.5" fill="#fff"/></svg>
+        <span>Destinos ganaderos<small>Salida desde Yopal, Casanare</small></span>
+      </a>
+      <nav class="nav" aria-label="Principal">
+        <ul>
+          <li><a href="index.html">Tablero</a></li>
+          <li><a href="detalle.html">Registrar lote</a></li>
+          <li><a href="historial.html" aria-current="page">Historial</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <main id="contenido" tabindex="-1">
+    <h1>Historial de simulaciones</h1>
+    <p>Cada simulación guarda el precio, la ruta y el flete con que se calculó, para que pueda revisar después por qué eligió un destino.</p>
+
+    <div class="barra-herramientas" role="search" aria-label="Buscar en el historial">
+      <div class="campo">
+        <label for="buscar">Buscar por lote, finca o productor</label>
+        <input type="search" id="buscar" name="buscar" autocomplete="off">
+      </div>
+      <div class="campo">
+        <label for="filtro-mejor">Mejor destino</label>
+        <select id="filtro-mejor" name="filtro-mejor">
+          <option value="">Todos</option>
+        </select>
+      </div>
+      <a class="boton" href="detalle.html">Nueva simulación</a>
+    </div>
+
+    <section id="estado-cargando" class="estado" aria-busy="true" aria-labelledby="t-cargando">
+      <h2 id="t-cargando"><span class="girador" aria-hidden="true"></span>Cargando el historial</h2>
+      <div class="cargando__barra" aria-hidden="true"></div>
+      <div class="cargando__barra" aria-hidden="true"></div>
+      <div class="cargando__barra cargando__barra--corta" aria-hidden="true"></div>
+    </section>
+
+    <section id="estado-error" class="estado estado--error" role="alert" aria-labelledby="t-error" hidden>
+      <h2 id="t-error">No se pudo cargar el historial</h2>
+      <p>No hubo respuesta del servidor. Revise la conexión a internet y vuelva a intentar.</p>
+      <div class="acciones"><button type="button" class="boton" id="btn-reintentar">Volver a intentar</button></div>
+    </section>
+
+    <section id="estado-vacio" class="estado estado--vacio" aria-labelledby="t-vacio" hidden>
+      <h2 id="t-vacio">No hay simulaciones que coincidan</h2>
+      <p id="vacio-texto">Pruebe con otra palabra o quite el filtro de destino.</p>
+      <div class="acciones">
+        <button type="button" class="boton boton--secundario" id="btn-limpiar">Limpiar búsqueda</button>
+        <a class="boton" href="detalle.html">Registrar un lote</a>
+      </div>
+    </section>
+
+    <section id="con-datos" aria-labelledby="t-lista" hidden>
+      <h2 id="t-lista" class="sr-only">Simulaciones guardadas</h2>
+      <p class="conteo" id="conteo" role="status"></p>
+      <ul class="simulaciones" id="lista-simulaciones"></ul>
+    </section>
+  </main>
+
+  <footer class="pie">
+    <div class="pie__dentro">
+      <div>
+        <p>Prototipo de la Entrega 2 · Tecnologías Web 2026-B · Unitrópico, Yopal.</p>
+        <p>Precios, peajes y merma son estimaciones del equipo para el prototipo, no cotizaciones reales.</p>
+      </div>
+      <nav aria-label="Estados de la interfaz">
+        <p>Ver estados del historial:</p>
+        <ul>
+          <li><a href="historial.html?demo=cargando">Cargando</a></li>
+          <li><a href="historial.html?demo=vacio">Sin simulaciones</a></li>
+          <li><a href="historial.html?demo=error">Error de conexión</a></li>
+        </ul>
+      </nav>
+    </div>
+  </footer>
+
+  <script src="js/app.js" defer></script>
+</body>
+</html>

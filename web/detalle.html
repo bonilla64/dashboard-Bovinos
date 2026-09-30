@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="es-CO">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Registrar lote · Simulador de Destinos Ganaderos</title>
+  <meta name="description" content="Registre su lote de ganado y el valor del flete para comparar destinos de venta desde Yopal.">
+  <meta name="theme-color" content="#143e2e">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='6' fill='%23143e2e'/%3E%3Cpath d='M9 22 L16 10 L24 14' stroke='%23e3b23c' stroke-width='3' fill='none' stroke-linecap='round'/%3E%3Ccircle cx='9' cy='22' r='3.5' fill='%23fff'/%3E%3C/svg%3E">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:wght@400;700&display=swap">
+  <link rel="stylesheet" href="css/estilos.css">
+</head>
+<body data-pagina="formulario">
+  <a class="saltar" href="#contenido">Saltar al contenido</a>
+
+  <header class="cabecera">
+    <div class="cabecera__dentro">
+      <a class="marca" href="index.html">
+        <svg width="36" height="36" viewBox="0 0 32 32" aria-hidden="true" focusable="false"><rect width="32" height="32" rx="6" fill="#1f5c45"/><path d="M9 22 L16 10 L24 14" stroke="#e3b23c" stroke-width="3" fill="none" stroke-linecap="round"/><circle cx="9" cy="22" r="3.5" fill="#fff"/></svg>
+        <span>Destinos ganaderos<small>Salida desde Yopal, Casanare</small></span>
+      </a>
+      <nav class="nav" aria-label="Principal">
+        <ul>
+          <li><a href="index.html">Tablero</a></li>
+          <li><a href="detalle.html" aria-current="page">Registrar lote</a></li>
+          <li><a href="historial.html">Historial</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <main id="contenido" tabindex="-1">
+    <h1 id="t-form">Registrar lote y comparar destinos</h1>
+    <p>Llene los datos del lote y el valor del flete. Al calcular, el tablero muestra cuánto le queda en cada destino. Los campos marcados como opcionales se pueden dejar vacíos.</p>
+
+    <div id="resumen-errores" class="resumen-errores" role="alert" tabindex="-1" hidden>
+      <h2>Revise estos campos antes de calcular</h2>
+      <ul id="lista-errores"></ul>
+    </div>
+
+    <form id="form-lote" class="formulario" novalidate aria-labelledby="t-form">
+
+      <fieldset>
+        <legend>Productor</legend>
+        <div class="campos">
+          <div class="campo campo--ancho">
+            <label for="productor_id">Productor responsable</label>
+            <select id="productor_id" name="productor_id" required aria-describedby="productor_id-error">
+              <option value="">Seleccione un productor</option>
+            </select>
+            <p class="error-campo" id="productor_id-error"></p>
+          </div>
+        </div>
+      </fieldset>
+
+      <fieldset>
+        <legend>Datos del lote</legend>
+        <div class="campos">
+          <div class="campo campo--ancho">
+            <label for="nombre">Nombre del lote</label>
+            <p class="ayuda" id="nombre-ayuda">Un nombre que usted reconozca, por ejemplo «Novillos cebados de octubre».</p>
+            <input type="text" id="nombre" name="nombre" required minlength="3" maxlength="80" autocomplete="off" aria-describedby="nombre-ayuda nombre-error">
+            <p class="error-campo" id="nombre-error"></p>
+          </div>
+
+          <div class="campo">
+            <label for="categoria">Categoría</label>
+            <select id="categoria" name="categoria" required aria-describedby="categoria-ayuda categoria-error">
+              <option value="">Seleccione la categoría</option>
+              <option value="novillo_gordo">Novillo gordo</option>
+              <option value="vaca_gorda">Vaca gorda</option>
+              <option value="novillo_levante">Novillo de levante</option>
+              <option value="ternero_destete">Ternero de destete</option>
+              <option value="toro">Toro</option>
+            </select>
+            <p class="ayuda" id="categoria-ayuda">Define qué precio por kilo se aplica.</p>
+            <p class="error-campo" id="categoria-error"></p>
+          </div>
+
+          <div class="campo">
+            <label for="raza">Raza o cruce <span class="opcional">(opcional)</span></label>
+            <input type="text" id="raza" name="raza" maxlength="40" list="razas" autocomplete="off" aria-describedby="raza-error">
+            <datalist id="razas">
+              <option value="Brahman comercial"></option>
+              <option value="Brahman rojo"></option>
+              <option value="Cebú comercial"></option>
+              <option value="Criollo casanareño"></option>
+              <option value="Brahman x Sanmartinero"></option>
+              <option value="Gyr x Brahman"></option>
+            </datalist>
+            <p class="error-campo" id="raza-error"></p>
+          </div>
+
+          <div class="campo">
+            <label for="cantidad_animales">Cantidad de animales</label>
+            <input type="number" id="cantidad_animales" name="cantidad_animales" required min="1" max="200" step="1" inputmode="numeric" aria-describedby="cantidad_animales-ayuda cantidad_animales-error">
+            <p class="ayuda" id="cantidad_animales-ayuda">Entre 1 y 200 animales.</p>
+            <p class="error-campo" id="cantidad_animales-error"></p>
+          </div>
+
+          <div class="campo">
+            <label for="peso_promedio_kg">Peso promedio por animal (kg)</label>
+            <input type="number" id="peso_promedio_kg" name="peso_promedio_kg" required min="80" max="900" step="0.1" inputmode="decimal" aria-describedby="peso_promedio_kg-ayuda peso_promedio_kg-error">
+            <p class="ayuda" id="peso_promedio_kg-ayuda">Entre 80 y 900 kg. Si pesó el lote completo en báscula, divida el total entre el número de animales.</p>
+            <p class="error-campo" id="peso_promedio_kg-error"></p>
+          </div>
+
+          <div class="campo">
+            <label for="finca">Finca o hato <span class="opcional">(opcional)</span></label>
+            <input type="text" id="finca" name="finca" maxlength="80" autocomplete="off" aria-describedby="finca-error">
+            <p class="error-campo" id="finca-error"></p>
+          </div>
+
+          <div class="campo">
+            <label for="municipio_origen">Municipio de origen</label>
+            <select id="municipio_origen" name="municipio_origen" required aria-describedby="municipio_origen-error">
+              <option value="">Seleccione el municipio</option>
+              <option>Yopal</option><option>Aguazul</option><option>Tauramena</option><option>Maní</option>
+              <option>Monterrey</option><option>Villanueva</option><option>Nunchía</option><option>Pore</option>
+              <option>Paz de Ariporo</option><option>Hato Corozal</option><option>Trinidad</option><option>San Luis de Palenque</option>
+              <option>Orocué</option><option>Támara</option><option>Sabanalarga</option><option>Recetor</option>
+            </select>
+            <p class="error-campo" id="municipio_origen-error"></p>
+          </div>
+        </div>
+
+        <div class="calculo" aria-live="polite">
+          Peso total del lote: <output id="peso_total_kg" for="cantidad_animales peso_promedio_kg">—</output>
+        </div>
+      </fieldset>
+
+      <fieldset>
+        <legend>Transporte y destinos</legend>
+        <div class="campos">
+          <div class="campo campo--ancho">
+            <label for="flete_km_cop">Valor del flete por kilómetro (COP)</label>
+            <input type="number" id="flete_km_cop" name="flete_km_cop" required min="1000" max="50000" step="50" inputmode="numeric" aria-describedby="flete_km_cop-ayuda flete_km_cop-error">
+            <p class="ayuda" id="flete_km_cop-ayuda">Lo que cobra el transportador por kilómetro, por el camión completo. Entre 1.000 y 50.000 pesos.</p>
+            <p class="error-campo" id="flete_km_cop-error"></p>
+          </div>
+
+          <fieldset class="campo campo--ancho" id="destino_ids" aria-describedby="destino_ids-ayuda destino_ids-error" tabindex="-1">
+            <legend>Destinos a comparar</legend>
+            <p class="ayuda" id="destino_ids-ayuda">Marque al menos dos. Por defecto se comparan todos.</p>
+            <div class="lista-destinos" id="lista-destinos"></div>
+            <p class="error-campo" id="destino_ids-error"></p>
+          </fieldset>
+        </div>
+      </fieldset>
+
+      <div class="acciones">
+        <button type="submit" class="boton">Calcular y ver en el tablero</button>
+        <a class="boton boton--secundario" href="index.html">Cancelar</a>
+      </div>
+    </form>
+  </main>
+
+  <footer class="pie">
+    <div class="pie__dentro">
+      <div>
+        <p>Prototipo de la Entrega 2 · Tecnologías Web 2026-B · Unitrópico, Yopal.</p>
+        <p>En esta entrega el lote se guarda solo en este navegador; la API lo guardará desde la Entrega 3.</p>
+      </div>
+      <nav aria-label="Estados de la interfaz">
+        <p>Ver estados de la interfaz:</p>
+        <ul>
+          <li><a href="index.html?demo=cargando">Cargando</a></li>
+          <li><a href="index.html?demo=vacio">Sin resultados</a></li>
+          <li><a href="index.html?demo=error">Error de conexión</a></li>
+        </ul>
+      </nav>
+    </div>
+  </footer>
+
+  <script src="js/app.js" defer></script>
+</body>
+</html>

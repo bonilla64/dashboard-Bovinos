@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="es-CO">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Tablero de destinos · Simulador de Destinos Ganaderos</title>
+  <meta name="description" content="Compare en un mapa a qué subasta, feria o frigorífico le conviene llevar su lote de ganado desde Yopal.">
+  <meta name="theme-color" content="#143e2e">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='6' fill='%23143e2e'/%3E%3Cpath d='M9 22 L16 10 L24 14' stroke='%23e3b23c' stroke-width='3' fill='none' stroke-linecap='round'/%3E%3Ccircle cx='9' cy='22' r='3.5' fill='%23fff'/%3E%3C/svg%3E">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:wght@400;700&display=swap">
+  <link rel="stylesheet" href="vendor/leaflet/leaflet.css">
+  <link rel="stylesheet" href="css/estilos.css">
+</head>
+<body data-pagina="tablero">
+  <a class="saltar" href="#contenido">Saltar al contenido</a>
+
+  <header class="cabecera">
+    <div class="cabecera__dentro">
+      <a class="marca" href="index.html">
+        <svg width="36" height="36" viewBox="0 0 32 32" aria-hidden="true" focusable="false"><rect width="32" height="32" rx="6" fill="#1f5c45"/><path d="M9 22 L16 10 L24 14" stroke="#e3b23c" stroke-width="3" fill="none" stroke-linecap="round"/><circle cx="9" cy="22" r="3.5" fill="#fff"/></svg>
+        <span>Destinos ganaderos<small>Salida desde Yopal, Casanare</small></span>
+      </a>
+      <nav class="nav" aria-label="Principal">
+        <ul>
+          <li><a href="index.html" aria-current="page">Tablero</a></li>
+          <li><a href="detalle.html">Registrar lote</a></li>
+          <li><a href="historial.html">Historial</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <main id="contenido" tabindex="-1">
+
+    <!-- Estado: cargando -->
+    <section id="estado-cargando" class="estado" aria-busy="true" aria-labelledby="t-cargando">
+      <h1 id="t-cargando"><span class="girador" aria-hidden="true"></span>Cargando precios y rutas</h1>
+      <p>Estamos reuniendo el precio por kilo y la ruta de cada destino.</p>
+      <div class="cargando__barra" aria-hidden="true"></div>
+      <div class="cargando__barra cargando__barra--corta" aria-hidden="true"></div>
+      <div class="cargando__barra cargando__caja" aria-hidden="true"></div>
+    </section>
+
+    <!-- Estado: error -->
+    <section id="estado-error" class="estado estado--error" role="alert" aria-labelledby="t-error" hidden>
+      <h1 id="t-error">No se pudieron cargar los destinos</h1>
+      <p id="error-detalle">El servidor de precios no respondió. Sus datos del lote no se perdieron.</p>
+      <p>Revise la conexión a internet y vuelva a intentar. Si el problema sigue, puede registrar el lote y comparar más tarde.</p>
+      <div class="acciones">
+        <button type="button" class="boton" id="btn-reintentar">Volver a intentar</button>
+        <a class="boton boton--secundario" href="detalle.html">Registrar lote</a>
+      </div>
+    </section>
+
+    <!-- Contenido con datos -->
+    <div id="con-datos" hidden>
+      <div id="aviso-simulacion" class="aviso" role="status" hidden></div>
+
+      <section class="bloque respuesta" aria-labelledby="t-respuesta">
+        <div class="respuesta__lote">
+          <p id="lote-resumen">Lote activo</p>
+          <a href="detalle.html" id="enlace-editar-lote">Cambiar lote o flete</a>
+        </div>
+        <h1 id="t-respuesta">¿A dónde llevo el lote?</h1>
+        <p class="respuesta__cifra" id="respuesta-cifra"></p>
+      </section>
+
+      <section class="bloque filtros" aria-labelledby="t-filtros">
+        <h2 id="t-filtros" class="sr-only">Filtros de destinos</h2>
+        <fieldset>
+          <legend>Tipo de destino</legend>
+          <div class="opciones" id="filtro-tipos">
+            <label class="opcion"><input type="checkbox" name="tipo" value="subasta" checked> Subastas</label>
+            <label class="opcion"><input type="checkbox" name="tipo" value="feria" checked> Ferias</label>
+            <label class="opcion"><input type="checkbox" name="tipo" value="frigorifico" checked> Frigoríficos</label>
+            <label class="opcion"><input type="checkbox" name="tipo" value="planta_beneficio" checked> Plantas de beneficio</label>
+          </div>
+        </fieldset>
+        <div class="control-rango">
+          <label for="filtro-distancia">Distancia máxima</label>
+          <input type="range" id="filtro-distancia" min="50" max="800" step="10" value="800" aria-describedby="filtro-distancia-valor">
+          <output id="filtro-distancia-valor" for="filtro-distancia">Hasta 800 km</output>
+        </div>
+        <button type="button" class="boton boton--secundario boton--peq" id="btn-quitar-filtros">Quitar filtros</button>
+      </section>
+
+      <!-- Estado: vacío (ningún destino cumple los filtros) -->
+      <section id="estado-vacio" class="estado estado--vacio" aria-labelledby="t-vacio" hidden>
+        <h2 id="t-vacio">Ningún destino cumple los filtros</h2>
+        <p>Con los tipos de destino marcados y la distancia elegida no queda ningún lugar para comparar. Amplíe la distancia o marque más tipos de destino.</p>
+        <div class="acciones">
+          <button type="button" class="boton" id="btn-vacio-quitar">Mostrar todos los destinos</button>
+        </div>
+      </section>
+
+      <div id="visualizaciones">
+        <div class="rejilla">
+          <section class="bloque" aria-labelledby="t-mapa">
+            <h2 id="t-mapa">Rutas desde Yopal</h2>
+            <div id="mapa" class="mapa" role="region" aria-label="Mapa de rutas desde Yopal. La tabla de comparación, más abajo, contiene la misma información."></div>
+            <ul class="leyenda" aria-label="Leyenda del mapa">
+              <li><i class="l-origen"></i> Origen: Yopal</li>
+              <li><i class="l-mejor"></i> Mejor destino</li>
+              <li><i class="l-sel"></i> Destino seleccionado</li>
+              <li><i></i> Otros destinos</li>
+            </ul>
+            <p class="nota" id="mapa-nota">Seleccione un destino en el gráfico, en la tabla o en el mapa para resaltarlo en las tres vistas.</p>
+          </section>
+
+          <section class="bloque grafico" aria-labelledby="t-grafico">
+            <h2 id="t-grafico">Cuánto gana o pierde frente a vender cerca</h2>
+            <p class="nota" id="grafico-base"></p>
+            <div id="grafico"></div>
+            <p class="nota enlace-tabla"><a href="#tabla-comparacion">Ver estos mismos datos como tabla</a></p>
+          </section>
+        </div>
+
+        <section class="bloque" aria-labelledby="t-tabla">
+          <h2 id="t-tabla">Comparación de destinos</h2>
+          <p class="nota">Ordenada de mayor a menor utilidad neta. Utilidad = ingreso por el peso que llega − (flete + peajes).</p>
+          <div class="tabla-envoltura" tabindex="0" role="region" aria-labelledby="t-tabla" id="tabla-comparacion">
+            <table>
+              <caption id="tabla-caption">Utilidad estimada por destino</caption>
+              <thead>
+                <tr>
+                  <th scope="col">Destino</th>
+                  <th scope="col">Distancia</th>
+                  <th scope="col">Tiempo</th>
+                  <th scope="col">Merma</th>
+                  <th scope="col">Precio por kg</th>
+                  <th scope="col">Flete</th>
+                  <th scope="col">Peajes</th>
+                  <th scope="col">Utilidad neta</th>
+                  <th scope="col"><span class="sr-only">Acción</span></th>
+                </tr>
+              </thead>
+              <tbody id="tabla-cuerpo"></tbody>
+            </table>
+          </div>
+        </section>
+      </div>
+    </div>
+  </main>
+
+  <footer class="pie">
+    <div class="pie__dentro">
+      <div>
+        <p>Prototipo de la Entrega 2 · Tecnologías Web 2026-B · Unitrópico, Yopal.</p>
+        <p>Precios, peajes y merma son estimaciones del equipo para el prototipo, no cotizaciones reales.</p>
+      </div>
+      <nav aria-label="Estados de la interfaz">
+        <p>Ver estados de la interfaz:</p>
+        <ul>
+          <li><a href="index.html?demo=cargando">Cargando</a></li>
+          <li><a href="index.html?demo=vacio">Sin resultados</a></li>
+          <li><a href="index.html?demo=error">Error de conexión</a></li>
+        </ul>
+      </nav>
+    </div>
+  </footer>
+
+  <script src="vendor/leaflet/leaflet.js" defer></script>
+  <script src="js/app.js" defer></script>
+</body>
+</html>
