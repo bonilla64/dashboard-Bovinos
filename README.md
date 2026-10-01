@@ -274,7 +274,7 @@ Casanare tiene 2.431.203 bovinos y bufalinos (Fedegán, ciclo II de vacunación 
 
 - **Ruta de profundización:** H · Visualización de datos y web geoespacial
 - **Curso:** Tecnologías Web 2026-B, Ingeniería de Sistemas, Unitrópico (Yopal)
-- **Equipo N.º:** COMPLETAR · **Grupo:** COMPLETAR
+- **Equipo N.º:** 1 · **Grupo:** 2
 
 | Integrante | Rol | Usuario de GitHub |
 |---|---|---|
@@ -300,8 +300,7 @@ Los roles rotan al menos una vez en el semestre; el cambio se registra en esta t
 
 | Herramienta | Para qué | Alcance |
 |---|---|---|
-| Claude (Anthropic) | Borrador del contrato OpenAPI, del modelo de datos, del prototipo HTML/CSS/JS y de esta documentación, a partir del anteproyecto y de la versión de escritorio del equipo | El equipo revisó, corrigió y aprobó cada archivo mediante pull request. Los datos regionales y las decisiones de negocio los valida el equipo. COMPLETAR: qué cambió el equipo |
-| COMPLETAR | | |
+| Claude (Anthropic) | Borrador del contrato OpenAPI, del modelo de datos, del prototipo HTML/CSS/JS y de la documentación, a partir del anteproyecto y de la versión de escritorio del equipo (`core.py`). También como guía paso a paso para organizar el repositorio, publicar en GitHub Pages y tomar las evidencias | El equipo definió el problema, los usuarios, la ruta H, los roles y el modelo de cálculo base. Revisó el contenido generado, ajustó los roles al formato de conformación, reorganizó el repositorio, corrigió los enlaces, validó el contrato con Swagger Editor y Prism y auditó la accesibilidad con Lighthouse. Los precios, peajes y porcentajes de merma son estimaciones pendientes de validar con ganaderos |
 
 ### Licencia
 
