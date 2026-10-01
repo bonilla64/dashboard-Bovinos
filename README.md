@@ -278,9 +278,9 @@ Casanare tiene 2.431.203 bovinos y bufalinos (Fedegán, ciclo II de vacunación 
 
 | Integrante | Rol | Usuario de GitHub |
 |---|---|---|
-| David Fabián Pérez Bonilla | Líder técnico | @COMPLETAR |
-| Daniela Angélica Cruz González | DevOps y calidad | @COMPLETAR |
-| Juan Mario Angarita Cruz | Frontend y experiencia | @COMPLETAR |
+| David Fabián Pérez Bonilla | Líder técnico | @bonilla64 |
+| Daniela Angélica Cruz González | DevOps y calidad | @danielacruz-sudo |
+| Juan Mario Angarita Cruz | Frontend y experiencia | @dgg6h7zw76-glitch |
 | Juan David Piracón Guauque | Backend y datos | @COMPLETAR |
 
 Los roles rotan al menos una vez en el semestre; el cambio se registra en esta tabla.
