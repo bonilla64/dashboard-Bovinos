@@ -115,3 +115,28 @@ utilidad_neta_cop   = ingreso_bruto_cop − costo_logistico_cop
 | Peajes por ruta | Estimados del equipo | Transportador; luego Google Routes |
 | Precio por kg por destino | Estimaciones ilustrativas | Subasta de Yopal, compradores de frigorífico |
 | Qué destinos se usan de verdad | 10 destinos | Ganadero |
+
+
+---
+
+## D-13 · Ajustes al modelo tras la entrevista con un ganadero
+
+**Contexto.** El 29 de septiembre de 2026 entrevistamos a un ganadero de Yopal, Casanare, que vende directamente en finca. No pudo darnos todos los valores (flete por kilómetro, peajes exactos), pero sus respuestas contradicen varios supuestos del prototipo.
+
+**Lo que encontramos:**
+
+| Respuesta del ganadero | Supuesto del prototipo | Ajuste |
+|---|---|---|
+| Vende en finca, directo al comprador, para no pagar transporte | No existe la opción de venta en finca | Agregar el destino base «venta en finca»: sin flete, sin peajes, sin merma |
+| Los animales pierden 30 a 40 kg en viajes largos (Bogotá, Villavicencio) | Merma de 3 % a 4,5 % hacia esos destinos | Subir la merma a un 7 % – 9 % en viajes largos; calcularla en kg por animal, no solo en porcentaje |
+| Macho de levante a $12.000/kg en pie | Sin precios de novillo de levante; novillo gordo entre $10.250 y $11.600 | Agregar precios de levante y revisar los de las demás categorías con la subasta |
+| Caben 24 a 27 animales por camión | Un solo camión por lote | Calcular camiones = cantidad ÷ capacidad, redondeado hacia arriba, y multiplicar el flete |
+| Los peajes los paga el transportador | Peajes sumados aparte del flete | Permitir indicar si el flete ya incluye peajes, para no cobrarlos dos veces |
+| Para confiar, el cálculo debe incluir la comisión de la subasta | Sin comisión | Agregar `comision_pct` a los destinos de tipo subasta |
+| Lo usaría en el celular | Diseño pensado primero para celular | Se mantiene |
+
+**Impacto.** Con la merma que reportó (35 kg por animal, 7,7 % sobre 452 kg), el ejemplo del tablero cambia de resultado: Frigorífico Guadalupe pasa de $143,1 millones a $138,2 millones y vender en Yopal ($140,3 millones) queda como mejor opción. Esto coincide con su práctica de vender cerca.
+
+**Decisión.** Los valores del prototipo de la Entrega 2 no se modifican, para mantener la coherencia entre el contrato, el modelo y las evidencias ya entregadas. Los ajustes se implementan en la Entrega 3, junto con la API, y quedan como tareas en el tablero.
+
+**Pendiente:** conseguir el valor del flete por viaje o por kilómetro con un transportador, y la comisión de la Subasta de Yopal.
