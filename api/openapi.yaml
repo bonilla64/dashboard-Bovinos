@@ -38,6 +38,8 @@ info:
     name: MIT
     identifier: MIT
 servers:
+  - url: /api/v1
+    description: Este mismo servidor (el que muestra esta documentación, local o publicado)
   - url: http://localhost:3000/api/v1
     description: Servidor local (docker compose up)
 security: []
