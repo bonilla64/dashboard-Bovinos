@@ -29,9 +29,9 @@ export async function calcularYGuardar(bd, lote, entrada, creadoEn = null, vigen
     // Precio vigente: el más reciente que no sea posterior al día de la simulación.
     const { rows: [precio] } = await bd.query(
       `SELECT precio_kg_cop, to_char(fecha, 'YYYY-MM-DD') AS fecha,
-              (COALESCE($3::timestamptz, now())::date - fecha) AS antiguedad
+              ((COALESCE($3::timestamptz, now()) AT TIME ZONE 'America/Bogota')::date - fecha) AS antiguedad
        FROM precio_mercado
-       WHERE destino_id = $1 AND categoria = $2 AND fecha <= COALESCE($3::timestamptz, now())::date
+       WHERE destino_id = $1 AND categoria = $2 AND fecha <= (COALESCE($3::timestamptz, now()) AT TIME ZONE 'America/Bogota')::date
        ORDER BY fecha DESC LIMIT 1`, [destinoId, lote.categoria, creadoEn]);
     if (!precio) { problemas.push({ campo, problema: `${destino.nombre} no tiene precio vigente para ${lote.categoria}.` }); continue; }
     if (precio.antiguedad > vigencia.maximo) {

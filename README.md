@@ -477,7 +477,7 @@ npm run dev                           # http://localhost:3000, se reinicia al gu
 
 ### Pruebas automáticas
 
-80 pruebas de la API: cálculo, rutas desde otros municipios, vigencia e importación de precios, autenticación, autorización, validación, filtro espacial, CRUD de todos los recursos, coherencia contrato ↔ base de datos y validación de **cada respuesta contra el contrato**. Usan una base aparte, que se borra en cada ejecución: si `DATABASE_URL_PRUEBAS` falta o es igual a `DATABASE_URL`, las pruebas se niegan a correr para no borrar los precios reales.
+81 pruebas de la API: cálculo, rutas desde otros municipios, vigencia e importación de precios, autenticación, autorización, validación, filtro espacial, CRUD de todos los recursos, coherencia contrato ↔ base de datos y validación de **cada respuesta contra el contrato**. Usan una base aparte, que se borra en cada ejecución: si `DATABASE_URL_PRUEBAS` falta o es igual a `DATABASE_URL`, las pruebas se niegan a correr para no borrar los precios reales.
 
 ```bash
 cd api
@@ -555,7 +555,7 @@ Los roles rotan al menos una vez en el semestre; el cambio se registra en esta t
 |---|---|---|---|
 | 1 · Anteproyecto | 17 sep 2026 | Entregada | Problema, ruta H, wireframes en texto, plan de trabajo |
 | 2 · Prototipo y contrato | 1 oct 2026 | Entregada (`v0.2.0`) | Prototipo navegable de 3 pantallas con estados, contrato OpenAPI 3.1 con 6 recursos, modelo de datos |
-| 3 · MVP del backend | 15 oct 2026 | **En curso** (`v0.3.0`) | API REST con CRUD de 6 recursos, autenticación JWT + bcrypt, autorización por rol y por dueño, validación desde el contrato, errores centralizados, PostgreSQL + PostGIS, Swagger en `/docs`, Docker Compose y Codespaces, precios de Fedegán con vigencia y carga por CSV desde el tablero, tablero conectado a la API (ingreso, registro, cálculo en el servidor, historial y precios), rutas desde el municipio del lote, precios en kg y arroba, publicación en internet (Render + Neon + Pages), 80 pruebas en CI, ajustes de la entrevista |
+| 3 · MVP del backend | 15 oct 2026 | **En curso** (`v0.3.0`) | API REST con CRUD de 6 recursos, autenticación JWT + bcrypt, autorización por rol y por dueño, validación desde el contrato, errores centralizados, PostgreSQL + PostGIS, Swagger en `/docs`, Docker Compose y Codespaces, precios de Fedegán con vigencia y carga por CSV desde el tablero, tablero conectado a la API (ingreso, registro, cálculo en el servidor, historial y precios), rutas desde el municipio del lote, precios en kg y arroba, publicación en internet (Render + Neon + Pages), 81 pruebas en CI, ajustes de la entrevista |
 | 4 · Mapa desplegado con HTTPS | 12 nov 2026 | Pendiente | |
 | 5 · Visualizaciones y accesibilidad | 26 nov 2026 | Pendiente | |
 | EXIS | 4 dic 2026 | Pendiente | |

@@ -1,4 +1,5 @@
 // Columnas que devuelve cada recurso, ya con la forma del contrato (GeoJSON incluido).
+import { HOY_COLOMBIA } from './bd.js';
 
 export const COL_PRODUCTOR = 'id, nombre_completo, municipio, telefono, correo, creado_en, actualizado_en';
 export const COL_USUARIO = 'id, nombre_completo, correo, rol, productor_id, creado_en, actualizado_en';
@@ -7,7 +8,7 @@ export const COL_LOTE = `id, productor_id, nombre, cantidad_animales, peso_prome
 export const COL_DESTINO = `id, nombre, tipo, municipio, departamento, ST_AsGeoJSON(ubicacion, 6)::json AS ubicacion,
   comision_pct, activo, creado_en, actualizado_en`;
 export const COL_PRECIO = `id, destino_id, categoria, precio_kg_cop, to_char(fecha, 'YYYY-MM-DD') AS fecha, fuente,
-  referencia, importacion_id, (current_date - fecha) AS antiguedad_dias, creado_en, actualizado_en`;
+  referencia, importacion_id, (${HOY_COLOMBIA} - fecha) AS antiguedad_dias, creado_en, actualizado_en`;
 export const COL_IMPORTACION = 'id, fuente, origen, filas, insertados, actualizados, sin_cambios, usuario_id, creado_en, actualizado_en';
 export const COL_RUTA = `id, destino_id, origen_nombre, ST_AsGeoJSON(origen, 6)::json AS origen, distancia_km,
   tiempo_horas, peajes_cop, factor_dificultad, merma_pct, ST_AsGeoJSON(geometria, 6)::json AS geometria, fuente,

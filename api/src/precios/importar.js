@@ -12,7 +12,7 @@
 // Las filas con la columna destino vacía se ignoran (sirven de comentario).
 
 import { parse } from 'csv-parse/sync';
-import { enTransaccion } from '../bd.js';
+import { enTransaccion, HOY_COLOMBIA } from '../bd.js';
 import { COL_IMPORTACION } from '../consultas.js';
 import { validacion } from '../errores.js';
 
@@ -122,9 +122,9 @@ export async function importarPrecios(pool, filas, { origen = 'manual', usuarioI
 /** Destinos activos cuyo último precio de una categoría que sí compran tiene más de `dias` días. */
 export async function preciosVencidos(pool, dias) {
   const { rows } = await pool.query(
-    `SELECT d.nombre, p.categoria, to_char(max(p.fecha), 'YYYY-MM-DD') AS ultima_fecha, current_date - max(p.fecha) AS dias
+    `SELECT d.nombre, p.categoria, to_char(max(p.fecha), 'YYYY-MM-DD') AS ultima_fecha, ${HOY_COLOMBIA} - max(p.fecha) AS dias
      FROM destino d JOIN precio_mercado p ON p.destino_id = d.id
-     WHERE d.activo GROUP BY d.nombre, p.categoria HAVING current_date - max(p.fecha) > $1
+     WHERE d.activo GROUP BY d.nombre, p.categoria HAVING ${HOY_COLOMBIA} - max(p.fecha) > $1
      ORDER BY dias DESC, d.nombre`, [dias]);
   return rows;
 }

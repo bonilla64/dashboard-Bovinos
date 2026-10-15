@@ -6,6 +6,10 @@ import pg from 'pg';
 pg.types.setTypeParser(1700, (v) => (v === null ? null : Number(v))); // numeric
 pg.types.setTypeParser(20, (v) => (v === null ? null : Number(v)));   // bigint (count)
 
+// «Hoy» siempre en hora de Colombia. Los servidores (GitHub, Render, Neon) trabajan en UTC: con
+// current_date, entre las 7 p. m. y la medianoche un precio aparecería un día más viejo.
+export const HOY_COLOMBIA = "(now() AT TIME ZONE 'America/Bogota')::date";
+
 export function crearPool(url) {
   return new pg.Pool({ connectionString: url, max: 10, idleTimeoutMillis: 30000 });
 }
