@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="es-CO">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Ingresar · Simulador de Destinos Ganaderos</title>
+  <meta name="description" content="Inicie sesión o cree su cuenta para comparar destinos de venta de su ganado.">
+  <meta name="theme-color" content="#143e2e">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='6' fill='%23143e2e'/%3E%3Cpath d='M9 22 L16 10 L24 14' stroke='%23e3b23c' stroke-width='3' fill='none' stroke-linecap='round'/%3E%3Ccircle cx='9' cy='22' r='3.5' fill='%23fff'/%3E%3C/svg%3E">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:wght@400;700&display=swap">
+  <link rel="stylesheet" href="css/estilos.css">
+</head>
+<body data-pagina="ingreso">
+  <a class="saltar" href="#contenido">Saltar al contenido</a>
+
+  <header class="cabecera">
+    <div class="cabecera__dentro">
+      <a class="marca" href="index.html">
+        <svg width="36" height="36" viewBox="0 0 32 32" aria-hidden="true" focusable="false"><rect width="32" height="32" rx="6" fill="#1f5c45"/><path d="M9 22 L16 10 L24 14" stroke="#e3b23c" stroke-width="3" fill="none" stroke-linecap="round"/><circle cx="9" cy="22" r="3.5" fill="#fff"/></svg>
+        <span>Destinos ganaderos<small>Ganado de Casanare</small></span>
+      </a>
+      <nav class="nav" aria-label="Principal">
+        <ul>
+          <li><a href="index.html">Tablero</a></li>
+          <li><a href="detalle.html">Registrar lote</a></li>
+          <li><a href="historial.html">Historial</a></li>
+          <li><a href="precios.html">Precios</a></li>
+        </ul>
+      </nav>
+      <div class="sesion" id="sesion" aria-live="polite"></div>
+    </div>
+  </header>
+
+  <main id="contenido" tabindex="-1">
+    <h1>Ingresar</h1>
+    <p>Inicie sesión para comparar sus lotes. Cada productor ve solo sus propios lotes y simulaciones.</p>
+
+    <div id="aviso-ingreso" class="aviso" role="status" hidden></div>
+
+    <div class="rejilla-ingreso">
+      <section class="bloque" aria-labelledby="t-ingreso">
+        <h2 id="t-ingreso">Iniciar sesión</h2>
+        <div id="errores-ingreso" class="resumen-errores" role="alert" tabindex="-1" hidden></div>
+        <form id="form-ingreso" class="formulario" novalidate>
+          <div class="campo">
+            <label for="ingreso-correo">Correo</label>
+            <input type="email" id="ingreso-correo" name="correo" required autocomplete="username" maxlength="120">
+          </div>
+          <div class="campo">
+            <label for="ingreso-contrasena">Contraseña</label>
+            <input type="password" id="ingreso-contrasena" name="contrasena" required autocomplete="current-password" maxlength="72">
+          </div>
+          <div class="acciones"><button type="submit" class="boton">Ingresar</button></div>
+        </form>
+      </section>
+
+      <section class="bloque" aria-labelledby="t-registro">
+        <h2 id="t-registro">Crear una cuenta de productor</h2>
+        <div id="errores-registro" class="resumen-errores" role="alert" tabindex="-1" hidden></div>
+        <form id="form-registro" class="formulario" novalidate>
+          <div class="campo">
+            <label for="registro-nombre">Nombre completo</label>
+            <input type="text" id="registro-nombre" name="nombre_completo" required minlength="3" maxlength="120" autocomplete="name" aria-describedby="registro-nombre-error">
+            <p class="error-campo" id="registro-nombre-error"></p>
+          </div>
+          <div class="campo">
+            <label for="registro-correo">Correo</label>
+            <input type="email" id="registro-correo" name="correo" required maxlength="120" autocomplete="email" aria-describedby="registro-correo-error">
+            <p class="error-campo" id="registro-correo-error"></p>
+          </div>
+          <div class="campo">
+            <label for="registro-contrasena">Contraseña</label>
+            <p class="ayuda" id="registro-contrasena-ayuda">Mínimo 10 caracteres. Se guarda cifrada.</p>
+            <input type="password" id="registro-contrasena" name="contrasena" required minlength="10" maxlength="72" autocomplete="new-password" aria-describedby="registro-contrasena-ayuda registro-contrasena-error">
+            <p class="error-campo" id="registro-contrasena-error"></p>
+          </div>
+          <div class="campo">
+            <label for="registro-municipio">Municipio</label>
+            <input type="text" id="registro-municipio" name="municipio" required minlength="2" maxlength="60" list="municipios" aria-describedby="registro-municipio-error">
+            <datalist id="municipios"><option>Yopal</option><option>Aguazul</option><option>Tauramena</option><option>Maní</option><option>Monterrey</option><option>Villanueva</option><option>Nunchía</option><option>Pore</option><option>Paz de Ariporo</option><option>Hato Corozal</option><option>Trinidad</option><option>San Luis de Palenque</option><option>Orocué</option></datalist>
+            <p class="error-campo" id="registro-municipio-error"></p>
+          </div>
+          <div class="campo">
+            <label for="registro-telefono">Celular <span class="opcional">(opcional)</span></label>
+            <input type="tel" id="registro-telefono" name="telefono" inputmode="numeric" pattern="3[0-9]{9}" maxlength="10" autocomplete="tel" aria-describedby="registro-telefono-error">
+            <p class="error-campo" id="registro-telefono-error"></p>
+          </div>
+          <div class="acciones"><button type="submit" class="boton">Crear cuenta</button></div>
+        </form>
+      </section>
+    </div>
+
+    <details class="bloque conexion">
+      <summary>Conexión con el servidor</summary>
+      <p>Esta página se comunica con la API en <code id="api-actual"></code>. Si la API corre en otra dirección, escríbala aquí.</p>
+      <form id="form-api" class="formulario">
+        <div class="campo">
+          <label for="api-base">Dirección de la API</label>
+          <input type="url" id="api-base" placeholder="http://localhost:3000/api/v1">
+        </div>
+        <div class="acciones"><button type="submit" class="boton boton--secundario">Guardar dirección</button></div>
+      </form>
+    </details>
+  </main>
+
+  <footer class="pie">
+    <div class="pie__dentro">
+      <div>
+        <p>Simulador de Destinos Ganaderos · Tecnologías Web 2026-B · Unitrópico, Yopal.</p>
+        <p>Los resultados se calculan en el servidor con los precios cargados desde Fedegán. Cada precio muestra su fecha y su fuente.</p>
+      </div>
+      <nav aria-label="Estados de la interfaz">
+        <p>Ver estados de la interfaz:</p>
+        <ul>
+          <li><a href="index.html?demo=cargando">Cargando</a></li>
+          <li><a href="index.html?demo=vacio">Sin resultados</a></li>
+          <li><a href="index.html?demo=error">Error de conexión</a></li>
+        </ul>
+      </nav>
+    </div>
+  </footer>
+
+  <script src="js/config.js" defer></script>
+  <script src="js/api.js" defer></script>
+  <script src="js/app.js" defer></script>
+</body>
+</html>

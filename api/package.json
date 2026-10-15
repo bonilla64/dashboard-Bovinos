@@ -1,0 +1,41 @@
+{
+  "name": "simulador-ganadero-api",
+  "version": "0.3.0",
+  "description": "API REST del Simulador de Destinos Ganaderos desde Yopal",
+  "private": true,
+  "type": "module",
+  "engines": {
+    "node": ">=20"
+  },
+  "main": "src/servidor.js",
+  "scripts": {
+    "start": "node src/servidor.js",
+    "dev": "node --watch src/servidor.js",
+    "migrar": "node scripts/migrar.js",
+    "sembrar": "node scripts/sembrar.js",
+    "preparar": "node scripts/migrar.js && node scripts/sembrar.js",
+    "test": "node --test --test-concurrency=1 \"test/**/*.test.js\"",
+    "contrato:validar": "redocly lint openapi.yaml",
+    "exportar:prototipo": "node scripts/exportar-prototipo.js",
+    "precios:sincronizar": "node scripts/sincronizar-precios.js"
+  },
+  "license": "MIT",
+  "dependencies": {
+    "@fastify/cors": "^11.3.1",
+    "@fastify/helmet": "^13.1.2",
+    "@fastify/jwt": "^10.2.4",
+    "@fastify/rate-limit": "^11.2.1",
+    "@fastify/swagger": "^9.9.2",
+    "@fastify/swagger-ui": "^6.1.2",
+    "bcryptjs": "^3.0.3",
+    "csv-parse": "^7.0.3",
+    "fastify": "^5.12.5",
+    "pg": "^8.23.1",
+    "yaml": "^2.9.1"
+  },
+  "devDependencies": {
+    "@redocly/cli": "^1.34.20",
+    "ajv": "^8.20.0",
+    "ajv-formats": "^3.0.1"
+  }
+}

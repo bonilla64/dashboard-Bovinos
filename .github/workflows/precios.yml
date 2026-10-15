@@ -1,0 +1,35 @@
+# Actualiza los precios cada 3 días desde la hoja de Fedegán publicada como CSV.
+# Requisitos (Settings → Secrets and variables → Actions):
+#   DATABASE_URL     conexión a la base de datos publicada (Entrega 4)
+#   PRECIOS_CSV_URL  enlace CSV de la hoja de Google (Archivo → Compartir → Publicar en la web → CSV)
+# Si faltan, la tarea termina sin hacer nada. Si algún precio tiene más de 7 días, la tarea falla
+# y GitHub envía un correo: es la señal para actualizar la hoja con el último reporte de Fedegán.
+name: Precios · sincronizar desde Fedegán
+
+on:
+  schedule:
+    - cron: "17 11 */3 * *"   # 6:17 a. m. de Colombia, cada 3 días
+  workflow_dispatch:
+
+jobs:
+  sincronizar:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: api
+    env:
+      DATABASE_URL: ${{ secrets.DATABASE_URL }}
+      PRECIOS_CSV_URL: ${{ secrets.PRECIOS_CSV_URL }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+          cache-dependency-path: api/package-lock.json
+      - run: npm ci --omit=dev
+      - name: Aplicar migraciones pendientes
+        if: env.DATABASE_URL != ''
+        run: npm run migrar
+      - name: Importar la hoja y revisar vigencia
+        run: npm run precios:sincronizar -- --revisar

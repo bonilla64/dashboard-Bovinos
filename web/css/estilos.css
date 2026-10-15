@@ -337,6 +337,7 @@ thead th { background: var(--fondo); font-size: var(--t-0); vertical-align: bott
 tbody tr:hover { background: #f6f8f5; }
 tbody tr.es-mejor { background: var(--sabana-claro); }
 tbody tr.es-seleccionado { box-shadow: inset 5px 0 0 var(--morichal); background: var(--morichal-claro); }
+td small.dato-fecha { display: block; font-size: 0.8rem; color: var(--tinta-suave); }
 td.negativo { color: var(--perdida); font-weight: 700; }
 .fila-destino { font-weight: 700; }
 .fila-destino small { display: block; font-weight: 400; color: var(--tinta-suave); }
@@ -529,3 +530,27 @@ td.negativo { color: var(--perdida); font-weight: 700; }
 .enlace-tabla { margin-top: var(--e-4); }
 .enlace-tabla a { display: inline-block; padding: var(--e-2) 0; min-height: 24px; }
 .simulaciones > li, .simulacion { min-width: 0; }
+
+/* ---------- Sesión, ingreso y precios (Entrega 3) ---------- */
+.sesion { display: flex; align-items: center; gap: var(--e-3); color: #fff; font-size: var(--t-0); }
+.sesion:empty { display: none; }
+.sesion .boton { min-height: 36px; padding: var(--e-1) var(--e-3); background: transparent; border-color: #fff; color: #fff; }
+.sesion .boton:hover { background: rgba(255, 255, 255, 0.15); }
+.rejilla-ingreso { display: grid; gap: var(--e-5); grid-template-columns: repeat(2, minmax(0, 1fr)); align-items: start; }
+.rejilla-ingreso .bloque { margin-bottom: 0; }
+.rejilla-ingreso .formulario { display: grid; gap: var(--e-4); max-width: none; }
+.conexion summary { cursor: pointer; font-weight: 700; }
+.conexion { margin-top: var(--e-5); }
+.pasos { padding-left: var(--e-5); display: grid; gap: var(--e-2); max-width: 70ch; }
+.insignia { display: inline-block; padding: 0 var(--e-2); border-radius: 999px; font-size: 0.8rem; font-weight: 700; border: 1px solid currentColor; }
+.insignia--ok { color: var(--morichal); }
+.insignia--aviso { color: #7a5200; background: var(--sabana-claro); }
+.insignia--vencido { color: var(--perdida); background: var(--perdida-claro); }
+td small.advertencia { display: block; color: #7a5200; font-weight: 700; font-size: 0.8rem; white-space: normal; max-width: 14rem; }
+td.izq, th.izq { text-align: left; white-space: normal; }
+@media (max-width: 760px) { .rejilla-ingreso { grid-template-columns: minmax(0, 1fr); } }
+td.izq small { display: block; font-size: 0.8rem; color: var(--tinta-suave); }
+.resumen-errores h3 { color: var(--perdida); font-size: var(--t-1); margin-top: 0; }
+.aviso .boton--peq { margin-left: var(--e-2); }
+.insignia { white-space: nowrap; margin: 2px 0; }
+.aviso--flotante { position: fixed; left: 50%; bottom: var(--e-4); transform: translateX(-50%); z-index: 1000; max-width: min(90vw, 36rem); box-shadow: 0 4px 16px rgba(0, 0, 0, 0.2); margin: 0; }

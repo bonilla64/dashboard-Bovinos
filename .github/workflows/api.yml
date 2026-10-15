@@ -1,0 +1,70 @@
+# Integración continua de la API: pruebas contra PostGIS real y prueba de humo del docker compose.
+name: API · pruebas e imagen
+
+on:
+  pull_request:
+    paths: ["api/**", "docker-compose.yml", ".github/workflows/api.yml"]
+  push:
+    branches: [main]
+    paths: ["api/**", "docker-compose.yml", ".github/workflows/api.yml"]
+
+jobs:
+  pruebas:
+    runs-on: ubuntu-latest
+    services:
+      postgres:
+        image: postgis/postgis:16-3.4
+        env:
+          POSTGRES_USER: ganadero
+          POSTGRES_PASSWORD: clave_solo_ci
+          POSTGRES_DB: simulador_ganadero_pruebas
+        ports: ["5432:5432"]
+        options: >-
+          --health-cmd "pg_isready -U ganadero" --health-interval 5s --health-timeout 3s --health-retries 20
+    defaults:
+      run:
+        working-directory: api
+    env:
+      DATABASE_URL_PRUEBAS: postgresql://ganadero:clave_solo_ci@localhost:5432/simulador_ganadero_pruebas
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+          cache-dependency-path: api/package-lock.json
+      - run: npm ci
+      - name: Validar contrato OpenAPI
+        run: npm run contrato:validar
+      - name: Pruebas unitarias, de integración y de contrato
+        run: npm test
+
+  imagen:
+    needs: pruebas
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Crear .env de CI (valores desechables, no son secretos reales)
+        run: |
+          cp .env.example .env
+          sed -i "s/^POSTGRES_PASSWORD=.*/POSTGRES_PASSWORD=clave_solo_ci/" .env
+          sed -i "s/^JWT_SECRET=.*/JWT_SECRET=$(openssl rand -hex 32)/" .env
+          sed -i "s/^CONTRASENA_DEMO=.*/CONTRASENA_DEMO=demo-solo-ci-2026/" .env
+      - name: Construir y levantar
+        run: docker compose up --build -d
+      - name: Esperar a que la API responda
+        run: |
+          for i in $(seq 1 40); do curl -sf http://localhost:3000/api/v1/salud && exit 0; sleep 3; done
+          docker compose logs api; exit 1
+      - name: Prueba de humo
+        run: |
+          set -e
+          curl -sf http://localhost:3000/docs/json > /dev/null
+          TOKEN=$(curl -sf -X POST http://localhost:3000/api/v1/auth/ingreso -H 'Content-Type: application/json' \
+            -d '{"correo":"hernando.rincon@correo.co","contrasena":"demo-solo-ci-2026"}' | jq -r .token)
+          curl -sf http://localhost:3000/api/v1/lotes -H "Authorization: Bearer $TOKEN" | jq -e '.total > 0'
+          curl -sf http://localhost:8080/ > /dev/null
+      - name: Tamaño de la imagen
+        run: docker image ls --format '{{.Repository}}:{{.Tag}} {{.Size}}' | grep api
+      - if: always()
+        run: docker compose down -v

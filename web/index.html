@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Tablero de destinos · Simulador de Destinos Ganaderos</title>
-  <meta name="description" content="Compare en un mapa a qué subasta, feria o frigorífico le conviene llevar su lote de ganado desde Yopal.">
+  <meta name="description" content="Compare en un mapa a qué subasta, feria o frigorífico le conviene llevar su lote de ganado desde su municipio en Casanare.">
   <meta name="theme-color" content="#143e2e">
   <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='6' fill='%23143e2e'/%3E%3Cpath d='M9 22 L16 10 L24 14' stroke='%23e3b23c' stroke-width='3' fill='none' stroke-linecap='round'/%3E%3Ccircle cx='9' cy='22' r='3.5' fill='%23fff'/%3E%3C/svg%3E">
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -20,15 +20,17 @@
     <div class="cabecera__dentro">
       <a class="marca" href="index.html">
         <svg width="36" height="36" viewBox="0 0 32 32" aria-hidden="true" focusable="false"><rect width="32" height="32" rx="6" fill="#1f5c45"/><path d="M9 22 L16 10 L24 14" stroke="#e3b23c" stroke-width="3" fill="none" stroke-linecap="round"/><circle cx="9" cy="22" r="3.5" fill="#fff"/></svg>
-        <span>Destinos ganaderos<small>Salida desde Yopal, Casanare</small></span>
+        <span>Destinos ganaderos<small>Ganado de Casanare</small></span>
       </a>
       <nav class="nav" aria-label="Principal">
         <ul>
           <li><a href="index.html" aria-current="page">Tablero</a></li>
           <li><a href="detalle.html">Registrar lote</a></li>
           <li><a href="historial.html">Historial</a></li>
+          <li><a href="precios.html">Precios</a></li>
         </ul>
       </nav>
+      <div class="sesion" id="sesion" aria-live="polite"></div>
     </div>
   </header>
 
@@ -36,8 +38,8 @@
 
     <!-- Estado: cargando -->
     <section id="estado-cargando" class="estado" aria-busy="true" aria-labelledby="t-cargando">
-      <h1 id="t-cargando"><span class="girador" aria-hidden="true"></span>Cargando precios y rutas</h1>
-      <p>Estamos reuniendo el precio por kilo y la ruta de cada destino.</p>
+      <h1 id="t-cargando"><span class="girador" aria-hidden="true"></span>Cargando su última simulación</h1>
+      <p>Estamos trayendo del servidor el resultado, los destinos y las rutas.</p>
       <div class="cargando__barra" aria-hidden="true"></div>
       <div class="cargando__barra cargando__barra--corta" aria-hidden="true"></div>
       <div class="cargando__barra cargando__caja" aria-hidden="true"></div>
@@ -46,12 +48,19 @@
     <!-- Estado: error -->
     <section id="estado-error" class="estado estado--error" role="alert" aria-labelledby="t-error" hidden>
       <h1 id="t-error">No se pudieron cargar los destinos</h1>
-      <p id="error-detalle">El servidor de precios no respondió. Sus datos del lote no se perdieron.</p>
+      <p id="error-detalle">El servidor no respondió. Sus datos no se perdieron.</p>
       <p>Revise la conexión a internet y vuelva a intentar. Si el problema sigue, puede registrar el lote y comparar más tarde.</p>
       <div class="acciones">
         <button type="button" class="boton" id="btn-reintentar">Volver a intentar</button>
         <a class="boton boton--secundario" href="detalle.html">Registrar lote</a>
       </div>
+    </section>
+
+    <!-- Estado: el productor todavía no tiene simulaciones -->
+    <section id="estado-sin-simulaciones" class="estado estado--vacio" aria-labelledby="t-sin-sim" hidden>
+      <h1 id="t-sin-sim">Todavía no ha comparado ningún lote</h1>
+      <p>Registre un lote con su cantidad de animales, el peso y el valor del flete. La aplicación calcula cuánto le queda en cada destino y guarda el resultado.</p>
+      <div class="acciones"><a class="boton" href="detalle.html">Registrar un lote</a></div>
     </section>
 
     <!-- Contenido con datos -->
@@ -62,6 +71,7 @@
         <div class="respuesta__lote">
           <p id="lote-resumen">Lote activo</p>
           <a href="detalle.html" id="enlace-editar-lote">Cambiar lote o flete</a>
+          <a href="detalle.html">Comparar otro lote</a>
         </div>
         <h1 id="t-respuesta">¿A dónde llevo el lote?</h1>
         <p class="respuesta__cifra" id="respuesta-cifra"></p>
@@ -72,6 +82,7 @@
         <fieldset>
           <legend>Tipo de destino</legend>
           <div class="opciones" id="filtro-tipos">
+            <label class="opcion"><input type="checkbox" name="tipo" value="finca" checked> Venta en finca</label>
             <label class="opcion"><input type="checkbox" name="tipo" value="subasta" checked> Subastas</label>
             <label class="opcion"><input type="checkbox" name="tipo" value="feria" checked> Ferias</label>
             <label class="opcion"><input type="checkbox" name="tipo" value="frigorifico" checked> Frigoríficos</label>
@@ -98,10 +109,10 @@
       <div id="visualizaciones">
         <div class="rejilla">
           <section class="bloque" aria-labelledby="t-mapa">
-            <h2 id="t-mapa">Rutas desde Yopal</h2>
-            <div id="mapa" class="mapa" role="region" aria-label="Mapa de rutas desde Yopal. La tabla de comparación, más abajo, contiene la misma información."></div>
+            <h2 id="t-mapa">Rutas desde el origen del lote</h2>
+            <div id="mapa" class="mapa" role="region" aria-label="Mapa de rutas desde el origen del lote. La tabla de comparación, más abajo, contiene la misma información."></div>
             <ul class="leyenda" aria-label="Leyenda del mapa">
-              <li><i class="l-origen"></i> Origen: Yopal</li>
+              <li><i class="l-origen"></i> <span id="leyenda-origen">Origen del lote</span></li>
               <li><i class="l-mejor"></i> Mejor destino</li>
               <li><i class="l-sel"></i> Destino seleccionado</li>
               <li><i></i> Otros destinos</li>
@@ -119,7 +130,7 @@
 
         <section class="bloque" aria-labelledby="t-tabla">
           <h2 id="t-tabla">Comparación de destinos</h2>
-          <p class="nota">Ordenada de mayor a menor utilidad neta. Utilidad = ingreso por el peso que llega − (flete + peajes).</p>
+          <p class="nota">Ordenada de mayor a menor utilidad neta, calculada por el servidor. Utilidad = ingreso por el peso que llega − (flete + peajes + comisión). Debajo de cada precio está la fecha del dato y, si tiene más de 7 días, una advertencia.</p>
           <div class="tabla-envoltura" tabindex="0" role="region" aria-labelledby="t-tabla" id="tabla-comparacion">
             <table>
               <caption id="tabla-caption">Utilidad estimada por destino</caption>
@@ -132,6 +143,7 @@
                   <th scope="col">Precio por kg</th>
                   <th scope="col">Flete</th>
                   <th scope="col">Peajes</th>
+                  <th scope="col">Comisión</th>
                   <th scope="col">Utilidad neta</th>
                   <th scope="col"><span class="sr-only">Acción</span></th>
                 </tr>
@@ -147,8 +159,8 @@
   <footer class="pie">
     <div class="pie__dentro">
       <div>
-        <p>Prototipo de la Entrega 2 · Tecnologías Web 2026-B · Unitrópico, Yopal.</p>
-        <p>Precios, peajes y merma son estimaciones del equipo para el prototipo, no cotizaciones reales.</p>
+        <p>Simulador de Destinos Ganaderos · Tecnologías Web 2026-B · Unitrópico, Yopal.</p>
+        <p>Los resultados se calculan en el servidor con los precios cargados desde Fedegán. Cada precio muestra su fecha y su fuente.</p>
       </div>
       <nav aria-label="Estados de la interfaz">
         <p>Ver estados de la interfaz:</p>
@@ -162,6 +174,8 @@
   </footer>
 
   <script src="vendor/leaflet/leaflet.js" defer></script>
+  <script src="js/config.js" defer></script>
+  <script src="js/api.js" defer></script>
   <script src="js/app.js" defer></script>
 </body>
 </html>

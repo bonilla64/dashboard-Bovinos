@@ -1,17 +1,18 @@
 {
-  "descripcion": "Datos de ejemplo del Simulador de Destinos Ganaderos (Entrega 2). Distancias, peajes y precios son estimaciones del equipo para el prototipo; en la Entrega 3 se reemplazan por OSRM y fuentes de precio verificadas.",
-  "actualizado_en": "2026-09-28T07:00:00-05:00",
+  "descripcion": "Exportado desde la base de datos de la API (npm run exportar:prototipo). Precios estimados; ver docs/decisiones.md.",
+  "actualizado_en": "2026-10-12T20:24:54.913Z",
   "origen": {
-    "nombre": "Yopal (centro de acopio)",
+    "nombre": "Paz de Ariporo",
     "ubicacion": {
       "type": "Point",
       "coordinates": [
-        -72.3959,
-        5.3371
+        -71.8919,
+        5.8811
       ]
     }
   },
   "flete_km_cop_por_defecto": 6500,
+  "capacidad_camion_por_defecto": 25,
   "productores": [
     {
       "id": "cd3b83ce-114a-5624-bde0-0c482a535db2",
@@ -19,17 +20,26 @@
       "municipio": "Yopal",
       "telefono": "3124587710",
       "correo": "hernando.rincon@correo.co",
-      "creado_en": "2026-09-10T09:00:00-05:00",
-      "actualizado_en": "2026-09-10T09:00:00-05:00"
+      "creado_en": "2026-10-12T20:24:54.352Z",
+      "actualizado_en": "2026-10-12T20:24:54.352Z"
     },
     {
       "id": "f20f9d5f-85ca-5681-bbf2-6da289276b37",
       "nombre_completo": "Luz Marina Cárdenas Pérez",
       "municipio": "Aguazul",
       "telefono": "3208841325",
-      "correo": null,
-      "creado_en": "2026-09-10T09:00:00-05:00",
-      "actualizado_en": "2026-09-10T09:00:00-05:00"
+      "correo": "luz.cardenas@correo.co",
+      "creado_en": "2026-10-12T20:24:54.352Z",
+      "actualizado_en": "2026-10-12T20:24:54.352Z"
+    },
+    {
+      "id": "76f9cfc9-a7d6-5604-afca-f992aff831e2",
+      "nombre_completo": "Rosalba Guío Vargas",
+      "municipio": "Tauramena",
+      "telefono": "3114409862",
+      "correo": "rosalba.guio@correo.co",
+      "creado_en": "2026-10-12T20:24:54.352Z",
+      "actualizado_en": "2026-10-12T20:24:54.352Z"
     },
     {
       "id": "0047a00d-c5eb-501f-94a7-b9076480c1e9",
@@ -37,17 +47,8 @@
       "municipio": "Paz de Ariporo",
       "telefono": "3157702498",
       "correo": "edgar.silva.tumay@correo.co",
-      "creado_en": "2026-09-10T09:00:00-05:00",
-      "actualizado_en": "2026-09-10T09:00:00-05:00"
-    },
-    {
-      "id": "76f9cfc9-a7d6-5604-afca-f992aff831e2",
-      "nombre_completo": "Rosalba Guío Vargas",
-      "municipio": "Tauramena",
-      "telefono": "3114409862",
-      "correo": null,
-      "creado_en": "2026-09-10T09:00:00-05:00",
-      "actualizado_en": "2026-09-10T09:00:00-05:00"
+      "creado_en": "2026-10-12T20:24:54.352Z",
+      "actualizado_en": "2026-10-12T20:24:54.352Z"
     }
   ],
   "lotes": [
@@ -56,173 +57,155 @@
       "productor_id": "cd3b83ce-114a-5624-bde0-0c482a535db2",
       "nombre": "Novillos cebados de septiembre",
       "cantidad_animales": 30,
-      "peso_promedio_kg": 452.0,
-      "peso_total_kg": 13560.0,
+      "peso_promedio_kg": 452,
+      "peso_total_kg": 13560,
       "categoria": "novillo_gordo",
       "raza": "Brahman comercial",
       "finca": "Finca La Esperanza",
       "municipio_origen": "Yopal",
       "estado": "simulado",
-      "creado_en": "2026-09-14T07:30:00-05:00",
-      "actualizado_en": "2026-09-14T07:30:00-05:00"
+      "creado_en": "2026-09-15T12:30:00.000Z",
+      "actualizado_en": "2026-10-12T20:24:54.352Z"
     },
     {
       "id": "7461b160-f980-5d27-af1b-7bd4bb9b14f1",
       "productor_id": "f20f9d5f-85ca-5681-bbf2-6da289276b37",
       "nombre": "Vacas de descarte primer semestre",
       "cantidad_animales": 22,
-      "peso_promedio_kg": 420.0,
-      "peso_total_kg": 9240.0,
+      "peso_promedio_kg": 420,
+      "peso_total_kg": 9240,
       "categoria": "vaca_gorda",
       "raza": "Brahman x Sanmartinero",
       "finca": "Hato El Porvenir",
       "municipio_origen": "Aguazul",
       "estado": "vendido",
-      "creado_en": "2026-09-15T07:30:00-05:00",
-      "actualizado_en": "2026-09-15T07:30:00-05:00"
+      "creado_en": "2026-09-16T12:30:00.000Z",
+      "actualizado_en": "2026-10-12T20:24:54.352Z"
     },
     {
       "id": "bb0ff19b-a1d7-509a-9512-cef23cbde87d",
       "productor_id": "76f9cfc9-a7d6-5604-afca-f992aff831e2",
       "nombre": "Novillos de ceba en pradera",
       "cantidad_animales": 40,
-      "peso_promedio_kg": 470.0,
-      "peso_total_kg": 18800.0,
+      "peso_promedio_kg": 470,
+      "peso_total_kg": 18800,
       "categoria": "novillo_gordo",
       "raza": "Brahman rojo",
       "finca": "Finca Villa Luz",
       "municipio_origen": "Tauramena",
       "estado": "simulado",
-      "creado_en": "2026-09-16T07:30:00-05:00",
-      "actualizado_en": "2026-09-16T07:30:00-05:00"
+      "creado_en": "2026-09-17T12:30:00.000Z",
+      "actualizado_en": "2026-10-12T20:24:54.352Z"
     },
     {
       "id": "9252d5d1-4051-5095-a93b-ae493636dc2e",
       "productor_id": "0047a00d-c5eb-501f-94a7-b9076480c1e9",
       "nombre": "Novillos de sabana inundable",
       "cantidad_animales": 35,
-      "peso_promedio_kg": 438.0,
-      "peso_total_kg": 15330.0,
+      "peso_promedio_kg": 438,
+      "peso_total_kg": 15330,
       "categoria": "novillo_gordo",
       "raza": "Cebú comercial",
       "finca": "Hato Las Palmeras",
       "municipio_origen": "Paz de Ariporo",
       "estado": "simulado",
-      "creado_en": "2026-09-18T07:30:00-05:00",
-      "actualizado_en": "2026-09-18T07:30:00-05:00"
+      "creado_en": "2026-09-19T12:30:00.000Z",
+      "actualizado_en": "2026-10-12T20:24:54.352Z"
     },
     {
       "id": "ff58ca0f-4e8c-506e-8288-8ad8f651b1d6",
       "productor_id": "f20f9d5f-85ca-5681-bbf2-6da289276b37",
       "nombre": "Vacas gordas para frigorífico",
       "cantidad_animales": 18,
-      "peso_promedio_kg": 405.0,
-      "peso_total_kg": 7290.0,
+      "peso_promedio_kg": 405,
+      "peso_total_kg": 7290,
       "categoria": "vaca_gorda",
       "raza": "Criollo casanareño",
       "finca": "Finca El Recreo",
       "municipio_origen": "Maní",
       "estado": "disponible",
-      "creado_en": "2026-09-21T07:30:00-05:00",
-      "actualizado_en": "2026-09-21T07:30:00-05:00"
+      "creado_en": "2026-09-22T12:30:00.000Z",
+      "actualizado_en": "2026-09-22T12:30:00.000Z"
     },
     {
       "id": "d041a25f-0ea4-5ea0-abec-c5c5bdaddb62",
       "productor_id": "cd3b83ce-114a-5624-bde0-0c482a535db2",
       "nombre": "Novillos terminados lote 2",
       "cantidad_animales": 25,
-      "peso_promedio_kg": 462.0,
-      "peso_total_kg": 11550.0,
+      "peso_promedio_kg": 462,
+      "peso_total_kg": 11550,
       "categoria": "novillo_gordo",
       "raza": "Gyr x Brahman",
       "finca": "Finca San José",
       "municipio_origen": "Nunchía",
       "estado": "simulado",
-      "creado_en": "2026-09-22T07:30:00-05:00",
-      "actualizado_en": "2026-09-22T07:30:00-05:00"
+      "creado_en": "2026-09-23T12:30:00.000Z",
+      "actualizado_en": "2026-10-12T20:24:54.352Z"
     },
     {
       "id": "2e18e5ff-26cc-588b-994b-aee0da7ff865",
       "productor_id": "0047a00d-c5eb-501f-94a7-b9076480c1e9",
       "nombre": "Novillos de fin de verano",
       "cantidad_animales": 45,
-      "peso_promedio_kg": 455.0,
-      "peso_total_kg": 20475.0,
+      "peso_promedio_kg": 455,
+      "peso_total_kg": 20475,
       "categoria": "novillo_gordo",
       "raza": "Brahman comercial",
       "finca": "Hato Santa Rita",
       "municipio_origen": "Orocué",
       "estado": "simulado",
-      "creado_en": "2026-09-24T07:30:00-05:00",
-      "actualizado_en": "2026-09-24T07:30:00-05:00"
+      "creado_en": "2026-09-25T12:30:00.000Z",
+      "actualizado_en": "2026-10-12T20:24:54.352Z"
     },
     {
       "id": "85c355d5-e5a0-588c-a121-1113771481ce",
       "productor_id": "76f9cfc9-a7d6-5604-afca-f992aff831e2",
       "nombre": "Vacas de descarte del hato",
       "cantidad_animales": 20,
-      "peso_promedio_kg": 432.0,
-      "peso_total_kg": 8640.0,
+      "peso_promedio_kg": 432,
+      "peso_total_kg": 8640,
       "categoria": "vaca_gorda",
       "raza": "Brahman x Gyr",
       "finca": "Finca Los Guaduales",
       "municipio_origen": "Monterrey",
-      "estado": "disponible",
-      "creado_en": "2026-09-26T07:30:00-05:00",
-      "actualizado_en": "2026-09-26T07:30:00-05:00"
+      "estado": "simulado",
+      "creado_en": "2026-09-27T12:30:00.000Z",
+      "actualizado_en": "2026-10-12T20:24:54.352Z"
+    },
+    {
+      "id": "4c1d9e2f-6a7b-5c8d-9e0f-1a2b3c4d5e6f",
+      "productor_id": "cd3b83ce-114a-5624-bde0-0c482a535db2",
+      "nombre": "Machos de levante de octubre",
+      "cantidad_animales": 26,
+      "peso_promedio_kg": 235,
+      "peso_total_kg": 6110,
+      "categoria": "novillo_levante",
+      "raza": "Brahman comercial",
+      "finca": "Finca La Esperanza",
+      "municipio_origen": "Yopal",
+      "estado": "simulado",
+      "creado_en": "2026-10-06T12:30:00.000Z",
+      "actualizado_en": "2026-10-12T20:24:54.352Z"
     }
   ],
   "destinos": [
     {
-      "id": "acca0ef8-f855-5505-b81b-25833e792ff1",
-      "nombre": "Subasta Ganadera de Yopal",
-      "tipo": "subasta",
-      "municipio": "Yopal",
-      "departamento": "Casanare",
+      "id": "15bf935c-dea7-52e8-a312-228463fe5aef",
+      "nombre": "Central Ganadera de Medellín",
+      "tipo": "feria",
+      "municipio": "Medellín",
+      "departamento": "Antioquia",
       "ubicacion": {
         "type": "Point",
         "coordinates": [
-          -72.4102,
-          5.3265
+          -75.5636,
+          6.2518
         ]
       },
+      "comision_pct": 0,
       "activo": true,
-      "creado_en": "2026-09-01T08:00:00-05:00",
-      "actualizado_en": "2026-09-01T08:00:00-05:00"
-    },
-    {
-      "id": "5a11df78-6998-5089-a775-55e35b205cfe",
-      "nombre": "Subasta Ganadera de Paz de Ariporo",
-      "tipo": "subasta",
-      "municipio": "Paz de Ariporo",
-      "departamento": "Casanare",
-      "ubicacion": {
-        "type": "Point",
-        "coordinates": [
-          -71.8918,
-          5.8811
-        ]
-      },
-      "activo": true,
-      "creado_en": "2026-09-01T08:00:00-05:00",
-      "actualizado_en": "2026-09-01T08:00:00-05:00"
-    },
-    {
-      "id": "a8745d0d-590c-5f1b-b749-bb96c5be4aac",
-      "nombre": "Subasta Ganadera de Villanueva",
-      "tipo": "subasta",
-      "municipio": "Villanueva",
-      "departamento": "Casanare",
-      "ubicacion": {
-        "type": "Point",
-        "coordinates": [
-          -72.9281,
-          4.6094
-        ]
-      },
-      "activo": true,
-      "creado_en": "2026-09-01T08:00:00-05:00",
-      "actualizado_en": "2026-09-01T08:00:00-05:00"
+      "creado_en": "2026-10-12T20:24:54.352Z",
+      "actualizado_en": "2026-10-12T20:24:54.352Z"
     },
     {
       "id": "6b8211cf-49f9-5354-925a-ec5edb230ee1",
@@ -237,43 +220,10 @@
           4.142
         ]
       },
+      "comision_pct": 0,
       "activo": true,
-      "creado_en": "2026-09-01T08:00:00-05:00",
-      "actualizado_en": "2026-09-01T08:00:00-05:00"
-    },
-    {
-      "id": "d8c5a7c4-888d-56e2-81f2-f8cc588a2834",
-      "nombre": "Plaza de ferias de Sogamoso",
-      "tipo": "feria",
-      "municipio": "Sogamoso",
-      "departamento": "Boyacá",
-      "ubicacion": {
-        "type": "Point",
-        "coordinates": [
-          -72.9339,
-          5.7146
-        ]
-      },
-      "activo": true,
-      "creado_en": "2026-09-01T08:00:00-05:00",
-      "actualizado_en": "2026-09-01T08:00:00-05:00"
-    },
-    {
-      "id": "3878b38f-1764-5e78-88b0-93461cec83ec",
-      "nombre": "Plaza de ferias de Tunja",
-      "tipo": "feria",
-      "municipio": "Tunja",
-      "departamento": "Boyacá",
-      "ubicacion": {
-        "type": "Point",
-        "coordinates": [
-          -73.3678,
-          5.5353
-        ]
-      },
-      "activo": true,
-      "creado_en": "2026-09-01T08:00:00-05:00",
-      "actualizado_en": "2026-09-01T08:00:00-05:00"
+      "creado_en": "2026-10-12T20:24:54.352Z",
+      "actualizado_en": "2026-10-12T20:24:54.352Z"
     },
     {
       "id": "52bbc2f4-901c-5ff0-a08a-5f8f08f91fa1",
@@ -288,9 +238,10 @@
           4.587
         ]
       },
+      "comision_pct": 0,
       "activo": true,
-      "creado_en": "2026-09-01T08:00:00-05:00",
-      "actualizado_en": "2026-09-01T08:00:00-05:00"
+      "creado_en": "2026-10-12T20:24:54.352Z",
+      "actualizado_en": "2026-10-12T20:24:54.352Z"
     },
     {
       "id": "c1b1b4d6-5649-5406-a30d-e47ea1c9ba12",
@@ -305,9 +256,10 @@
           7.0908
         ]
       },
+      "comision_pct": 0,
       "activo": true,
-      "creado_en": "2026-09-01T08:00:00-05:00",
-      "actualizado_en": "2026-09-01T08:00:00-05:00"
+      "creado_en": "2026-10-12T20:24:54.352Z",
+      "actualizado_en": "2026-10-12T20:24:54.352Z"
     },
     {
       "id": "396e4a75-a43f-5e33-adb3-1d6163e10530",
@@ -322,29 +274,385 @@
           7.8939
         ]
       },
+      "comision_pct": 0,
       "activo": true,
-      "creado_en": "2026-09-01T08:00:00-05:00",
-      "actualizado_en": "2026-09-01T08:00:00-05:00"
+      "creado_en": "2026-10-12T20:24:54.352Z",
+      "actualizado_en": "2026-10-12T20:24:54.352Z"
     },
     {
-      "id": "15bf935c-dea7-52e8-a312-228463fe5aef",
-      "nombre": "Central Ganadera de Medellín",
+      "id": "d8c5a7c4-888d-56e2-81f2-f8cc588a2834",
+      "nombre": "Plaza de ferias de Sogamoso",
       "tipo": "feria",
-      "municipio": "Medellín",
-      "departamento": "Antioquia",
+      "municipio": "Sogamoso",
+      "departamento": "Boyacá",
       "ubicacion": {
         "type": "Point",
         "coordinates": [
-          -75.5636,
-          6.2518
+          -72.9339,
+          5.7146
         ]
       },
+      "comision_pct": 0,
       "activo": true,
-      "creado_en": "2026-09-01T08:00:00-05:00",
-      "actualizado_en": "2026-09-01T08:00:00-05:00"
+      "creado_en": "2026-10-12T20:24:54.352Z",
+      "actualizado_en": "2026-10-12T20:24:54.352Z"
+    },
+    {
+      "id": "3878b38f-1764-5e78-88b0-93461cec83ec",
+      "nombre": "Plaza de ferias de Tunja",
+      "tipo": "feria",
+      "municipio": "Tunja",
+      "departamento": "Boyacá",
+      "ubicacion": {
+        "type": "Point",
+        "coordinates": [
+          -73.3678,
+          5.5353
+        ]
+      },
+      "comision_pct": 0,
+      "activo": true,
+      "creado_en": "2026-10-12T20:24:54.352Z",
+      "actualizado_en": "2026-10-12T20:24:54.352Z"
+    },
+    {
+      "id": "5a11df78-6998-5089-a775-55e35b205cfe",
+      "nombre": "Subasta Ganadera de Paz de Ariporo",
+      "tipo": "subasta",
+      "municipio": "Paz de Ariporo",
+      "departamento": "Casanare",
+      "ubicacion": {
+        "type": "Point",
+        "coordinates": [
+          -71.8918,
+          5.8811
+        ]
+      },
+      "comision_pct": 3,
+      "activo": true,
+      "creado_en": "2026-10-12T20:24:54.352Z",
+      "actualizado_en": "2026-10-12T20:24:54.352Z"
+    },
+    {
+      "id": "a8745d0d-590c-5f1b-b749-bb96c5be4aac",
+      "nombre": "Subasta Ganadera de Villanueva",
+      "tipo": "subasta",
+      "municipio": "Villanueva",
+      "departamento": "Casanare",
+      "ubicacion": {
+        "type": "Point",
+        "coordinates": [
+          -72.9281,
+          4.6094
+        ]
+      },
+      "comision_pct": 3,
+      "activo": true,
+      "creado_en": "2026-10-12T20:24:54.352Z",
+      "actualizado_en": "2026-10-12T20:24:54.352Z"
+    },
+    {
+      "id": "acca0ef8-f855-5505-b81b-25833e792ff1",
+      "nombre": "Subasta Ganadera de Yopal",
+      "tipo": "subasta",
+      "municipio": "Yopal",
+      "departamento": "Casanare",
+      "ubicacion": {
+        "type": "Point",
+        "coordinates": [
+          -72.4102,
+          5.3265
+        ]
+      },
+      "comision_pct": 3,
+      "activo": true,
+      "creado_en": "2026-10-12T20:24:54.352Z",
+      "actualizado_en": "2026-10-12T20:24:54.352Z"
+    },
+    {
+      "id": "0e6f6c1a-3b0d-5c8e-9f1a-6d2b7c4e8a10",
+      "nombre": "Venta en finca (comprador en finca)",
+      "tipo": "finca",
+      "municipio": "Origen del lote",
+      "departamento": "Casanare",
+      "ubicacion": {
+        "type": "Point",
+        "coordinates": [
+          -72.3959,
+          5.3371
+        ]
+      },
+      "comision_pct": 0,
+      "activo": true,
+      "creado_en": "2026-10-12T20:24:54.352Z",
+      "actualizado_en": "2026-10-12T20:24:54.352Z"
     }
   ],
   "rutas": [
+    {
+      "id": "7c0333f1-b8a7-4f9a-9b99-f53e54ba733d",
+      "destino_id": "0e6f6c1a-3b0d-5c8e-9f1a-6d2b7c4e8a10",
+      "origen_nombre": "Paz de Ariporo",
+      "origen": {
+        "type": "Point",
+        "coordinates": [
+          -71.8919,
+          5.8811
+        ]
+      },
+      "distancia_km": 0,
+      "tiempo_horas": 0,
+      "peajes_cop": 0,
+      "factor_dificultad": 1,
+      "merma_pct": 0,
+      "geometria": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            -71.8919,
+            5.8811
+          ],
+          [
+            -71.8919,
+            5.8811
+          ]
+        ]
+      },
+      "fuente": "manual",
+      "creado_en": "2026-10-12T20:24:54.352Z",
+      "actualizado_en": "2026-10-12T20:24:54.352Z"
+    },
+    {
+      "id": "1e1c4107-d5f5-4d0f-85fb-f4a0ee26f3a2",
+      "destino_id": "0e6f6c1a-3b0d-5c8e-9f1a-6d2b7c4e8a10",
+      "origen_nombre": "Monterrey",
+      "origen": {
+        "type": "Point",
+        "coordinates": [
+          -72.8956,
+          4.8786
+        ]
+      },
+      "distancia_km": 0,
+      "tiempo_horas": 0,
+      "peajes_cop": 0,
+      "factor_dificultad": 1,
+      "merma_pct": 0,
+      "geometria": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            -72.8956,
+            4.8786
+          ],
+          [
+            -72.8956,
+            4.8786
+          ]
+        ]
+      },
+      "fuente": "manual",
+      "creado_en": "2026-10-12T20:24:54.352Z",
+      "actualizado_en": "2026-10-12T20:24:54.352Z"
+    },
+    {
+      "id": "61589290-4dd7-4ce6-97dc-628e090d2990",
+      "destino_id": "0e6f6c1a-3b0d-5c8e-9f1a-6d2b7c4e8a10",
+      "origen_nombre": "Orocué",
+      "origen": {
+        "type": "Point",
+        "coordinates": [
+          -71.3394,
+          4.7908
+        ]
+      },
+      "distancia_km": 0,
+      "tiempo_horas": 0,
+      "peajes_cop": 0,
+      "factor_dificultad": 1,
+      "merma_pct": 0,
+      "geometria": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            -71.3394,
+            4.7908
+          ],
+          [
+            -71.3394,
+            4.7908
+          ]
+        ]
+      },
+      "fuente": "manual",
+      "creado_en": "2026-10-12T20:24:54.352Z",
+      "actualizado_en": "2026-10-12T20:24:54.352Z"
+    },
+    {
+      "id": "29e436d4-423a-4bac-bbb7-e4b7948a2865",
+      "destino_id": "0e6f6c1a-3b0d-5c8e-9f1a-6d2b7c4e8a10",
+      "origen_nombre": "Aguazul",
+      "origen": {
+        "type": "Point",
+        "coordinates": [
+          -72.5547,
+          5.1727
+        ]
+      },
+      "distancia_km": 0,
+      "tiempo_horas": 0,
+      "peajes_cop": 0,
+      "factor_dificultad": 1,
+      "merma_pct": 0,
+      "geometria": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            -72.5547,
+            5.1727
+          ],
+          [
+            -72.5547,
+            5.1727
+          ]
+        ]
+      },
+      "fuente": "manual",
+      "creado_en": "2026-10-12T20:24:54.352Z",
+      "actualizado_en": "2026-10-12T20:24:54.352Z"
+    },
+    {
+      "id": "944d11bc-35d9-43ab-b927-02cffc1afadc",
+      "destino_id": "0e6f6c1a-3b0d-5c8e-9f1a-6d2b7c4e8a10",
+      "origen_nombre": "Nunchía",
+      "origen": {
+        "type": "Point",
+        "coordinates": [
+          -72.1956,
+          5.6372
+        ]
+      },
+      "distancia_km": 0,
+      "tiempo_horas": 0,
+      "peajes_cop": 0,
+      "factor_dificultad": 1,
+      "merma_pct": 0,
+      "geometria": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            -72.1956,
+            5.6372
+          ],
+          [
+            -72.1956,
+            5.6372
+          ]
+        ]
+      },
+      "fuente": "manual",
+      "creado_en": "2026-10-12T20:24:54.352Z",
+      "actualizado_en": "2026-10-12T20:24:54.352Z"
+    },
+    {
+      "id": "50568506-18f6-457e-95e2-b962b3f9eff6",
+      "destino_id": "0e6f6c1a-3b0d-5c8e-9f1a-6d2b7c4e8a10",
+      "origen_nombre": "Tauramena",
+      "origen": {
+        "type": "Point",
+        "coordinates": [
+          -72.7475,
+          5.018
+        ]
+      },
+      "distancia_km": 0,
+      "tiempo_horas": 0,
+      "peajes_cop": 0,
+      "factor_dificultad": 1,
+      "merma_pct": 0,
+      "geometria": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            -72.7475,
+            5.018
+          ],
+          [
+            -72.7475,
+            5.018
+          ]
+        ]
+      },
+      "fuente": "manual",
+      "creado_en": "2026-10-12T20:24:54.352Z",
+      "actualizado_en": "2026-10-12T20:24:54.352Z"
+    },
+    {
+      "id": "7b1e2d3c-4a5b-5c6d-8e7f-9a0b1c2d3e4f",
+      "destino_id": "0e6f6c1a-3b0d-5c8e-9f1a-6d2b7c4e8a10",
+      "origen_nombre": "Yopal (centro de acopio)",
+      "origen": {
+        "type": "Point",
+        "coordinates": [
+          -72.3959,
+          5.3371
+        ]
+      },
+      "distancia_km": 0,
+      "tiempo_horas": 0,
+      "peajes_cop": 0,
+      "factor_dificultad": 1,
+      "merma_pct": 0,
+      "geometria": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            -72.3959,
+            5.3371
+          ],
+          [
+            -72.3959,
+            5.3371
+          ]
+        ]
+      },
+      "fuente": "manual",
+      "creado_en": "2026-10-12T20:24:54.352Z",
+      "actualizado_en": "2026-10-12T20:24:54.352Z"
+    },
+    {
+      "id": "cb0242cf-341c-4dbf-8185-84e9eace6e27",
+      "destino_id": "5a11df78-6998-5089-a775-55e35b205cfe",
+      "origen_nombre": "Paz de Ariporo",
+      "origen": {
+        "type": "Point",
+        "coordinates": [
+          -71.8919,
+          5.8811
+        ]
+      },
+      "distancia_km": 3,
+      "tiempo_horas": 0.1,
+      "peajes_cop": 0,
+      "factor_dificultad": 1.05,
+      "merma_pct": 0.2,
+      "geometria": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            -71.8919,
+            5.8811
+          ],
+          [
+            -71.8918,
+            5.8811
+          ]
+        ]
+      },
+      "fuente": "respaldo_linea_recta",
+      "creado_en": "2026-10-12T20:24:54.352Z",
+      "actualizado_en": "2026-10-12T20:24:54.352Z"
+    },
     {
       "id": "58503f72-33aa-5dc3-a8fa-e39abddb9eea",
       "destino_id": "acca0ef8-f855-5505-b81b-25833e792ff1",
@@ -359,7 +667,7 @@
       "distancia_km": 9.5,
       "tiempo_horas": 0.3,
       "peajes_cop": 0,
-      "factor_dificultad": 1.0,
+      "factor_dificultad": 1,
       "merma_pct": 0.5,
       "geometria": {
         "type": "LineString",
@@ -375,8 +683,239 @@
         ]
       },
       "fuente": "manual",
-      "creado_en": "2026-09-01T08:00:00-05:00",
-      "actualizado_en": "2026-09-26T10:15:00-05:00"
+      "creado_en": "2026-10-12T20:24:54.352Z",
+      "actualizado_en": "2026-10-12T20:24:54.352Z"
+    },
+    {
+      "id": "0fbdd383-6a88-4619-beb1-f265116b1eba",
+      "destino_id": "acca0ef8-f855-5505-b81b-25833e792ff1",
+      "origen_nombre": "Aguazul",
+      "origen": {
+        "type": "Point",
+        "coordinates": [
+          -72.5547,
+          5.1727
+        ]
+      },
+      "distancia_km": 30.4,
+      "tiempo_horas": 0.7,
+      "peajes_cop": 3400,
+      "factor_dificultad": 1,
+      "merma_pct": 0.9,
+      "geometria": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            -72.5547,
+            5.1727
+          ],
+          [
+            -72.4102,
+            5.3265
+          ]
+        ]
+      },
+      "fuente": "respaldo_linea_recta",
+      "creado_en": "2026-10-12T20:24:54.352Z",
+      "actualizado_en": "2026-10-12T20:24:54.352Z"
+    },
+    {
+      "id": "5a4ab622-4f36-4764-86cb-423b56408dfc",
+      "destino_id": "a8745d0d-590c-5f1b-b749-bb96c5be4aac",
+      "origen_nombre": "Monterrey",
+      "origen": {
+        "type": "Point",
+        "coordinates": [
+          -72.8956,
+          4.8786
+        ]
+      },
+      "distancia_km": 39.5,
+      "tiempo_horas": 0.9,
+      "peajes_cop": 4800,
+      "factor_dificultad": 1.05,
+      "merma_pct": 1.1,
+      "geometria": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            -72.8956,
+            4.8786
+          ],
+          [
+            -72.9281,
+            4.6094
+          ]
+        ]
+      },
+      "fuente": "respaldo_linea_recta",
+      "creado_en": "2026-10-12T20:24:54.352Z",
+      "actualizado_en": "2026-10-12T20:24:54.352Z"
+    },
+    {
+      "id": "a323ee37-f338-48f7-b7f0-9fe9bf68743c",
+      "destino_id": "acca0ef8-f855-5505-b81b-25833e792ff1",
+      "origen_nombre": "Nunchía",
+      "origen": {
+        "type": "Point",
+        "coordinates": [
+          -72.1956,
+          5.6372
+        ]
+      },
+      "distancia_km": 54.5,
+      "tiempo_horas": 1.2,
+      "peajes_cop": 7200,
+      "factor_dificultad": 1,
+      "merma_pct": 1.4,
+      "geometria": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            -72.1956,
+            5.6372
+          ],
+          [
+            -72.4102,
+            5.3265
+          ]
+        ]
+      },
+      "fuente": "respaldo_linea_recta",
+      "creado_en": "2026-10-12T20:24:54.352Z",
+      "actualizado_en": "2026-10-12T20:24:54.352Z"
+    },
+    {
+      "id": "18761755-2e2e-4c83-a37c-e21897a8eaeb",
+      "destino_id": "acca0ef8-f855-5505-b81b-25833e792ff1",
+      "origen_nombre": "Tauramena",
+      "origen": {
+        "type": "Point",
+        "coordinates": [
+          -72.7475,
+          5.018
+        ]
+      },
+      "distancia_km": 65.9,
+      "tiempo_horas": 1.4,
+      "peajes_cop": 9000,
+      "factor_dificultad": 1,
+      "merma_pct": 1.7,
+      "geometria": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            -72.7475,
+            5.018
+          ],
+          [
+            -72.4102,
+            5.3265
+          ]
+        ]
+      },
+      "fuente": "respaldo_linea_recta",
+      "creado_en": "2026-10-12T20:24:54.352Z",
+      "actualizado_en": "2026-10-12T20:24:54.352Z"
+    },
+    {
+      "id": "735d2e5f-3a2c-40b2-af0a-88d781a45440",
+      "destino_id": "acca0ef8-f855-5505-b81b-25833e792ff1",
+      "origen_nombre": "Monterrey",
+      "origen": {
+        "type": "Point",
+        "coordinates": [
+          -72.8956,
+          4.8786
+        ]
+      },
+      "distancia_km": 95.3,
+      "tiempo_horas": 2.1,
+      "peajes_cop": 13800,
+      "factor_dificultad": 1,
+      "merma_pct": 2.3,
+      "geometria": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            -72.8956,
+            4.8786
+          ],
+          [
+            -72.4102,
+            5.3265
+          ]
+        ]
+      },
+      "fuente": "respaldo_linea_recta",
+      "creado_en": "2026-10-12T20:24:54.352Z",
+      "actualizado_en": "2026-10-12T20:24:54.352Z"
+    },
+    {
+      "id": "e0311a7a-3644-4c9c-97e1-f659bd2e8378",
+      "destino_id": "a8745d0d-590c-5f1b-b749-bb96c5be4aac",
+      "origen_nombre": "Aguazul",
+      "origen": {
+        "type": "Point",
+        "coordinates": [
+          -72.5547,
+          5.1727
+        ]
+      },
+      "distancia_km": 98.2,
+      "tiempo_horas": 2.1,
+      "peajes_cop": 14200,
+      "factor_dificultad": 1.05,
+      "merma_pct": 2.4,
+      "geometria": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            -72.5547,
+            5.1727
+          ],
+          [
+            -72.9281,
+            4.6094
+          ]
+        ]
+      },
+      "fuente": "respaldo_linea_recta",
+      "creado_en": "2026-10-12T20:24:54.352Z",
+      "actualizado_en": "2026-10-12T20:24:54.352Z"
+    },
+    {
+      "id": "e1c74087-2ae8-4250-bae0-1b290263f652",
+      "destino_id": "acca0ef8-f855-5505-b81b-25833e792ff1",
+      "origen_nombre": "Paz de Ariporo",
+      "origen": {
+        "type": "Point",
+        "coordinates": [
+          -71.8919,
+          5.8811
+        ]
+      },
+      "distancia_km": 108.2,
+      "tiempo_horas": 2.3,
+      "peajes_cop": 15800,
+      "factor_dificultad": 1,
+      "merma_pct": 2.6,
+      "geometria": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            -71.8919,
+            5.8811
+          ],
+          [
+            -72.4102,
+            5.3265
+          ]
+        ]
+      },
+      "fuente": "respaldo_linea_recta",
+      "creado_en": "2026-10-12T20:24:54.352Z",
+      "actualizado_en": "2026-10-12T20:24:54.352Z"
     },
     {
       "id": "ae582c3d-af89-5b0d-988d-4ed54fba9b89",
@@ -389,11 +928,11 @@
           5.3371
         ]
       },
-      "distancia_km": 128.0,
+      "distancia_km": 128,
       "tiempo_horas": 2.6,
       "peajes_cop": 19000,
       "factor_dificultad": 1.05,
-      "merma_pct": 2.0,
+      "merma_pct": 3,
       "geometria": {
         "type": "LineString",
         "coordinates": [
@@ -412,8 +951,8 @@
         ]
       },
       "fuente": "manual",
-      "creado_en": "2026-09-01T08:00:00-05:00",
-      "actualizado_en": "2026-09-26T10:15:00-05:00"
+      "creado_en": "2026-10-12T20:24:54.352Z",
+      "actualizado_en": "2026-10-12T20:24:54.352Z"
     },
     {
       "id": "e59208f0-6906-5331-a7eb-bbdaa0a2eb78",
@@ -426,11 +965,11 @@
           5.3371
         ]
       },
-      "distancia_km": 131.0,
+      "distancia_km": 131,
       "tiempo_horas": 2.7,
       "peajes_cop": 21000,
       "factor_dificultad": 1.05,
-      "merma_pct": 2.0,
+      "merma_pct": 3,
       "geometria": {
         "type": "LineString",
         "coordinates": [
@@ -453,51 +992,31 @@
         ]
       },
       "fuente": "manual",
-      "creado_en": "2026-09-01T08:00:00-05:00",
-      "actualizado_en": "2026-09-26T10:15:00-05:00"
+      "creado_en": "2026-10-12T20:24:54.352Z",
+      "actualizado_en": "2026-10-12T20:24:54.352Z"
     },
     {
-      "id": "5ec2ea46-db9d-525b-8417-462de2b24a6a",
+      "id": "90e2bb5a-0804-4068-8879-2ef0537c961b",
       "destino_id": "6b8211cf-49f9-5354-925a-ec5edb230ee1",
-      "origen_nombre": "Yopal (centro de acopio)",
+      "origen_nombre": "Monterrey",
       "origen": {
         "type": "Point",
         "coordinates": [
-          -72.3959,
-          5.3371
+          -72.8956,
+          4.8786
         ]
       },
-      "distancia_km": 266.0,
-      "tiempo_horas": 5.1,
-      "peajes_cop": 85000,
+      "distancia_km": 160.9,
+      "tiempo_horas": 3.5,
+      "peajes_cop": 36300,
       "factor_dificultad": 1.1,
-      "merma_pct": 3.0,
+      "merma_pct": 4.5,
       "geometria": {
         "type": "LineString",
         "coordinates": [
           [
-            -72.3959,
-            5.3371
-          ],
-          [
-            -72.5471,
-            5.1731
-          ],
-          [
-            -72.8958,
-            4.8766
-          ],
-          [
-            -72.9281,
-            4.6094
-          ],
-          [
-            -72.9654,
-            4.5756
-          ],
-          [
-            -73.4868,
-            4.2699
+            -72.8956,
+            4.8786
           ],
           [
             -73.6266,
@@ -505,9 +1024,42 @@
           ]
         ]
       },
-      "fuente": "manual",
-      "creado_en": "2026-09-01T08:00:00-05:00",
-      "actualizado_en": "2026-09-26T10:15:00-05:00"
+      "fuente": "respaldo_linea_recta",
+      "creado_en": "2026-10-12T20:24:54.352Z",
+      "actualizado_en": "2026-10-12T20:24:54.352Z"
+    },
+    {
+      "id": "a3df0d21-f68b-45d5-ab9c-80836abd4444",
+      "destino_id": "acca0ef8-f855-5505-b81b-25833e792ff1",
+      "origen_nombre": "Orocué",
+      "origen": {
+        "type": "Point",
+        "coordinates": [
+          -71.3394,
+          4.7908
+        ]
+      },
+      "distancia_km": 167.7,
+      "tiempo_horas": 3.6,
+      "peajes_cop": 39800,
+      "factor_dificultad": 1,
+      "merma_pct": 4.8,
+      "geometria": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            -71.3394,
+            4.7908
+          ],
+          [
+            -72.4102,
+            5.3265
+          ]
+        ]
+      },
+      "fuente": "respaldo_linea_recta",
+      "creado_en": "2026-10-12T20:24:54.352Z",
+      "actualizado_en": "2026-10-12T20:24:54.352Z"
     },
     {
       "id": "cf10b20d-fd88-529e-a803-62f520737f2e",
@@ -520,11 +1072,11 @@
           5.3371
         ]
       },
-      "distancia_km": 172.0,
+      "distancia_km": 172,
       "tiempo_horas": 4.3,
       "peajes_cop": 42000,
       "factor_dificultad": 1.2,
-      "merma_pct": 2.8,
+      "merma_pct": 5,
       "geometria": {
         "type": "LineString",
         "coordinates": [
@@ -547,8 +1099,239 @@
         ]
       },
       "fuente": "manual",
-      "creado_en": "2026-09-01T08:00:00-05:00",
-      "actualizado_en": "2026-09-26T10:15:00-05:00"
+      "creado_en": "2026-10-12T20:24:54.352Z",
+      "actualizado_en": "2026-10-12T20:24:54.352Z"
+    },
+    {
+      "id": "e6fb6607-7c04-4976-8063-9ed9e97d0484",
+      "destino_id": "3878b38f-1764-5e78-88b0-93461cec83ec",
+      "origen_nombre": "Tauramena",
+      "origen": {
+        "type": "Point",
+        "coordinates": [
+          -72.7475,
+          5.018
+        ]
+      },
+      "distancia_km": 183.8,
+      "tiempo_horas": 4,
+      "peajes_cop": 45500,
+      "factor_dificultad": 1.15,
+      "merma_pct": 5.2,
+      "geometria": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            -72.7475,
+            5.018
+          ],
+          [
+            -73.3678,
+            5.5353
+          ]
+        ]
+      },
+      "fuente": "respaldo_linea_recta",
+      "creado_en": "2026-10-12T20:24:54.352Z",
+      "actualizado_en": "2026-10-12T20:24:54.352Z"
+    },
+    {
+      "id": "2e003454-aeb7-4fd9-a9b0-46bba66690bf",
+      "destino_id": "6b8211cf-49f9-5354-925a-ec5edb230ee1",
+      "origen_nombre": "Tauramena",
+      "origen": {
+        "type": "Point",
+        "coordinates": [
+          -72.7475,
+          5.018
+        ]
+      },
+      "distancia_km": 192.5,
+      "tiempo_horas": 4.2,
+      "peajes_cop": 48000,
+      "factor_dificultad": 1.1,
+      "merma_pct": 5.4,
+      "geometria": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            -72.7475,
+            5.018
+          ],
+          [
+            -73.6266,
+            4.142
+          ]
+        ]
+      },
+      "fuente": "respaldo_linea_recta",
+      "creado_en": "2026-10-12T20:24:54.352Z",
+      "actualizado_en": "2026-10-12T20:24:54.352Z"
+    },
+    {
+      "id": "7a48d2dc-8ddc-46fb-8662-1ce86b884835",
+      "destino_id": "d8c5a7c4-888d-56e2-81f2-f8cc588a2834",
+      "origen_nombre": "Aguazul",
+      "origen": {
+        "type": "Point",
+        "coordinates": [
+          -72.5547,
+          5.1727
+        ]
+      },
+      "distancia_km": 202.4,
+      "tiempo_horas": 4.4,
+      "peajes_cop": 50900,
+      "factor_dificultad": 1.2,
+      "merma_pct": 5.6,
+      "geometria": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            -72.5547,
+            5.1727
+          ],
+          [
+            -72.9339,
+            5.7146
+          ]
+        ]
+      },
+      "fuente": "respaldo_linea_recta",
+      "creado_en": "2026-10-12T20:24:54.352Z",
+      "actualizado_en": "2026-10-12T20:24:54.352Z"
+    },
+    {
+      "id": "0cc1ec44-e033-4dea-8a7d-19b692cbdb76",
+      "destino_id": "5a11df78-6998-5089-a775-55e35b205cfe",
+      "origen_nombre": "Orocué",
+      "origen": {
+        "type": "Point",
+        "coordinates": [
+          -71.3394,
+          4.7908
+        ]
+      },
+      "distancia_km": 211.2,
+      "tiempo_horas": 4.6,
+      "peajes_cop": 53500,
+      "factor_dificultad": 1.05,
+      "merma_pct": 5.8,
+      "geometria": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            -71.3394,
+            4.7908
+          ],
+          [
+            -71.8918,
+            5.8811
+          ]
+        ]
+      },
+      "fuente": "respaldo_linea_recta",
+      "creado_en": "2026-10-12T20:24:54.352Z",
+      "actualizado_en": "2026-10-12T20:24:54.352Z"
+    },
+    {
+      "id": "22bfe46e-515b-49b9-840b-78c8a7e991f8",
+      "destino_id": "d8c5a7c4-888d-56e2-81f2-f8cc588a2834",
+      "origen_nombre": "Nunchía",
+      "origen": {
+        "type": "Point",
+        "coordinates": [
+          -72.1956,
+          5.6372
+        ]
+      },
+      "distancia_km": 220.1,
+      "tiempo_horas": 4.8,
+      "peajes_cop": 56100,
+      "factor_dificultad": 1.2,
+      "merma_pct": 6,
+      "geometria": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            -72.1956,
+            5.6372
+          ],
+          [
+            -72.9339,
+            5.7146
+          ]
+        ]
+      },
+      "fuente": "respaldo_linea_recta",
+      "creado_en": "2026-10-12T20:24:54.352Z",
+      "actualizado_en": "2026-10-12T20:24:54.352Z"
+    },
+    {
+      "id": "5333c4c9-afff-4ac0-8ce4-60cba14e9834",
+      "destino_id": "6b8211cf-49f9-5354-925a-ec5edb230ee1",
+      "origen_nombre": "Aguazul",
+      "origen": {
+        "type": "Point",
+        "coordinates": [
+          -72.5547,
+          5.1727
+        ]
+      },
+      "distancia_km": 230.6,
+      "tiempo_horas": 5,
+      "peajes_cop": 59200,
+      "factor_dificultad": 1.1,
+      "merma_pct": 6.2,
+      "geometria": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            -72.5547,
+            5.1727
+          ],
+          [
+            -73.6266,
+            4.142
+          ]
+        ]
+      },
+      "fuente": "respaldo_linea_recta",
+      "creado_en": "2026-10-12T20:24:54.352Z",
+      "actualizado_en": "2026-10-12T20:24:54.352Z"
+    },
+    {
+      "id": "44fdb6a8-190c-4ec2-a3a0-7528eee5d3ac",
+      "destino_id": "a8745d0d-590c-5f1b-b749-bb96c5be4aac",
+      "origen_nombre": "Orocué",
+      "origen": {
+        "type": "Point",
+        "coordinates": [
+          -71.3394,
+          4.7908
+        ]
+      },
+      "distancia_km": 231.9,
+      "tiempo_horas": 5,
+      "peajes_cop": 59600,
+      "factor_dificultad": 1.05,
+      "merma_pct": 6.2,
+      "geometria": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            -71.3394,
+            4.7908
+          ],
+          [
+            -72.9281,
+            4.6094
+          ]
+        ]
+      },
+      "fuente": "respaldo_linea_recta",
+      "creado_en": "2026-10-12T20:24:54.352Z",
+      "actualizado_en": "2026-10-12T20:24:54.352Z"
     },
     {
       "id": "48492f5f-f1ef-5799-8dd1-aa2e1598d817",
@@ -561,11 +1344,11 @@
           5.3371
         ]
       },
-      "distancia_km": 247.0,
+      "distancia_km": 247,
       "tiempo_horas": 5.9,
       "peajes_cop": 64000,
       "factor_dificultad": 1.15,
-      "merma_pct": 3.5,
+      "merma_pct": 6.5,
       "geometria": {
         "type": "LineString",
         "coordinates": [
@@ -600,8 +1383,292 @@
         ]
       },
       "fuente": "manual",
-      "creado_en": "2026-09-01T08:00:00-05:00",
-      "actualizado_en": "2026-09-26T10:15:00-05:00"
+      "creado_en": "2026-10-12T20:24:54.352Z",
+      "actualizado_en": "2026-10-12T20:24:54.352Z"
+    },
+    {
+      "id": "5ec2ea46-db9d-525b-8417-462de2b24a6a",
+      "destino_id": "6b8211cf-49f9-5354-925a-ec5edb230ee1",
+      "origen_nombre": "Yopal (centro de acopio)",
+      "origen": {
+        "type": "Point",
+        "coordinates": [
+          -72.3959,
+          5.3371
+        ]
+      },
+      "distancia_km": 266,
+      "tiempo_horas": 5.1,
+      "peajes_cop": 85000,
+      "factor_dificultad": 1.1,
+      "merma_pct": 6.5,
+      "geometria": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            -72.3959,
+            5.3371
+          ],
+          [
+            -72.5471,
+            5.1731
+          ],
+          [
+            -72.8958,
+            4.8766
+          ],
+          [
+            -72.9281,
+            4.6094
+          ],
+          [
+            -72.9654,
+            4.5756
+          ],
+          [
+            -73.4868,
+            4.2699
+          ],
+          [
+            -73.6266,
+            4.142
+          ]
+        ]
+      },
+      "fuente": "manual",
+      "creado_en": "2026-10-12T20:24:54.352Z",
+      "actualizado_en": "2026-10-12T20:24:54.352Z"
+    },
+    {
+      "id": "187058bd-c4a8-4a2e-85e8-54ed62357dd5",
+      "destino_id": "52bbc2f4-901c-5ff0-a08a-5f8f08f91fa1",
+      "origen_nombre": "Monterrey",
+      "origen": {
+        "type": "Point",
+        "coordinates": [
+          -72.8956,
+          4.8786
+        ]
+      },
+      "distancia_km": 291.7,
+      "tiempo_horas": 6.3,
+      "peajes_cop": 90500,
+      "factor_dificultad": 1.25,
+      "merma_pct": 6.8,
+      "geometria": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            -72.8956,
+            4.8786
+          ],
+          [
+            -74.154,
+            4.587
+          ]
+        ]
+      },
+      "fuente": "respaldo_linea_recta",
+      "creado_en": "2026-10-12T20:24:54.352Z",
+      "actualizado_en": "2026-10-12T20:24:54.352Z"
+    },
+    {
+      "id": "6261bfc6-4566-4e30-911c-1103bb9ae2b9",
+      "destino_id": "3878b38f-1764-5e78-88b0-93461cec83ec",
+      "origen_nombre": "Nunchía",
+      "origen": {
+        "type": "Point",
+        "coordinates": [
+          -72.1956,
+          5.6372
+        ]
+      },
+      "distancia_km": 295.1,
+      "tiempo_horas": 6.4,
+      "peajes_cop": 91300,
+      "factor_dificultad": 1.15,
+      "merma_pct": 6.8,
+      "geometria": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            -72.1956,
+            5.6372
+          ],
+          [
+            -73.3678,
+            5.5353
+          ]
+        ]
+      },
+      "fuente": "respaldo_linea_recta",
+      "creado_en": "2026-10-12T20:24:54.352Z",
+      "actualizado_en": "2026-10-12T20:24:54.352Z"
+    },
+    {
+      "id": "9766a346-7b15-4c41-a3f5-4554d4e57b3d",
+      "destino_id": "52bbc2f4-901c-5ff0-a08a-5f8f08f91fa1",
+      "origen_nombre": "Tauramena",
+      "origen": {
+        "type": "Point",
+        "coordinates": [
+          -72.7475,
+          5.018
+        ]
+      },
+      "distancia_km": 318.8,
+      "tiempo_horas": 6.9,
+      "peajes_cop": 96400,
+      "factor_dificultad": 1.25,
+      "merma_pct": 7,
+      "geometria": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            -72.7475,
+            5.018
+          ],
+          [
+            -74.154,
+            4.587
+          ]
+        ]
+      },
+      "fuente": "respaldo_linea_recta",
+      "creado_en": "2026-10-12T20:24:54.352Z",
+      "actualizado_en": "2026-10-12T20:24:54.352Z"
+    },
+    {
+      "id": "7efad896-3f13-4404-bb5b-3a1986c680f7",
+      "destino_id": "d8c5a7c4-888d-56e2-81f2-f8cc588a2834",
+      "origen_nombre": "Orocué",
+      "origen": {
+        "type": "Point",
+        "coordinates": [
+          -71.3394,
+          4.7908
+        ]
+      },
+      "distancia_km": 330.2,
+      "tiempo_horas": 7.1,
+      "peajes_cop": 98800,
+      "factor_dificultad": 1.2,
+      "merma_pct": 7.2,
+      "geometria": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            -71.3394,
+            4.7908
+          ],
+          [
+            -72.9339,
+            5.7146
+          ]
+        ]
+      },
+      "fuente": "respaldo_linea_recta",
+      "creado_en": "2026-10-12T20:24:54.352Z",
+      "actualizado_en": "2026-10-12T20:24:54.352Z"
+    },
+    {
+      "id": "bb0db10a-ed3a-44a2-99cd-9a82bbebda23",
+      "destino_id": "52bbc2f4-901c-5ff0-a08a-5f8f08f91fa1",
+      "origen_nombre": "Aguazul",
+      "origen": {
+        "type": "Point",
+        "coordinates": [
+          -72.5547,
+          5.1727
+        ]
+      },
+      "distancia_km": 351.6,
+      "tiempo_horas": 7.6,
+      "peajes_cop": 103400,
+      "factor_dificultad": 1.25,
+      "merma_pct": 7.4,
+      "geometria": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            -72.5547,
+            5.1727
+          ],
+          [
+            -74.154,
+            4.587
+          ]
+        ]
+      },
+      "fuente": "respaldo_linea_recta",
+      "creado_en": "2026-10-12T20:24:54.352Z",
+      "actualizado_en": "2026-10-12T20:24:54.352Z"
+    },
+    {
+      "id": "2caec5e0-f713-4ca3-a53e-cd40aaa91af1",
+      "destino_id": "6b8211cf-49f9-5354-925a-ec5edb230ee1",
+      "origen_nombre": "Paz de Ariporo",
+      "origen": {
+        "type": "Point",
+        "coordinates": [
+          -71.8919,
+          5.8811
+        ]
+      },
+      "distancia_km": 364.7,
+      "tiempo_horas": 7.9,
+      "peajes_cop": 106300,
+      "factor_dificultad": 1.1,
+      "merma_pct": 7.5,
+      "geometria": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            -71.8919,
+            5.8811
+          ],
+          [
+            -73.6266,
+            4.142
+          ]
+        ]
+      },
+      "fuente": "respaldo_linea_recta",
+      "creado_en": "2026-10-12T20:24:54.352Z",
+      "actualizado_en": "2026-10-12T20:24:54.352Z"
+    },
+    {
+      "id": "7f156f06-97c9-4556-ba6c-ae925da540a5",
+      "destino_id": "6b8211cf-49f9-5354-925a-ec5edb230ee1",
+      "origen_nombre": "Orocué",
+      "origen": {
+        "type": "Point",
+        "coordinates": [
+          -71.3394,
+          4.7908
+        ]
+      },
+      "distancia_km": 368.3,
+      "tiempo_horas": 8,
+      "peajes_cop": 107000,
+      "factor_dificultad": 1.1,
+      "merma_pct": 7.6,
+      "geometria": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            -71.3394,
+            4.7908
+          ],
+          [
+            -73.6266,
+            4.142
+          ]
+        ]
+      },
+      "fuente": "respaldo_linea_recta",
+      "creado_en": "2026-10-12T20:24:54.352Z",
+      "actualizado_en": "2026-10-12T20:24:54.352Z"
     },
     {
       "id": "a69ac042-f646-50e2-88bd-b4f76f38c169",
@@ -614,11 +1681,11 @@
           5.3371
         ]
       },
-      "distancia_km": 382.0,
+      "distancia_km": 382,
       "tiempo_horas": 8.4,
       "peajes_cop": 110000,
       "factor_dificultad": 1.25,
-      "merma_pct": 4.5,
+      "merma_pct": 7.7,
       "geometria": {
         "type": "LineString",
         "coordinates": [
@@ -665,8 +1732,107 @@
         ]
       },
       "fuente": "manual",
-      "creado_en": "2026-09-01T08:00:00-05:00",
-      "actualizado_en": "2026-09-26T10:15:00-05:00"
+      "creado_en": "2026-10-12T20:24:54.352Z",
+      "actualizado_en": "2026-10-12T20:24:54.352Z"
+    },
+    {
+      "id": "0bcd441c-2504-4b4e-8a41-79d7db53780b",
+      "destino_id": "3878b38f-1764-5e78-88b0-93461cec83ec",
+      "origen_nombre": "Orocué",
+      "origen": {
+        "type": "Point",
+        "coordinates": [
+          -71.3394,
+          4.7908
+        ]
+      },
+      "distancia_km": 405.2,
+      "tiempo_horas": 8.8,
+      "peajes_cop": 113700,
+      "factor_dificultad": 1.15,
+      "merma_pct": 7.8,
+      "geometria": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            -71.3394,
+            4.7908
+          ],
+          [
+            -73.3678,
+            5.5353
+          ]
+        ]
+      },
+      "fuente": "respaldo_linea_recta",
+      "creado_en": "2026-10-12T20:24:54.352Z",
+      "actualizado_en": "2026-10-12T20:24:54.352Z"
+    },
+    {
+      "id": "1fc73225-6b50-4ffe-af80-9dd016fb8331",
+      "destino_id": "52bbc2f4-901c-5ff0-a08a-5f8f08f91fa1",
+      "origen_nombre": "Nunchía",
+      "origen": {
+        "type": "Point",
+        "coordinates": [
+          -72.1956,
+          5.6372
+        ]
+      },
+      "distancia_km": 430.1,
+      "tiempo_horas": 9.3,
+      "peajes_cop": 117700,
+      "factor_dificultad": 1.25,
+      "merma_pct": 8,
+      "geometria": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            -72.1956,
+            5.6372
+          ],
+          [
+            -74.154,
+            4.587
+          ]
+        ]
+      },
+      "fuente": "respaldo_linea_recta",
+      "creado_en": "2026-10-12T20:24:54.352Z",
+      "actualizado_en": "2026-10-12T20:24:54.352Z"
+    },
+    {
+      "id": "84919ca0-0fe5-4318-9e79-b3e50666f4e9",
+      "destino_id": "396e4a75-a43f-5e33-adb3-1d6163e10530",
+      "origen_nombre": "Paz de Ariporo",
+      "origen": {
+        "type": "Point",
+        "coordinates": [
+          -71.8919,
+          5.8811
+        ]
+      },
+      "distancia_km": 504.3,
+      "tiempo_horas": 10.9,
+      "peajes_cop": 129600,
+      "factor_dificultad": 1.35,
+      "merma_pct": 8.5,
+      "geometria": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            -71.8919,
+            5.8811
+          ],
+          [
+            -72.5078,
+            7.8939
+          ]
+        ]
+      },
+      "fuente": "respaldo_linea_recta",
+      "creado_en": "2026-10-12T20:24:54.352Z",
+      "actualizado_en": "2026-10-12T20:24:54.352Z"
     },
     {
       "id": "a94ec479-675c-5807-9e62-d64eda22f8bd",
@@ -679,11 +1845,11 @@
           5.3371
         ]
       },
-      "distancia_km": 507.0,
+      "distancia_km": 507,
       "tiempo_horas": 11.2,
       "peajes_cop": 130000,
       "factor_dificultad": 1.35,
-      "merma_pct": 5.5,
+      "merma_pct": 8.5,
       "geometria": {
         "type": "LineString",
         "coordinates": [
@@ -730,8 +1896,74 @@
         ]
       },
       "fuente": "manual",
-      "creado_en": "2026-09-01T08:00:00-05:00",
-      "actualizado_en": "2026-09-26T10:15:00-05:00"
+      "creado_en": "2026-10-12T20:24:54.352Z",
+      "actualizado_en": "2026-10-12T20:24:54.352Z"
+    },
+    {
+      "id": "c08f44e0-c29c-4ca9-9647-64075fde1db3",
+      "destino_id": "52bbc2f4-901c-5ff0-a08a-5f8f08f91fa1",
+      "origen_nombre": "Orocué",
+      "origen": {
+        "type": "Point",
+        "coordinates": [
+          -71.3394,
+          4.7908
+        ]
+      },
+      "distancia_km": 540.2,
+      "tiempo_horas": 11.7,
+      "peajes_cop": 136900,
+      "factor_dificultad": 1.25,
+      "merma_pct": 8.7,
+      "geometria": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            -71.3394,
+            4.7908
+          ],
+          [
+            -74.154,
+            4.587
+          ]
+        ]
+      },
+      "fuente": "respaldo_linea_recta",
+      "creado_en": "2026-10-12T20:24:54.352Z",
+      "actualizado_en": "2026-10-12T20:24:54.352Z"
+    },
+    {
+      "id": "7e08d41b-9a6e-476e-9239-37849263a64e",
+      "destino_id": "c1b1b4d6-5649-5406-a30d-e47ea1c9ba12",
+      "origen_nombre": "Tauramena",
+      "origen": {
+        "type": "Point",
+        "coordinates": [
+          -72.7475,
+          5.018
+        ]
+      },
+      "distancia_km": 570.2,
+      "tiempo_horas": 12.3,
+      "peajes_cop": 143200,
+      "factor_dificultad": 1.35,
+      "merma_pct": 8.8,
+      "geometria": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            -72.7475,
+            5.018
+          ],
+          [
+            -73.156,
+            7.0908
+          ]
+        ]
+      },
+      "fuente": "respaldo_linea_recta",
+      "creado_en": "2026-10-12T20:24:54.352Z",
+      "actualizado_en": "2026-10-12T20:24:54.352Z"
     },
     {
       "id": "24cc9013-756c-5947-b31d-103ecf0effca",
@@ -744,11 +1976,11 @@
           5.3371
         ]
       },
-      "distancia_km": 603.0,
-      "tiempo_horas": 13.0,
+      "distancia_km": 603,
+      "tiempo_horas": 13,
       "peajes_cop": 150000,
       "factor_dificultad": 1.35,
-      "merma_pct": 6.0,
+      "merma_pct": 9,
       "geometria": {
         "type": "LineString",
         "coordinates": [
@@ -787,8 +2019,107 @@
         ]
       },
       "fuente": "manual",
-      "creado_en": "2026-09-01T08:00:00-05:00",
-      "actualizado_en": "2026-09-26T10:15:00-05:00"
+      "creado_en": "2026-10-12T20:24:54.352Z",
+      "actualizado_en": "2026-10-12T20:24:54.352Z"
+    },
+    {
+      "id": "cbc63be0-9817-4dbc-9ea6-f7eccc94f332",
+      "destino_id": "c1b1b4d6-5649-5406-a30d-e47ea1c9ba12",
+      "origen_nombre": "Orocué",
+      "origen": {
+        "type": "Point",
+        "coordinates": [
+          -71.3394,
+          4.7908
+        ]
+      },
+      "distancia_km": 665.2,
+      "tiempo_horas": 14.4,
+      "peajes_cop": 169900,
+      "factor_dificultad": 1.35,
+      "merma_pct": 9.2,
+      "geometria": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            -71.3394,
+            4.7908
+          ],
+          [
+            -73.156,
+            7.0908
+          ]
+        ]
+      },
+      "fuente": "respaldo_linea_recta",
+      "creado_en": "2026-10-12T20:24:54.352Z",
+      "actualizado_en": "2026-10-12T20:24:54.352Z"
+    },
+    {
+      "id": "f2f2e125-7eb8-4a0f-9ccb-498c4e8771fc",
+      "destino_id": "15bf935c-dea7-52e8-a312-228463fe5aef",
+      "origen_nombre": "Tauramena",
+      "origen": {
+        "type": "Point",
+        "coordinates": [
+          -72.7475,
+          5.018
+        ]
+      },
+      "distancia_km": 727.8,
+      "tiempo_horas": 15.7,
+      "peajes_cop": 189800,
+      "factor_dificultad": 1.4,
+      "merma_pct": 9.3,
+      "geometria": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            -72.7475,
+            5.018
+          ],
+          [
+            -75.5636,
+            6.2518
+          ]
+        ]
+      },
+      "fuente": "respaldo_linea_recta",
+      "creado_en": "2026-10-12T20:24:54.352Z",
+      "actualizado_en": "2026-10-12T20:24:54.352Z"
+    },
+    {
+      "id": "8dc25bc5-bb7f-49dc-8851-a9790d7a70f4",
+      "destino_id": "396e4a75-a43f-5e33-adb3-1d6163e10530",
+      "origen_nombre": "Orocué",
+      "origen": {
+        "type": "Point",
+        "coordinates": [
+          -71.3394,
+          4.7908
+        ]
+      },
+      "distancia_km": 761.2,
+      "tiempo_horas": 16.5,
+      "peajes_cop": 200500,
+      "factor_dificultad": 1.35,
+      "merma_pct": 9.4,
+      "geometria": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            -71.3394,
+            4.7908
+          ],
+          [
+            -72.5078,
+            7.8939
+          ]
+        ]
+      },
+      "fuente": "respaldo_linea_recta",
+      "creado_en": "2026-10-12T20:24:54.352Z",
+      "actualizado_en": "2026-10-12T20:24:54.352Z"
     },
     {
       "id": "9e8d2db5-62af-5aff-9e08-4f15f793f377",
@@ -801,11 +2132,11 @@
           5.3371
         ]
       },
-      "distancia_km": 791.0,
+      "distancia_km": 791,
       "tiempo_horas": 16.5,
       "peajes_cop": 210000,
       "factor_dificultad": 1.4,
-      "merma_pct": 7.0,
+      "merma_pct": 9.5,
       "geometria": {
         "type": "LineString",
         "coordinates": [
@@ -872,1252 +2203,2067 @@
         ]
       },
       "fuente": "manual",
-      "creado_en": "2026-09-01T08:00:00-05:00",
-      "actualizado_en": "2026-09-26T10:15:00-05:00"
+      "creado_en": "2026-10-12T20:24:54.352Z",
+      "actualizado_en": "2026-10-12T20:24:54.352Z"
+    },
+    {
+      "id": "a4212f08-fade-45ef-8f56-ddd5ffcd2baf",
+      "destino_id": "15bf935c-dea7-52e8-a312-228463fe5aef",
+      "origen_nombre": "Orocué",
+      "origen": {
+        "type": "Point",
+        "coordinates": [
+          -71.3394,
+          4.7908
+        ]
+      },
+      "distancia_km": 949.2,
+      "tiempo_horas": 20.5,
+      "peajes_cop": 210000,
+      "factor_dificultad": 1.4,
+      "merma_pct": 9.5,
+      "geometria": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            -71.3394,
+            4.7908
+          ],
+          [
+            -75.5636,
+            6.2518
+          ]
+        ]
+      },
+      "fuente": "respaldo_linea_recta",
+      "creado_en": "2026-10-12T20:24:54.352Z",
+      "actualizado_en": "2026-10-12T20:24:54.352Z"
     }
   ],
   "precios": [
     {
-      "id": "eb9b2f28-bb8d-57a0-9c2a-5597363d3f93",
-      "destino_id": "acca0ef8-f855-5505-b81b-25833e792ff1",
+      "id": "cb36e3f5-e164-4640-a4fb-56a09722030a",
+      "destino_id": "0e6f6c1a-3b0d-5c8e-9f1a-6d2b7c4e8a10",
       "categoria": "novillo_gordo",
-      "precio_kg_cop": 10400,
-      "fecha": "2026-09-28",
-      "fuente": "Estimación del equipo con base en referencias públicas de precio de ganado gordo (valor ilustrativo)",
-      "creado_en": "2026-09-28T07:00:00-05:00",
-      "actualizado_en": "2026-09-28T07:00:00-05:00"
+      "precio_kg_cop": 10100,
+      "fecha": "2026-10-10",
+      "fuente": "Estimación: precio de subasta de Yopal menos 300 COP/kg; el comprador asume el transporte",
+      "referencia": null,
+      "importacion_id": null,
+      "antiguedad_dias": 2,
+      "creado_en": "2026-10-12T20:24:54.352Z",
+      "actualizado_en": "2026-10-12T20:24:54.352Z"
     },
     {
-      "id": "d6348ddd-4333-51ac-a469-2be1bb2eb3ea",
-      "destino_id": "acca0ef8-f855-5505-b81b-25833e792ff1",
+      "id": "03699a39-2878-4485-bdc3-66522651c415",
+      "destino_id": "0e6f6c1a-3b0d-5c8e-9f1a-6d2b7c4e8a10",
       "categoria": "vaca_gorda",
-      "precio_kg_cop": 8940,
-      "fecha": "2026-09-28",
-      "fuente": "Estimación del equipo con base en referencias públicas de precio de ganado gordo (valor ilustrativo)",
-      "creado_en": "2026-09-28T07:00:00-05:00",
-      "actualizado_en": "2026-09-28T07:00:00-05:00"
+      "precio_kg_cop": 8690,
+      "fecha": "2026-10-10",
+      "fuente": "Estimación: 86 % del novillo gordo (relación observada en OPCA-Unicórdoba, jun 2026)",
+      "referencia": null,
+      "importacion_id": null,
+      "antiguedad_dias": 2,
+      "creado_en": "2026-10-12T20:24:54.352Z",
+      "actualizado_en": "2026-10-12T20:24:54.352Z"
     },
     {
-      "id": "c88837c1-4c47-5a7e-8b5c-2d26871f4dac",
-      "destino_id": "5a11df78-6998-5089-a775-55e35b205cfe",
-      "categoria": "novillo_gordo",
-      "precio_kg_cop": 10250,
-      "fecha": "2026-09-28",
-      "fuente": "Estimación del equipo con base en referencias públicas de precio de ganado gordo (valor ilustrativo)",
-      "creado_en": "2026-09-28T07:00:00-05:00",
-      "actualizado_en": "2026-09-28T07:00:00-05:00"
+      "id": "fa0724fb-5960-4e9e-92da-462411f59e43",
+      "destino_id": "0e6f6c1a-3b0d-5c8e-9f1a-6d2b7c4e8a10",
+      "categoria": "novillo_levante",
+      "precio_kg_cop": 12000,
+      "fecha": "2026-10-10",
+      "fuente": "Entrevista a ganadero de Yopal (29 sep 2026): macho de levante a 12.000 COP/kg en pie",
+      "referencia": null,
+      "importacion_id": null,
+      "antiguedad_dias": 2,
+      "creado_en": "2026-10-12T20:24:54.352Z",
+      "actualizado_en": "2026-10-12T20:24:54.352Z"
     },
     {
-      "id": "603504ee-9a08-59c0-b5d6-cb8cb8a76f87",
-      "destino_id": "5a11df78-6998-5089-a775-55e35b205cfe",
-      "categoria": "vaca_gorda",
-      "precio_kg_cop": 8820,
-      "fecha": "2026-09-28",
-      "fuente": "Estimación del equipo con base en referencias públicas de precio de ganado gordo (valor ilustrativo)",
-      "creado_en": "2026-09-28T07:00:00-05:00",
-      "actualizado_en": "2026-09-28T07:00:00-05:00"
-    },
-    {
-      "id": "d69ee307-3d5c-5951-851a-42c3308d5d35",
-      "destino_id": "a8745d0d-590c-5f1b-b749-bb96c5be4aac",
-      "categoria": "novillo_gordo",
-      "precio_kg_cop": 10450,
-      "fecha": "2026-09-28",
-      "fuente": "Estimación del equipo con base en referencias públicas de precio de ganado gordo (valor ilustrativo)",
-      "creado_en": "2026-09-28T07:00:00-05:00",
-      "actualizado_en": "2026-09-28T07:00:00-05:00"
-    },
-    {
-      "id": "4eb597c4-65ec-503f-8846-2f019a5cb6c9",
-      "destino_id": "a8745d0d-590c-5f1b-b749-bb96c5be4aac",
-      "categoria": "vaca_gorda",
-      "precio_kg_cop": 8990,
-      "fecha": "2026-09-28",
-      "fuente": "Estimación del equipo con base en referencias públicas de precio de ganado gordo (valor ilustrativo)",
-      "creado_en": "2026-09-28T07:00:00-05:00",
-      "actualizado_en": "2026-09-28T07:00:00-05:00"
-    },
-    {
-      "id": "23195f87-22b4-532a-b79b-5a960e559cda",
-      "destino_id": "6b8211cf-49f9-5354-925a-ec5edb230ee1",
-      "categoria": "novillo_gordo",
-      "precio_kg_cop": 10600,
-      "fecha": "2026-09-28",
-      "fuente": "Estimación del equipo con base en referencias públicas de precio de ganado gordo (valor ilustrativo)",
-      "creado_en": "2026-09-28T07:00:00-05:00",
-      "actualizado_en": "2026-09-28T07:00:00-05:00"
-    },
-    {
-      "id": "0e4f3c72-84e6-5fbc-a400-eb5a55db02e9",
-      "destino_id": "6b8211cf-49f9-5354-925a-ec5edb230ee1",
-      "categoria": "vaca_gorda",
-      "precio_kg_cop": 9120,
-      "fecha": "2026-09-28",
-      "fuente": "Estimación del equipo con base en referencias públicas de precio de ganado gordo (valor ilustrativo)",
-      "creado_en": "2026-09-28T07:00:00-05:00",
-      "actualizado_en": "2026-09-28T07:00:00-05:00"
-    },
-    {
-      "id": "271e9fbb-b7f5-591e-bad1-4a0be862bee7",
-      "destino_id": "d8c5a7c4-888d-56e2-81f2-f8cc588a2834",
-      "categoria": "novillo_gordo",
-      "precio_kg_cop": 10750,
-      "fecha": "2026-09-28",
-      "fuente": "Estimación del equipo con base en referencias públicas de precio de ganado gordo (valor ilustrativo)",
-      "creado_en": "2026-09-28T07:00:00-05:00",
-      "actualizado_en": "2026-09-28T07:00:00-05:00"
-    },
-    {
-      "id": "317c62b8-e6fa-56a7-85b4-313f19782dd8",
-      "destino_id": "d8c5a7c4-888d-56e2-81f2-f8cc588a2834",
-      "categoria": "vaca_gorda",
-      "precio_kg_cop": 9240,
-      "fecha": "2026-09-28",
-      "fuente": "Estimación del equipo con base en referencias públicas de precio de ganado gordo (valor ilustrativo)",
-      "creado_en": "2026-09-28T07:00:00-05:00",
-      "actualizado_en": "2026-09-28T07:00:00-05:00"
-    },
-    {
-      "id": "c557a8dd-d7f3-51fa-ba28-4666650e7d3e",
-      "destino_id": "3878b38f-1764-5e78-88b0-93461cec83ec",
-      "categoria": "novillo_gordo",
-      "precio_kg_cop": 10900,
-      "fecha": "2026-09-28",
-      "fuente": "Estimación del equipo con base en referencias públicas de precio de ganado gordo (valor ilustrativo)",
-      "creado_en": "2026-09-28T07:00:00-05:00",
-      "actualizado_en": "2026-09-28T07:00:00-05:00"
-    },
-    {
-      "id": "71d22660-d34b-5abf-a84b-a0ac8e59d162",
-      "destino_id": "3878b38f-1764-5e78-88b0-93461cec83ec",
-      "categoria": "vaca_gorda",
-      "precio_kg_cop": 9370,
-      "fecha": "2026-09-28",
-      "fuente": "Estimación del equipo con base en referencias públicas de precio de ganado gordo (valor ilustrativo)",
-      "creado_en": "2026-09-28T07:00:00-05:00",
-      "actualizado_en": "2026-09-28T07:00:00-05:00"
-    },
-    {
-      "id": "d6f79498-451a-5491-a3a3-b42aa7a861ed",
-      "destino_id": "52bbc2f4-901c-5ff0-a08a-5f8f08f91fa1",
-      "categoria": "novillo_gordo",
-      "precio_kg_cop": 11300,
-      "fecha": "2026-09-28",
-      "fuente": "Estimación del equipo con base en referencias públicas de precio de ganado gordo (valor ilustrativo)",
-      "creado_en": "2026-09-28T07:00:00-05:00",
-      "actualizado_en": "2026-09-28T07:00:00-05:00"
-    },
-    {
-      "id": "40e9a9da-5bdd-5d6c-93b6-0694c3d8800e",
-      "destino_id": "52bbc2f4-901c-5ff0-a08a-5f8f08f91fa1",
-      "categoria": "vaca_gorda",
-      "precio_kg_cop": 9720,
-      "fecha": "2026-09-28",
-      "fuente": "Estimación del equipo con base en referencias públicas de precio de ganado gordo (valor ilustrativo)",
-      "creado_en": "2026-09-28T07:00:00-05:00",
-      "actualizado_en": "2026-09-28T07:00:00-05:00"
-    },
-    {
-      "id": "620ed279-c411-57ef-acf5-1ec69d908fe2",
-      "destino_id": "c1b1b4d6-5649-5406-a30d-e47ea1c9ba12",
-      "categoria": "novillo_gordo",
-      "precio_kg_cop": 11100,
-      "fecha": "2026-09-28",
-      "fuente": "Estimación del equipo con base en referencias públicas de precio de ganado gordo (valor ilustrativo)",
-      "creado_en": "2026-09-28T07:00:00-05:00",
-      "actualizado_en": "2026-09-28T07:00:00-05:00"
-    },
-    {
-      "id": "a7c638b3-f265-5218-9301-1121d3f6c2ab",
-      "destino_id": "c1b1b4d6-5649-5406-a30d-e47ea1c9ba12",
-      "categoria": "vaca_gorda",
-      "precio_kg_cop": 9550,
-      "fecha": "2026-09-28",
-      "fuente": "Estimación del equipo con base en referencias públicas de precio de ganado gordo (valor ilustrativo)",
-      "creado_en": "2026-09-28T07:00:00-05:00",
-      "actualizado_en": "2026-09-28T07:00:00-05:00"
-    },
-    {
-      "id": "ad5fd416-9af2-586a-8106-b6466145a73e",
-      "destino_id": "396e4a75-a43f-5e33-adb3-1d6163e10530",
-      "categoria": "novillo_gordo",
-      "precio_kg_cop": 11200,
-      "fecha": "2026-09-28",
-      "fuente": "Estimación del equipo con base en referencias públicas de precio de ganado gordo (valor ilustrativo)",
-      "creado_en": "2026-09-28T07:00:00-05:00",
-      "actualizado_en": "2026-09-28T07:00:00-05:00"
-    },
-    {
-      "id": "9877514c-5e11-5f2e-b808-cfff230dda84",
-      "destino_id": "396e4a75-a43f-5e33-adb3-1d6163e10530",
-      "categoria": "vaca_gorda",
-      "precio_kg_cop": 9630,
-      "fecha": "2026-09-28",
-      "fuente": "Estimación del equipo con base en referencias públicas de precio de ganado gordo (valor ilustrativo)",
-      "creado_en": "2026-09-28T07:00:00-05:00",
-      "actualizado_en": "2026-09-28T07:00:00-05:00"
-    },
-    {
-      "id": "7c66f66b-df9b-505c-98cc-924cc8fa922e",
+      "id": "41024655-ab3e-4cd8-b22b-b444425e2093",
       "destino_id": "15bf935c-dea7-52e8-a312-228463fe5aef",
       "categoria": "novillo_gordo",
       "precio_kg_cop": 11600,
-      "fecha": "2026-09-28",
-      "fuente": "Estimación del equipo con base en referencias públicas de precio de ganado gordo (valor ilustrativo)",
-      "creado_en": "2026-09-28T07:00:00-05:00",
-      "actualizado_en": "2026-09-28T07:00:00-05:00"
+      "fecha": "2026-10-10",
+      "fuente": "Estimación del equipo calibrada con OPCA-Unicórdoba (jun 2026) y feria de Medellín; pendiente de validar",
+      "referencia": null,
+      "importacion_id": null,
+      "antiguedad_dias": 2,
+      "creado_en": "2026-10-12T20:24:54.352Z",
+      "actualizado_en": "2026-10-12T20:24:54.352Z"
     },
     {
-      "id": "1f2ddf49-090f-5aba-a292-0f9b897d02a2",
+      "id": "dc9d96cb-4f18-4d24-9c4a-ade851019da6",
       "destino_id": "15bf935c-dea7-52e8-a312-228463fe5aef",
       "categoria": "vaca_gorda",
       "precio_kg_cop": 9980,
-      "fecha": "2026-09-28",
-      "fuente": "Estimación del equipo con base en referencias públicas de precio de ganado gordo (valor ilustrativo)",
-      "creado_en": "2026-09-28T07:00:00-05:00",
-      "actualizado_en": "2026-09-28T07:00:00-05:00"
+      "fecha": "2026-10-10",
+      "fuente": "Estimación del equipo calibrada con OPCA-Unicórdoba (jun 2026) y feria de Medellín; pendiente de validar",
+      "referencia": null,
+      "importacion_id": null,
+      "antiguedad_dias": 2,
+      "creado_en": "2026-10-12T20:24:54.352Z",
+      "actualizado_en": "2026-10-12T20:24:54.352Z"
+    },
+    {
+      "id": "08ff8054-7141-4fa1-8c49-fd365647db3e",
+      "destino_id": "15bf935c-dea7-52e8-a312-228463fe5aef",
+      "categoria": "novillo_levante",
+      "precio_kg_cop": 12600,
+      "fecha": "2026-10-10",
+      "fuente": "Estimación del equipo calibrada con OPCA-Unicórdoba (jun 2026) y feria de Medellín; pendiente de validar",
+      "referencia": null,
+      "importacion_id": null,
+      "antiguedad_dias": 2,
+      "creado_en": "2026-10-12T20:24:54.352Z",
+      "actualizado_en": "2026-10-12T20:24:54.352Z"
+    },
+    {
+      "id": "5d1b13c9-a264-43d9-9585-3c93d27ec54e",
+      "destino_id": "3878b38f-1764-5e78-88b0-93461cec83ec",
+      "categoria": "novillo_gordo",
+      "precio_kg_cop": 10900,
+      "fecha": "2026-10-10",
+      "fuente": "Estimación del equipo calibrada con OPCA-Unicórdoba (jun 2026) y feria de Medellín; pendiente de validar",
+      "referencia": null,
+      "importacion_id": null,
+      "antiguedad_dias": 2,
+      "creado_en": "2026-10-12T20:24:54.352Z",
+      "actualizado_en": "2026-10-12T20:24:54.352Z"
+    },
+    {
+      "id": "b177daa6-5480-4eab-bb4b-974de9c63fe6",
+      "destino_id": "3878b38f-1764-5e78-88b0-93461cec83ec",
+      "categoria": "vaca_gorda",
+      "precio_kg_cop": 9370,
+      "fecha": "2026-10-10",
+      "fuente": "Estimación del equipo calibrada con OPCA-Unicórdoba (jun 2026) y feria de Medellín; pendiente de validar",
+      "referencia": null,
+      "importacion_id": null,
+      "antiguedad_dias": 2,
+      "creado_en": "2026-10-12T20:24:54.352Z",
+      "actualizado_en": "2026-10-12T20:24:54.352Z"
+    },
+    {
+      "id": "04afbfa7-3d0c-4e8f-850d-605e3036a83e",
+      "destino_id": "3878b38f-1764-5e78-88b0-93461cec83ec",
+      "categoria": "novillo_levante",
+      "precio_kg_cop": 12350,
+      "fecha": "2026-10-10",
+      "fuente": "Estimación del equipo calibrada con OPCA-Unicórdoba (jun 2026) y feria de Medellín; pendiente de validar",
+      "referencia": null,
+      "importacion_id": null,
+      "antiguedad_dias": 2,
+      "creado_en": "2026-10-12T20:24:54.352Z",
+      "actualizado_en": "2026-10-12T20:24:54.352Z"
+    },
+    {
+      "id": "9873bcf4-7c9e-463e-a37e-990da2fde410",
+      "destino_id": "396e4a75-a43f-5e33-adb3-1d6163e10530",
+      "categoria": "novillo_gordo",
+      "precio_kg_cop": 11200,
+      "fecha": "2026-10-10",
+      "fuente": "Estimación del equipo calibrada con OPCA-Unicórdoba (jun 2026) y feria de Medellín; pendiente de validar",
+      "referencia": null,
+      "importacion_id": null,
+      "antiguedad_dias": 2,
+      "creado_en": "2026-10-12T20:24:54.352Z",
+      "actualizado_en": "2026-10-12T20:24:54.352Z"
+    },
+    {
+      "id": "ebe9b872-e7a2-4011-97b5-1760ef3cf7a1",
+      "destino_id": "396e4a75-a43f-5e33-adb3-1d6163e10530",
+      "categoria": "vaca_gorda",
+      "precio_kg_cop": 9630,
+      "fecha": "2026-10-10",
+      "fuente": "Estimación del equipo calibrada con OPCA-Unicórdoba (jun 2026) y feria de Medellín; pendiente de validar",
+      "referencia": null,
+      "importacion_id": null,
+      "antiguedad_dias": 2,
+      "creado_en": "2026-10-12T20:24:54.352Z",
+      "actualizado_en": "2026-10-12T20:24:54.352Z"
+    },
+    {
+      "id": "c19110f2-0ae2-420a-a8f6-2b947a6a5122",
+      "destino_id": "52bbc2f4-901c-5ff0-a08a-5f8f08f91fa1",
+      "categoria": "novillo_gordo",
+      "precio_kg_cop": 11300,
+      "fecha": "2026-10-10",
+      "fuente": "Estimación del equipo calibrada con OPCA-Unicórdoba (jun 2026) y feria de Medellín; pendiente de validar",
+      "referencia": null,
+      "importacion_id": null,
+      "antiguedad_dias": 2,
+      "creado_en": "2026-10-12T20:24:54.352Z",
+      "actualizado_en": "2026-10-12T20:24:54.352Z"
+    },
+    {
+      "id": "7bf97f22-2e1a-4b7b-971b-6903878c2b4e",
+      "destino_id": "52bbc2f4-901c-5ff0-a08a-5f8f08f91fa1",
+      "categoria": "vaca_gorda",
+      "precio_kg_cop": 9720,
+      "fecha": "2026-10-10",
+      "fuente": "Estimación del equipo calibrada con OPCA-Unicórdoba (jun 2026) y feria de Medellín; pendiente de validar",
+      "referencia": null,
+      "importacion_id": null,
+      "antiguedad_dias": 2,
+      "creado_en": "2026-10-12T20:24:54.352Z",
+      "actualizado_en": "2026-10-12T20:24:54.352Z"
+    },
+    {
+      "id": "c23fefba-b28b-408d-b243-555ede205e56",
+      "destino_id": "5a11df78-6998-5089-a775-55e35b205cfe",
+      "categoria": "novillo_gordo",
+      "precio_kg_cop": 10250,
+      "fecha": "2026-10-10",
+      "fuente": "Estimación del equipo calibrada con OPCA-Unicórdoba (jun 2026) y feria de Medellín; pendiente de validar",
+      "referencia": null,
+      "importacion_id": null,
+      "antiguedad_dias": 2,
+      "creado_en": "2026-10-12T20:24:54.352Z",
+      "actualizado_en": "2026-10-12T20:24:54.352Z"
+    },
+    {
+      "id": "3a7055a8-5749-405f-8890-21fd71e5d46e",
+      "destino_id": "5a11df78-6998-5089-a775-55e35b205cfe",
+      "categoria": "vaca_gorda",
+      "precio_kg_cop": 8820,
+      "fecha": "2026-10-10",
+      "fuente": "Estimación del equipo calibrada con OPCA-Unicórdoba (jun 2026) y feria de Medellín; pendiente de validar",
+      "referencia": null,
+      "importacion_id": null,
+      "antiguedad_dias": 2,
+      "creado_en": "2026-10-12T20:24:54.352Z",
+      "actualizado_en": "2026-10-12T20:24:54.352Z"
+    },
+    {
+      "id": "ce60ba48-e23c-4080-872d-199ecfcadd5e",
+      "destino_id": "5a11df78-6998-5089-a775-55e35b205cfe",
+      "categoria": "novillo_levante",
+      "precio_kg_cop": 12000,
+      "fecha": "2026-10-10",
+      "fuente": "Estimación del equipo calibrada con OPCA-Unicórdoba (jun 2026) y feria de Medellín; pendiente de validar",
+      "referencia": null,
+      "importacion_id": null,
+      "antiguedad_dias": 2,
+      "creado_en": "2026-10-12T20:24:54.352Z",
+      "actualizado_en": "2026-10-12T20:24:54.352Z"
+    },
+    {
+      "id": "4e8cd372-6295-4adb-aab7-7b75969bb050",
+      "destino_id": "6b8211cf-49f9-5354-925a-ec5edb230ee1",
+      "categoria": "novillo_gordo",
+      "precio_kg_cop": 10600,
+      "fecha": "2026-10-10",
+      "fuente": "Estimación del equipo calibrada con OPCA-Unicórdoba (jun 2026) y feria de Medellín; pendiente de validar",
+      "referencia": null,
+      "importacion_id": null,
+      "antiguedad_dias": 2,
+      "creado_en": "2026-10-12T20:24:54.352Z",
+      "actualizado_en": "2026-10-12T20:24:54.352Z"
+    },
+    {
+      "id": "28ed75eb-7de4-4012-891e-62138f395829",
+      "destino_id": "6b8211cf-49f9-5354-925a-ec5edb230ee1",
+      "categoria": "vaca_gorda",
+      "precio_kg_cop": 9120,
+      "fecha": "2026-10-10",
+      "fuente": "Estimación del equipo calibrada con OPCA-Unicórdoba (jun 2026) y feria de Medellín; pendiente de validar",
+      "referencia": null,
+      "importacion_id": null,
+      "antiguedad_dias": 2,
+      "creado_en": "2026-10-12T20:24:54.352Z",
+      "actualizado_en": "2026-10-12T20:24:54.352Z"
+    },
+    {
+      "id": "66c1964b-1b9c-4a27-bb20-ce94aa9851bf",
+      "destino_id": "6b8211cf-49f9-5354-925a-ec5edb230ee1",
+      "categoria": "novillo_levante",
+      "precio_kg_cop": 12400,
+      "fecha": "2026-10-10",
+      "fuente": "Estimación del equipo calibrada con OPCA-Unicórdoba (jun 2026) y feria de Medellín; pendiente de validar",
+      "referencia": null,
+      "importacion_id": null,
+      "antiguedad_dias": 2,
+      "creado_en": "2026-10-12T20:24:54.352Z",
+      "actualizado_en": "2026-10-12T20:24:54.352Z"
+    },
+    {
+      "id": "6b1f7b59-b964-4fd4-8390-d4f0817a62d9",
+      "destino_id": "a8745d0d-590c-5f1b-b749-bb96c5be4aac",
+      "categoria": "novillo_gordo",
+      "precio_kg_cop": 10450,
+      "fecha": "2026-10-10",
+      "fuente": "Estimación del equipo calibrada con OPCA-Unicórdoba (jun 2026) y feria de Medellín; pendiente de validar",
+      "referencia": null,
+      "importacion_id": null,
+      "antiguedad_dias": 2,
+      "creado_en": "2026-10-12T20:24:54.352Z",
+      "actualizado_en": "2026-10-12T20:24:54.352Z"
+    },
+    {
+      "id": "64af2852-697e-4923-a94c-290bd2a9bb70",
+      "destino_id": "a8745d0d-590c-5f1b-b749-bb96c5be4aac",
+      "categoria": "vaca_gorda",
+      "precio_kg_cop": 8990,
+      "fecha": "2026-10-10",
+      "fuente": "Estimación del equipo calibrada con OPCA-Unicórdoba (jun 2026) y feria de Medellín; pendiente de validar",
+      "referencia": null,
+      "importacion_id": null,
+      "antiguedad_dias": 2,
+      "creado_en": "2026-10-12T20:24:54.352Z",
+      "actualizado_en": "2026-10-12T20:24:54.352Z"
+    },
+    {
+      "id": "5a32fe6c-329e-4480-8f76-8ff92743baf4",
+      "destino_id": "a8745d0d-590c-5f1b-b749-bb96c5be4aac",
+      "categoria": "novillo_levante",
+      "precio_kg_cop": 12100,
+      "fecha": "2026-10-10",
+      "fuente": "Estimación del equipo calibrada con OPCA-Unicórdoba (jun 2026) y feria de Medellín; pendiente de validar",
+      "referencia": null,
+      "importacion_id": null,
+      "antiguedad_dias": 2,
+      "creado_en": "2026-10-12T20:24:54.352Z",
+      "actualizado_en": "2026-10-12T20:24:54.352Z"
+    },
+    {
+      "id": "19acf133-7556-4fe7-b76b-5d28f79236db",
+      "destino_id": "acca0ef8-f855-5505-b81b-25833e792ff1",
+      "categoria": "novillo_gordo",
+      "precio_kg_cop": 10400,
+      "fecha": "2026-10-10",
+      "fuente": "Estimación del equipo calibrada con OPCA-Unicórdoba (jun 2026) y feria de Medellín; pendiente de validar",
+      "referencia": null,
+      "importacion_id": null,
+      "antiguedad_dias": 2,
+      "creado_en": "2026-10-12T20:24:54.352Z",
+      "actualizado_en": "2026-10-12T20:24:54.352Z"
+    },
+    {
+      "id": "30c5e9d1-1792-4ffa-9e61-4f272a35e93f",
+      "destino_id": "acca0ef8-f855-5505-b81b-25833e792ff1",
+      "categoria": "vaca_gorda",
+      "precio_kg_cop": 8940,
+      "fecha": "2026-10-10",
+      "fuente": "Estimación del equipo calibrada con OPCA-Unicórdoba (jun 2026) y feria de Medellín; pendiente de validar",
+      "referencia": null,
+      "importacion_id": null,
+      "antiguedad_dias": 2,
+      "creado_en": "2026-10-12T20:24:54.352Z",
+      "actualizado_en": "2026-10-12T20:24:54.352Z"
+    },
+    {
+      "id": "1c7faf65-19fd-459c-be69-6c2c4a08a40d",
+      "destino_id": "acca0ef8-f855-5505-b81b-25833e792ff1",
+      "categoria": "novillo_levante",
+      "precio_kg_cop": 12200,
+      "fecha": "2026-10-10",
+      "fuente": "Estimación del equipo calibrada con OPCA-Unicórdoba (jun 2026) y feria de Medellín; pendiente de validar",
+      "referencia": null,
+      "importacion_id": null,
+      "antiguedad_dias": 2,
+      "creado_en": "2026-10-12T20:24:54.352Z",
+      "actualizado_en": "2026-10-12T20:24:54.352Z"
+    },
+    {
+      "id": "eb8f7687-da46-451c-843a-71954217ea9a",
+      "destino_id": "c1b1b4d6-5649-5406-a30d-e47ea1c9ba12",
+      "categoria": "novillo_gordo",
+      "precio_kg_cop": 11100,
+      "fecha": "2026-10-10",
+      "fuente": "Estimación del equipo calibrada con OPCA-Unicórdoba (jun 2026) y feria de Medellín; pendiente de validar",
+      "referencia": null,
+      "importacion_id": null,
+      "antiguedad_dias": 2,
+      "creado_en": "2026-10-12T20:24:54.352Z",
+      "actualizado_en": "2026-10-12T20:24:54.352Z"
+    },
+    {
+      "id": "18816744-56cd-48ac-9bf6-b5d6d97e2eb6",
+      "destino_id": "c1b1b4d6-5649-5406-a30d-e47ea1c9ba12",
+      "categoria": "vaca_gorda",
+      "precio_kg_cop": 9550,
+      "fecha": "2026-10-10",
+      "fuente": "Estimación del equipo calibrada con OPCA-Unicórdoba (jun 2026) y feria de Medellín; pendiente de validar",
+      "referencia": null,
+      "importacion_id": null,
+      "antiguedad_dias": 2,
+      "creado_en": "2026-10-12T20:24:54.352Z",
+      "actualizado_en": "2026-10-12T20:24:54.352Z"
+    },
+    {
+      "id": "54b870cb-86fb-4187-b595-3b167230dd08",
+      "destino_id": "d8c5a7c4-888d-56e2-81f2-f8cc588a2834",
+      "categoria": "novillo_gordo",
+      "precio_kg_cop": 10750,
+      "fecha": "2026-10-10",
+      "fuente": "Estimación del equipo calibrada con OPCA-Unicórdoba (jun 2026) y feria de Medellín; pendiente de validar",
+      "referencia": null,
+      "importacion_id": null,
+      "antiguedad_dias": 2,
+      "creado_en": "2026-10-12T20:24:54.352Z",
+      "actualizado_en": "2026-10-12T20:24:54.352Z"
+    },
+    {
+      "id": "0971d984-7506-4d8a-8d40-5697a331a08d",
+      "destino_id": "d8c5a7c4-888d-56e2-81f2-f8cc588a2834",
+      "categoria": "vaca_gorda",
+      "precio_kg_cop": 9240,
+      "fecha": "2026-10-10",
+      "fuente": "Estimación del equipo calibrada con OPCA-Unicórdoba (jun 2026) y feria de Medellín; pendiente de validar",
+      "referencia": null,
+      "importacion_id": null,
+      "antiguedad_dias": 2,
+      "creado_en": "2026-10-12T20:24:54.352Z",
+      "actualizado_en": "2026-10-12T20:24:54.352Z"
+    },
+    {
+      "id": "cb86da7f-fb2a-41c5-adcb-873e4951b702",
+      "destino_id": "d8c5a7c4-888d-56e2-81f2-f8cc588a2834",
+      "categoria": "novillo_levante",
+      "precio_kg_cop": 12300,
+      "fecha": "2026-10-10",
+      "fuente": "Estimación del equipo calibrada con OPCA-Unicórdoba (jun 2026) y feria de Medellín; pendiente de validar",
+      "referencia": null,
+      "importacion_id": null,
+      "antiguedad_dias": 2,
+      "creado_en": "2026-10-12T20:24:54.352Z",
+      "actualizado_en": "2026-10-12T20:24:54.352Z"
     }
   ],
   "simulaciones": [
     {
-      "id": "18cd8eeb-37b5-5ed0-a354-46501964d2e1",
+      "id": "d4908552-fe50-40ab-abfa-835579d6d46f",
+      "lote_id": "4c1d9e2f-6a7b-5c8d-9e0f-1a2b3c4d5e6f",
+      "flete_km_cop": 6500,
+      "capacidad_camion": 25,
+      "flete_incluye_peajes": false,
+      "mejor_destino_id": "0e6f6c1a-3b0d-5c8e-9f1a-6d2b7c4e8a10",
+      "creado_en": "2026-10-07T15:00:00.000Z",
+      "actualizado_en": "2026-10-07T15:00:00.000Z",
+      "resultados": [
+        {
+          "id": "a3ba9eb6-92ba-4791-ba53-86455a766823",
+          "simulacion_id": "d4908552-fe50-40ab-abfa-835579d6d46f",
+          "destino_id": "0e6f6c1a-3b0d-5c8e-9f1a-6d2b7c4e8a10",
+          "ruta_id": "7b1e2d3c-4a5b-5c6d-8e7f-9a0b1c2d3e4f",
+          "distancia_km": 0,
+          "tiempo_horas": 0,
+          "merma_pct": 0,
+          "camiones": 2,
+          "peso_vendido_kg": 6110,
+          "precio_kg_cop": 11880,
+          "precio_fecha": "2026-09-26",
+          "precio_antiguedad_dias": 11,
+          "advertencia": "Precio de hace 11 días (2026-09-26); puede no reflejar el mercado actual.",
+          "comision_cop": 0,
+          "flete_cop": 0,
+          "peajes_cop": 0,
+          "costo_logistico_cop": 0,
+          "ingreso_bruto_cop": 72586800,
+          "utilidad_neta_cop": 72586800,
+          "posicion": 1,
+          "creado_en": "2026-10-07T15:00:00.000Z",
+          "actualizado_en": "2026-10-07T15:00:00.000Z"
+        },
+        {
+          "id": "868f1484-9fa9-4920-956c-3fe641bdf19f",
+          "simulacion_id": "d4908552-fe50-40ab-abfa-835579d6d46f",
+          "destino_id": "acca0ef8-f855-5505-b81b-25833e792ff1",
+          "ruta_id": "58503f72-33aa-5dc3-a8fa-e39abddb9eea",
+          "distancia_km": 9.5,
+          "tiempo_horas": 0.3,
+          "merma_pct": 0.5,
+          "camiones": 2,
+          "peso_vendido_kg": 6079.5,
+          "precio_kg_cop": 12080,
+          "precio_fecha": "2026-09-26",
+          "precio_antiguedad_dias": 11,
+          "advertencia": "Precio de hace 11 días (2026-09-26); puede no reflejar el mercado actual.",
+          "comision_cop": 2203211,
+          "flete_cop": 123500,
+          "peajes_cop": 0,
+          "costo_logistico_cop": 2326711,
+          "ingreso_bruto_cop": 73440360,
+          "utilidad_neta_cop": 71113649,
+          "posicion": 2,
+          "creado_en": "2026-10-07T15:00:00.000Z",
+          "actualizado_en": "2026-10-07T15:00:00.000Z"
+        },
+        {
+          "id": "479c45cf-9a00-40bb-80a5-0be533e6f833",
+          "simulacion_id": "d4908552-fe50-40ab-abfa-835579d6d46f",
+          "destino_id": "a8745d0d-590c-5f1b-b749-bb96c5be4aac",
+          "ruta_id": "e59208f0-6906-5331-a7eb-bbdaa0a2eb78",
+          "distancia_km": 131,
+          "tiempo_horas": 2.7,
+          "merma_pct": 3,
+          "camiones": 2,
+          "peso_vendido_kg": 5926.7,
+          "precio_kg_cop": 11980,
+          "precio_fecha": "2026-09-26",
+          "precio_antiguedad_dias": 11,
+          "advertencia": "Precio de hace 11 días (2026-09-26); puede no reflejar el mercado actual.",
+          "comision_cop": 2130056,
+          "flete_cop": 1788150,
+          "peajes_cop": 42000,
+          "costo_logistico_cop": 3960206,
+          "ingreso_bruto_cop": 71001866,
+          "utilidad_neta_cop": 67041660,
+          "posicion": 3,
+          "creado_en": "2026-10-07T15:00:00.000Z",
+          "actualizado_en": "2026-10-07T15:00:00.000Z"
+        },
+        {
+          "id": "5d5fef3c-6a5f-42a2-9d3a-4362ac9bbaa6",
+          "simulacion_id": "d4908552-fe50-40ab-abfa-835579d6d46f",
+          "destino_id": "5a11df78-6998-5089-a775-55e35b205cfe",
+          "ruta_id": "ae582c3d-af89-5b0d-988d-4ed54fba9b89",
+          "distancia_km": 128,
+          "tiempo_horas": 2.6,
+          "merma_pct": 3,
+          "camiones": 2,
+          "peso_vendido_kg": 5926.7,
+          "precio_kg_cop": 11880,
+          "precio_fecha": "2026-09-26",
+          "precio_antiguedad_dias": 11,
+          "advertencia": "Precio de hace 11 días (2026-09-26); puede no reflejar el mercado actual.",
+          "comision_cop": 2112276,
+          "flete_cop": 1747200,
+          "peajes_cop": 38000,
+          "costo_logistico_cop": 3897476,
+          "ingreso_bruto_cop": 70409196,
+          "utilidad_neta_cop": 66511720,
+          "posicion": 4,
+          "creado_en": "2026-10-07T15:00:00.000Z",
+          "actualizado_en": "2026-10-07T15:00:00.000Z"
+        },
+        {
+          "id": "178fd47d-a5bf-466b-9de5-01f4468aa020",
+          "simulacion_id": "d4908552-fe50-40ab-abfa-835579d6d46f",
+          "destino_id": "6b8211cf-49f9-5354-925a-ec5edb230ee1",
+          "ruta_id": "5ec2ea46-db9d-525b-8417-462de2b24a6a",
+          "distancia_km": 266,
+          "tiempo_horas": 5.1,
+          "merma_pct": 6.5,
+          "camiones": 2,
+          "peso_vendido_kg": 5712.9,
+          "precio_kg_cop": 12280,
+          "precio_fecha": "2026-09-26",
+          "precio_antiguedad_dias": 11,
+          "advertencia": "Precio de hace 11 días (2026-09-26); puede no reflejar el mercado actual.",
+          "comision_cop": 0,
+          "flete_cop": 3803800,
+          "peajes_cop": 170000,
+          "costo_logistico_cop": 3973800,
+          "ingreso_bruto_cop": 70154412,
+          "utilidad_neta_cop": 66180612,
+          "posicion": 5,
+          "creado_en": "2026-10-07T15:00:00.000Z",
+          "actualizado_en": "2026-10-07T15:00:00.000Z"
+        }
+      ]
+    },
+    {
+      "id": "fc981e31-e520-4536-9138-9c55787a887f",
       "lote_id": "85c355d5-e5a0-588c-a121-1113771481ce",
       "flete_km_cop": 6300,
+      "capacidad_camion": 25,
+      "flete_incluye_peajes": false,
       "mejor_destino_id": "52bbc2f4-901c-5ff0-a08a-5f8f08f91fa1",
+      "creado_en": "2026-09-28T14:15:00.000Z",
+      "actualizado_en": "2026-09-28T14:15:00.000Z",
       "resultados": [
         {
-          "id": "6c1be6e8-6b45-5a73-96ab-62f577b83395",
-          "simulacion_id": "18cd8eeb-37b5-5ed0-a354-46501964d2e1",
+          "id": "0b91ebcc-15ff-4339-b1da-fd545bc2ab5d",
+          "simulacion_id": "fc981e31-e520-4536-9138-9c55787a887f",
           "destino_id": "52bbc2f4-901c-5ff0-a08a-5f8f08f91fa1",
-          "ruta_id": "a69ac042-f646-50e2-88bd-b4f76f38c169",
-          "distancia_km": 382.0,
-          "tiempo_horas": 8.4,
-          "merma_pct": 4.5,
-          "peso_vendido_kg": 8251.2,
-          "precio_kg_cop": 9720,
-          "flete_cop": 3008250,
-          "peajes_cop": 110000,
-          "costo_logistico_cop": 3118250,
-          "ingreso_bruto_cop": 80201664,
-          "utilidad_neta_cop": 77083414,
+          "ruta_id": "187058bd-c4a8-4a2e-85e8-54ed62357dd5",
+          "distancia_km": 291.7,
+          "tiempo_horas": 6.3,
+          "merma_pct": 6.8,
+          "camiones": 1,
+          "peso_vendido_kg": 8052.5,
+          "precio_kg_cop": 9600,
+          "precio_fecha": "2026-09-26",
+          "precio_antiguedad_dias": 2,
+          "advertencia": null,
+          "comision_cop": 0,
+          "flete_cop": 2297138,
+          "peajes_cop": 90500,
+          "costo_logistico_cop": 2387638,
+          "ingreso_bruto_cop": 77304000,
+          "utilidad_neta_cop": 74916362,
           "posicion": 1,
-          "creado_en": "2026-09-27T09:15:00-05:00",
-          "actualizado_en": "2026-09-27T09:15:00-05:00"
+          "creado_en": "2026-09-28T14:15:00.000Z",
+          "actualizado_en": "2026-09-28T14:15:00.000Z"
         },
         {
-          "id": "c0c36e2c-8d62-529a-9d78-0c73e96b64af",
-          "simulacion_id": "18cd8eeb-37b5-5ed0-a354-46501964d2e1",
-          "destino_id": "acca0ef8-f855-5505-b81b-25833e792ff1",
-          "ruta_id": "58503f72-33aa-5dc3-a8fa-e39abddb9eea",
-          "distancia_km": 9.5,
-          "tiempo_horas": 0.3,
-          "merma_pct": 0.5,
-          "peso_vendido_kg": 8596.8,
-          "precio_kg_cop": 8940,
-          "flete_cop": 59850,
+          "id": "62a5af01-ace9-4c58-b4a6-8e54452a566d",
+          "simulacion_id": "fc981e31-e520-4536-9138-9c55787a887f",
+          "destino_id": "0e6f6c1a-3b0d-5c8e-9f1a-6d2b7c4e8a10",
+          "ruta_id": "1e1c4107-d5f5-4d0f-85fb-f4a0ee26f3a2",
+          "distancia_km": 0,
+          "tiempo_horas": 0,
+          "merma_pct": 0,
+          "camiones": 1,
+          "peso_vendido_kg": 8640,
+          "precio_kg_cop": 8570,
+          "precio_fecha": "2026-09-26",
+          "precio_antiguedad_dias": 2,
+          "advertencia": null,
+          "comision_cop": 0,
+          "flete_cop": 0,
           "peajes_cop": 0,
-          "costo_logistico_cop": 59850,
-          "ingreso_bruto_cop": 76855392,
-          "utilidad_neta_cop": 76795542,
+          "costo_logistico_cop": 0,
+          "ingreso_bruto_cop": 74044800,
+          "utilidad_neta_cop": 74044800,
           "posicion": 2,
-          "creado_en": "2026-09-27T09:15:00-05:00",
-          "actualizado_en": "2026-09-27T09:15:00-05:00"
+          "creado_en": "2026-09-28T14:15:00.000Z",
+          "actualizado_en": "2026-09-28T14:15:00.000Z"
         },
         {
-          "id": "6dd76c13-d109-5867-9687-09ff5fd8670a",
-          "simulacion_id": "18cd8eeb-37b5-5ed0-a354-46501964d2e1",
+          "id": "e053d94c-501a-4367-8b2c-90bb36a92337",
+          "simulacion_id": "fc981e31-e520-4536-9138-9c55787a887f",
           "destino_id": "a8745d0d-590c-5f1b-b749-bb96c5be4aac",
-          "ruta_id": "e59208f0-6906-5331-a7eb-bbdaa0a2eb78",
-          "distancia_km": 131.0,
-          "tiempo_horas": 2.7,
-          "merma_pct": 2.0,
-          "peso_vendido_kg": 8467.2,
-          "precio_kg_cop": 8990,
-          "flete_cop": 866565,
-          "peajes_cop": 21000,
-          "costo_logistico_cop": 887565,
-          "ingreso_bruto_cop": 76120128,
-          "utilidad_neta_cop": 75232563,
+          "ruta_id": "5a4ab622-4f36-4764-86cb-423b56408dfc",
+          "distancia_km": 39.5,
+          "tiempo_horas": 0.9,
+          "merma_pct": 1.1,
+          "camiones": 1,
+          "peso_vendido_kg": 8545,
+          "precio_kg_cop": 8870,
+          "precio_fecha": "2026-09-26",
+          "precio_antiguedad_dias": 2,
+          "advertencia": null,
+          "comision_cop": 2273825,
+          "flete_cop": 261293,
+          "peajes_cop": 4800,
+          "costo_logistico_cop": 2539918,
+          "ingreso_bruto_cop": 75794150,
+          "utilidad_neta_cop": 73254232,
           "posicion": 3,
-          "creado_en": "2026-09-27T09:15:00-05:00",
-          "actualizado_en": "2026-09-27T09:15:00-05:00"
+          "creado_en": "2026-09-28T14:15:00.000Z",
+          "actualizado_en": "2026-09-28T14:15:00.000Z"
         },
         {
-          "id": "52a64199-4c0f-5277-9b3e-05a505b6016e",
-          "simulacion_id": "18cd8eeb-37b5-5ed0-a354-46501964d2e1",
+          "id": "d3f2dd49-9492-42b2-b60e-d343e1b8073a",
+          "simulacion_id": "fc981e31-e520-4536-9138-9c55787a887f",
           "destino_id": "6b8211cf-49f9-5354-925a-ec5edb230ee1",
-          "ruta_id": "5ec2ea46-db9d-525b-8417-462de2b24a6a",
-          "distancia_km": 266.0,
-          "tiempo_horas": 5.1,
-          "merma_pct": 3.0,
-          "peso_vendido_kg": 8380.8,
-          "precio_kg_cop": 9120,
-          "flete_cop": 1843380,
-          "peajes_cop": 85000,
-          "costo_logistico_cop": 1928380,
-          "ingreso_bruto_cop": 76432896,
-          "utilidad_neta_cop": 74504516,
+          "ruta_id": "90e2bb5a-0804-4068-8879-2ef0537c961b",
+          "distancia_km": 160.9,
+          "tiempo_horas": 3.5,
+          "merma_pct": 4.5,
+          "camiones": 1,
+          "peso_vendido_kg": 8251.2,
+          "precio_kg_cop": 9000,
+          "precio_fecha": "2026-09-26",
+          "precio_antiguedad_dias": 2,
+          "advertencia": null,
+          "comision_cop": 0,
+          "flete_cop": 1115037,
+          "peajes_cop": 36300,
+          "costo_logistico_cop": 1151337,
+          "ingreso_bruto_cop": 74260800,
+          "utilidad_neta_cop": 73109463,
           "posicion": 4,
-          "creado_en": "2026-09-27T09:15:00-05:00",
-          "actualizado_en": "2026-09-27T09:15:00-05:00"
+          "creado_en": "2026-09-28T14:15:00.000Z",
+          "actualizado_en": "2026-09-28T14:15:00.000Z"
+        },
+        {
+          "id": "1167112d-df40-40c5-916e-d323c01d3499",
+          "simulacion_id": "fc981e31-e520-4536-9138-9c55787a887f",
+          "destino_id": "acca0ef8-f855-5505-b81b-25833e792ff1",
+          "ruta_id": "735d2e5f-3a2c-40b2-af0a-88d781a45440",
+          "distancia_km": 95.3,
+          "tiempo_horas": 2.1,
+          "merma_pct": 2.3,
+          "camiones": 1,
+          "peso_vendido_kg": 8441.3,
+          "precio_kg_cop": 8820,
+          "precio_fecha": "2026-09-26",
+          "precio_antiguedad_dias": 2,
+          "advertencia": null,
+          "comision_cop": 2233568,
+          "flete_cop": 600390,
+          "peajes_cop": 13800,
+          "costo_logistico_cop": 2847758,
+          "ingreso_bruto_cop": 74452266,
+          "utilidad_neta_cop": 71604508,
+          "posicion": 5,
+          "creado_en": "2026-09-28T14:15:00.000Z",
+          "actualizado_en": "2026-09-28T14:15:00.000Z"
         }
-      ],
-      "creado_en": "2026-09-27T09:15:00-05:00",
-      "actualizado_en": "2026-09-27T09:15:00-05:00"
+      ]
     },
     {
-      "id": "dae3c330-09f6-55d1-ad0c-adb80c4a691c",
+      "id": "2148d4e5-3163-406d-a252-33b9f5bcd6cd",
       "lote_id": "bb0ff19b-a1d7-509a-9512-cef23cbde87d",
       "flete_km_cop": 6400,
+      "capacidad_camion": 25,
+      "flete_incluye_peajes": false,
       "mejor_destino_id": "52bbc2f4-901c-5ff0-a08a-5f8f08f91fa1",
+      "creado_en": "2026-09-26T19:00:00.000Z",
+      "actualizado_en": "2026-09-26T19:00:00.000Z",
       "resultados": [
         {
-          "id": "68b3ba19-1b6f-51f2-84f0-a7f928311d7d",
-          "simulacion_id": "dae3c330-09f6-55d1-ad0c-adb80c4a691c",
+          "id": "78030b8e-d00f-420e-a1f0-a7f9bdde1821",
+          "simulacion_id": "2148d4e5-3163-406d-a252-33b9f5bcd6cd",
           "destino_id": "52bbc2f4-901c-5ff0-a08a-5f8f08f91fa1",
-          "ruta_id": "a69ac042-f646-50e2-88bd-b4f76f38c169",
-          "distancia_km": 382.0,
-          "tiempo_horas": 8.4,
-          "merma_pct": 4.5,
-          "peso_vendido_kg": 17954.0,
-          "precio_kg_cop": 11300,
-          "flete_cop": 3056000,
-          "peajes_cop": 110000,
-          "costo_logistico_cop": 3166000,
-          "ingreso_bruto_cop": 202880200,
-          "utilidad_neta_cop": 199714200,
+          "ruta_id": "9766a346-7b15-4c41-a3f5-4554d4e57b3d",
+          "distancia_km": 318.8,
+          "tiempo_horas": 6.9,
+          "merma_pct": 7,
+          "camiones": 2,
+          "peso_vendido_kg": 17484,
+          "precio_kg_cop": 11180,
+          "precio_fecha": "2026-09-26",
+          "precio_antiguedad_dias": 0,
+          "advertencia": null,
+          "comision_cop": 0,
+          "flete_cop": 5100800,
+          "peajes_cop": 192800,
+          "costo_logistico_cop": 5293600,
+          "ingreso_bruto_cop": 195471120,
+          "utilidad_neta_cop": 190177520,
           "posicion": 1,
-          "creado_en": "2026-09-25T14:00:00-05:00",
-          "actualizado_en": "2026-09-25T14:00:00-05:00"
+          "creado_en": "2026-09-26T19:00:00.000Z",
+          "actualizado_en": "2026-09-26T19:00:00.000Z"
         },
         {
-          "id": "987826c0-e5d2-5673-a535-201cd5d8c78d",
-          "simulacion_id": "dae3c330-09f6-55d1-ad0c-adb80c4a691c",
-          "destino_id": "15bf935c-dea7-52e8-a312-228463fe5aef",
-          "ruta_id": "9e8d2db5-62af-5aff-9e08-4f15f793f377",
-          "distancia_km": 791.0,
-          "tiempo_horas": 16.5,
-          "merma_pct": 7.0,
-          "peso_vendido_kg": 17484.0,
-          "precio_kg_cop": 11600,
-          "flete_cop": 7087360,
-          "peajes_cop": 210000,
-          "costo_logistico_cop": 7297360,
-          "ingreso_bruto_cop": 202814400,
-          "utilidad_neta_cop": 195517040,
-          "posicion": 2,
-          "creado_en": "2026-09-25T14:00:00-05:00",
-          "actualizado_en": "2026-09-25T14:00:00-05:00"
-        },
-        {
-          "id": "0a657909-7b59-5020-9981-a92ce647adc7",
-          "simulacion_id": "dae3c330-09f6-55d1-ad0c-adb80c4a691c",
+          "id": "4238ecc3-c742-4d26-91ae-cbf11ae1b35d",
+          "simulacion_id": "2148d4e5-3163-406d-a252-33b9f5bcd6cd",
           "destino_id": "6b8211cf-49f9-5354-925a-ec5edb230ee1",
-          "ruta_id": "5ec2ea46-db9d-525b-8417-462de2b24a6a",
-          "distancia_km": 266.0,
-          "tiempo_horas": 5.1,
-          "merma_pct": 3.0,
-          "peso_vendido_kg": 18236.0,
-          "precio_kg_cop": 10600,
-          "flete_cop": 1872640,
-          "peajes_cop": 85000,
-          "costo_logistico_cop": 1957640,
-          "ingreso_bruto_cop": 193301600,
-          "utilidad_neta_cop": 191343960,
+          "ruta_id": "2e003454-aeb7-4fd9-a9b0-46bba66690bf",
+          "distancia_km": 192.5,
+          "tiempo_horas": 4.2,
+          "merma_pct": 5.4,
+          "camiones": 2,
+          "peso_vendido_kg": 17784.8,
+          "precio_kg_cop": 10480,
+          "precio_fecha": "2026-09-26",
+          "precio_antiguedad_dias": 0,
+          "advertencia": null,
+          "comision_cop": 0,
+          "flete_cop": 2710400,
+          "peajes_cop": 96000,
+          "costo_logistico_cop": 2806400,
+          "ingreso_bruto_cop": 186384704,
+          "utilidad_neta_cop": 183578304,
+          "posicion": 2,
+          "creado_en": "2026-09-26T19:00:00.000Z",
+          "actualizado_en": "2026-09-26T19:00:00.000Z"
+        },
+        {
+          "id": "01cb5f4b-4237-4ba8-95a3-675140eabeba",
+          "simulacion_id": "2148d4e5-3163-406d-a252-33b9f5bcd6cd",
+          "destino_id": "15bf935c-dea7-52e8-a312-228463fe5aef",
+          "ruta_id": "f2f2e125-7eb8-4a0f-9ccb-498c4e8771fc",
+          "distancia_km": 727.8,
+          "tiempo_horas": 15.7,
+          "merma_pct": 9.3,
+          "camiones": 2,
+          "peso_vendido_kg": 17051.6,
+          "precio_kg_cop": 11480,
+          "precio_fecha": "2026-09-26",
+          "precio_antiguedad_dias": 0,
+          "advertencia": null,
+          "comision_cop": 0,
+          "flete_cop": 13042176,
+          "peajes_cop": 379600,
+          "costo_logistico_cop": 13421776,
+          "ingreso_bruto_cop": 195752368,
+          "utilidad_neta_cop": 182330592,
           "posicion": 3,
-          "creado_en": "2026-09-25T14:00:00-05:00",
-          "actualizado_en": "2026-09-25T14:00:00-05:00"
+          "creado_en": "2026-09-26T19:00:00.000Z",
+          "actualizado_en": "2026-09-26T19:00:00.000Z"
         }
-      ],
-      "creado_en": "2026-09-25T14:00:00-05:00",
-      "actualizado_en": "2026-09-25T14:00:00-05:00"
+      ]
     },
     {
-      "id": "3b4429c6-69a5-5f46-a791-56178b8f8d24",
+      "id": "119c69ae-dc99-4fcb-950c-726e95a63ebb",
       "lote_id": "2e18e5ff-26cc-588b-994b-aee0da7ff865",
       "flete_km_cop": 6600,
-      "mejor_destino_id": "52bbc2f4-901c-5ff0-a08a-5f8f08f91fa1",
+      "capacidad_camion": 25,
+      "flete_incluye_peajes": false,
+      "mejor_destino_id": "0e6f6c1a-3b0d-5c8e-9f1a-6d2b7c4e8a10",
+      "creado_en": "2026-09-25T15:30:00.000Z",
+      "actualizado_en": "2026-09-25T15:30:00.000Z",
       "resultados": [
         {
-          "id": "c78a817d-9322-5316-806c-513e8049f164",
-          "simulacion_id": "3b4429c6-69a5-5f46-a791-56178b8f8d24",
-          "destino_id": "52bbc2f4-901c-5ff0-a08a-5f8f08f91fa1",
-          "ruta_id": "a69ac042-f646-50e2-88bd-b4f76f38c169",
-          "distancia_km": 382.0,
-          "tiempo_horas": 8.4,
-          "merma_pct": 4.5,
-          "peso_vendido_kg": 19553.6,
-          "precio_kg_cop": 11300,
-          "flete_cop": 3151500,
-          "peajes_cop": 110000,
-          "costo_logistico_cop": 3261500,
-          "ingreso_bruto_cop": 220955680,
-          "utilidad_neta_cop": 217694180,
-          "posicion": 1,
-          "creado_en": "2026-09-24T10:30:00-05:00",
-          "actualizado_en": "2026-09-24T10:30:00-05:00"
-        },
-        {
-          "id": "b20fa5df-9419-50bd-b312-b71ec94f1bcc",
-          "simulacion_id": "3b4429c6-69a5-5f46-a791-56178b8f8d24",
-          "destino_id": "3878b38f-1764-5e78-88b0-93461cec83ec",
-          "ruta_id": "48492f5f-f1ef-5799-8dd1-aa2e1598d817",
-          "distancia_km": 247.0,
-          "tiempo_horas": 5.9,
-          "merma_pct": 3.5,
-          "peso_vendido_kg": 19758.4,
-          "precio_kg_cop": 10900,
-          "flete_cop": 1874730,
-          "peajes_cop": 64000,
-          "costo_logistico_cop": 1938730,
-          "ingreso_bruto_cop": 215366560,
-          "utilidad_neta_cop": 213427830,
-          "posicion": 2,
-          "creado_en": "2026-09-24T10:30:00-05:00",
-          "actualizado_en": "2026-09-24T10:30:00-05:00"
-        },
-        {
-          "id": "b6165494-e35b-5c6d-9098-4bbea7e4c2d0",
-          "simulacion_id": "3b4429c6-69a5-5f46-a791-56178b8f8d24",
-          "destino_id": "15bf935c-dea7-52e8-a312-228463fe5aef",
-          "ruta_id": "9e8d2db5-62af-5aff-9e08-4f15f793f377",
-          "distancia_km": 791.0,
-          "tiempo_horas": 16.5,
-          "merma_pct": 7.0,
-          "peso_vendido_kg": 19041.8,
-          "precio_kg_cop": 11600,
-          "flete_cop": 7308840,
-          "peajes_cop": 210000,
-          "costo_logistico_cop": 7518840,
-          "ingreso_bruto_cop": 220884880,
-          "utilidad_neta_cop": 213366040,
-          "posicion": 3,
-          "creado_en": "2026-09-24T10:30:00-05:00",
-          "actualizado_en": "2026-09-24T10:30:00-05:00"
-        },
-        {
-          "id": "f01e0677-6692-5ade-bc55-dc6388acf7e8",
-          "simulacion_id": "3b4429c6-69a5-5f46-a791-56178b8f8d24",
-          "destino_id": "d8c5a7c4-888d-56e2-81f2-f8cc588a2834",
-          "ruta_id": "cf10b20d-fd88-529e-a803-62f520737f2e",
-          "distancia_km": 172.0,
-          "tiempo_horas": 4.3,
-          "merma_pct": 2.8,
-          "peso_vendido_kg": 19901.7,
-          "precio_kg_cop": 10750,
-          "flete_cop": 1362240,
-          "peajes_cop": 42000,
-          "costo_logistico_cop": 1404240,
-          "ingreso_bruto_cop": 213943275,
-          "utilidad_neta_cop": 212539035,
-          "posicion": 4,
-          "creado_en": "2026-09-24T10:30:00-05:00",
-          "actualizado_en": "2026-09-24T10:30:00-05:00"
-        },
-        {
-          "id": "e992e868-43ba-5086-9939-7ed4d3819c5c",
-          "simulacion_id": "3b4429c6-69a5-5f46-a791-56178b8f8d24",
-          "destino_id": "acca0ef8-f855-5505-b81b-25833e792ff1",
-          "ruta_id": "58503f72-33aa-5dc3-a8fa-e39abddb9eea",
-          "distancia_km": 9.5,
-          "tiempo_horas": 0.3,
-          "merma_pct": 0.5,
-          "peso_vendido_kg": 20372.6,
-          "precio_kg_cop": 10400,
-          "flete_cop": 62700,
+          "id": "ac25ab31-d5a0-4b73-988a-fd42af68a9e8",
+          "simulacion_id": "119c69ae-dc99-4fcb-950c-726e95a63ebb",
+          "destino_id": "0e6f6c1a-3b0d-5c8e-9f1a-6d2b7c4e8a10",
+          "ruta_id": "61589290-4dd7-4ce6-97dc-628e090d2990",
+          "distancia_km": 0,
+          "tiempo_horas": 0,
+          "merma_pct": 0,
+          "camiones": 2,
+          "peso_vendido_kg": 20475,
+          "precio_kg_cop": 9850,
+          "precio_fecha": "2026-09-02",
+          "precio_antiguedad_dias": 23,
+          "advertencia": "Precio de hace 23 días (2026-09-02); puede no reflejar el mercado actual.",
+          "comision_cop": 0,
+          "flete_cop": 0,
           "peajes_cop": 0,
-          "costo_logistico_cop": 62700,
-          "ingreso_bruto_cop": 211875040,
-          "utilidad_neta_cop": 211812340,
+          "costo_logistico_cop": 0,
+          "ingreso_bruto_cop": 201678750,
+          "utilidad_neta_cop": 201678750,
+          "posicion": 1,
+          "creado_en": "2026-09-25T15:30:00.000Z",
+          "actualizado_en": "2026-09-25T15:30:00.000Z"
+        },
+        {
+          "id": "6bc9b3b8-7d2e-4f2e-93ae-aaf5b5d24614",
+          "simulacion_id": "119c69ae-dc99-4fcb-950c-726e95a63ebb",
+          "destino_id": "52bbc2f4-901c-5ff0-a08a-5f8f08f91fa1",
+          "ruta_id": "c08f44e0-c29c-4ca9-9647-64075fde1db3",
+          "distancia_km": 540.2,
+          "tiempo_horas": 11.7,
+          "merma_pct": 8.7,
+          "camiones": 2,
+          "peso_vendido_kg": 18693.7,
+          "precio_kg_cop": 11050,
+          "precio_fecha": "2026-09-02",
+          "precio_antiguedad_dias": 23,
+          "advertencia": "Precio de hace 23 días (2026-09-02); puede no reflejar el mercado actual.",
+          "comision_cop": 0,
+          "flete_cop": 8913300,
+          "peajes_cop": 273800,
+          "costo_logistico_cop": 9187100,
+          "ingreso_bruto_cop": 206565385,
+          "utilidad_neta_cop": 197378285,
+          "posicion": 2,
+          "creado_en": "2026-09-25T15:30:00.000Z",
+          "actualizado_en": "2026-09-25T15:30:00.000Z"
+        },
+        {
+          "id": "f05dfbda-21c1-4f68-ae44-8004ad5f0d23",
+          "simulacion_id": "119c69ae-dc99-4fcb-950c-726e95a63ebb",
+          "destino_id": "3878b38f-1764-5e78-88b0-93461cec83ec",
+          "ruta_id": "0bcd441c-2504-4b4e-8a41-79d7db53780b",
+          "distancia_km": 405.2,
+          "tiempo_horas": 8.8,
+          "merma_pct": 7.8,
+          "camiones": 2,
+          "peso_vendido_kg": 18878,
+          "precio_kg_cop": 10650,
+          "precio_fecha": "2026-09-02",
+          "precio_antiguedad_dias": 23,
+          "advertencia": "Precio de hace 23 días (2026-09-02); puede no reflejar el mercado actual.",
+          "comision_cop": 0,
+          "flete_cop": 6150936,
+          "peajes_cop": 227400,
+          "costo_logistico_cop": 6378336,
+          "ingreso_bruto_cop": 201050700,
+          "utilidad_neta_cop": 194672364,
+          "posicion": 3,
+          "creado_en": "2026-09-25T15:30:00.000Z",
+          "actualizado_en": "2026-09-25T15:30:00.000Z"
+        },
+        {
+          "id": "d2daa90f-1e97-41d7-bf7c-b7c79a7e83e6",
+          "simulacion_id": "119c69ae-dc99-4fcb-950c-726e95a63ebb",
+          "destino_id": "d8c5a7c4-888d-56e2-81f2-f8cc588a2834",
+          "ruta_id": "7efad896-3f13-4404-bb5b-3a1986c680f7",
+          "distancia_km": 330.2,
+          "tiempo_horas": 7.1,
+          "merma_pct": 7.2,
+          "camiones": 2,
+          "peso_vendido_kg": 19000.8,
+          "precio_kg_cop": 10500,
+          "precio_fecha": "2026-09-02",
+          "precio_antiguedad_dias": 23,
+          "advertencia": "Precio de hace 23 días (2026-09-02); puede no reflejar el mercado actual.",
+          "comision_cop": 0,
+          "flete_cop": 5230368,
+          "peajes_cop": 197600,
+          "costo_logistico_cop": 5427968,
+          "ingreso_bruto_cop": 199508400,
+          "utilidad_neta_cop": 194080432,
+          "posicion": 4,
+          "creado_en": "2026-09-25T15:30:00.000Z",
+          "actualizado_en": "2026-09-25T15:30:00.000Z"
+        },
+        {
+          "id": "da86743d-1f4a-4b83-a95b-78412b9dbcba",
+          "simulacion_id": "119c69ae-dc99-4fcb-950c-726e95a63ebb",
+          "destino_id": "15bf935c-dea7-52e8-a312-228463fe5aef",
+          "ruta_id": "a4212f08-fade-45ef-8f56-ddd5ffcd2baf",
+          "distancia_km": 949.2,
+          "tiempo_horas": 20.5,
+          "merma_pct": 9.5,
+          "camiones": 2,
+          "peso_vendido_kg": 18529.9,
+          "precio_kg_cop": 11350,
+          "precio_fecha": "2026-09-02",
+          "precio_antiguedad_dias": 23,
+          "advertencia": "Precio de hace 23 días (2026-09-02); puede no reflejar el mercado actual.",
+          "comision_cop": 0,
+          "flete_cop": 17541216,
+          "peajes_cop": 420000,
+          "costo_logistico_cop": 17961216,
+          "ingreso_bruto_cop": 210314365,
+          "utilidad_neta_cop": 192353149,
           "posicion": 5,
-          "creado_en": "2026-09-24T10:30:00-05:00",
-          "actualizado_en": "2026-09-24T10:30:00-05:00"
+          "creado_en": "2026-09-25T15:30:00.000Z",
+          "actualizado_en": "2026-09-25T15:30:00.000Z"
         },
         {
-          "id": "84139bf5-eba2-52a8-be71-310a36d764eb",
-          "simulacion_id": "3b4429c6-69a5-5f46-a791-56178b8f8d24",
-          "destino_id": "c1b1b4d6-5649-5406-a30d-e47ea1c9ba12",
-          "ruta_id": "a94ec479-675c-5807-9e62-d64eda22f8bd",
-          "distancia_km": 507.0,
-          "tiempo_horas": 11.2,
-          "merma_pct": 5.5,
-          "peso_vendido_kg": 19348.9,
-          "precio_kg_cop": 11100,
-          "flete_cop": 4517370,
-          "peajes_cop": 130000,
-          "costo_logistico_cop": 4647370,
-          "ingreso_bruto_cop": 214772790,
-          "utilidad_neta_cop": 210125420,
-          "posicion": 6,
-          "creado_en": "2026-09-24T10:30:00-05:00",
-          "actualizado_en": "2026-09-24T10:30:00-05:00"
-        },
-        {
-          "id": "0762e6cb-58b3-5a17-bc2b-761d5f98ef1e",
-          "simulacion_id": "3b4429c6-69a5-5f46-a791-56178b8f8d24",
-          "destino_id": "396e4a75-a43f-5e33-adb3-1d6163e10530",
-          "ruta_id": "24cc9013-756c-5947-b31d-103ecf0effca",
-          "distancia_km": 603.0,
-          "tiempo_horas": 13.0,
-          "merma_pct": 6.0,
-          "peso_vendido_kg": 19246.5,
-          "precio_kg_cop": 11200,
-          "flete_cop": 5372730,
-          "peajes_cop": 150000,
-          "costo_logistico_cop": 5522730,
-          "ingreso_bruto_cop": 215560800,
-          "utilidad_neta_cop": 210038070,
-          "posicion": 7,
-          "creado_en": "2026-09-24T10:30:00-05:00",
-          "actualizado_en": "2026-09-24T10:30:00-05:00"
-        },
-        {
-          "id": "2ba5c1dc-6249-5eb4-ae84-5e0fd878ade0",
-          "simulacion_id": "3b4429c6-69a5-5f46-a791-56178b8f8d24",
-          "destino_id": "a8745d0d-590c-5f1b-b749-bb96c5be4aac",
-          "ruta_id": "e59208f0-6906-5331-a7eb-bbdaa0a2eb78",
-          "distancia_km": 131.0,
-          "tiempo_horas": 2.7,
-          "merma_pct": 2.0,
-          "peso_vendido_kg": 20065.5,
-          "precio_kg_cop": 10450,
-          "flete_cop": 907830,
-          "peajes_cop": 21000,
-          "costo_logistico_cop": 928830,
-          "ingreso_bruto_cop": 209684475,
-          "utilidad_neta_cop": 208755645,
-          "posicion": 8,
-          "creado_en": "2026-09-24T10:30:00-05:00",
-          "actualizado_en": "2026-09-24T10:30:00-05:00"
-        },
-        {
-          "id": "9111a74b-f745-5a30-bba7-3de17fbdea99",
-          "simulacion_id": "3b4429c6-69a5-5f46-a791-56178b8f8d24",
+          "id": "ee7ca10a-d9a4-4e0d-9e3b-9ddaf7cd73da",
+          "simulacion_id": "119c69ae-dc99-4fcb-950c-726e95a63ebb",
           "destino_id": "6b8211cf-49f9-5354-925a-ec5edb230ee1",
-          "ruta_id": "5ec2ea46-db9d-525b-8417-462de2b24a6a",
-          "distancia_km": 266.0,
-          "tiempo_horas": 5.1,
-          "merma_pct": 3.0,
-          "peso_vendido_kg": 19860.8,
-          "precio_kg_cop": 10600,
-          "flete_cop": 1931160,
-          "peajes_cop": 85000,
-          "costo_logistico_cop": 2016160,
-          "ingreso_bruto_cop": 210524480,
-          "utilidad_neta_cop": 208508320,
-          "posicion": 9,
-          "creado_en": "2026-09-24T10:30:00-05:00",
-          "actualizado_en": "2026-09-24T10:30:00-05:00"
+          "ruta_id": "7f156f06-97c9-4556-ba6c-ae925da540a5",
+          "distancia_km": 368.3,
+          "tiempo_horas": 8,
+          "merma_pct": 7.6,
+          "camiones": 2,
+          "peso_vendido_kg": 18918.9,
+          "precio_kg_cop": 10350,
+          "precio_fecha": "2026-09-02",
+          "precio_antiguedad_dias": 23,
+          "advertencia": "Precio de hace 23 días (2026-09-02); puede no reflejar el mercado actual.",
+          "comision_cop": 0,
+          "flete_cop": 5347716,
+          "peajes_cop": 214000,
+          "costo_logistico_cop": 5561716,
+          "ingreso_bruto_cop": 195810615,
+          "utilidad_neta_cop": 190248899,
+          "posicion": 6,
+          "creado_en": "2026-09-25T15:30:00.000Z",
+          "actualizado_en": "2026-09-25T15:30:00.000Z"
         },
         {
-          "id": "2c82bc7f-2290-58df-9ab5-54b449ded8d9",
-          "simulacion_id": "3b4429c6-69a5-5f46-a791-56178b8f8d24",
-          "destino_id": "5a11df78-6998-5089-a775-55e35b205cfe",
-          "ruta_id": "ae582c3d-af89-5b0d-988d-4ed54fba9b89",
-          "distancia_km": 128.0,
-          "tiempo_horas": 2.6,
-          "merma_pct": 2.0,
-          "peso_vendido_kg": 20065.5,
-          "precio_kg_cop": 10250,
-          "flete_cop": 887040,
-          "peajes_cop": 19000,
-          "costo_logistico_cop": 906040,
-          "ingreso_bruto_cop": 205671375,
-          "utilidad_neta_cop": 204765335,
+          "id": "b6cf26b2-7513-4359-98f2-54f99ae9808a",
+          "simulacion_id": "119c69ae-dc99-4fcb-950c-726e95a63ebb",
+          "destino_id": "acca0ef8-f855-5505-b81b-25833e792ff1",
+          "ruta_id": "a3df0d21-f68b-45d5-ab9c-80836abd4444",
+          "distancia_km": 167.7,
+          "tiempo_horas": 3.6,
+          "merma_pct": 4.8,
+          "camiones": 2,
+          "peso_vendido_kg": 19492.2,
+          "precio_kg_cop": 10150,
+          "precio_fecha": "2026-09-02",
+          "precio_antiguedad_dias": 23,
+          "advertencia": "Precio de hace 23 días (2026-09-02); puede no reflejar el mercado actual.",
+          "comision_cop": 5935375,
+          "flete_cop": 2213640,
+          "peajes_cop": 79600,
+          "costo_logistico_cop": 8228615,
+          "ingreso_bruto_cop": 197845830,
+          "utilidad_neta_cop": 189617215,
+          "posicion": 7,
+          "creado_en": "2026-09-25T15:30:00.000Z",
+          "actualizado_en": "2026-09-25T15:30:00.000Z"
+        },
+        {
+          "id": "309cb046-d847-4551-9bc2-1b829a252bb6",
+          "simulacion_id": "119c69ae-dc99-4fcb-950c-726e95a63ebb",
+          "destino_id": "c1b1b4d6-5649-5406-a30d-e47ea1c9ba12",
+          "ruta_id": "cbc63be0-9817-4dbc-9ea6-f7eccc94f332",
+          "distancia_km": 665.2,
+          "tiempo_horas": 14.4,
+          "merma_pct": 9.2,
+          "camiones": 2,
+          "peso_vendido_kg": 18591.3,
+          "precio_kg_cop": 10850,
+          "precio_fecha": "2026-09-02",
+          "precio_antiguedad_dias": 23,
+          "advertencia": "Precio de hace 23 días (2026-09-02); puede no reflejar el mercado actual.",
+          "comision_cop": 0,
+          "flete_cop": 11853864,
+          "peajes_cop": 339800,
+          "costo_logistico_cop": 12193664,
+          "ingreso_bruto_cop": 201715605,
+          "utilidad_neta_cop": 189521941,
+          "posicion": 8,
+          "creado_en": "2026-09-25T15:30:00.000Z",
+          "actualizado_en": "2026-09-25T15:30:00.000Z"
+        },
+        {
+          "id": "a4a1f68d-399f-4af7-8acb-6b367a6654e9",
+          "simulacion_id": "119c69ae-dc99-4fcb-950c-726e95a63ebb",
+          "destino_id": "396e4a75-a43f-5e33-adb3-1d6163e10530",
+          "ruta_id": "8dc25bc5-bb7f-49dc-8851-a9790d7a70f4",
+          "distancia_km": 761.2,
+          "tiempo_horas": 16.5,
+          "merma_pct": 9.4,
+          "camiones": 2,
+          "peso_vendido_kg": 18550.4,
+          "precio_kg_cop": 10950,
+          "precio_fecha": "2026-09-02",
+          "precio_antiguedad_dias": 23,
+          "advertencia": "Precio de hace 23 días (2026-09-02); puede no reflejar el mercado actual.",
+          "comision_cop": 0,
+          "flete_cop": 13564584,
+          "peajes_cop": 401000,
+          "costo_logistico_cop": 13965584,
+          "ingreso_bruto_cop": 203126880,
+          "utilidad_neta_cop": 189161296,
+          "posicion": 9,
+          "creado_en": "2026-09-25T15:30:00.000Z",
+          "actualizado_en": "2026-09-25T15:30:00.000Z"
+        },
+        {
+          "id": "edc1b9de-f925-4927-bf36-dc913285d70c",
+          "simulacion_id": "119c69ae-dc99-4fcb-950c-726e95a63ebb",
+          "destino_id": "a8745d0d-590c-5f1b-b749-bb96c5be4aac",
+          "ruta_id": "44fdb6a8-190c-4ec2-a3a0-7528eee5d3ac",
+          "distancia_km": 231.9,
+          "tiempo_horas": 5,
+          "merma_pct": 6.2,
+          "camiones": 2,
+          "peso_vendido_kg": 19205.6,
+          "precio_kg_cop": 10200,
+          "precio_fecha": "2026-09-02",
+          "precio_antiguedad_dias": 23,
+          "advertencia": "Precio de hace 23 días (2026-09-02); puede no reflejar el mercado actual.",
+          "comision_cop": 5876914,
+          "flete_cop": 3214134,
+          "peajes_cop": 119200,
+          "costo_logistico_cop": 9210248,
+          "ingreso_bruto_cop": 195897120,
+          "utilidad_neta_cop": 186686872,
           "posicion": 10,
-          "creado_en": "2026-09-24T10:30:00-05:00",
-          "actualizado_en": "2026-09-24T10:30:00-05:00"
+          "creado_en": "2026-09-25T15:30:00.000Z",
+          "actualizado_en": "2026-09-25T15:30:00.000Z"
+        },
+        {
+          "id": "c4549498-fe1a-4e9a-a648-27983ffb1421",
+          "simulacion_id": "119c69ae-dc99-4fcb-950c-726e95a63ebb",
+          "destino_id": "5a11df78-6998-5089-a775-55e35b205cfe",
+          "ruta_id": "0cc1ec44-e033-4dea-8a7d-19b692cbdb76",
+          "distancia_km": 211.2,
+          "tiempo_horas": 4.6,
+          "merma_pct": 5.8,
+          "camiones": 2,
+          "peso_vendido_kg": 19287.5,
+          "precio_kg_cop": 10000,
+          "precio_fecha": "2026-09-02",
+          "precio_antiguedad_dias": 23,
+          "advertencia": "Precio de hace 23 días (2026-09-02); puede no reflejar el mercado actual.",
+          "comision_cop": 5786250,
+          "flete_cop": 2927232,
+          "peajes_cop": 107000,
+          "costo_logistico_cop": 8820482,
+          "ingreso_bruto_cop": 192875000,
+          "utilidad_neta_cop": 184054518,
+          "posicion": 11,
+          "creado_en": "2026-09-25T15:30:00.000Z",
+          "actualizado_en": "2026-09-25T15:30:00.000Z"
         }
-      ],
-      "creado_en": "2026-09-24T10:30:00-05:00",
-      "actualizado_en": "2026-09-24T10:30:00-05:00"
+      ]
     },
     {
-      "id": "52f381bc-c20e-5327-81d6-0f741acbaa24",
+      "id": "8564917b-53f4-45dc-8090-531dc785e346",
       "lote_id": "d041a25f-0ea4-5ea0-abec-c5c5bdaddb62",
       "flete_km_cop": 6500,
+      "capacidad_camion": 25,
+      "flete_incluye_peajes": false,
       "mejor_destino_id": "52bbc2f4-901c-5ff0-a08a-5f8f08f91fa1",
+      "creado_en": "2026-09-23T22:45:00.000Z",
+      "actualizado_en": "2026-09-23T22:45:00.000Z",
       "resultados": [
         {
-          "id": "4e98d705-6f0d-5679-aacb-c169df1e152c",
-          "simulacion_id": "52f381bc-c20e-5327-81d6-0f741acbaa24",
+          "id": "504fd1b8-19a9-49ac-b918-e4121e511403",
+          "simulacion_id": "8564917b-53f4-45dc-8090-531dc785e346",
           "destino_id": "52bbc2f4-901c-5ff0-a08a-5f8f08f91fa1",
-          "ruta_id": "a69ac042-f646-50e2-88bd-b4f76f38c169",
-          "distancia_km": 382.0,
-          "tiempo_horas": 8.4,
-          "merma_pct": 4.5,
-          "peso_vendido_kg": 11030.2,
-          "precio_kg_cop": 11300,
-          "flete_cop": 3103750,
-          "peajes_cop": 110000,
-          "costo_logistico_cop": 3213750,
-          "ingreso_bruto_cop": 124641260,
-          "utilidad_neta_cop": 121427510,
+          "ruta_id": "1fc73225-6b50-4ffe-af80-9dd016fb8331",
+          "distancia_km": 430.1,
+          "tiempo_horas": 9.3,
+          "merma_pct": 8,
+          "camiones": 1,
+          "peso_vendido_kg": 10626,
+          "precio_kg_cop": 11050,
+          "precio_fecha": "2026-09-02",
+          "precio_antiguedad_dias": 21,
+          "advertencia": "Precio de hace 21 días (2026-09-02); puede no reflejar el mercado actual.",
+          "comision_cop": 0,
+          "flete_cop": 3494563,
+          "peajes_cop": 117700,
+          "costo_logistico_cop": 3612263,
+          "ingreso_bruto_cop": 117417300,
+          "utilidad_neta_cop": 113805037,
           "posicion": 1,
-          "creado_en": "2026-09-22T17:45:00-05:00",
-          "actualizado_en": "2026-09-22T17:45:00-05:00"
+          "creado_en": "2026-09-23T22:45:00.000Z",
+          "actualizado_en": "2026-09-23T22:45:00.000Z"
         },
         {
-          "id": "8f83d9bd-0bda-5cdd-96ff-08c5d8ba7e90",
-          "simulacion_id": "52f381bc-c20e-5327-81d6-0f741acbaa24",
-          "destino_id": "3878b38f-1764-5e78-88b0-93461cec83ec",
-          "ruta_id": "48492f5f-f1ef-5799-8dd1-aa2e1598d817",
-          "distancia_km": 247.0,
-          "tiempo_horas": 5.9,
-          "merma_pct": 3.5,
-          "peso_vendido_kg": 11145.8,
-          "precio_kg_cop": 10900,
-          "flete_cop": 1846325,
-          "peajes_cop": 64000,
-          "costo_logistico_cop": 1910325,
-          "ingreso_bruto_cop": 121489220,
-          "utilidad_neta_cop": 119578895,
-          "posicion": 2,
-          "creado_en": "2026-09-22T17:45:00-05:00",
-          "actualizado_en": "2026-09-22T17:45:00-05:00"
-        },
-        {
-          "id": "a8e5c48e-8dc8-530f-8da1-392dc50eabca",
-          "simulacion_id": "52f381bc-c20e-5327-81d6-0f741acbaa24",
-          "destino_id": "acca0ef8-f855-5505-b81b-25833e792ff1",
-          "ruta_id": "58503f72-33aa-5dc3-a8fa-e39abddb9eea",
-          "distancia_km": 9.5,
-          "tiempo_horas": 0.3,
-          "merma_pct": 0.5,
-          "peso_vendido_kg": 11492.2,
-          "precio_kg_cop": 10400,
-          "flete_cop": 61750,
+          "id": "08ce9aa5-5f61-4859-b915-955b14973ceb",
+          "simulacion_id": "8564917b-53f4-45dc-8090-531dc785e346",
+          "destino_id": "0e6f6c1a-3b0d-5c8e-9f1a-6d2b7c4e8a10",
+          "ruta_id": "944d11bc-35d9-43ab-b927-02cffc1afadc",
+          "distancia_km": 0,
+          "tiempo_horas": 0,
+          "merma_pct": 0,
+          "camiones": 1,
+          "peso_vendido_kg": 11550,
+          "precio_kg_cop": 9850,
+          "precio_fecha": "2026-09-02",
+          "precio_antiguedad_dias": 21,
+          "advertencia": "Precio de hace 21 días (2026-09-02); puede no reflejar el mercado actual.",
+          "comision_cop": 0,
+          "flete_cop": 0,
           "peajes_cop": 0,
-          "costo_logistico_cop": 61750,
-          "ingreso_bruto_cop": 119518880,
-          "utilidad_neta_cop": 119457130,
-          "posicion": 3,
-          "creado_en": "2026-09-22T17:45:00-05:00",
-          "actualizado_en": "2026-09-22T17:45:00-05:00"
+          "costo_logistico_cop": 0,
+          "ingreso_bruto_cop": 113767500,
+          "utilidad_neta_cop": 113767500,
+          "posicion": 2,
+          "creado_en": "2026-09-23T22:45:00.000Z",
+          "actualizado_en": "2026-09-23T22:45:00.000Z"
         },
         {
-          "id": "c8d1ae15-f5a7-57e9-a63e-25da3551c85d",
-          "simulacion_id": "52f381bc-c20e-5327-81d6-0f741acbaa24",
+          "id": "3eea8439-9cde-4b39-be72-9b74fab5c086",
+          "simulacion_id": "8564917b-53f4-45dc-8090-531dc785e346",
+          "destino_id": "3878b38f-1764-5e78-88b0-93461cec83ec",
+          "ruta_id": "6261bfc6-4566-4e30-911c-1103bb9ae2b9",
+          "distancia_km": 295.1,
+          "tiempo_horas": 6.4,
+          "merma_pct": 6.8,
+          "camiones": 1,
+          "peso_vendido_kg": 10764.6,
+          "precio_kg_cop": 10650,
+          "precio_fecha": "2026-09-02",
+          "precio_antiguedad_dias": 21,
+          "advertencia": "Precio de hace 21 días (2026-09-02); puede no reflejar el mercado actual.",
+          "comision_cop": 0,
+          "flete_cop": 2205873,
+          "peajes_cop": 91300,
+          "costo_logistico_cop": 2297173,
+          "ingreso_bruto_cop": 114642990,
+          "utilidad_neta_cop": 112345817,
+          "posicion": 3,
+          "creado_en": "2026-09-23T22:45:00.000Z",
+          "actualizado_en": "2026-09-23T22:45:00.000Z"
+        },
+        {
+          "id": "f321acea-5c22-4b56-88d1-ae54a9b67f6b",
+          "simulacion_id": "8564917b-53f4-45dc-8090-531dc785e346",
           "destino_id": "d8c5a7c4-888d-56e2-81f2-f8cc588a2834",
-          "ruta_id": "cf10b20d-fd88-529e-a803-62f520737f2e",
-          "distancia_km": 172.0,
-          "tiempo_horas": 4.3,
-          "merma_pct": 2.8,
-          "peso_vendido_kg": 11226.6,
-          "precio_kg_cop": 10750,
-          "flete_cop": 1341600,
-          "peajes_cop": 42000,
-          "costo_logistico_cop": 1383600,
-          "ingreso_bruto_cop": 120685950,
-          "utilidad_neta_cop": 119302350,
+          "ruta_id": "22bfe46e-515b-49b9-840b-78c8a7e991f8",
+          "distancia_km": 220.1,
+          "tiempo_horas": 4.8,
+          "merma_pct": 6,
+          "camiones": 1,
+          "peso_vendido_kg": 10857,
+          "precio_kg_cop": 10500,
+          "precio_fecha": "2026-09-02",
+          "precio_antiguedad_dias": 21,
+          "advertencia": "Precio de hace 21 días (2026-09-02); puede no reflejar el mercado actual.",
+          "comision_cop": 0,
+          "flete_cop": 1716780,
+          "peajes_cop": 56100,
+          "costo_logistico_cop": 1772880,
+          "ingreso_bruto_cop": 113998500,
+          "utilidad_neta_cop": 112225620,
           "posicion": 4,
-          "creado_en": "2026-09-22T17:45:00-05:00",
-          "actualizado_en": "2026-09-22T17:45:00-05:00"
+          "creado_en": "2026-09-23T22:45:00.000Z",
+          "actualizado_en": "2026-09-23T22:45:00.000Z"
+        },
+        {
+          "id": "6088037a-a6a2-45fe-ab96-c7ddd11477e5",
+          "simulacion_id": "8564917b-53f4-45dc-8090-531dc785e346",
+          "destino_id": "acca0ef8-f855-5505-b81b-25833e792ff1",
+          "ruta_id": "a323ee37-f338-48f7-b7f0-9fe9bf68743c",
+          "distancia_km": 54.5,
+          "tiempo_horas": 1.2,
+          "merma_pct": 1.4,
+          "camiones": 1,
+          "peso_vendido_kg": 11388.3,
+          "precio_kg_cop": 10150,
+          "precio_fecha": "2026-09-02",
+          "precio_antiguedad_dias": 21,
+          "advertencia": "Precio de hace 21 días (2026-09-02); puede no reflejar el mercado actual.",
+          "comision_cop": 3467737,
+          "flete_cop": 354250,
+          "peajes_cop": 7200,
+          "costo_logistico_cop": 3829187,
+          "ingreso_bruto_cop": 115591245,
+          "utilidad_neta_cop": 111762058,
+          "posicion": 5,
+          "creado_en": "2026-09-23T22:45:00.000Z",
+          "actualizado_en": "2026-09-23T22:45:00.000Z"
         }
-      ],
-      "creado_en": "2026-09-22T17:45:00-05:00",
-      "actualizado_en": "2026-09-22T17:45:00-05:00"
+      ]
     },
     {
-      "id": "d014a3b6-e98c-5057-a5c1-37dcf2aebb6b",
+      "id": "dee1fec2-ef85-4038-ac3a-da0305f52f94",
       "lote_id": "9bad2b17-c8e0-57f7-ac48-2d1cf99ad088",
       "flete_km_cop": 7000,
-      "mejor_destino_id": "52bbc2f4-901c-5ff0-a08a-5f8f08f91fa1",
+      "capacidad_camion": 25,
+      "flete_incluye_peajes": false,
+      "mejor_destino_id": "0e6f6c1a-3b0d-5c8e-9f1a-6d2b7c4e8a10",
+      "creado_en": "2026-09-20T13:25:00.000Z",
+      "actualizado_en": "2026-09-20T13:25:00.000Z",
       "resultados": [
         {
-          "id": "200c89eb-f7c0-52d9-9da4-dd8cf561c65e",
-          "simulacion_id": "d014a3b6-e98c-5057-a5c1-37dcf2aebb6b",
-          "destino_id": "52bbc2f4-901c-5ff0-a08a-5f8f08f91fa1",
-          "ruta_id": "a69ac042-f646-50e2-88bd-b4f76f38c169",
-          "distancia_km": 382.0,
-          "tiempo_horas": 8.4,
-          "merma_pct": 4.5,
-          "peso_vendido_kg": 12949.8,
-          "precio_kg_cop": 11300,
-          "flete_cop": 3342500,
-          "peajes_cop": 110000,
-          "costo_logistico_cop": 3452500,
-          "ingreso_bruto_cop": 146332740,
-          "utilidad_neta_cop": 142880240,
+          "id": "29ac2f2f-4d22-40aa-a295-ca5451aa8c3d",
+          "simulacion_id": "dee1fec2-ef85-4038-ac3a-da0305f52f94",
+          "destino_id": "0e6f6c1a-3b0d-5c8e-9f1a-6d2b7c4e8a10",
+          "ruta_id": "7b1e2d3c-4a5b-5c6d-8e7f-9a0b1c2d3e4f",
+          "distancia_km": 0,
+          "tiempo_horas": 0,
+          "merma_pct": 0,
+          "camiones": 2,
+          "peso_vendido_kg": 13560,
+          "precio_kg_cop": 9850,
+          "precio_fecha": "2026-09-02",
+          "precio_antiguedad_dias": 18,
+          "advertencia": "Precio de hace 18 días (2026-09-02); puede no reflejar el mercado actual.",
+          "comision_cop": 0,
+          "flete_cop": 0,
+          "peajes_cop": 0,
+          "costo_logistico_cop": 0,
+          "ingreso_bruto_cop": 133566000,
+          "utilidad_neta_cop": 133566000,
           "posicion": 1,
-          "creado_en": "2026-09-19T08:25:00-05:00",
-          "actualizado_en": "2026-09-19T08:25:00-05:00"
+          "creado_en": "2026-09-20T13:25:00.000Z",
+          "actualizado_en": "2026-09-20T13:25:00.000Z"
         },
         {
-          "id": "2e85a1a3-fbba-5a59-a438-35bbd6154c5e",
-          "simulacion_id": "d014a3b6-e98c-5057-a5c1-37dcf2aebb6b",
+          "id": "ae1fcc57-ccae-4a8c-b9d6-47958a3b4648",
+          "simulacion_id": "dee1fec2-ef85-4038-ac3a-da0305f52f94",
           "destino_id": "acca0ef8-f855-5505-b81b-25833e792ff1",
           "ruta_id": "58503f72-33aa-5dc3-a8fa-e39abddb9eea",
           "distancia_km": 9.5,
           "tiempo_horas": 0.3,
           "merma_pct": 0.5,
+          "camiones": 2,
           "peso_vendido_kg": 13492.2,
-          "precio_kg_cop": 10400,
-          "flete_cop": 66500,
+          "precio_kg_cop": 10150,
+          "precio_fecha": "2026-09-02",
+          "precio_antiguedad_dias": 18,
+          "advertencia": "Precio de hace 18 días (2026-09-02); puede no reflejar el mercado actual.",
+          "comision_cop": 4108375,
+          "flete_cop": 133000,
           "peajes_cop": 0,
-          "costo_logistico_cop": 66500,
-          "ingreso_bruto_cop": 140318880,
-          "utilidad_neta_cop": 140252380,
+          "costo_logistico_cop": 4241375,
+          "ingreso_bruto_cop": 136945830,
+          "utilidad_neta_cop": 132704455,
           "posicion": 2,
-          "creado_en": "2026-09-19T08:25:00-05:00",
-          "actualizado_en": "2026-09-19T08:25:00-05:00"
+          "creado_en": "2026-09-20T13:25:00.000Z",
+          "actualizado_en": "2026-09-20T13:25:00.000Z"
         },
         {
-          "id": "e157a897-5d2f-595b-bbff-ca440b72652b",
-          "simulacion_id": "d014a3b6-e98c-5057-a5c1-37dcf2aebb6b",
-          "destino_id": "15bf935c-dea7-52e8-a312-228463fe5aef",
-          "ruta_id": "9e8d2db5-62af-5aff-9e08-4f15f793f377",
-          "distancia_km": 791.0,
-          "tiempo_horas": 16.5,
-          "merma_pct": 7.0,
-          "peso_vendido_kg": 12610.8,
-          "precio_kg_cop": 11600,
-          "flete_cop": 7751800,
-          "peajes_cop": 210000,
-          "costo_logistico_cop": 7961800,
-          "ingreso_bruto_cop": 146285280,
-          "utilidad_neta_cop": 138323480,
+          "id": "57fc54d6-d8f0-4139-ae1a-3b2858ea4ab6",
+          "simulacion_id": "dee1fec2-ef85-4038-ac3a-da0305f52f94",
+          "destino_id": "52bbc2f4-901c-5ff0-a08a-5f8f08f91fa1",
+          "ruta_id": "a69ac042-f646-50e2-88bd-b4f76f38c169",
+          "distancia_km": 382,
+          "tiempo_horas": 8.4,
+          "merma_pct": 7.7,
+          "camiones": 2,
+          "peso_vendido_kg": 12515.9,
+          "precio_kg_cop": 11050,
+          "precio_fecha": "2026-09-02",
+          "precio_antiguedad_dias": 18,
+          "advertencia": "Precio de hace 18 días (2026-09-02); puede no reflejar el mercado actual.",
+          "comision_cop": 0,
+          "flete_cop": 6685000,
+          "peajes_cop": 220000,
+          "costo_logistico_cop": 6905000,
+          "ingreso_bruto_cop": 138300695,
+          "utilidad_neta_cop": 131395695,
           "posicion": 3,
-          "creado_en": "2026-09-19T08:25:00-05:00",
-          "actualizado_en": "2026-09-19T08:25:00-05:00"
+          "creado_en": "2026-09-20T13:25:00.000Z",
+          "actualizado_en": "2026-09-20T13:25:00.000Z"
         },
         {
-          "id": "c1cb1beb-5763-5430-b57e-5ef6f6747f5f",
-          "simulacion_id": "d014a3b6-e98c-5057-a5c1-37dcf2aebb6b",
+          "id": "b8dea211-610a-4e72-a1be-8bea101b7519",
+          "simulacion_id": "dee1fec2-ef85-4038-ac3a-da0305f52f94",
           "destino_id": "6b8211cf-49f9-5354-925a-ec5edb230ee1",
           "ruta_id": "5ec2ea46-db9d-525b-8417-462de2b24a6a",
-          "distancia_km": 266.0,
+          "distancia_km": 266,
           "tiempo_horas": 5.1,
-          "merma_pct": 3.0,
-          "peso_vendido_kg": 13153.2,
-          "precio_kg_cop": 10600,
-          "flete_cop": 2048200,
-          "peajes_cop": 85000,
-          "costo_logistico_cop": 2133200,
-          "ingreso_bruto_cop": 139423920,
-          "utilidad_neta_cop": 137290720,
+          "merma_pct": 6.5,
+          "camiones": 2,
+          "peso_vendido_kg": 12678.6,
+          "precio_kg_cop": 10350,
+          "precio_fecha": "2026-09-02",
+          "precio_antiguedad_dias": 18,
+          "advertencia": "Precio de hace 18 días (2026-09-02); puede no reflejar el mercado actual.",
+          "comision_cop": 0,
+          "flete_cop": 4096400,
+          "peajes_cop": 170000,
+          "costo_logistico_cop": 4266400,
+          "ingreso_bruto_cop": 131223510,
+          "utilidad_neta_cop": 126957110,
           "posicion": 4,
-          "creado_en": "2026-09-19T08:25:00-05:00",
-          "actualizado_en": "2026-09-19T08:25:00-05:00"
+          "creado_en": "2026-09-20T13:25:00.000Z",
+          "actualizado_en": "2026-09-20T13:25:00.000Z"
+        },
+        {
+          "id": "ec6c9b72-9d99-47cd-957c-b657a62b3eb4",
+          "simulacion_id": "dee1fec2-ef85-4038-ac3a-da0305f52f94",
+          "destino_id": "15bf935c-dea7-52e8-a312-228463fe5aef",
+          "ruta_id": "9e8d2db5-62af-5aff-9e08-4f15f793f377",
+          "distancia_km": 791,
+          "tiempo_horas": 16.5,
+          "merma_pct": 9.5,
+          "camiones": 2,
+          "peso_vendido_kg": 12271.8,
+          "precio_kg_cop": 11350,
+          "precio_fecha": "2026-09-02",
+          "precio_antiguedad_dias": 18,
+          "advertencia": "Precio de hace 18 días (2026-09-02); puede no reflejar el mercado actual.",
+          "comision_cop": 0,
+          "flete_cop": 15503600,
+          "peajes_cop": 420000,
+          "costo_logistico_cop": 15923600,
+          "ingreso_bruto_cop": 139284930,
+          "utilidad_neta_cop": 123361330,
+          "posicion": 5,
+          "creado_en": "2026-09-20T13:25:00.000Z",
+          "actualizado_en": "2026-09-20T13:25:00.000Z"
         }
-      ],
-      "creado_en": "2026-09-19T08:25:00-05:00",
-      "actualizado_en": "2026-09-19T08:25:00-05:00"
+      ]
     },
     {
-      "id": "da722e39-979e-5b78-80e1-c68b7089c28e",
+      "id": "e7f1ff3b-a66a-4f4f-b36a-c73a436c44ec",
       "lote_id": "9252d5d1-4051-5095-a93b-ae493636dc2e",
       "flete_km_cop": 6200,
-      "mejor_destino_id": "acca0ef8-f855-5505-b81b-25833e792ff1",
+      "capacidad_camion": 25,
+      "flete_incluye_peajes": false,
+      "mejor_destino_id": "0e6f6c1a-3b0d-5c8e-9f1a-6d2b7c4e8a10",
+      "creado_en": "2026-09-19T20:10:00.000Z",
+      "actualizado_en": "2026-09-19T20:10:00.000Z",
       "resultados": [
         {
-          "id": "642c3914-b497-5ba4-b7cd-33f7ab3750d0",
-          "simulacion_id": "da722e39-979e-5b78-80e1-c68b7089c28e",
-          "destino_id": "acca0ef8-f855-5505-b81b-25833e792ff1",
-          "ruta_id": "58503f72-33aa-5dc3-a8fa-e39abddb9eea",
-          "distancia_km": 9.5,
-          "tiempo_horas": 0.3,
-          "merma_pct": 0.5,
-          "peso_vendido_kg": 15253.4,
-          "precio_kg_cop": 10400,
-          "flete_cop": 58900,
+          "id": "22af79b4-7c16-4f7f-8251-a626dfc31481",
+          "simulacion_id": "e7f1ff3b-a66a-4f4f-b36a-c73a436c44ec",
+          "destino_id": "0e6f6c1a-3b0d-5c8e-9f1a-6d2b7c4e8a10",
+          "ruta_id": "7c0333f1-b8a7-4f9a-9b99-f53e54ba733d",
+          "distancia_km": 0,
+          "tiempo_horas": 0,
+          "merma_pct": 0,
+          "camiones": 2,
+          "peso_vendido_kg": 15330,
+          "precio_kg_cop": 9850,
+          "precio_fecha": "2026-09-02",
+          "precio_antiguedad_dias": 17,
+          "advertencia": "Precio de hace 17 días (2026-09-02); puede no reflejar el mercado actual.",
+          "comision_cop": 0,
+          "flete_cop": 0,
           "peajes_cop": 0,
-          "costo_logistico_cop": 58900,
-          "ingreso_bruto_cop": 158635360,
-          "utilidad_neta_cop": 158576460,
+          "costo_logistico_cop": 0,
+          "ingreso_bruto_cop": 151000500,
+          "utilidad_neta_cop": 151000500,
           "posicion": 1,
-          "creado_en": "2026-09-18T15:10:00-05:00",
-          "actualizado_en": "2026-09-18T15:10:00-05:00"
+          "creado_en": "2026-09-19T20:10:00.000Z",
+          "actualizado_en": "2026-09-19T20:10:00.000Z"
         },
         {
-          "id": "b4801d1d-fbc6-5146-80de-5504f998ae46",
-          "simulacion_id": "da722e39-979e-5b78-80e1-c68b7089c28e",
-          "destino_id": "396e4a75-a43f-5e33-adb3-1d6163e10530",
-          "ruta_id": "24cc9013-756c-5947-b31d-103ecf0effca",
-          "distancia_km": 603.0,
-          "tiempo_horas": 13.0,
-          "merma_pct": 6.0,
-          "peso_vendido_kg": 14410.2,
-          "precio_kg_cop": 11200,
-          "flete_cop": 5047110,
-          "peajes_cop": 150000,
-          "costo_logistico_cop": 5197110,
-          "ingreso_bruto_cop": 161394240,
-          "utilidad_neta_cop": 156197130,
-          "posicion": 2,
-          "creado_en": "2026-09-18T15:10:00-05:00",
-          "actualizado_en": "2026-09-18T15:10:00-05:00"
-        },
-        {
-          "id": "41229859-38dd-5aa8-ae53-781681f5edc2",
-          "simulacion_id": "da722e39-979e-5b78-80e1-c68b7089c28e",
-          "destino_id": "6b8211cf-49f9-5354-925a-ec5edb230ee1",
-          "ruta_id": "5ec2ea46-db9d-525b-8417-462de2b24a6a",
-          "distancia_km": 266.0,
-          "tiempo_horas": 5.1,
-          "merma_pct": 3.0,
-          "peso_vendido_kg": 14870.1,
-          "precio_kg_cop": 10600,
-          "flete_cop": 1814120,
-          "peajes_cop": 85000,
-          "costo_logistico_cop": 1899120,
-          "ingreso_bruto_cop": 157623060,
-          "utilidad_neta_cop": 155723940,
-          "posicion": 3,
-          "creado_en": "2026-09-18T15:10:00-05:00",
-          "actualizado_en": "2026-09-18T15:10:00-05:00"
-        },
-        {
-          "id": "91fac431-a81e-5b69-bf5e-93e14b32a80c",
-          "simulacion_id": "da722e39-979e-5b78-80e1-c68b7089c28e",
+          "id": "8e9fe926-e171-4f36-a81b-ce2f15092905",
+          "simulacion_id": "e7f1ff3b-a66a-4f4f-b36a-c73a436c44ec",
           "destino_id": "5a11df78-6998-5089-a775-55e35b205cfe",
-          "ruta_id": "ae582c3d-af89-5b0d-988d-4ed54fba9b89",
-          "distancia_km": 128.0,
-          "tiempo_horas": 2.6,
-          "merma_pct": 2.0,
-          "peso_vendido_kg": 15023.4,
-          "precio_kg_cop": 10250,
-          "flete_cop": 833280,
-          "peajes_cop": 19000,
-          "costo_logistico_cop": 852280,
-          "ingreso_bruto_cop": 153989850,
-          "utilidad_neta_cop": 153137570,
+          "ruta_id": "cb0242cf-341c-4dbf-8185-84e9eace6e27",
+          "distancia_km": 3,
+          "tiempo_horas": 0.1,
+          "merma_pct": 0.2,
+          "camiones": 2,
+          "peso_vendido_kg": 15299.3,
+          "precio_kg_cop": 10000,
+          "precio_fecha": "2026-09-02",
+          "precio_antiguedad_dias": 17,
+          "advertencia": "Precio de hace 17 días (2026-09-02); puede no reflejar el mercado actual.",
+          "comision_cop": 4589790,
+          "flete_cop": 39060,
+          "peajes_cop": 0,
+          "costo_logistico_cop": 4628850,
+          "ingreso_bruto_cop": 152993000,
+          "utilidad_neta_cop": 148364150,
+          "posicion": 2,
+          "creado_en": "2026-09-19T20:10:00.000Z",
+          "actualizado_en": "2026-09-19T20:10:00.000Z"
+        },
+        {
+          "id": "1d34dd5d-d16b-48d5-936a-c6769fa44f31",
+          "simulacion_id": "e7f1ff3b-a66a-4f4f-b36a-c73a436c44ec",
+          "destino_id": "acca0ef8-f855-5505-b81b-25833e792ff1",
+          "ruta_id": "e1c74087-2ae8-4250-bae0-1b290263f652",
+          "distancia_km": 108.2,
+          "tiempo_horas": 2.3,
+          "merma_pct": 2.6,
+          "camiones": 2,
+          "peso_vendido_kg": 14931.4,
+          "precio_kg_cop": 10150,
+          "precio_fecha": "2026-09-02",
+          "precio_antiguedad_dias": 17,
+          "advertencia": "Precio de hace 17 días (2026-09-02); puede no reflejar el mercado actual.",
+          "comision_cop": 4546611,
+          "flete_cop": 1341680,
+          "peajes_cop": 31600,
+          "costo_logistico_cop": 5919891,
+          "ingreso_bruto_cop": 151553710,
+          "utilidad_neta_cop": 145633819,
+          "posicion": 3,
+          "creado_en": "2026-09-19T20:10:00.000Z",
+          "actualizado_en": "2026-09-19T20:10:00.000Z"
+        },
+        {
+          "id": "e3547f56-52a5-4e64-9b29-a6a4df769277",
+          "simulacion_id": "e7f1ff3b-a66a-4f4f-b36a-c73a436c44ec",
+          "destino_id": "396e4a75-a43f-5e33-adb3-1d6163e10530",
+          "ruta_id": "84919ca0-0fe5-4318-9e79-b3e50666f4e9",
+          "distancia_km": 504.3,
+          "tiempo_horas": 10.9,
+          "merma_pct": 8.5,
+          "camiones": 2,
+          "peso_vendido_kg": 14027,
+          "precio_kg_cop": 10950,
+          "precio_fecha": "2026-09-02",
+          "precio_antiguedad_dias": 17,
+          "advertencia": "Precio de hace 17 días (2026-09-02); puede no reflejar el mercado actual.",
+          "comision_cop": 0,
+          "flete_cop": 8441982,
+          "peajes_cop": 259200,
+          "costo_logistico_cop": 8701182,
+          "ingreso_bruto_cop": 153595650,
+          "utilidad_neta_cop": 144894468,
           "posicion": 4,
-          "creado_en": "2026-09-18T15:10:00-05:00",
-          "actualizado_en": "2026-09-18T15:10:00-05:00"
+          "creado_en": "2026-09-19T20:10:00.000Z",
+          "actualizado_en": "2026-09-19T20:10:00.000Z"
+        },
+        {
+          "id": "f46cea3a-8ca6-4d7f-8bae-95785d78f6c2",
+          "simulacion_id": "e7f1ff3b-a66a-4f4f-b36a-c73a436c44ec",
+          "destino_id": "6b8211cf-49f9-5354-925a-ec5edb230ee1",
+          "ruta_id": "2caec5e0-f713-4ca3-a53e-cd40aaa91af1",
+          "distancia_km": 364.7,
+          "tiempo_horas": 7.9,
+          "merma_pct": 7.5,
+          "camiones": 2,
+          "peso_vendido_kg": 14180.3,
+          "precio_kg_cop": 10350,
+          "precio_fecha": "2026-09-02",
+          "precio_antiguedad_dias": 17,
+          "advertencia": "Precio de hace 17 días (2026-09-02); puede no reflejar el mercado actual.",
+          "comision_cop": 0,
+          "flete_cop": 4974508,
+          "peajes_cop": 212600,
+          "costo_logistico_cop": 5187108,
+          "ingreso_bruto_cop": 146766105,
+          "utilidad_neta_cop": 141578997,
+          "posicion": 5,
+          "creado_en": "2026-09-19T20:10:00.000Z",
+          "actualizado_en": "2026-09-19T20:10:00.000Z"
         }
-      ],
-      "creado_en": "2026-09-18T15:10:00-05:00",
-      "actualizado_en": "2026-09-18T15:10:00-05:00"
+      ]
     },
     {
-      "id": "2ffd2d99-779d-5eb0-bd02-10250fcbad37",
+      "id": "d7499bf2-38df-4b3d-8f25-827b574c2273",
       "lote_id": "bb0ff19b-a1d7-509a-9512-cef23cbde87d",
       "flete_km_cop": 6800,
+      "capacidad_camion": 25,
+      "flete_incluye_peajes": false,
       "mejor_destino_id": "52bbc2f4-901c-5ff0-a08a-5f8f08f91fa1",
+      "creado_en": "2026-09-18T14:40:00.000Z",
+      "actualizado_en": "2026-09-18T14:40:00.000Z",
       "resultados": [
         {
-          "id": "0962887e-ecab-5dc5-92e4-c964dd488da6",
-          "simulacion_id": "2ffd2d99-779d-5eb0-bd02-10250fcbad37",
+          "id": "6b7a0d2a-9261-40ec-b90e-46e00691fcf1",
+          "simulacion_id": "d7499bf2-38df-4b3d-8f25-827b574c2273",
           "destino_id": "52bbc2f4-901c-5ff0-a08a-5f8f08f91fa1",
-          "ruta_id": "a69ac042-f646-50e2-88bd-b4f76f38c169",
-          "distancia_km": 382.0,
-          "tiempo_horas": 8.4,
-          "merma_pct": 4.5,
-          "peso_vendido_kg": 17954.0,
-          "precio_kg_cop": 11300,
-          "flete_cop": 3247000,
-          "peajes_cop": 110000,
-          "costo_logistico_cop": 3357000,
-          "ingreso_bruto_cop": 202880200,
-          "utilidad_neta_cop": 199523200,
+          "ruta_id": "9766a346-7b15-4c41-a3f5-4554d4e57b3d",
+          "distancia_km": 318.8,
+          "tiempo_horas": 6.9,
+          "merma_pct": 7,
+          "camiones": 2,
+          "peso_vendido_kg": 17484,
+          "precio_kg_cop": 11050,
+          "precio_fecha": "2026-09-02",
+          "precio_antiguedad_dias": 16,
+          "advertencia": "Precio de hace 16 días (2026-09-02); puede no reflejar el mercado actual.",
+          "comision_cop": 0,
+          "flete_cop": 5419600,
+          "peajes_cop": 192800,
+          "costo_logistico_cop": 5612400,
+          "ingreso_bruto_cop": 193198200,
+          "utilidad_neta_cop": 187585800,
           "posicion": 1,
-          "creado_en": "2026-09-17T09:40:00-05:00",
-          "actualizado_en": "2026-09-17T09:40:00-05:00"
+          "creado_en": "2026-09-18T14:40:00.000Z",
+          "actualizado_en": "2026-09-18T14:40:00.000Z"
         },
         {
-          "id": "7d2722ca-4dc6-5bc4-a06b-8486de006a58",
-          "simulacion_id": "2ffd2d99-779d-5eb0-bd02-10250fcbad37",
+          "id": "d3bdff1b-5db7-441c-8a32-5a0fd71fa1ed",
+          "simulacion_id": "d7499bf2-38df-4b3d-8f25-827b574c2273",
           "destino_id": "3878b38f-1764-5e78-88b0-93461cec83ec",
-          "ruta_id": "48492f5f-f1ef-5799-8dd1-aa2e1598d817",
-          "distancia_km": 247.0,
-          "tiempo_horas": 5.9,
-          "merma_pct": 3.5,
-          "peso_vendido_kg": 18142.0,
-          "precio_kg_cop": 10900,
-          "flete_cop": 1931540,
-          "peajes_cop": 64000,
-          "costo_logistico_cop": 1995540,
-          "ingreso_bruto_cop": 197747800,
-          "utilidad_neta_cop": 195752260,
+          "ruta_id": "e6fb6607-7c04-4976-8063-9ed9e97d0484",
+          "distancia_km": 183.8,
+          "tiempo_horas": 4,
+          "merma_pct": 5.2,
+          "camiones": 2,
+          "peso_vendido_kg": 17822.4,
+          "precio_kg_cop": 10650,
+          "precio_fecha": "2026-09-02",
+          "precio_antiguedad_dias": 16,
+          "advertencia": "Precio de hace 16 días (2026-09-02); puede no reflejar el mercado actual.",
+          "comision_cop": 0,
+          "flete_cop": 2874632,
+          "peajes_cop": 91000,
+          "costo_logistico_cop": 2965632,
+          "ingreso_bruto_cop": 189808560,
+          "utilidad_neta_cop": 186842928,
           "posicion": 2,
-          "creado_en": "2026-09-17T09:40:00-05:00",
-          "actualizado_en": "2026-09-17T09:40:00-05:00"
+          "creado_en": "2026-09-18T14:40:00.000Z",
+          "actualizado_en": "2026-09-18T14:40:00.000Z"
         },
         {
-          "id": "9eb8ed07-394b-5f5d-8a6c-928cd8fe7d33",
-          "simulacion_id": "2ffd2d99-779d-5eb0-bd02-10250fcbad37",
-          "destino_id": "15bf935c-dea7-52e8-a312-228463fe5aef",
-          "ruta_id": "9e8d2db5-62af-5aff-9e08-4f15f793f377",
-          "distancia_km": 791.0,
-          "tiempo_horas": 16.5,
-          "merma_pct": 7.0,
-          "peso_vendido_kg": 17484.0,
-          "precio_kg_cop": 11600,
-          "flete_cop": 7530320,
-          "peajes_cop": 210000,
-          "costo_logistico_cop": 7740320,
-          "ingreso_bruto_cop": 202814400,
-          "utilidad_neta_cop": 195074080,
-          "posicion": 3,
-          "creado_en": "2026-09-17T09:40:00-05:00",
-          "actualizado_en": "2026-09-17T09:40:00-05:00"
-        },
-        {
-          "id": "afa356e2-93de-57fb-8b46-0c743b137412",
-          "simulacion_id": "2ffd2d99-779d-5eb0-bd02-10250fcbad37",
-          "destino_id": "acca0ef8-f855-5505-b81b-25833e792ff1",
-          "ruta_id": "58503f72-33aa-5dc3-a8fa-e39abddb9eea",
-          "distancia_km": 9.5,
-          "tiempo_horas": 0.3,
-          "merma_pct": 0.5,
-          "peso_vendido_kg": 18706.0,
-          "precio_kg_cop": 10400,
-          "flete_cop": 64600,
+          "id": "f42b7358-c3a3-412c-a274-4faf470ceeab",
+          "simulacion_id": "d7499bf2-38df-4b3d-8f25-827b574c2273",
+          "destino_id": "0e6f6c1a-3b0d-5c8e-9f1a-6d2b7c4e8a10",
+          "ruta_id": "50568506-18f6-457e-95e2-b962b3f9eff6",
+          "distancia_km": 0,
+          "tiempo_horas": 0,
+          "merma_pct": 0,
+          "camiones": 2,
+          "peso_vendido_kg": 18800,
+          "precio_kg_cop": 9850,
+          "precio_fecha": "2026-09-02",
+          "precio_antiguedad_dias": 16,
+          "advertencia": "Precio de hace 16 días (2026-09-02); puede no reflejar el mercado actual.",
+          "comision_cop": 0,
+          "flete_cop": 0,
           "peajes_cop": 0,
-          "costo_logistico_cop": 64600,
-          "ingreso_bruto_cop": 194542400,
-          "utilidad_neta_cop": 194477800,
-          "posicion": 4,
-          "creado_en": "2026-09-17T09:40:00-05:00",
-          "actualizado_en": "2026-09-17T09:40:00-05:00"
+          "costo_logistico_cop": 0,
+          "ingreso_bruto_cop": 185180000,
+          "utilidad_neta_cop": 185180000,
+          "posicion": 3,
+          "creado_en": "2026-09-18T14:40:00.000Z",
+          "actualizado_en": "2026-09-18T14:40:00.000Z"
         },
         {
-          "id": "317fd132-1830-5073-8fbf-2f424d15a371",
-          "simulacion_id": "2ffd2d99-779d-5eb0-bd02-10250fcbad37",
-          "destino_id": "c1b1b4d6-5649-5406-a30d-e47ea1c9ba12",
-          "ruta_id": "a94ec479-675c-5807-9e62-d64eda22f8bd",
-          "distancia_km": 507.0,
-          "tiempo_horas": 11.2,
-          "merma_pct": 5.5,
-          "peso_vendido_kg": 17766.0,
-          "precio_kg_cop": 11100,
-          "flete_cop": 4654260,
-          "peajes_cop": 130000,
-          "costo_logistico_cop": 4784260,
-          "ingreso_bruto_cop": 197202600,
-          "utilidad_neta_cop": 192418340,
-          "posicion": 5,
-          "creado_en": "2026-09-17T09:40:00-05:00",
-          "actualizado_en": "2026-09-17T09:40:00-05:00"
-        },
-        {
-          "id": "104e6287-cf4d-5e14-9cf2-7cc2790fe038",
-          "simulacion_id": "2ffd2d99-779d-5eb0-bd02-10250fcbad37",
+          "id": "c6b762f5-1c0d-43ab-845a-27bbb007adda",
+          "simulacion_id": "d7499bf2-38df-4b3d-8f25-827b574c2273",
           "destino_id": "6b8211cf-49f9-5354-925a-ec5edb230ee1",
-          "ruta_id": "5ec2ea46-db9d-525b-8417-462de2b24a6a",
-          "distancia_km": 266.0,
-          "tiempo_horas": 5.1,
-          "merma_pct": 3.0,
-          "peso_vendido_kg": 18236.0,
-          "precio_kg_cop": 10600,
-          "flete_cop": 1989680,
-          "peajes_cop": 85000,
-          "costo_logistico_cop": 2074680,
-          "ingreso_bruto_cop": 193301600,
-          "utilidad_neta_cop": 191226920,
+          "ruta_id": "2e003454-aeb7-4fd9-a9b0-46bba66690bf",
+          "distancia_km": 192.5,
+          "tiempo_horas": 4.2,
+          "merma_pct": 5.4,
+          "camiones": 2,
+          "peso_vendido_kg": 17784.8,
+          "precio_kg_cop": 10350,
+          "precio_fecha": "2026-09-02",
+          "precio_antiguedad_dias": 16,
+          "advertencia": "Precio de hace 16 días (2026-09-02); puede no reflejar el mercado actual.",
+          "comision_cop": 0,
+          "flete_cop": 2879800,
+          "peajes_cop": 96000,
+          "costo_logistico_cop": 2975800,
+          "ingreso_bruto_cop": 184072680,
+          "utilidad_neta_cop": 181096880,
+          "posicion": 4,
+          "creado_en": "2026-09-18T14:40:00.000Z",
+          "actualizado_en": "2026-09-18T14:40:00.000Z"
+        },
+        {
+          "id": "fbac9c87-70b4-4a1b-89d4-4109485fdc35",
+          "simulacion_id": "d7499bf2-38df-4b3d-8f25-827b574c2273",
+          "destino_id": "acca0ef8-f855-5505-b81b-25833e792ff1",
+          "ruta_id": "18761755-2e2e-4c83-a37c-e21897a8eaeb",
+          "distancia_km": 65.9,
+          "tiempo_horas": 1.4,
+          "merma_pct": 1.7,
+          "camiones": 2,
+          "peso_vendido_kg": 18480.4,
+          "precio_kg_cop": 10150,
+          "precio_fecha": "2026-09-02",
+          "precio_antiguedad_dias": 16,
+          "advertencia": "Precio de hace 16 días (2026-09-02); puede no reflejar el mercado actual.",
+          "comision_cop": 5627282,
+          "flete_cop": 896240,
+          "peajes_cop": 18000,
+          "costo_logistico_cop": 6541522,
+          "ingreso_bruto_cop": 187576060,
+          "utilidad_neta_cop": 181034538,
+          "posicion": 5,
+          "creado_en": "2026-09-18T14:40:00.000Z",
+          "actualizado_en": "2026-09-18T14:40:00.000Z"
+        },
+        {
+          "id": "4d61062c-d62f-456a-9c12-14c2ff7fb031",
+          "simulacion_id": "d7499bf2-38df-4b3d-8f25-827b574c2273",
+          "destino_id": "15bf935c-dea7-52e8-a312-228463fe5aef",
+          "ruta_id": "f2f2e125-7eb8-4a0f-9ccb-498c4e8771fc",
+          "distancia_km": 727.8,
+          "tiempo_horas": 15.7,
+          "merma_pct": 9.3,
+          "camiones": 2,
+          "peso_vendido_kg": 17051.6,
+          "precio_kg_cop": 11350,
+          "precio_fecha": "2026-09-02",
+          "precio_antiguedad_dias": 16,
+          "advertencia": "Precio de hace 16 días (2026-09-02); puede no reflejar el mercado actual.",
+          "comision_cop": 0,
+          "flete_cop": 13857312,
+          "peajes_cop": 379600,
+          "costo_logistico_cop": 14236912,
+          "ingreso_bruto_cop": 193535660,
+          "utilidad_neta_cop": 179298748,
           "posicion": 6,
-          "creado_en": "2026-09-17T09:40:00-05:00",
-          "actualizado_en": "2026-09-17T09:40:00-05:00"
+          "creado_en": "2026-09-18T14:40:00.000Z",
+          "actualizado_en": "2026-09-18T14:40:00.000Z"
+        },
+        {
+          "id": "f27d21ff-fc11-4f5b-b9eb-28e18c85f9a7",
+          "simulacion_id": "d7499bf2-38df-4b3d-8f25-827b574c2273",
+          "destino_id": "c1b1b4d6-5649-5406-a30d-e47ea1c9ba12",
+          "ruta_id": "7e08d41b-9a6e-476e-9239-37849263a64e",
+          "distancia_km": 570.2,
+          "tiempo_horas": 12.3,
+          "merma_pct": 8.8,
+          "camiones": 2,
+          "peso_vendido_kg": 17145.6,
+          "precio_kg_cop": 10850,
+          "precio_fecha": "2026-09-02",
+          "precio_antiguedad_dias": 16,
+          "advertencia": "Precio de hace 16 días (2026-09-02); puede no reflejar el mercado actual.",
+          "comision_cop": 0,
+          "flete_cop": 10468872,
+          "peajes_cop": 286400,
+          "costo_logistico_cop": 10755272,
+          "ingreso_bruto_cop": 186029760,
+          "utilidad_neta_cop": 175274488,
+          "posicion": 7,
+          "creado_en": "2026-09-18T14:40:00.000Z",
+          "actualizado_en": "2026-09-18T14:40:00.000Z"
         }
-      ],
-      "creado_en": "2026-09-17T09:40:00-05:00",
-      "actualizado_en": "2026-09-17T09:40:00-05:00"
+      ]
     },
     {
-      "id": "18f0c14b-525f-58f0-97e0-006709b5c89f",
+      "id": "1615c04a-d506-4c17-9d9a-827085aa52e1",
       "lote_id": "7461b160-f980-5d27-af1b-7bd4bb9b14f1",
       "flete_km_cop": 6300,
+      "capacidad_camion": 25,
+      "flete_incluye_peajes": false,
       "mejor_destino_id": "52bbc2f4-901c-5ff0-a08a-5f8f08f91fa1",
+      "creado_en": "2026-09-16T16:05:00.000Z",
+      "actualizado_en": "2026-09-16T16:05:00.000Z",
       "resultados": [
         {
-          "id": "8eba723c-57e3-5891-a485-43b8fcb57f37",
-          "simulacion_id": "18f0c14b-525f-58f0-97e0-006709b5c89f",
+          "id": "ee597b38-70ef-41e8-ba1d-9dd037bc70d9",
+          "simulacion_id": "1615c04a-d506-4c17-9d9a-827085aa52e1",
           "destino_id": "52bbc2f4-901c-5ff0-a08a-5f8f08f91fa1",
-          "ruta_id": "a69ac042-f646-50e2-88bd-b4f76f38c169",
-          "distancia_km": 382.0,
-          "tiempo_horas": 8.4,
-          "merma_pct": 4.5,
-          "peso_vendido_kg": 8824.2,
-          "precio_kg_cop": 9720,
-          "flete_cop": 3008250,
-          "peajes_cop": 110000,
-          "costo_logistico_cop": 3118250,
-          "ingreso_bruto_cop": 85771224,
-          "utilidad_neta_cop": 82652974,
+          "ruta_id": "bb0db10a-ed3a-44a2-99cd-9a82bbebda23",
+          "distancia_km": 351.6,
+          "tiempo_horas": 7.6,
+          "merma_pct": 7.4,
+          "camiones": 1,
+          "peso_vendido_kg": 8556.2,
+          "precio_kg_cop": 9470,
+          "precio_fecha": "2026-09-02",
+          "precio_antiguedad_dias": 14,
+          "advertencia": "Precio de hace 14 días (2026-09-02); puede no reflejar el mercado actual.",
+          "comision_cop": 0,
+          "flete_cop": 2768850,
+          "peajes_cop": 103400,
+          "costo_logistico_cop": 2872250,
+          "ingreso_bruto_cop": 81027214,
+          "utilidad_neta_cop": 78154964,
           "posicion": 1,
-          "creado_en": "2026-09-15T11:05:00-05:00",
-          "actualizado_en": "2026-09-15T11:05:00-05:00"
+          "creado_en": "2026-09-16T16:05:00.000Z",
+          "actualizado_en": "2026-09-16T16:05:00.000Z"
         },
         {
-          "id": "37ec41aa-575d-5947-9509-4c2330503efe",
-          "simulacion_id": "18f0c14b-525f-58f0-97e0-006709b5c89f",
-          "destino_id": "acca0ef8-f855-5505-b81b-25833e792ff1",
-          "ruta_id": "58503f72-33aa-5dc3-a8fa-e39abddb9eea",
-          "distancia_km": 9.5,
-          "tiempo_horas": 0.3,
-          "merma_pct": 0.5,
-          "peso_vendido_kg": 9193.8,
-          "precio_kg_cop": 8940,
-          "flete_cop": 59850,
+          "id": "8a732940-2393-4af6-81e5-b9973f65c7fe",
+          "simulacion_id": "1615c04a-d506-4c17-9d9a-827085aa52e1",
+          "destino_id": "0e6f6c1a-3b0d-5c8e-9f1a-6d2b7c4e8a10",
+          "ruta_id": "29e436d4-423a-4bac-bbb7-e4b7948a2865",
+          "distancia_km": 0,
+          "tiempo_horas": 0,
+          "merma_pct": 0,
+          "camiones": 1,
+          "peso_vendido_kg": 9240,
+          "precio_kg_cop": 8440,
+          "precio_fecha": "2026-09-02",
+          "precio_antiguedad_dias": 14,
+          "advertencia": "Precio de hace 14 días (2026-09-02); puede no reflejar el mercado actual.",
+          "comision_cop": 0,
+          "flete_cop": 0,
           "peajes_cop": 0,
-          "costo_logistico_cop": 59850,
-          "ingreso_bruto_cop": 82192572,
-          "utilidad_neta_cop": 82132722,
+          "costo_logistico_cop": 0,
+          "ingreso_bruto_cop": 77985600,
+          "utilidad_neta_cop": 77985600,
           "posicion": 2,
-          "creado_en": "2026-09-15T11:05:00-05:00",
-          "actualizado_en": "2026-09-15T11:05:00-05:00"
+          "creado_en": "2026-09-16T16:05:00.000Z",
+          "actualizado_en": "2026-09-16T16:05:00.000Z"
         },
         {
-          "id": "70c77ba6-6611-5c03-99b9-94c49eea63d8",
-          "simulacion_id": "18f0c14b-525f-58f0-97e0-006709b5c89f",
-          "destino_id": "d8c5a7c4-888d-56e2-81f2-f8cc588a2834",
-          "ruta_id": "cf10b20d-fd88-529e-a803-62f520737f2e",
-          "distancia_km": 172.0,
-          "tiempo_horas": 4.3,
-          "merma_pct": 2.8,
-          "peso_vendido_kg": 8981.3,
-          "precio_kg_cop": 9240,
-          "flete_cop": 1300320,
-          "peajes_cop": 42000,
-          "costo_logistico_cop": 1342320,
-          "ingreso_bruto_cop": 82987212,
-          "utilidad_neta_cop": 81644892,
+          "id": "a62b87fd-3d61-4cc6-af10-d7f990065382",
+          "simulacion_id": "1615c04a-d506-4c17-9d9a-827085aa52e1",
+          "destino_id": "acca0ef8-f855-5505-b81b-25833e792ff1",
+          "ruta_id": "0fbdd383-6a88-4619-beb1-f265116b1eba",
+          "distancia_km": 30.4,
+          "tiempo_horas": 0.7,
+          "merma_pct": 0.9,
+          "camiones": 1,
+          "peso_vendido_kg": 9156.8,
+          "precio_kg_cop": 8690,
+          "precio_fecha": "2026-09-02",
+          "precio_antiguedad_dias": 14,
+          "advertencia": "Precio de hace 14 días (2026-09-02); puede no reflejar el mercado actual.",
+          "comision_cop": 2387178,
+          "flete_cop": 191520,
+          "peajes_cop": 3400,
+          "costo_logistico_cop": 2582098,
+          "ingreso_bruto_cop": 79572592,
+          "utilidad_neta_cop": 76990494,
           "posicion": 3,
-          "creado_en": "2026-09-15T11:05:00-05:00",
-          "actualizado_en": "2026-09-15T11:05:00-05:00"
+          "creado_en": "2026-09-16T16:05:00.000Z",
+          "actualizado_en": "2026-09-16T16:05:00.000Z"
         },
         {
-          "id": "3efb9d1b-2144-5529-9c9b-d73faf45db6b",
-          "simulacion_id": "18f0c14b-525f-58f0-97e0-006709b5c89f",
-          "destino_id": "a8745d0d-590c-5f1b-b749-bb96c5be4aac",
-          "ruta_id": "e59208f0-6906-5331-a7eb-bbdaa0a2eb78",
-          "distancia_km": 131.0,
-          "tiempo_horas": 2.7,
-          "merma_pct": 2.0,
-          "peso_vendido_kg": 9055.2,
+          "id": "4cfd2bd8-3485-4289-9375-16d692d825aa",
+          "simulacion_id": "1615c04a-d506-4c17-9d9a-827085aa52e1",
+          "destino_id": "d8c5a7c4-888d-56e2-81f2-f8cc588a2834",
+          "ruta_id": "7a48d2dc-8ddc-46fb-8662-1ce86b884835",
+          "distancia_km": 202.4,
+          "tiempo_horas": 4.4,
+          "merma_pct": 5.6,
+          "camiones": 1,
+          "peso_vendido_kg": 8722.6,
           "precio_kg_cop": 8990,
-          "flete_cop": 866565,
-          "peajes_cop": 21000,
-          "costo_logistico_cop": 887565,
-          "ingreso_bruto_cop": 81406248,
-          "utilidad_neta_cop": 80518683,
+          "precio_fecha": "2026-09-02",
+          "precio_antiguedad_dias": 14,
+          "advertencia": "Precio de hace 14 días (2026-09-02); puede no reflejar el mercado actual.",
+          "comision_cop": 0,
+          "flete_cop": 1530144,
+          "peajes_cop": 50900,
+          "costo_logistico_cop": 1581044,
+          "ingreso_bruto_cop": 78416174,
+          "utilidad_neta_cop": 76835130,
           "posicion": 4,
-          "creado_en": "2026-09-15T11:05:00-05:00",
-          "actualizado_en": "2026-09-15T11:05:00-05:00"
+          "creado_en": "2026-09-16T16:05:00.000Z",
+          "actualizado_en": "2026-09-16T16:05:00.000Z"
         },
         {
-          "id": "13d0d31e-b902-5b3f-bfbc-87611409233b",
-          "simulacion_id": "18f0c14b-525f-58f0-97e0-006709b5c89f",
-          "destino_id": "6b8211cf-49f9-5354-925a-ec5edb230ee1",
-          "ruta_id": "5ec2ea46-db9d-525b-8417-462de2b24a6a",
-          "distancia_km": 266.0,
-          "tiempo_horas": 5.1,
-          "merma_pct": 3.0,
-          "peso_vendido_kg": 8962.8,
-          "precio_kg_cop": 9120,
-          "flete_cop": 1843380,
-          "peajes_cop": 85000,
-          "costo_logistico_cop": 1928380,
-          "ingreso_bruto_cop": 81740736,
-          "utilidad_neta_cop": 79812356,
+          "id": "ff185e37-c8b8-4883-ab4e-5c47d76df37f",
+          "simulacion_id": "1615c04a-d506-4c17-9d9a-827085aa52e1",
+          "destino_id": "a8745d0d-590c-5f1b-b749-bb96c5be4aac",
+          "ruta_id": "e0311a7a-3644-4c9c-97e1-f659bd2e8378",
+          "distancia_km": 98.2,
+          "tiempo_horas": 2.1,
+          "merma_pct": 2.4,
+          "camiones": 1,
+          "peso_vendido_kg": 9018.2,
+          "precio_kg_cop": 8740,
+          "precio_fecha": "2026-09-02",
+          "precio_antiguedad_dias": 14,
+          "advertencia": "Precio de hace 14 días (2026-09-02); puede no reflejar el mercado actual.",
+          "comision_cop": 2364572,
+          "flete_cop": 649593,
+          "peajes_cop": 14200,
+          "costo_logistico_cop": 3028365,
+          "ingreso_bruto_cop": 78819068,
+          "utilidad_neta_cop": 75790703,
           "posicion": 5,
-          "creado_en": "2026-09-15T11:05:00-05:00",
-          "actualizado_en": "2026-09-15T11:05:00-05:00"
+          "creado_en": "2026-09-16T16:05:00.000Z",
+          "actualizado_en": "2026-09-16T16:05:00.000Z"
+        },
+        {
+          "id": "5de07f30-ee07-404c-80a5-20a1a035a22c",
+          "simulacion_id": "1615c04a-d506-4c17-9d9a-827085aa52e1",
+          "destino_id": "6b8211cf-49f9-5354-925a-ec5edb230ee1",
+          "ruta_id": "5333c4c9-afff-4ac0-8ce4-60cba14e9834",
+          "distancia_km": 230.6,
+          "tiempo_horas": 5,
+          "merma_pct": 6.2,
+          "camiones": 1,
+          "peso_vendido_kg": 8667.1,
+          "precio_kg_cop": 8870,
+          "precio_fecha": "2026-09-02",
+          "precio_antiguedad_dias": 14,
+          "advertencia": "Precio de hace 14 días (2026-09-02); puede no reflejar el mercado actual.",
+          "comision_cop": 0,
+          "flete_cop": 1598058,
+          "peajes_cop": 59200,
+          "costo_logistico_cop": 1657258,
+          "ingreso_bruto_cop": 76877177,
+          "utilidad_neta_cop": 75219919,
+          "posicion": 6,
+          "creado_en": "2026-09-16T16:05:00.000Z",
+          "actualizado_en": "2026-09-16T16:05:00.000Z"
         }
-      ],
-      "creado_en": "2026-09-15T11:05:00-05:00",
-      "actualizado_en": "2026-09-15T11:05:00-05:00"
+      ]
     },
     {
-      "id": "c71c7cd7-82a2-5a3b-abc0-1980d053a3e8",
+      "id": "a46a11bc-ecdd-4760-945c-dcac3d895630",
       "lote_id": "9bad2b17-c8e0-57f7-ac48-2d1cf99ad088",
       "flete_km_cop": 6500,
-      "mejor_destino_id": "52bbc2f4-901c-5ff0-a08a-5f8f08f91fa1",
+      "capacidad_camion": 25,
+      "flete_incluye_peajes": false,
+      "mejor_destino_id": "0e6f6c1a-3b0d-5c8e-9f1a-6d2b7c4e8a10",
+      "creado_en": "2026-09-15T21:20:00.000Z",
+      "actualizado_en": "2026-09-15T21:20:00.000Z",
       "resultados": [
         {
-          "id": "a9ca901b-f65f-5b5e-9443-df4792201081",
-          "simulacion_id": "c71c7cd7-82a2-5a3b-abc0-1980d053a3e8",
-          "destino_id": "52bbc2f4-901c-5ff0-a08a-5f8f08f91fa1",
-          "ruta_id": "a69ac042-f646-50e2-88bd-b4f76f38c169",
-          "distancia_km": 382.0,
-          "tiempo_horas": 8.4,
-          "merma_pct": 4.5,
-          "peso_vendido_kg": 12949.8,
-          "precio_kg_cop": 11300,
-          "flete_cop": 3103750,
-          "peajes_cop": 110000,
-          "costo_logistico_cop": 3213750,
-          "ingreso_bruto_cop": 146332740,
-          "utilidad_neta_cop": 143118990,
+          "id": "20684f02-0763-4878-a982-8b59041d2b0f",
+          "simulacion_id": "a46a11bc-ecdd-4760-945c-dcac3d895630",
+          "destino_id": "0e6f6c1a-3b0d-5c8e-9f1a-6d2b7c4e8a10",
+          "ruta_id": "7b1e2d3c-4a5b-5c6d-8e7f-9a0b1c2d3e4f",
+          "distancia_km": 0,
+          "tiempo_horas": 0,
+          "merma_pct": 0,
+          "camiones": 2,
+          "peso_vendido_kg": 13560,
+          "precio_kg_cop": 9850,
+          "precio_fecha": "2026-09-02",
+          "precio_antiguedad_dias": 13,
+          "advertencia": "Precio de hace 13 días (2026-09-02); puede no reflejar el mercado actual.",
+          "comision_cop": 0,
+          "flete_cop": 0,
+          "peajes_cop": 0,
+          "costo_logistico_cop": 0,
+          "ingreso_bruto_cop": 133566000,
+          "utilidad_neta_cop": 133566000,
           "posicion": 1,
-          "creado_en": "2026-09-14T16:20:00-05:00",
-          "actualizado_en": "2026-09-14T16:20:00-05:00"
+          "creado_en": "2026-09-15T21:20:00.000Z",
+          "actualizado_en": "2026-09-15T21:20:00.000Z"
         },
         {
-          "id": "a6637534-b22b-50a5-bb01-7948eb571852",
-          "simulacion_id": "c71c7cd7-82a2-5a3b-abc0-1980d053a3e8",
-          "destino_id": "3878b38f-1764-5e78-88b0-93461cec83ec",
-          "ruta_id": "48492f5f-f1ef-5799-8dd1-aa2e1598d817",
-          "distancia_km": 247.0,
-          "tiempo_horas": 5.9,
-          "merma_pct": 3.5,
-          "peso_vendido_kg": 13085.4,
-          "precio_kg_cop": 10900,
-          "flete_cop": 1846325,
-          "peajes_cop": 64000,
-          "costo_logistico_cop": 1910325,
-          "ingreso_bruto_cop": 142630860,
-          "utilidad_neta_cop": 140720535,
-          "posicion": 2,
-          "creado_en": "2026-09-14T16:20:00-05:00",
-          "actualizado_en": "2026-09-14T16:20:00-05:00"
-        },
-        {
-          "id": "211bb4cb-ad73-5250-8535-bc12eed3ea8a",
-          "simulacion_id": "c71c7cd7-82a2-5a3b-abc0-1980d053a3e8",
-          "destino_id": "d8c5a7c4-888d-56e2-81f2-f8cc588a2834",
-          "ruta_id": "cf10b20d-fd88-529e-a803-62f520737f2e",
-          "distancia_km": 172.0,
-          "tiempo_horas": 4.3,
-          "merma_pct": 2.8,
-          "peso_vendido_kg": 13180.3,
-          "precio_kg_cop": 10750,
-          "flete_cop": 1341600,
-          "peajes_cop": 42000,
-          "costo_logistico_cop": 1383600,
-          "ingreso_bruto_cop": 141688225,
-          "utilidad_neta_cop": 140304625,
-          "posicion": 3,
-          "creado_en": "2026-09-14T16:20:00-05:00",
-          "actualizado_en": "2026-09-14T16:20:00-05:00"
-        },
-        {
-          "id": "0e7de407-2b5a-5abe-851c-f23aa72db433",
-          "simulacion_id": "c71c7cd7-82a2-5a3b-abc0-1980d053a3e8",
+          "id": "4cac0ff3-cbac-4060-aaa9-dd9308de4924",
+          "simulacion_id": "a46a11bc-ecdd-4760-945c-dcac3d895630",
           "destino_id": "acca0ef8-f855-5505-b81b-25833e792ff1",
           "ruta_id": "58503f72-33aa-5dc3-a8fa-e39abddb9eea",
           "distancia_km": 9.5,
           "tiempo_horas": 0.3,
           "merma_pct": 0.5,
+          "camiones": 2,
           "peso_vendido_kg": 13492.2,
-          "precio_kg_cop": 10400,
-          "flete_cop": 61750,
+          "precio_kg_cop": 10150,
+          "precio_fecha": "2026-09-02",
+          "precio_antiguedad_dias": 13,
+          "advertencia": "Precio de hace 13 días (2026-09-02); puede no reflejar el mercado actual.",
+          "comision_cop": 4108375,
+          "flete_cop": 123500,
           "peajes_cop": 0,
-          "costo_logistico_cop": 61750,
-          "ingreso_bruto_cop": 140318880,
-          "utilidad_neta_cop": 140257130,
+          "costo_logistico_cop": 4231875,
+          "ingreso_bruto_cop": 136945830,
+          "utilidad_neta_cop": 132713955,
+          "posicion": 2,
+          "creado_en": "2026-09-15T21:20:00.000Z",
+          "actualizado_en": "2026-09-15T21:20:00.000Z"
+        },
+        {
+          "id": "e75b2f1b-e6d8-4833-8816-f347e53330a2",
+          "simulacion_id": "a46a11bc-ecdd-4760-945c-dcac3d895630",
+          "destino_id": "d8c5a7c4-888d-56e2-81f2-f8cc588a2834",
+          "ruta_id": "cf10b20d-fd88-529e-a803-62f520737f2e",
+          "distancia_km": 172,
+          "tiempo_horas": 4.3,
+          "merma_pct": 5,
+          "camiones": 2,
+          "peso_vendido_kg": 12882,
+          "precio_kg_cop": 10500,
+          "precio_fecha": "2026-09-02",
+          "precio_antiguedad_dias": 13,
+          "advertencia": "Precio de hace 13 días (2026-09-02); puede no reflejar el mercado actual.",
+          "comision_cop": 0,
+          "flete_cop": 2683200,
+          "peajes_cop": 84000,
+          "costo_logistico_cop": 2767200,
+          "ingreso_bruto_cop": 135261000,
+          "utilidad_neta_cop": 132493800,
+          "posicion": 3,
+          "creado_en": "2026-09-15T21:20:00.000Z",
+          "actualizado_en": "2026-09-15T21:20:00.000Z"
+        },
+        {
+          "id": "b3c78e2a-fdda-471c-a7af-19969bf809de",
+          "simulacion_id": "a46a11bc-ecdd-4760-945c-dcac3d895630",
+          "destino_id": "52bbc2f4-901c-5ff0-a08a-5f8f08f91fa1",
+          "ruta_id": "a69ac042-f646-50e2-88bd-b4f76f38c169",
+          "distancia_km": 382,
+          "tiempo_horas": 8.4,
+          "merma_pct": 7.7,
+          "camiones": 2,
+          "peso_vendido_kg": 12515.9,
+          "precio_kg_cop": 11050,
+          "precio_fecha": "2026-09-02",
+          "precio_antiguedad_dias": 13,
+          "advertencia": "Precio de hace 13 días (2026-09-02); puede no reflejar el mercado actual.",
+          "comision_cop": 0,
+          "flete_cop": 6207500,
+          "peajes_cop": 220000,
+          "costo_logistico_cop": 6427500,
+          "ingreso_bruto_cop": 138300695,
+          "utilidad_neta_cop": 131873195,
           "posicion": 4,
-          "creado_en": "2026-09-14T16:20:00-05:00",
-          "actualizado_en": "2026-09-14T16:20:00-05:00"
+          "creado_en": "2026-09-15T21:20:00.000Z",
+          "actualizado_en": "2026-09-15T21:20:00.000Z"
         },
         {
-          "id": "c900789e-1b65-5f2b-bd32-945fde554846",
-          "simulacion_id": "c71c7cd7-82a2-5a3b-abc0-1980d053a3e8",
-          "destino_id": "15bf935c-dea7-52e8-a312-228463fe5aef",
-          "ruta_id": "9e8d2db5-62af-5aff-9e08-4f15f793f377",
-          "distancia_km": 791.0,
-          "tiempo_horas": 16.5,
-          "merma_pct": 7.0,
-          "peso_vendido_kg": 12610.8,
-          "precio_kg_cop": 11600,
-          "flete_cop": 7198100,
-          "peajes_cop": 210000,
-          "costo_logistico_cop": 7408100,
-          "ingreso_bruto_cop": 146285280,
-          "utilidad_neta_cop": 138877180,
+          "id": "61203eb9-147c-4197-91ea-a6de06801087",
+          "simulacion_id": "a46a11bc-ecdd-4760-945c-dcac3d895630",
+          "destino_id": "3878b38f-1764-5e78-88b0-93461cec83ec",
+          "ruta_id": "48492f5f-f1ef-5799-8dd1-aa2e1598d817",
+          "distancia_km": 247,
+          "tiempo_horas": 5.9,
+          "merma_pct": 6.5,
+          "camiones": 2,
+          "peso_vendido_kg": 12678.6,
+          "precio_kg_cop": 10650,
+          "precio_fecha": "2026-09-02",
+          "precio_antiguedad_dias": 13,
+          "advertencia": "Precio de hace 13 días (2026-09-02); puede no reflejar el mercado actual.",
+          "comision_cop": 0,
+          "flete_cop": 3692650,
+          "peajes_cop": 128000,
+          "costo_logistico_cop": 3820650,
+          "ingreso_bruto_cop": 135027090,
+          "utilidad_neta_cop": 131206440,
           "posicion": 5,
-          "creado_en": "2026-09-14T16:20:00-05:00",
-          "actualizado_en": "2026-09-14T16:20:00-05:00"
+          "creado_en": "2026-09-15T21:20:00.000Z",
+          "actualizado_en": "2026-09-15T21:20:00.000Z"
         },
         {
-          "id": "f5d3989c-4f3b-5153-a7d0-9a5aee244f57",
-          "simulacion_id": "c71c7cd7-82a2-5a3b-abc0-1980d053a3e8",
+          "id": "3dc0071b-0487-4592-aa58-d4d3784b237d",
+          "simulacion_id": "a46a11bc-ecdd-4760-945c-dcac3d895630",
           "destino_id": "a8745d0d-590c-5f1b-b749-bb96c5be4aac",
           "ruta_id": "e59208f0-6906-5331-a7eb-bbdaa0a2eb78",
-          "distancia_km": 131.0,
+          "distancia_km": 131,
           "tiempo_horas": 2.7,
-          "merma_pct": 2.0,
-          "peso_vendido_kg": 13288.8,
-          "precio_kg_cop": 10450,
-          "flete_cop": 894075,
-          "peajes_cop": 21000,
-          "costo_logistico_cop": 915075,
-          "ingreso_bruto_cop": 138867960,
-          "utilidad_neta_cop": 137952885,
+          "merma_pct": 3,
+          "camiones": 2,
+          "peso_vendido_kg": 13153.2,
+          "precio_kg_cop": 10200,
+          "precio_fecha": "2026-09-02",
+          "precio_antiguedad_dias": 13,
+          "advertencia": "Precio de hace 13 días (2026-09-02); puede no reflejar el mercado actual.",
+          "comision_cop": 4024879,
+          "flete_cop": 1788150,
+          "peajes_cop": 42000,
+          "costo_logistico_cop": 5855029,
+          "ingreso_bruto_cop": 134162640,
+          "utilidad_neta_cop": 128307611,
           "posicion": 6,
-          "creado_en": "2026-09-14T16:20:00-05:00",
-          "actualizado_en": "2026-09-14T16:20:00-05:00"
+          "creado_en": "2026-09-15T21:20:00.000Z",
+          "actualizado_en": "2026-09-15T21:20:00.000Z"
         },
         {
-          "id": "27136b34-1647-50c4-a67e-c82aea3510cd",
-          "simulacion_id": "c71c7cd7-82a2-5a3b-abc0-1980d053a3e8",
-          "destino_id": "c1b1b4d6-5649-5406-a30d-e47ea1c9ba12",
-          "ruta_id": "a94ec479-675c-5807-9e62-d64eda22f8bd",
-          "distancia_km": 507.0,
-          "tiempo_horas": 11.2,
-          "merma_pct": 5.5,
-          "peso_vendido_kg": 12814.2,
-          "precio_kg_cop": 11100,
-          "flete_cop": 4448925,
-          "peajes_cop": 130000,
-          "costo_logistico_cop": 4578925,
-          "ingreso_bruto_cop": 142237620,
-          "utilidad_neta_cop": 137658695,
-          "posicion": 7,
-          "creado_en": "2026-09-14T16:20:00-05:00",
-          "actualizado_en": "2026-09-14T16:20:00-05:00"
-        },
-        {
-          "id": "74b2a6bb-3dc3-59eb-acba-3378a97d9d78",
-          "simulacion_id": "c71c7cd7-82a2-5a3b-abc0-1980d053a3e8",
+          "id": "d45b4fc8-a9cc-4954-b78a-460f7c931fe6",
+          "simulacion_id": "a46a11bc-ecdd-4760-945c-dcac3d895630",
           "destino_id": "6b8211cf-49f9-5354-925a-ec5edb230ee1",
           "ruta_id": "5ec2ea46-db9d-525b-8417-462de2b24a6a",
-          "distancia_km": 266.0,
+          "distancia_km": 266,
           "tiempo_horas": 5.1,
-          "merma_pct": 3.0,
-          "peso_vendido_kg": 13153.2,
-          "precio_kg_cop": 10600,
-          "flete_cop": 1901900,
-          "peajes_cop": 85000,
-          "costo_logistico_cop": 1986900,
-          "ingreso_bruto_cop": 139423920,
-          "utilidad_neta_cop": 137437020,
-          "posicion": 8,
-          "creado_en": "2026-09-14T16:20:00-05:00",
-          "actualizado_en": "2026-09-14T16:20:00-05:00"
+          "merma_pct": 6.5,
+          "camiones": 2,
+          "peso_vendido_kg": 12678.6,
+          "precio_kg_cop": 10350,
+          "precio_fecha": "2026-09-02",
+          "precio_antiguedad_dias": 13,
+          "advertencia": "Precio de hace 13 días (2026-09-02); puede no reflejar el mercado actual.",
+          "comision_cop": 0,
+          "flete_cop": 3803800,
+          "peajes_cop": 170000,
+          "costo_logistico_cop": 3973800,
+          "ingreso_bruto_cop": 131223510,
+          "utilidad_neta_cop": 127249710,
+          "posicion": 7,
+          "creado_en": "2026-09-15T21:20:00.000Z",
+          "actualizado_en": "2026-09-15T21:20:00.000Z"
         },
         {
-          "id": "1bda055d-6084-5d05-af23-1db58795535c",
-          "simulacion_id": "c71c7cd7-82a2-5a3b-abc0-1980d053a3e8",
-          "destino_id": "396e4a75-a43f-5e33-adb3-1d6163e10530",
-          "ruta_id": "24cc9013-756c-5947-b31d-103ecf0effca",
-          "distancia_km": 603.0,
-          "tiempo_horas": 13.0,
-          "merma_pct": 6.0,
-          "peso_vendido_kg": 12746.4,
-          "precio_kg_cop": 11200,
-          "flete_cop": 5291325,
-          "peajes_cop": 150000,
-          "costo_logistico_cop": 5441325,
-          "ingreso_bruto_cop": 142759680,
-          "utilidad_neta_cop": 137318355,
-          "posicion": 9,
-          "creado_en": "2026-09-14T16:20:00-05:00",
-          "actualizado_en": "2026-09-14T16:20:00-05:00"
-        },
-        {
-          "id": "6d35b35c-8ca3-52e5-b04d-8e1d6da9ab08",
-          "simulacion_id": "c71c7cd7-82a2-5a3b-abc0-1980d053a3e8",
+          "id": "d107289a-8bc1-4276-900f-a66f379718a1",
+          "simulacion_id": "a46a11bc-ecdd-4760-945c-dcac3d895630",
           "destino_id": "5a11df78-6998-5089-a775-55e35b205cfe",
           "ruta_id": "ae582c3d-af89-5b0d-988d-4ed54fba9b89",
-          "distancia_km": 128.0,
+          "distancia_km": 128,
           "tiempo_horas": 2.6,
-          "merma_pct": 2.0,
-          "peso_vendido_kg": 13288.8,
-          "precio_kg_cop": 10250,
-          "flete_cop": 873600,
-          "peajes_cop": 19000,
-          "costo_logistico_cop": 892600,
-          "ingreso_bruto_cop": 136210200,
-          "utilidad_neta_cop": 135317600,
+          "merma_pct": 3,
+          "camiones": 2,
+          "peso_vendido_kg": 13153.2,
+          "precio_kg_cop": 10000,
+          "precio_fecha": "2026-09-02",
+          "precio_antiguedad_dias": 13,
+          "advertencia": "Precio de hace 13 días (2026-09-02); puede no reflejar el mercado actual.",
+          "comision_cop": 3945960,
+          "flete_cop": 1747200,
+          "peajes_cop": 38000,
+          "costo_logistico_cop": 5731160,
+          "ingreso_bruto_cop": 131532000,
+          "utilidad_neta_cop": 125800840,
+          "posicion": 8,
+          "creado_en": "2026-09-15T21:20:00.000Z",
+          "actualizado_en": "2026-09-15T21:20:00.000Z"
+        },
+        {
+          "id": "3b1fd1f6-80d2-4da9-a537-50fd2952a52d",
+          "simulacion_id": "a46a11bc-ecdd-4760-945c-dcac3d895630",
+          "destino_id": "c1b1b4d6-5649-5406-a30d-e47ea1c9ba12",
+          "ruta_id": "a94ec479-675c-5807-9e62-d64eda22f8bd",
+          "distancia_km": 507,
+          "tiempo_horas": 11.2,
+          "merma_pct": 8.5,
+          "camiones": 2,
+          "peso_vendido_kg": 12407.4,
+          "precio_kg_cop": 10850,
+          "precio_fecha": "2026-09-02",
+          "precio_antiguedad_dias": 13,
+          "advertencia": "Precio de hace 13 días (2026-09-02); puede no reflejar el mercado actual.",
+          "comision_cop": 0,
+          "flete_cop": 8897850,
+          "peajes_cop": 260000,
+          "costo_logistico_cop": 9157850,
+          "ingreso_bruto_cop": 134620290,
+          "utilidad_neta_cop": 125462440,
+          "posicion": 9,
+          "creado_en": "2026-09-15T21:20:00.000Z",
+          "actualizado_en": "2026-09-15T21:20:00.000Z"
+        },
+        {
+          "id": "74cc7e3e-b431-43f1-8cef-65ef78ca2b87",
+          "simulacion_id": "a46a11bc-ecdd-4760-945c-dcac3d895630",
+          "destino_id": "15bf935c-dea7-52e8-a312-228463fe5aef",
+          "ruta_id": "9e8d2db5-62af-5aff-9e08-4f15f793f377",
+          "distancia_km": 791,
+          "tiempo_horas": 16.5,
+          "merma_pct": 9.5,
+          "camiones": 2,
+          "peso_vendido_kg": 12271.8,
+          "precio_kg_cop": 11350,
+          "precio_fecha": "2026-09-02",
+          "precio_antiguedad_dias": 13,
+          "advertencia": "Precio de hace 13 días (2026-09-02); puede no reflejar el mercado actual.",
+          "comision_cop": 0,
+          "flete_cop": 14396200,
+          "peajes_cop": 420000,
+          "costo_logistico_cop": 14816200,
+          "ingreso_bruto_cop": 139284930,
+          "utilidad_neta_cop": 124468730,
           "posicion": 10,
-          "creado_en": "2026-09-14T16:20:00-05:00",
-          "actualizado_en": "2026-09-14T16:20:00-05:00"
+          "creado_en": "2026-09-15T21:20:00.000Z",
+          "actualizado_en": "2026-09-15T21:20:00.000Z"
+        },
+        {
+          "id": "52d17499-b50d-4c77-90fb-16d9747ad92f",
+          "simulacion_id": "a46a11bc-ecdd-4760-945c-dcac3d895630",
+          "destino_id": "396e4a75-a43f-5e33-adb3-1d6163e10530",
+          "ruta_id": "24cc9013-756c-5947-b31d-103ecf0effca",
+          "distancia_km": 603,
+          "tiempo_horas": 13,
+          "merma_pct": 9,
+          "camiones": 2,
+          "peso_vendido_kg": 12339.6,
+          "precio_kg_cop": 10950,
+          "precio_fecha": "2026-09-02",
+          "precio_antiguedad_dias": 13,
+          "advertencia": "Precio de hace 13 días (2026-09-02); puede no reflejar el mercado actual.",
+          "comision_cop": 0,
+          "flete_cop": 10582650,
+          "peajes_cop": 300000,
+          "costo_logistico_cop": 10882650,
+          "ingreso_bruto_cop": 135118620,
+          "utilidad_neta_cop": 124235970,
+          "posicion": 11,
+          "creado_en": "2026-09-15T21:20:00.000Z",
+          "actualizado_en": "2026-09-15T21:20:00.000Z"
         }
-      ],
-      "creado_en": "2026-09-14T16:20:00-05:00",
-      "actualizado_en": "2026-09-14T16:20:00-05:00"
+      ]
     }
   ]
 }

@@ -1,0 +1,30 @@
+# Publicación permanente de la API en Render (plan gratuito), con la base de datos en Neon.
+# Paso a paso: README, sección 2.4. Ningún secreto va escrito aquí: los valores marcados con
+# `sync: false` se escriben en el panel de Render al crear el servicio.
+services:
+  - type: web
+    name: simulador-ganadero-api
+    runtime: docker
+    plan: free
+    region: virginia
+    rootDir: api
+    dockerfilePath: ./Dockerfile
+    healthCheckPath: /api/v1/salud
+    autoDeploy: true
+    envVars:
+      - key: DATABASE_URL          # cadena de conexión de Neon, termina en ?sslmode=require
+        sync: false
+      - key: JWT_SECRET            # Render genera un valor aleatorio
+        generateValue: true
+      - key: CONTRASENA_DEMO       # contraseña del administrador inicial (mínimo 10 caracteres, que sea larga)
+        sync: false
+      - key: CORS_ORIGEN
+        value: https://bonilla64.github.io
+      - key: OSRM_BASE_URL
+        value: https://router.project-osrm.org
+      - key: TRUST_PROXY           # Render pone un proxy delante: la IP real viene en X-Forwarded-For
+        value: "1"
+      - key: PORT
+        value: "3000"
+      - key: NODE_ENV
+        value: production

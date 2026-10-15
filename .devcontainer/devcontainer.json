@@ -1,0 +1,19 @@
+{
+  // GitHub Codespaces: el proyecto completo (base de datos + API + tablero) corre en la nube,
+  // sin instalar Docker en el computador. Ver README, sección 2.1.
+  "name": "Simulador de Destinos Ganaderos",
+  "image": "mcr.microsoft.com/devcontainers/javascript-node:1-22-bookworm",
+  "features": {
+    "ghcr.io/devcontainers/features/docker-in-docker:2": {}
+  },
+  "hostRequirements": { "cpus": 2, "memory": "4gb" },
+  "postCreateCommand": "bash .devcontainer/preparar.sh",
+  "forwardPorts": [8080, 3000],
+  "portsAttributes": {
+    "8080": { "label": "Tablero", "onAutoForward": "openBrowser" },
+    "3000": { "label": "API (póngalo en Public)", "onAutoForward": "notify" }
+  },
+  "customizations": {
+    "vscode": { "extensions": ["redhat.vscode-yaml"] }
+  }
+}
