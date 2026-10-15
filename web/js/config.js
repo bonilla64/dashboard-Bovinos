@@ -6,5 +6,5 @@
  * Vacío = en GitHub Pages se usa el modo demostración; en su computador o en Codespaces se detecta solo.
  */
 window.SDG_CONFIG = {
-  api: "https://github.com/bonilla64/dashboard-Bovinos/blob/main/web/js/config.js",
+  api: "https://simulador-ganadero-api.onrender.com",
 };
