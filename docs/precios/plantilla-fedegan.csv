@@ -1,0 +1,31 @@
+destino,categoria,precio_kg_cop,fecha,fuente,referencia
+Central Ganadera de Medellín,novillo_gordo,11600,2026-10-09,Fedegán – precios semanales del ganado,Fedegán · Feria de Ganados de Medellín
+Central Ganadera de Medellín,novillo_levante,12600,2026-10-09,Fedegán – precios semanales del ganado,Fedegán · Feria de Ganados de Medellín
+Central Ganadera de Medellín,vaca_gorda,9980,2026-10-09,Fedegán – precios semanales del ganado,Fedegán · Feria de Ganados de Medellín
+Feria de ganado de Villavicencio,novillo_gordo,10600,2026-10-09,Fedegán – precios semanales del ganado,Fedegán · Llanos Orientales / Friogan Villavicencio
+Feria de ganado de Villavicencio,novillo_levante,12400,2026-10-09,Fedegán – precios semanales del ganado,Fedegán · Llanos Orientales / Friogan Villavicencio
+Feria de ganado de Villavicencio,vaca_gorda,9120,2026-10-09,Fedegán – precios semanales del ganado,Fedegán · Llanos Orientales / Friogan Villavicencio
+Frigorífico Guadalupe,novillo_gordo,11300,2026-10-09,Fedegán – precios semanales del ganado,Fedegán · planta Guadalupe (Bogotá)
+Frigorífico Guadalupe,vaca_gorda,9720,2026-10-09,Fedegán – precios semanales del ganado,Fedegán · planta Guadalupe (Bogotá)
+Frigorífico Vijagual,novillo_gordo,11100,2026-10-09,Fedegán – precios semanales del ganado,Fedegán · Santander
+Frigorífico Vijagual,vaca_gorda,9550,2026-10-09,Fedegán – precios semanales del ganado,Fedegán · Santander
+Planta de beneficio de Cúcuta,novillo_gordo,11200,2026-10-09,Fedegán – precios semanales del ganado,Fedegán · Norte de Santander
+Planta de beneficio de Cúcuta,vaca_gorda,9630,2026-10-09,Fedegán – precios semanales del ganado,Fedegán · Norte de Santander
+Plaza de ferias de Sogamoso,novillo_gordo,10750,2026-10-09,Fedegán – precios semanales del ganado,Fedegán · Boyacá
+Plaza de ferias de Sogamoso,novillo_levante,12300,2026-10-09,Fedegán – precios semanales del ganado,Fedegán · Boyacá
+Plaza de ferias de Sogamoso,vaca_gorda,9240,2026-10-09,Fedegán – precios semanales del ganado,Fedegán · Boyacá
+Plaza de ferias de Tunja,novillo_gordo,10900,2026-10-09,Fedegán – precios semanales del ganado,Fedegán · Boyacá
+Plaza de ferias de Tunja,novillo_levante,12350,2026-10-09,Fedegán – precios semanales del ganado,Fedegán · Boyacá
+Plaza de ferias de Tunja,vaca_gorda,9370,2026-10-09,Fedegán – precios semanales del ganado,Fedegán · Boyacá
+Subasta Ganadera de Paz de Ariporo,novillo_gordo,10250,2026-10-09,Fedegán – precios semanales del ganado,Fedegán · subastas de Casanare
+Subasta Ganadera de Paz de Ariporo,novillo_levante,12000,2026-10-09,Fedegán – precios semanales del ganado,Fedegán · subastas de Casanare
+Subasta Ganadera de Paz de Ariporo,vaca_gorda,8820,2026-10-09,Fedegán – precios semanales del ganado,Fedegán · subastas de Casanare
+Subasta Ganadera de Villanueva,novillo_gordo,10450,2026-10-09,Fedegán – precios semanales del ganado,Fedegán · subastas de Casanare
+Subasta Ganadera de Villanueva,novillo_levante,12100,2026-10-09,Fedegán – precios semanales del ganado,Fedegán · subastas de Casanare
+Subasta Ganadera de Villanueva,vaca_gorda,8990,2026-10-09,Fedegán – precios semanales del ganado,Fedegán · subastas de Casanare
+Subasta Ganadera de Yopal,novillo_gordo,10400,2026-10-09,Fedegán – precios semanales del ganado,Fedegán · subastas de Casanare
+Subasta Ganadera de Yopal,novillo_levante,12200,2026-10-09,Fedegán – precios semanales del ganado,Fedegán · subastas de Casanare
+Subasta Ganadera de Yopal,vaca_gorda,8940,2026-10-09,Fedegán – precios semanales del ganado,Fedegán · subastas de Casanare
+Venta en finca (comprador en finca),novillo_gordo,10100,2026-10-09,Productores de Casanare (entrevista 29 sep 2026),Precio en finca reportado por productores (no lo publica Fedegán)
+Venta en finca (comprador en finca),novillo_levante,12000,2026-10-09,Productores de Casanare (entrevista 29 sep 2026),Precio en finca reportado por productores (no lo publica Fedegán)
+Venta en finca (comprador en finca),vaca_gorda,8690,2026-10-09,Productores de Casanare (entrevista 29 sep 2026),Precio en finca reportado por productores (no lo publica Fedegán)

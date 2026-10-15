@@ -1,6 +1,6 @@
 # Modelo de datos
 
-Simulador de Destinos Ganaderos desde Yopal · Entrega 2 · versión 0.2.0
+Simulador de Destinos Ganaderos desde Yopal · Entrega 3 · versión 0.3.0
 
 Este documento y `api/openapi.yaml` describen las mismas entidades con los mismos nombres de campo. Si se cambia uno, se cambia el otro en el mismo pull request.
 
@@ -28,7 +28,8 @@ Tipos enumerados (se crean como `CREATE TYPE ... AS ENUM`):
 |---|---|
 | `categoria_animal` | `novillo_gordo`, `vaca_gorda`, `novillo_levante`, `ternero_destete`, `toro` |
 | `estado_lote` | `disponible`, `simulado`, `vendido` |
-| `tipo_destino` | `subasta`, `feria`, `frigorifico`, `planta_beneficio` |
+| `tipo_destino` | `finca`, `subasta`, `feria`, `frigorifico`, `planta_beneficio` |
+| `rol_usuario` | `administrador`, `productor` |
 | `fuente_ruta` | `osrm`, `manual`, `respaldo_linea_recta` |
 
 ## Entidades
@@ -43,7 +44,22 @@ Persona que registra lotes para vender.
 | `nombre_completo` | varchar(120) | no | | longitud ≥ 3 |
 | `municipio` | varchar(60) | no | | |
 | `telefono` | varchar(10) | sí | `NULL` | `^3[0-9]{9}$` (celular colombiano) |
-| `correo` | varchar(120) | sí | `NULL` | único cuando no es nulo |
+| `correo` | varchar(120) | sí | `NULL` | único sin distinguir mayúsculas, cuando no es nulo |
+| `creado_en` | timestamptz | no | `now()` | |
+| `actualizado_en` | timestamptz | no | `now()` | |
+
+### usuario
+
+Cuenta para iniciar sesión. Un usuario con rol `productor` está ligado a una ficha de productor; un `administrador` no.
+
+| Campo | Tipo | Nulo | Por defecto | Restricciones |
+|---|---|---|---|---|
+| `id` | uuid | no | `gen_random_uuid()` | PK |
+| `nombre_completo` | varchar(120) | no | | |
+| `correo` | varchar(120) | no | | único sin distinguir mayúsculas |
+| `contrasena_hash` | varchar(100) | no | | hash bcrypt (costo 12); la contraseña nunca se guarda |
+| `rol` | rol_usuario | no | `'productor'` | |
+| `productor_id` | uuid | sí | `NULL` | FK → `productor.id`, única; obligatoria si el rol es `productor` |
 | `creado_en` | timestamptz | no | `now()` | |
 | `actualizado_en` | timestamptz | no | `now()` | |
 
@@ -71,7 +87,7 @@ El límite de 200 animales corresponde a varios camiones ganaderos; un lote más
 
 ### destino
 
-Lugar donde se puede vender el lote: subasta, feria, frigorífico o planta de beneficio.
+Lugar donde se puede vender el lote: la propia finca (comprador que recoge el ganado), subasta, feria, frigorífico o planta de beneficio.
 
 | Campo | Tipo | Nulo | Por defecto | Restricciones |
 |---|---|---|---|---|
@@ -81,6 +97,7 @@ Lugar donde se puede vender el lote: subasta, feria, frigorífico o planta de be
 | `municipio` | varchar(60) | no | | |
 | `departamento` | varchar(60) | no | | |
 | `ubicacion` | geometry(Point, 4326) | no | | se expone como GeoJSON `Point` |
+| `comision_pct` | numeric(4,2) | no | `0` | `CHECK (comision_pct BETWEEN 0 AND 15)`; las subastas cobran comisión (D-13) |
 | `activo` | boolean | no | `true` | los inactivos no se ofrecen en el formulario |
 | `creado_en` | timestamptz | no | `now()` | |
 | `actualizado_en` | timestamptz | no | `now()` | |
@@ -96,11 +113,30 @@ Precio que paga un destino por kilogramo en pie, por categoría y por día. Se g
 | `categoria` | categoria_animal | no | | |
 | `precio_kg_cop` | integer | no | | `CHECK (precio_kg_cop BETWEEN 3000 AND 30000)` |
 | `fecha` | date | no | | |
-| `fuente` | varchar(160) | no | | de dónde salió el dato (portal, llamada, boletín) |
+| `fuente` | varchar(160) | no | | de dónde salió el dato (reporte de Fedegán, llamada, boletín) |
+| `referencia` | varchar(300) | sí | `NULL` | plaza o enlace del reporte original |
+| `importacion_id` | uuid | sí | `NULL` | FK → `importacion_precio.id`; nulo si se registró a mano |
 | `creado_en` | timestamptz | no | `now()` | |
 | `actualizado_en` | timestamptz | no | `now()` | |
 
 Restricción única: `(destino_id, categoria, fecha)`. El «precio vigente» es el de fecha más reciente.
+
+### importacion_precio
+
+Registro de cada carga de precios por lotes (manual o programada).
+
+| Campo | Tipo | Nulo | Por defecto | Restricciones |
+|---|---|---|---|---|
+| `id` | uuid | no | `gen_random_uuid()` | PK |
+| `fuente` | varchar(160) | no | | fuentes de las filas cargadas |
+| `origen` | varchar(20) | no | | `manual` o `programada` |
+| `filas` | integer | no | | filas válidas recibidas |
+| `insertados` | integer | no | | precios nuevos |
+| `actualizados` | integer | no | | precios existentes que cambiaron |
+| `sin_cambios` | integer | no | | precios que ya estaban iguales |
+| `usuario_id` | uuid | sí | `NULL` | FK → `usuario.id`; nulo en las cargas programadas |
+| `creado_en` | timestamptz | no | `now()` | |
+| `actualizado_en` | timestamptz | no | `now()` | |
 
 ### ruta
 
@@ -132,7 +168,9 @@ Una comparación de destinos para un lote con un valor de flete.
 |---|---|---|---|---|
 | `id` | uuid | no | `gen_random_uuid()` | PK |
 | `lote_id` | uuid | no | | FK → `lote.id`, `ON DELETE RESTRICT` |
-| `flete_km_cop` | integer | no | | `CHECK (flete_km_cop BETWEEN 1000 AND 50000)` |
+| `flete_km_cop` | integer | no | | `CHECK (flete_km_cop BETWEEN 1000 AND 50000)`, por camión |
+| `capacidad_camion` | smallint | no | `25` | `CHECK (capacidad_camion BETWEEN 5 AND 40)`; 24 a 27 según la entrevista |
+| `flete_incluye_peajes` | boolean | no | `false` | si el transportador paga los peajes |
 | `mejor_destino_id` | uuid | no | | FK → `destino.id` (el resultado con `posicion = 1`) |
 | `creado_en` | timestamptz | no | `now()` | fecha de la simulación |
 | `actualizado_en` | timestamptz | no | `now()` | |
@@ -150,11 +188,16 @@ Una fila por destino comparado. Guarda una copia de los valores usados en el cá
 | `distancia_km` | numeric(6,1) | no | | copia de `ruta.distancia_km` |
 | `tiempo_horas` | numeric(4,1) | no | | copia de `ruta.tiempo_horas` |
 | `merma_pct` | numeric(4,1) | no | | copia de `ruta.merma_pct` |
+| `camiones` | smallint | no | | `techo(cantidad_animales / capacidad_camion)` |
 | `peso_vendido_kg` | numeric(8,1) | no | | `peso_total_kg × (1 − merma_pct/100)` |
 | `precio_kg_cop` | integer | no | | precio vigente al momento de simular |
-| `flete_cop` | integer | no | | `distancia_km × flete_km_cop × factor_dificultad` |
-| `peajes_cop` | integer | no | | copia de `ruta.peajes_cop` |
-| `costo_logistico_cop` | integer | no | | `flete_cop + peajes_cop` |
+| `precio_fecha` | date | sí | | fecha de ese precio |
+| `precio_antiguedad_dias` | smallint | sí | | días entre el precio y la simulación |
+| `advertencia` | varchar(300) | sí | `NULL` | aviso si el precio tiene más de 7 días |
+| `comision_cop` | integer | no | `0` | `ingreso_bruto_cop × comision_pct / 100` |
+| `flete_cop` | integer | no | | `distancia_km × flete_km_cop × factor_dificultad × camiones` |
+| `peajes_cop` | integer | no | | `ruta.peajes_cop × camiones` (0 si el flete incluye peajes) |
+| `costo_logistico_cop` | integer | no | | `flete_cop + peajes_cop + comision_cop` |
 | `ingreso_bruto_cop` | integer | no | | `peso_vendido_kg × precio_kg_cop` |
 | `utilidad_neta_cop` | integer | no | | `ingreso_bruto_cop − costo_logistico_cop` (puede ser negativa) |
 | `posicion` | smallint | no | | `CHECK (posicion >= 1)`; 1 = mayor utilidad |
@@ -167,9 +210,12 @@ Restricciones únicas: `(simulacion_id, destino_id)` y `(simulacion_id, posicion
 
 | Relación | Cardinalidad | Clave foránea |
 |---|---|---|
+| usuario → productor | uno a uno (opcional) | `usuario.productor_id` |
 | productor → lote | uno a muchos | `lote.productor_id` |
 | lote → simulacion | uno a muchos | `simulacion.lote_id` |
 | destino → precio_mercado | uno a muchos | `precio_mercado.destino_id` |
+| importacion_precio → precio_mercado | uno a muchos (opcional) | `precio_mercado.importacion_id` |
+| usuario → importacion_precio | uno a muchos (opcional) | `importacion_precio.usuario_id` |
 | destino → ruta | uno a muchos (una por origen) | `ruta.destino_id` |
 | simulacion → resultado_simulacion | uno a muchos | `resultado_simulacion.simulacion_id` |
 | simulacion ↔ destino | muchos a muchos, resuelta por `resultado_simulacion` | `resultado_simulacion.destino_id` |
@@ -183,9 +229,11 @@ Restricciones únicas: `(simulacion_id, destino_id)` y `(simulacion_id, posicion
 | `lote_productor_idx (productor_id)` | lote | `GET /lotes?productor_id=` y el `JOIN` con productor. |
 | `lote_estado_categoria_idx (estado, categoria)` | lote | Filtros del listado de lotes. |
 | `lote_creado_idx (creado_en DESC)` | lote | Orden por defecto del listado (`-creado_en`). |
-| `productor_correo_uq (correo) WHERE correo IS NOT NULL` | productor | Evita correos repetidos sin obligar a tener correo. |
+| `productor_correo_uq (lower(correo)) WHERE correo IS NOT NULL` | productor | Evita correos repetidos sin obligar a tener correo. |
+| `usuario_correo_uq (lower(correo))` | usuario | Inicio de sesión por correo sin distinguir mayúsculas. |
 | `productor_municipio_idx (municipio)` | productor | `GET /productores?municipio=`. |
-| `destino_ubicacion_gix USING GIST (ubicacion)` | destino | Filtro espacial `ST_DWithin` de `GET /destinos?cerca_lat=&cerca_lon=&radio_km=`. |
+| `destino_ubicacion_gix USING GIST (ubicacion)` | destino | Consultas espaciales en grados (geometry). |
+| `destino_ubicacion_geog_gix USING GIST ((ubicacion::geography))` | destino | Filtro `ST_DWithin` en metros de `GET /destinos?cerca_lat=&cerca_lon=&radio_km=`. |
 | `destino_tipo_idx (tipo)`, `destino_departamento_idx (departamento)` | destino | Filtros `tipo` y `departamento`. |
 | `precio_destino_cat_fecha_uq (destino_id, categoria, fecha DESC)` | precio_mercado | Unicidad y búsqueda del precio vigente sin ordenar toda la tabla. |
 | `ruta_destino_origen_uq (destino_id, origen_nombre)` | ruta | Unicidad y `GET /rutas?destino_id=`. |
@@ -197,11 +245,13 @@ Restricciones únicas: `(simulacion_id, destino_id)` y `(simulacion_id, posicion
 
 | Esquema OpenAPI | Tabla | Notas |
 |---|---|---|
-| `Productor`, `ProductorEntrada` | productor | mismos campos |
+| `Usuario`, `RegistroEntrada` | usuario | `contrasena` entra y se guarda como `contrasena_hash`; nunca sale |
+| `Productor`, `ProductorEntrada`, `ProductorCambios` | productor | mismos campos |
 | `Lote`, `LoteEntrada`, `LoteCambios` | lote | `peso_total_kg` es de solo lectura (columna generada) |
-| `Destino` | destino | `ubicacion` viaja como GeoJSON `Point` |
-| `PrecioMercado`, `PrecioMercadoEntrada` | precio_mercado | `destino_id` llega por la ruta `/destinos/{destino_id}/precios` |
-| `Ruta` | ruta | `origen` y `geometria` viajan como GeoJSON |
+| `Destino`, `DestinoEntrada`, `DestinoCambios` | destino | `ubicacion` viaja como GeoJSON `Point`; `distancia_lineal_km` es calculado, no columna |
+| `ImportacionPrecios` | importacion_precio | mismos campos |
+| `PrecioMercado`, `PrecioMercadoEntrada`, `PrecioMercadoCambios` | precio_mercado | `antiguedad_dias` es calculado (`current_date − fecha`), no columna; `destino_id` llega por la ruta `/destinos/{destino_id}/precios` |
+| `Ruta`, `RutaEntrada`, `RutaCambios` | ruta | `origen` y `geometria` viajan como GeoJSON |
 | `Simulacion`, `SimulacionEntrada` | simulacion | ver campos que no son columnas |
 | `ResultadoSimulacion` | resultado_simulacion | mismos campos |
 
@@ -215,124 +265,11 @@ Campos del contrato que no son columnas, y dónde viven:
 - **Los resultados guardan copia de distancia, precio, peajes y merma.** Si mañana cambia el precio del frigorífico, una simulación del 14 de septiembre debe seguir mostrando el precio con el que se decidió. Por eso no se recalcula al consultar el historial.
 - **No hay campo de versión.** Los resultados no se editan, se crean simulaciones nuevas; y el precio se historiza por fecha. No hay edición concurrente que requiera bloqueo optimista en esta versión.
 - **La merma se modela en la ruta.** Depende sobre todo de las horas de viaje, que son propiedad del trayecto. Los valores actuales son estimaciones del equipo y deben validarse con ganaderos (pendiente en `decisiones.md`).
-- **Sin usuarios todavía.** La autenticación llega en la Entrega 3; entonces se agrega la tabla `usuario` y la relación usuario → productor, en el mismo pull request que actualice el contrato.
+- **Usuario y productor son tablas distintas.** Un administrador puede registrar ganaderos que no usan la aplicación (sin cuenta), y los datos de inicio de sesión quedan aislados de los datos del negocio.
+- **`actualizado_en` lo mantiene un disparador** (`marcar_actualizado`) en todas las tablas, no el código.
 
-## Anexo: DDL de referencia para la Entrega 3
+## Implementación
 
-```sql
-CREATE EXTENSION IF NOT EXISTS postgis;
-CREATE EXTENSION IF NOT EXISTS pgcrypto;
+El esquema real está en [`api/db/migraciones/`](../api/db/migraciones/) (`001_esquema_inicial.sql` y `002_vigencia_e_importacion_precios.sql`) y se aplica con `npm run migrar` (o solo, al arrancar `docker compose up`). Todo cambio futuro va en un archivo nuevo `002_…sql`, nunca editando uno ya aplicado.
 
-CREATE TYPE categoria_animal AS ENUM ('novillo_gordo','vaca_gorda','novillo_levante','ternero_destete','toro');
-CREATE TYPE estado_lote      AS ENUM ('disponible','simulado','vendido');
-CREATE TYPE tipo_destino     AS ENUM ('subasta','feria','frigorifico','planta_beneficio');
-CREATE TYPE fuente_ruta      AS ENUM ('osrm','manual','respaldo_linea_recta');
-
-CREATE TABLE productor (
-  id              uuid PRIMARY KEY DEFAULT gen_random_uuid(),
-  nombre_completo varchar(120) NOT NULL CHECK (char_length(nombre_completo) >= 3),
-  municipio       varchar(60)  NOT NULL,
-  telefono        varchar(10)  CHECK (telefono ~ '^3[0-9]{9}$'),
-  correo          varchar(120),
-  creado_en       timestamptz  NOT NULL DEFAULT now(),
-  actualizado_en  timestamptz  NOT NULL DEFAULT now()
-);
-CREATE UNIQUE INDEX productor_correo_uq ON productor (correo) WHERE correo IS NOT NULL;
-CREATE INDEX productor_municipio_idx ON productor (municipio);
-
-CREATE TABLE lote (
-  id                uuid PRIMARY KEY DEFAULT gen_random_uuid(),
-  productor_id      uuid NOT NULL REFERENCES productor(id) ON DELETE RESTRICT,
-  nombre            varchar(80) NOT NULL CHECK (char_length(nombre) >= 3),
-  cantidad_animales integer NOT NULL CHECK (cantidad_animales BETWEEN 1 AND 200),
-  peso_promedio_kg  numeric(5,1) NOT NULL CHECK (peso_promedio_kg BETWEEN 80 AND 900),
-  peso_total_kg     numeric(8,1) GENERATED ALWAYS AS (cantidad_animales * peso_promedio_kg) STORED,
-  categoria         categoria_animal NOT NULL,
-  raza              varchar(40),
-  finca             varchar(80),
-  municipio_origen  varchar(60) NOT NULL,
-  estado            estado_lote NOT NULL DEFAULT 'disponible',
-  creado_en         timestamptz NOT NULL DEFAULT now(),
-  actualizado_en    timestamptz NOT NULL DEFAULT now()
-);
-CREATE INDEX lote_productor_idx        ON lote (productor_id);
-CREATE INDEX lote_estado_categoria_idx ON lote (estado, categoria);
-CREATE INDEX lote_creado_idx           ON lote (creado_en DESC);
-
-CREATE TABLE destino (
-  id             uuid PRIMARY KEY DEFAULT gen_random_uuid(),
-  nombre         varchar(100) NOT NULL UNIQUE,
-  tipo           tipo_destino NOT NULL,
-  municipio      varchar(60)  NOT NULL,
-  departamento   varchar(60)  NOT NULL,
-  ubicacion      geometry(Point, 4326) NOT NULL,
-  activo         boolean NOT NULL DEFAULT true,
-  creado_en      timestamptz NOT NULL DEFAULT now(),
-  actualizado_en timestamptz NOT NULL DEFAULT now()
-);
-CREATE INDEX destino_ubicacion_gix    ON destino USING GIST (ubicacion);
-CREATE INDEX destino_tipo_idx         ON destino (tipo);
-CREATE INDEX destino_departamento_idx ON destino (departamento);
-
-CREATE TABLE precio_mercado (
-  id             uuid PRIMARY KEY DEFAULT gen_random_uuid(),
-  destino_id     uuid NOT NULL REFERENCES destino(id) ON DELETE CASCADE,
-  categoria      categoria_animal NOT NULL,
-  precio_kg_cop  integer NOT NULL CHECK (precio_kg_cop BETWEEN 3000 AND 30000),
-  fecha          date NOT NULL,
-  fuente         varchar(160) NOT NULL,
-  creado_en      timestamptz NOT NULL DEFAULT now(),
-  actualizado_en timestamptz NOT NULL DEFAULT now()
-);
-CREATE UNIQUE INDEX precio_destino_cat_fecha_uq ON precio_mercado (destino_id, categoria, fecha DESC);
-
-CREATE TABLE ruta (
-  id                uuid PRIMARY KEY DEFAULT gen_random_uuid(),
-  destino_id        uuid NOT NULL REFERENCES destino(id) ON DELETE CASCADE,
-  origen_nombre     varchar(80) NOT NULL DEFAULT 'Yopal (centro de acopio)',
-  origen            geometry(Point, 4326) NOT NULL,
-  distancia_km      numeric(6,1) NOT NULL CHECK (distancia_km BETWEEN 0 AND 3000),
-  tiempo_horas      numeric(4,1) NOT NULL CHECK (tiempo_horas BETWEEN 0 AND 72),
-  peajes_cop        integer NOT NULL DEFAULT 0 CHECK (peajes_cop >= 0),
-  factor_dificultad numeric(3,2) NOT NULL DEFAULT 1.00 CHECK (factor_dificultad BETWEEN 1 AND 2),
-  merma_pct         numeric(4,1) NOT NULL DEFAULT 0 CHECK (merma_pct BETWEEN 0 AND 15),
-  geometria         geometry(LineString, 4326) NOT NULL,
-  fuente            fuente_ruta NOT NULL DEFAULT 'manual',
-  creado_en         timestamptz NOT NULL DEFAULT now(),
-  actualizado_en    timestamptz NOT NULL DEFAULT now()
-);
-CREATE UNIQUE INDEX ruta_destino_origen_uq ON ruta (destino_id, origen_nombre);
-CREATE INDEX ruta_geometria_gix ON ruta USING GIST (geometria);
-
-CREATE TABLE simulacion (
-  id               uuid PRIMARY KEY DEFAULT gen_random_uuid(),
-  lote_id          uuid NOT NULL REFERENCES lote(id) ON DELETE RESTRICT,
-  flete_km_cop     integer NOT NULL CHECK (flete_km_cop BETWEEN 1000 AND 50000),
-  mejor_destino_id uuid NOT NULL REFERENCES destino(id),
-  creado_en        timestamptz NOT NULL DEFAULT now(),
-  actualizado_en   timestamptz NOT NULL DEFAULT now()
-);
-CREATE INDEX simulacion_lote_fecha_idx ON simulacion (lote_id, creado_en DESC);
-
-CREATE TABLE resultado_simulacion (
-  id                  uuid PRIMARY KEY DEFAULT gen_random_uuid(),
-  simulacion_id       uuid NOT NULL REFERENCES simulacion(id) ON DELETE CASCADE,
-  destino_id          uuid NOT NULL REFERENCES destino(id),
-  ruta_id             uuid NOT NULL REFERENCES ruta(id),
-  distancia_km        numeric(6,1) NOT NULL,
-  tiempo_horas        numeric(4,1) NOT NULL,
-  merma_pct           numeric(4,1) NOT NULL,
-  peso_vendido_kg     numeric(8,1) NOT NULL,
-  precio_kg_cop       integer NOT NULL,
-  flete_cop           integer NOT NULL,
-  peajes_cop          integer NOT NULL,
-  costo_logistico_cop integer NOT NULL,
-  ingreso_bruto_cop   integer NOT NULL,
-  utilidad_neta_cop   integer NOT NULL,
-  posicion            smallint NOT NULL CHECK (posicion >= 1),
-  creado_en           timestamptz NOT NULL DEFAULT now(),
-  actualizado_en      timestamptz NOT NULL DEFAULT now(),
-  UNIQUE (simulacion_id, destino_id)
-);
-CREATE UNIQUE INDEX resultado_sim_posicion_uq ON resultado_simulacion (simulacion_id, posicion);
-```
+Los datos de demostración están en [`api/db/semilla/datos.json`](../api/db/semilla/datos.json) y se cargan con `npm run sembrar`.

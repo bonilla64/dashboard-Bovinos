@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="es-CO">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Precios · Simulador de Destinos Ganaderos</title>
+  <meta name="description" content="Precios por kilo en pie de cada destino, con su fecha y su fuente (Fedegán).">
+  <meta name="theme-color" content="#143e2e">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='6' fill='%23143e2e'/%3E%3Cpath d='M9 22 L16 10 L24 14' stroke='%23e3b23c' stroke-width='3' fill='none' stroke-linecap='round'/%3E%3Ccircle cx='9' cy='22' r='3.5' fill='%23fff'/%3E%3C/svg%3E">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:wght@400;700&display=swap">
+  <link rel="stylesheet" href="css/estilos.css">
+</head>
+<body data-pagina="precios">
+  <a class="saltar" href="#contenido">Saltar al contenido</a>
+
+  <header class="cabecera">
+    <div class="cabecera__dentro">
+      <a class="marca" href="index.html">
+        <svg width="36" height="36" viewBox="0 0 32 32" aria-hidden="true" focusable="false"><rect width="32" height="32" rx="6" fill="#1f5c45"/><path d="M9 22 L16 10 L24 14" stroke="#e3b23c" stroke-width="3" fill="none" stroke-linecap="round"/><circle cx="9" cy="22" r="3.5" fill="#fff"/></svg>
+        <span>Destinos ganaderos<small>Ganado de Casanare</small></span>
+      </a>
+      <nav class="nav" aria-label="Principal">
+        <ul>
+          <li><a href="index.html">Tablero</a></li>
+          <li><a href="detalle.html">Registrar lote</a></li>
+          <li><a href="historial.html">Historial</a></li>
+          <li><a href="precios.html" aria-current="page">Precios</a></li>
+        </ul>
+      </nav>
+      <div class="sesion" id="sesion" aria-live="polite"></div>
+    </div>
+  </header>
+
+  <main id="contenido" tabindex="-1">
+    <h1>Precios</h1>
+    <p>Los precios por kilo en pie salen de los reportes semanales de <strong>Fedegán</strong>. Un precio con más de 7 días aparece con advertencia en las simulaciones; con más de 30 días, ese destino no se compara.</p>
+
+    <section id="estado-cargando" class="estado" aria-busy="true" aria-labelledby="t-cargando">
+      <h2 id="t-cargando"><span class="girador" aria-hidden="true"></span>Cargando precios</h2>
+      <div class="cargando__barra" aria-hidden="true"></div>
+      <div class="cargando__barra cargando__barra--corta" aria-hidden="true"></div>
+    </section>
+
+    <section id="estado-error" class="estado estado--error" role="alert" aria-labelledby="t-error" hidden>
+      <h2 id="t-error">No se pudieron cargar los precios</h2>
+      <p id="error-detalle">El servidor no respondió.</p>
+      <div class="acciones"><button type="button" class="boton" id="btn-reintentar">Volver a intentar</button></div>
+    </section>
+
+    <div id="con-datos" hidden>
+      <p class="conteo" id="resumen-precios" role="status"></p>
+      <section class="bloque" aria-labelledby="t-tabla-precios">
+        <h2 id="t-tabla-precios">Precio vigente por destino</h2>
+        <div class="tabla-envoltura" tabindex="0" role="region" aria-labelledby="t-tabla-precios">
+          <table>
+            <caption>El precio más reciente de cada destino y categoría</caption>
+            <thead><tr><th scope="col">Destino</th><th scope="col" class="izq">Categoría</th><th scope="col">Precio por kg</th><th scope="col">Fecha</th><th scope="col" class="izq">Estado</th><th scope="col" class="izq">Fuente</th></tr></thead>
+            <tbody id="tabla-precios"></tbody>
+          </table>
+        </div>
+      </section>
+
+      <section class="bloque" aria-labelledby="t-cargar" data-rol="administrador" hidden>
+        <h2 id="t-cargar">Cargar precios de Fedegán</h2>
+        <ol class="pasos">
+          <li><button type="button" class="boton boton--secundario boton--peq" id="btn-descargar-hoja">Descargar la hoja con los precios actuales</button> (CSV, se abre en Excel o Google Sheets).</li>
+          <li>Cambie los precios y la fecha por los del último reporte semanal de Fedegán. La columna <code>referencia</code> dice qué plaza del reporte corresponde a cada destino.</li>
+          <li>Guárdela como CSV y súbala aquí. Si una fila tiene un error, no se carga ninguna y se indica qué corregir.</li>
+        </ol>
+        <div id="errores-carga" class="resumen-errores" role="alert" tabindex="-1" hidden></div>
+        <div id="resultado-carga" class="aviso" role="status" hidden></div>
+        <form id="form-carga" class="formulario" novalidate>
+          <div class="campo">
+            <label for="archivo-precios">Hoja de precios (.csv)</label>
+            <input type="file" id="archivo-precios" accept=".csv,text/csv" required>
+          </div>
+          <div class="acciones"><button type="submit" class="boton">Cargar precios</button></div>
+        </form>
+      </section>
+
+      <section class="bloque" aria-labelledby="t-cargas" data-rol="administrador" hidden>
+        <h2 id="t-cargas">Últimas cargas</h2>
+        <div class="tabla-envoltura" tabindex="0" role="region" aria-labelledby="t-cargas">
+          <table>
+            <caption>Quién cargó precios, cuándo y qué cambió</caption>
+            <thead><tr><th scope="col">Fecha</th><th scope="col" class="izq">Fuente</th><th scope="col" class="izq">Origen</th><th scope="col">Nuevos</th><th scope="col">Cambiados</th><th scope="col">Iguales</th></tr></thead>
+            <tbody id="tabla-cargas"></tbody>
+          </table>
+        </div>
+      </section>
+    </div>
+  </main>
+
+  <footer class="pie">
+    <div class="pie__dentro">
+      <div>
+        <p>Simulador de Destinos Ganaderos · Tecnologías Web 2026-B · Unitrópico, Yopal.</p>
+        <p>Los resultados se calculan en el servidor con los precios cargados desde Fedegán. Cada precio muestra su fecha y su fuente.</p>
+      </div>
+      <nav aria-label="Estados de la interfaz">
+        <p>Ver estados de la interfaz:</p>
+        <ul>
+          <li><a href="index.html?demo=cargando">Cargando</a></li>
+          <li><a href="index.html?demo=vacio">Sin resultados</a></li>
+          <li><a href="index.html?demo=error">Error de conexión</a></li>
+        </ul>
+      </nav>
+    </div>
+  </footer>
+
+  <script src="js/config.js" defer></script>
+  <script src="js/api.js" defer></script>
+  <script src="js/app.js" defer></script>
+</body>
+</html>
