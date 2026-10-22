@@ -25,6 +25,7 @@
         <ul>
           <li><a href="index.html">Tablero</a></li>
           <li><a href="detalle.html">Registrar lote</a></li>
+          <li><a href="lotes.html">Mis lotes</a></li>
           <li><a href="historial.html">Historial</a></li>
           <li><a href="precios.html">Precios</a></li>
         </ul>
@@ -60,33 +61,8 @@
         <h2 id="t-registro">Crear una cuenta de productor</h2>
         <div id="errores-registro" class="resumen-errores" role="alert" tabindex="-1" hidden></div>
         <form id="form-registro" class="formulario" novalidate>
-          <div class="campo">
-            <label for="registro-nombre">Nombre completo</label>
-            <input type="text" id="registro-nombre" name="nombre_completo" required minlength="3" maxlength="120" autocomplete="name" aria-describedby="registro-nombre-error">
-            <p class="error-campo" id="registro-nombre-error"></p>
-          </div>
-          <div class="campo">
-            <label for="registro-correo">Correo</label>
-            <input type="email" id="registro-correo" name="correo" required maxlength="120" autocomplete="email" aria-describedby="registro-correo-error">
-            <p class="error-campo" id="registro-correo-error"></p>
-          </div>
-          <div class="campo">
-            <label for="registro-contrasena">Contraseña</label>
-            <p class="ayuda" id="registro-contrasena-ayuda">Mínimo 10 caracteres. Se guarda cifrada.</p>
-            <input type="password" id="registro-contrasena" name="contrasena" required minlength="10" maxlength="72" autocomplete="new-password" aria-describedby="registro-contrasena-ayuda registro-contrasena-error">
-            <p class="error-campo" id="registro-contrasena-error"></p>
-          </div>
-          <div class="campo">
-            <label for="registro-municipio">Municipio</label>
-            <input type="text" id="registro-municipio" name="municipio" required minlength="2" maxlength="60" list="municipios" aria-describedby="registro-municipio-error">
-            <datalist id="municipios"><option>Yopal</option><option>Aguazul</option><option>Tauramena</option><option>Maní</option><option>Monterrey</option><option>Villanueva</option><option>Nunchía</option><option>Pore</option><option>Paz de Ariporo</option><option>Hato Corozal</option><option>Trinidad</option><option>San Luis de Palenque</option><option>Orocué</option></datalist>
-            <p class="error-campo" id="registro-municipio-error"></p>
-          </div>
-          <div class="campo">
-            <label for="registro-telefono">Celular <span class="opcional">(opcional)</span></label>
-            <input type="tel" id="registro-telefono" name="telefono" inputmode="numeric" pattern="3[0-9]{9}" maxlength="10" autocomplete="tel" aria-describedby="registro-telefono-error">
-            <p class="error-campo" id="registro-telefono-error"></p>
-          </div>
+          <p class="ayuda">Puede registrarse como persona (con cédula) o como empresa (con NIT y representante legal).</p>
+          <div id="campos-registro"></div>
           <div class="acciones"><button type="submit" class="boton">Crear cuenta</button></div>
         </form>
       </section>
@@ -125,5 +101,6 @@
   <script src="js/config.js" defer></script>
   <script src="js/api.js" defer></script>
   <script src="js/app.js" defer></script>
+  <script src="js/cuentas.js" defer></script>
 </body>
 </html>

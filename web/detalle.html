@@ -25,6 +25,7 @@
         <ul>
           <li><a href="index.html">Tablero</a></li>
           <li><a href="detalle.html" aria-current="page">Registrar lote</a></li>
+          <li><a href="lotes.html">Mis lotes</a></li>
           <li><a href="historial.html">Historial</a></li>
           <li><a href="precios.html">Precios</a></li>
         </ul>
@@ -107,7 +108,13 @@
               <p class="error-campo" id="peso_promedio_kg-error"></p>
             </div>
             <div class="campo">
-              <label for="finca">Finca o hato <span class="opcional">(opcional)</span></label>
+              <label for="finca_id">Finca de donde sale</label>
+              <select id="finca_id" name="finca_id" aria-describedby="finca_id-ayuda finca_id-error"><option value="">Otra (escribir nombre y municipio)</option></select>
+              <p class="ayuda" id="finca_id-ayuda">Sus fincas se registran en <a href="cuenta.html#fincas">Mi cuenta</a>.</p>
+              <p class="error-campo" id="finca_id-error"></p>
+            </div>
+            <div class="campo" id="bloque-finca-texto">
+              <label for="finca">Nombre de la finca o hato <span class="opcional">(opcional)</span></label>
               <input type="text" id="finca" name="finca" maxlength="80" autocomplete="off" aria-describedby="finca-error">
               <p class="error-campo" id="finca-error"></p>
             </div>
@@ -183,5 +190,6 @@
   <script src="js/config.js" defer></script>
   <script src="js/api.js" defer></script>
   <script src="js/app.js" defer></script>
+  <script src="js/cuentas.js" defer></script>
 </body>
 </html>

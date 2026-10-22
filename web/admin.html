@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="es-CO">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Administración · Simulador de Destinos Ganaderos</title>
+  <meta name="description" content="Administración de cuentas, productores, destinos y bitácora.">
+  <meta name="theme-color" content="#143e2e">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='6' fill='%23143e2e'/%3E%3Cpath d='M9 22 L16 10 L24 14' stroke='%23e3b23c' stroke-width='3' fill='none' stroke-linecap='round'/%3E%3Ccircle cx='9' cy='22' r='3.5' fill='%23fff'/%3E%3C/svg%3E">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:wght@400;700&display=swap">
+  <link rel="stylesheet" href="css/estilos.css">
+</head>
+<body data-pagina="admin">
+  <a class="saltar" href="#contenido">Saltar al contenido</a>
+
+  <header class="cabecera">
+    <div class="cabecera__dentro">
+      <a class="marca" href="index.html">
+        <svg width="36" height="36" viewBox="0 0 32 32" aria-hidden="true" focusable="false"><rect width="32" height="32" rx="6" fill="#1f5c45"/><path d="M9 22 L16 10 L24 14" stroke="#e3b23c" stroke-width="3" fill="none" stroke-linecap="round"/><circle cx="9" cy="22" r="3.5" fill="#fff"/></svg>
+        <span>Destinos ganaderos<small>Ganado de Casanare</small></span>
+      </a>
+      <nav class="nav" aria-label="Principal">
+        <ul>
+          <li><a href="index.html">Tablero</a></li>
+          <li><a href="detalle.html">Registrar lote</a></li>
+          <li><a href="lotes.html">Mis lotes</a></li>
+          <li><a href="historial.html">Historial</a></li>
+          <li><a href="precios.html">Precios</a></li>
+        </ul>
+      </nav>
+      <div class="sesion" id="sesion" aria-live="polite"></div>
+    </div>
+  </header>
+
+  <main id="contenido" tabindex="-1">
+    <h1>Administración</h1>
+    <p>Solo para administradores. Las cuentas con datos no se borran: se suspenden; siempre queda al menos un administrador; todo cambio queda en la bitácora.</p>
+    <div id="aviso-admin" class="aviso" role="status" tabindex="-1" hidden></div>
+
+    <section id="estado-cargando" class="estado" aria-busy="true" aria-labelledby="t-cargando">
+      <h2 id="t-cargando"><span class="girador" aria-hidden="true"></span>Cargando la administración</h2>
+      <div class="cargando__barra" aria-hidden="true"></div>
+    </section>
+
+    <section id="estado-error" class="estado estado--error" role="alert" aria-labelledby="t-error" hidden>
+      <h2 id="t-error">No se pudo cargar esta página</h2>
+      <p id="error-detalle">El servidor no respondió.</p>
+      <div class="acciones"><button type="button" class="boton" id="btn-reintentar">Volver a intentar</button></div>
+    </section>
+
+    <div id="con-datos" hidden>
+      <div class="pestanas" role="tablist" aria-label="Secciones de administración">
+        <button type="button" role="tab" id="tab-resumen" aria-controls="panel-resumen" aria-selected="true">Resumen</button>
+        <button type="button" role="tab" id="tab-usuarios" aria-controls="panel-usuarios" aria-selected="false" tabindex="-1">Usuarios</button>
+        <button type="button" role="tab" id="tab-productores" aria-controls="panel-productores" aria-selected="false" tabindex="-1">Productores</button>
+        <button type="button" role="tab" id="tab-destinos" aria-controls="panel-destinos" aria-selected="false" tabindex="-1">Destinos y rutas</button>
+        <button type="button" role="tab" id="tab-bitacora" aria-controls="panel-bitacora" aria-selected="false" tabindex="-1">Bitácora</button>
+      </div>
+
+      <section id="panel-resumen" role="tabpanel" aria-labelledby="tab-resumen" class="panel">
+        <div id="tarjetas-resumen" class="tarjetas"></div>
+        <div class="bloque">
+          <h2>Destinos que más salen como mejor opción</h2>
+          <ol id="lista-mas-elegidos"></ol>
+        </div>
+      </section>
+
+      <section id="panel-usuarios" role="tabpanel" aria-labelledby="tab-usuarios" class="panel" hidden>
+        <form class="filtros barra-herramientas" id="filtros-usuarios" role="search" aria-label="Buscar cuentas">
+          <div class="campo"><label for="u-q">Buscar</label><input type="search" id="u-q" placeholder="Nombre, correo o documento" maxlength="80"></div>
+          <div class="campo"><label for="u-rol">Rol</label><select id="u-rol"><option value="">Todos</option><option value="productor">Productor</option><option value="administrador">Administrador</option></select></div>
+          <div class="campo"><label for="u-activo">Estado</label><select id="u-activo"><option value="">Todas</option><option value="true">Activas</option><option value="false">Suspendidas</option></select></div>
+          <div class="acciones"><button type="button" class="boton" id="btn-nuevo-usuario">Nueva cuenta</button></div>
+        </form>
+        <p class="conteo" id="conteo-usuarios" role="status"></p>
+        <div class="tabla-envoltura" tabindex="0" role="region" aria-label="Cuentas">
+          <table>
+            <thead><tr><th scope="col" class="izq">Cuenta</th><th scope="col" class="izq">Rol</th><th scope="col" class="izq">Identificación</th><th scope="col" class="izq">Municipio</th><th scope="col" class="izq">Estado</th><th scope="col" class="izq">Último ingreso</th><th scope="col" class="izq">Acciones</th></tr></thead>
+            <tbody id="tabla-usuarios"></tbody>
+          </table>
+        </div>
+      </section>
+
+      <section id="panel-productores" role="tabpanel" aria-labelledby="tab-productores" class="panel" hidden>
+        <form class="filtros barra-herramientas" id="filtros-productores" role="search" aria-label="Buscar productores">
+          <div class="campo"><label for="p-q">Buscar</label><input type="search" id="p-q" placeholder="Nombre o documento" maxlength="80"></div>
+          <div class="campo"><label for="p-tipo">Tipo</label><select id="p-tipo"><option value="">Todos</option><option value="natural">Persona</option><option value="juridica">Empresa</option></select></div>
+          <div class="campo"><label for="p-verificado">Documento</label><select id="p-verificado"><option value="">Todos</option><option value="false">Sin verificar</option><option value="true">Verificado</option></select></div>
+          <div class="acciones"><button type="button" class="boton" id="btn-nuevo-productor">Nuevo productor sin cuenta</button></div>
+        </form>
+        <p class="conteo" id="conteo-productores" role="status"></p>
+        <div class="tabla-envoltura" tabindex="0" role="region" aria-label="Productores">
+          <table>
+            <thead><tr><th scope="col" class="izq">Productor</th><th scope="col" class="izq">Identificación</th><th scope="col" class="izq">Ubicación</th><th scope="col" class="izq">Contacto</th><th scope="col" class="izq">Acciones</th></tr></thead>
+            <tbody id="tabla-productores"></tbody>
+          </table>
+        </div>
+      </section>
+
+      <section id="panel-destinos" role="tabpanel" aria-labelledby="tab-destinos" class="panel" hidden>
+        <div class="barra-herramientas">
+          <p>Un destino que ya aparece en simulaciones no se borra: se desactiva y deja de ofrecerse. Los precios se cargan en <a href="precios.html">Precios</a>.</p>
+          <div class="acciones"><button type="button" class="boton" id="btn-nuevo-destino">Nuevo destino</button></div>
+        </div>
+        <div class="tabla-envoltura" tabindex="0" role="region" aria-label="Destinos">
+          <table>
+            <thead><tr><th scope="col" class="izq">Destino</th><th scope="col" class="izq">Ubicación</th><th scope="col">Comisión</th><th scope="col" class="izq">Ruta desde Yopal</th><th scope="col" class="izq">Estado</th><th scope="col" class="izq">Acciones</th></tr></thead>
+            <tbody id="tabla-destinos"></tbody>
+          </table>
+        </div>
+      </section>
+
+      <section id="panel-bitacora" role="tabpanel" aria-labelledby="tab-bitacora" class="panel" hidden>
+        <form class="filtros barra-herramientas" id="filtros-bitacora" aria-label="Filtrar bitácora">
+          <div class="campo"><label for="b-recurso">Recurso</label>
+            <select id="b-recurso"><option value="">Todos</option><option value="usuario">Cuentas</option><option value="cuenta">Cuentas eliminadas</option><option value="perfil">Perfiles</option><option value="productor">Productores</option><option value="finca">Fincas</option><option value="destino">Destinos</option><option value="ruta">Rutas</option><option value="precio">Precios</option></select>
+          </div>
+        </form>
+        <div class="tabla-envoltura" tabindex="0" role="region" aria-label="Bitácora">
+          <table>
+            <thead><tr><th scope="col" class="izq">Fecha</th><th scope="col" class="izq">Quién</th><th scope="col" class="izq">Acción</th><th scope="col" class="izq">Sobre</th><th scope="col" class="izq">Detalle</th></tr></thead>
+            <tbody id="tabla-bitacora"></tbody>
+          </table>
+        </div>
+        <div class="acciones"><button type="button" class="boton boton--secundario" id="btn-mas-bitacora" hidden>Ver más</button></div>
+      </section>
+    </div>
+  </main>
+
+  <footer class="pie">
+    <div class="pie__dentro">
+      <div>
+        <p>Simulador de Destinos Ganaderos · Tecnologías Web 2026-B · Unitrópico, Yopal.</p>
+        <p>Los resultados se calculan en el servidor con los precios cargados desde Fedegán. Cada precio muestra su fecha y su fuente.</p>
+      </div>
+      <nav aria-label="Estados de la interfaz">
+        <p>Ver estados de la interfaz:</p>
+        <ul>
+          <li><a href="index.html?demo=cargando">Cargando</a></li>
+          <li><a href="index.html?demo=vacio">Sin resultados</a></li>
+          <li><a href="index.html?demo=error">Error de conexión</a></li>
+        </ul>
+      </nav>
+    </div>
+  </footer>
+
+  <script src="js/config.js" defer></script>
+  <script src="js/api.js" defer></script>
+  <script src="js/app.js" defer></script>
+  <script src="js/cuentas.js" defer></script>
+</body>
+</html>

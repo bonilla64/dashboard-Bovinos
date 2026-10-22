@@ -25,6 +25,7 @@
         <ul>
           <li><a href="index.html">Tablero</a></li>
           <li><a href="detalle.html">Registrar lote</a></li>
+          <li><a href="lotes.html">Mis lotes</a></li>
           <li><a href="historial.html">Historial</a></li>
           <li><a href="precios.html" aria-current="page">Precios</a></li>
         </ul>
@@ -56,7 +57,7 @@
         <div class="tabla-envoltura" tabindex="0" role="region" aria-labelledby="t-tabla-precios">
           <table>
             <caption>El precio más reciente de cada destino y categoría</caption>
-            <thead><tr><th scope="col">Destino</th><th scope="col" class="izq">Categoría</th><th scope="col">Precio por kg</th><th scope="col">Fecha</th><th scope="col" class="izq">Estado</th><th scope="col" class="izq">Fuente</th></tr></thead>
+            <thead><tr><th scope="col">Destino</th><th scope="col" class="izq">Categoría</th><th scope="col">Precio por kg</th><th scope="col">Fecha</th><th scope="col" class="izq">Estado</th><th scope="col" class="izq">Fuente</th><th scope="col" class="izq" data-rol="administrador" hidden>Acciones</th></tr></thead>
             <tbody id="tabla-precios"></tbody>
           </table>
         </div>
@@ -113,5 +114,6 @@
   <script src="js/config.js" defer></script>
   <script src="js/api.js" defer></script>
   <script src="js/app.js" defer></script>
+  <script src="js/cuentas.js" defer></script>
 </body>
 </html>

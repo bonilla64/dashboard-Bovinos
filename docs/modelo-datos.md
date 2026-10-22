@@ -31,20 +31,30 @@ Tipos enumerados (se crean como `CREATE TYPE ... AS ENUM`):
 | `tipo_destino` | `finca`, `subasta`, `feria`, `frigorifico`, `planta_beneficio` |
 | `rol_usuario` | `administrador`, `productor` |
 | `fuente_ruta` | `osrm`, `manual`, `respaldo_linea_recta` |
+| `tipo_persona` | `natural` (persona, cédula), `juridica` (empresa, NIT) |
+| `tipo_documento` | `CC`, `CE`, `NIT` |
 
 ## Entidades
 
 ### productor
 
-Persona que registra lotes para vender.
+Persona natural o empresa que registra lotes para vender.
 
 | Campo | Tipo | Nulo | Por defecto | Restricciones |
 |---|---|---|---|---|
 | `id` | uuid | no | `gen_random_uuid()` | PK |
-| `nombre_completo` | varchar(120) | no | | longitud ≥ 3 |
-| `municipio` | varchar(60) | no | | |
+| `tipo_persona` | tipo_persona | no | `'natural'` | `juridica` ⇔ documento `NIT` |
+| `tipo_documento` | tipo_documento | sí | `NULL` | nulo solo en fichas anteriores a la Entrega 3; junto con `numero_documento` |
+| `numero_documento` | varchar(15) | sí | `NULL` | único por tipo; NIT guardado como `900123456-7` con dígito de verificación comprobado |
+| `representante_legal` | varchar(120) | sí | `NULL` | obligatorio si `tipo_persona = 'juridica'` |
+| `nombre_completo` | varchar(120) | no | | longitud ≥ 3 (razón social en empresas) |
+| `departamento` | varchar(60) | no | `'Casanare'` | |
+| `municipio` | varchar(60) | no | | lista cerrada de los 19 municipios de Casanare (en el contrato) |
+| `vereda` | varchar(80) | sí | `NULL` | |
 | `telefono` | varchar(10) | sí | `NULL` | `^3[0-9]{9}$` (celular colombiano) |
-| `correo` | varchar(120) | sí | `NULL` | único sin distinguir mayúsculas, cuando no es nulo |
+| `correo` | varchar(120) | sí | `NULL` | único sin distinguir mayúsculas, cuando no es nulo; igual al de su cuenta |
+| `documento_verificado` | boolean | no | `false` | solo lo cambia un administrador; vuelve a `false` si cambia el documento |
+| `acepta_datos_en` | timestamptz | sí | `NULL` | momento de la autorización de tratamiento de datos (Ley 1581 de 2012) |
 | `creado_en` | timestamptz | no | `now()` | |
 | `actualizado_en` | timestamptz | no | `now()` | |
 
@@ -60,8 +70,42 @@ Cuenta para iniciar sesión. Un usuario con rol `productor` está ligado a una f
 | `contrasena_hash` | varchar(100) | no | | hash bcrypt (costo 12); la contraseña nunca se guarda |
 | `rol` | rol_usuario | no | `'productor'` | |
 | `productor_id` | uuid | sí | `NULL` | FK → `productor.id`, única; obligatoria si el rol es `productor` |
+| `activo` | boolean | no | `true` | `false` = suspendida: no ingresa y su token deja de servir |
+| `debe_cambiar_contrasena` | boolean | no | `false` | contraseña temporal puesta por un administrador |
+| `ultimo_ingreso` | timestamptz | sí | `NULL` | |
 | `creado_en` | timestamptz | no | `now()` | |
 | `actualizado_en` | timestamptz | no | `now()` | |
+
+### finca
+
+Predio de un productor. Cada lote sale de una finca y toma de ella el municipio de origen de la ruta.
+
+| Campo | Tipo | Nulo | Por defecto | Restricciones |
+|---|---|---|---|---|
+| `id` | uuid | no | `gen_random_uuid()` | PK |
+| `productor_id` | uuid | no | | FK → `productor.id`, `ON DELETE CASCADE` |
+| `nombre` | varchar(80) | no | | longitud ≥ 3; único por productor sin distinguir mayúsculas |
+| `departamento` | varchar(60) | no | `'Casanare'` | |
+| `municipio` | varchar(60) | no | | |
+| `vereda` | varchar(80) | sí | `NULL` | |
+| `ubicacion` | geometry(Point, 4326) | sí | `NULL` | a menos de 120 km de la cabecera del municipio (regla de la API) |
+| `area_ha` | numeric(8,1) | sí | `NULL` | > 0 y ≤ 100 000 |
+| `activo` | boolean | no | `true` | una finca con lotes no se borra: se desactiva |
+| `creado_en`, `actualizado_en` | timestamptz | no | `now()` | |
+
+### bitacora
+
+Registro de cambios: acciones de administración, registros de cuentas y cuentas eliminadas. Nunca guarda contraseñas.
+
+| Campo | Tipo | Nulo | Restricciones |
+|---|---|---|---|
+| `id` | bigserial | no | PK |
+| `usuario_id` | uuid | sí | FK → `usuario.id`, `ON DELETE SET NULL` |
+| `usuario_nombre` | varchar(120) | sí | copia del nombre, para que el registro sobreviva a la cuenta |
+| `accion` | varchar(40) | no | `crear`, `actualizar`, `suspender`, `verificar_documento`, `importar`… |
+| `recurso`, `recurso_id` | varchar | | qué se cambió |
+| `detalle` | jsonb | no | campos cambiados u otros datos (sin valores sensibles) |
+| `creado_en` | timestamptz | no | |
 
 ### lote
 
@@ -212,6 +256,9 @@ Restricciones únicas: `(simulacion_id, destino_id)` y `(simulacion_id, posicion
 |---|---|---|
 | usuario → productor | uno a uno (opcional) | `usuario.productor_id` |
 | productor → lote | uno a muchos | `lote.productor_id` |
+| productor → finca | uno a muchos | `finca.productor_id` |
+| finca → lote | uno a muchos (opcional en lotes antiguos) | `lote.finca_id` (`ON DELETE RESTRICT`) |
+| usuario → bitacora | uno a muchos (opcional) | `bitacora.usuario_id` |
 | lote → simulacion | uno a muchos | `simulacion.lote_id` |
 | destino → precio_mercado | uno a muchos | `precio_mercado.destino_id` |
 | importacion_precio → precio_mercado | uno a muchos (opcional) | `precio_mercado.importacion_id` |
@@ -247,7 +294,10 @@ Restricciones únicas: `(simulacion_id, destino_id)` y `(simulacion_id, posicion
 |---|---|---|
 | `Usuario`, `RegistroEntrada` | usuario | `contrasena` entra y se guarda como `contrasena_hash`; nunca sale |
 | `Productor`, `ProductorEntrada`, `ProductorCambios` | productor | mismos campos |
-| `Lote`, `LoteEntrada`, `LoteCambios` | lote | `peso_total_kg` es de solo lectura (columna generada) |
+| `Lote`, `LoteEntrada`, `LoteCambios` | lote | `peso_total_kg` es de solo lectura (columna generada); `simulaciones` es calculado |
+| `Finca`, `FincaEntrada`, `FincaCambios` | finca | `ubicacion` viaja como GeoJSON; `lotes` es calculado |
+| `EntradaBitacora` | bitacora | mismos campos |
+| `UsuarioDetalle` | usuario + productor | la cuenta con su ficha anidada |
 | `Destino`, `DestinoEntrada`, `DestinoCambios` | destino | `ubicacion` viaja como GeoJSON `Point`; `distancia_lineal_km` es calculado, no columna |
 | `ImportacionPrecios` | importacion_precio | mismos campos |
 | `PrecioMercado`, `PrecioMercadoEntrada`, `PrecioMercadoCambios` | precio_mercado | `antiguedad_dias` es calculado (`current_date − fecha`), no columna; `destino_id` llega por la ruta `/destinos/{destino_id}/precios` |
@@ -270,6 +320,6 @@ Campos del contrato que no son columnas, y dónde viven:
 
 ## Implementación
 
-El esquema real está en [`api/db/migraciones/`](../api/db/migraciones/) (`001_esquema_inicial.sql` y `002_vigencia_e_importacion_precios.sql`) y se aplica con `npm run migrar` (o solo, al arrancar `docker compose up`). Todo cambio futuro va en un archivo nuevo `002_…sql`, nunca editando uno ya aplicado.
+El esquema real está en [`api/db/migraciones/`](../api/db/migraciones/) (`001_esquema_inicial.sql`, `002_vigencia_e_importacion_precios.sql` y `003_cuentas_fincas_bitacora.sql`) y se aplica con `npm run migrar` (o solo, al arrancar `docker compose up`). Todo cambio futuro va en un archivo nuevo `004_…sql`, nunca editando uno ya aplicado.
 
 Los datos de demostración están en [`api/db/semilla/datos.json`](../api/db/semilla/datos.json) y se cargan con `npm run sembrar`.

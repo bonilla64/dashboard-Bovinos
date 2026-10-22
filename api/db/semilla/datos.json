@@ -1,1571 +1,1768 @@
 {
- "descripcion": "Datos de demostración del caso regional (Casanare). Precios estimados calibrados con OPCA-Unicórdoba jun 2026 y la entrevista del 29 sep 2026; merma ajustada según la entrevista (D-13).",
- "origen": {
-  "nombre": "Yopal (centro de acopio)",
-  "ubicacion": {
-   "type": "Point",
-   "coordinates": [
-    -72.3959,
-    5.3371
-   ]
-  }
- },
- "productores": [
-  {
-   "id": "cd3b83ce-114a-5624-bde0-0c482a535db2",
-   "nombre_completo": "Hernando Rincón Barrera",
-   "municipio": "Yopal",
-   "telefono": "3124587710",
-   "correo": "hernando.rincon@correo.co"
-  },
-  {
-   "id": "f20f9d5f-85ca-5681-bbf2-6da289276b37",
-   "nombre_completo": "Luz Marina Cárdenas Pérez",
-   "municipio": "Aguazul",
-   "telefono": "3208841325",
-   "correo": "luz.cardenas@correo.co"
-  },
-  {
-   "id": "0047a00d-c5eb-501f-94a7-b9076480c1e9",
-   "nombre_completo": "Édgar Alfonso Silva Tumay",
-   "municipio": "Paz de Ariporo",
-   "telefono": "3157702498",
-   "correo": "edgar.silva.tumay@correo.co"
-  },
-  {
-   "id": "76f9cfc9-a7d6-5604-afca-f992aff831e2",
-   "nombre_completo": "Rosalba Guío Vargas",
-   "municipio": "Tauramena",
-   "telefono": "3114409862",
-   "correo": "rosalba.guio@correo.co"
-  }
- ],
- "destinos": [
-  {
-   "id": "0e6f6c1a-3b0d-5c8e-9f1a-6d2b7c4e8a10",
-   "nombre": "Venta en finca (comprador en finca)",
-   "tipo": "finca",
-   "municipio": "Origen del lote",
-   "departamento": "Casanare",
-   "ubicacion": {
-    "type": "Point",
-    "coordinates": [
-     -72.3959,
-     5.3371
-    ]
-   },
-   "comision_pct": 0
-  },
-  {
-   "id": "acca0ef8-f855-5505-b81b-25833e792ff1",
-   "nombre": "Subasta Ganadera de Yopal",
-   "tipo": "subasta",
-   "municipio": "Yopal",
-   "departamento": "Casanare",
-   "ubicacion": {
-    "type": "Point",
-    "coordinates": [
-     -72.4102,
-     5.3265
-    ]
-   },
-   "comision_pct": 3.0
-  },
-  {
-   "id": "5a11df78-6998-5089-a775-55e35b205cfe",
-   "nombre": "Subasta Ganadera de Paz de Ariporo",
-   "tipo": "subasta",
-   "municipio": "Paz de Ariporo",
-   "departamento": "Casanare",
-   "ubicacion": {
-    "type": "Point",
-    "coordinates": [
-     -71.8918,
-     5.8811
-    ]
-   },
-   "comision_pct": 3.0
-  },
-  {
-   "id": "a8745d0d-590c-5f1b-b749-bb96c5be4aac",
-   "nombre": "Subasta Ganadera de Villanueva",
-   "tipo": "subasta",
-   "municipio": "Villanueva",
-   "departamento": "Casanare",
-   "ubicacion": {
-    "type": "Point",
-    "coordinates": [
-     -72.9281,
-     4.6094
-    ]
-   },
-   "comision_pct": 3.0
-  },
-  {
-   "id": "6b8211cf-49f9-5354-925a-ec5edb230ee1",
-   "nombre": "Feria de ganado de Villavicencio",
-   "tipo": "feria",
-   "municipio": "Villavicencio",
-   "departamento": "Meta",
-   "ubicacion": {
-    "type": "Point",
-    "coordinates": [
-     -73.6266,
-     4.142
-    ]
-   },
-   "comision_pct": 0
-  },
-  {
-   "id": "d8c5a7c4-888d-56e2-81f2-f8cc588a2834",
-   "nombre": "Plaza de ferias de Sogamoso",
-   "tipo": "feria",
-   "municipio": "Sogamoso",
-   "departamento": "Boyacá",
-   "ubicacion": {
-    "type": "Point",
-    "coordinates": [
-     -72.9339,
-     5.7146
-    ]
-   },
-   "comision_pct": 0
-  },
-  {
-   "id": "3878b38f-1764-5e78-88b0-93461cec83ec",
-   "nombre": "Plaza de ferias de Tunja",
-   "tipo": "feria",
-   "municipio": "Tunja",
-   "departamento": "Boyacá",
-   "ubicacion": {
-    "type": "Point",
-    "coordinates": [
-     -73.3678,
-     5.5353
-    ]
-   },
-   "comision_pct": 0
-  },
-  {
-   "id": "52bbc2f4-901c-5ff0-a08a-5f8f08f91fa1",
-   "nombre": "Frigorífico Guadalupe",
-   "tipo": "frigorifico",
-   "municipio": "Bogotá",
-   "departamento": "Bogotá D.C.",
-   "ubicacion": {
-    "type": "Point",
-    "coordinates": [
-     -74.154,
-     4.587
-    ]
-   },
-   "comision_pct": 0
-  },
-  {
-   "id": "c1b1b4d6-5649-5406-a30d-e47ea1c9ba12",
-   "nombre": "Frigorífico Vijagual",
-   "tipo": "frigorifico",
-   "municipio": "Bucaramanga",
-   "departamento": "Santander",
-   "ubicacion": {
-    "type": "Point",
-    "coordinates": [
-     -73.156,
-     7.0908
-    ]
-   },
-   "comision_pct": 0
-  },
-  {
-   "id": "396e4a75-a43f-5e33-adb3-1d6163e10530",
-   "nombre": "Planta de beneficio de Cúcuta",
-   "tipo": "planta_beneficio",
-   "municipio": "Cúcuta",
-   "departamento": "Norte de Santander",
-   "ubicacion": {
-    "type": "Point",
-    "coordinates": [
-     -72.5078,
-     7.8939
-    ]
-   },
-   "comision_pct": 0
-  },
-  {
-   "id": "15bf935c-dea7-52e8-a312-228463fe5aef",
-   "nombre": "Central Ganadera de Medellín",
-   "tipo": "feria",
-   "municipio": "Medellín",
-   "departamento": "Antioquia",
-   "ubicacion": {
-    "type": "Point",
-    "coordinates": [
-     -75.5636,
-     6.2518
-    ]
-   },
-   "comision_pct": 0
-  }
- ],
- "rutas": [
-  {
-   "id": "7b1e2d3c-4a5b-5c6d-8e7f-9a0b1c2d3e4f",
-   "destino_id": "0e6f6c1a-3b0d-5c8e-9f1a-6d2b7c4e8a10",
-   "distancia_km": 0,
-   "tiempo_horas": 0,
-   "peajes_cop": 0,
-   "factor_dificultad": 1.0,
-   "merma_pct": 0,
-   "geometria": {
-    "type": "LineString",
-    "coordinates": [
-     [
-      -72.3959,
-      5.3371
-     ],
-     [
-      -72.3959,
-      5.3371
-     ]
-    ]
-   },
-   "fuente": "manual"
-  },
-  {
-   "id": "58503f72-33aa-5dc3-a8fa-e39abddb9eea",
-   "destino_id": "acca0ef8-f855-5505-b81b-25833e792ff1",
-   "distancia_km": 9.5,
-   "tiempo_horas": 0.3,
-   "peajes_cop": 0,
-   "factor_dificultad": 1.0,
-   "geometria": {
-    "type": "LineString",
-    "coordinates": [
-     [
-      -72.3959,
-      5.3371
-     ],
-     [
-      -72.4102,
-      5.3265
-     ]
-    ]
-   },
-   "fuente": "manual",
-   "merma_pct": 0.5
-  },
-  {
-   "id": "ae582c3d-af89-5b0d-988d-4ed54fba9b89",
-   "destino_id": "5a11df78-6998-5089-a775-55e35b205cfe",
-   "distancia_km": 128.0,
-   "tiempo_horas": 2.6,
-   "peajes_cop": 19000,
-   "factor_dificultad": 1.05,
-   "geometria": {
-    "type": "LineString",
-    "coordinates": [
-     [
-      -72.3959,
-      5.3371
-     ],
-     [
-      -71.9925,
-      5.7275
-     ],
-     [
-      -71.8918,
-      5.8811
-     ]
-    ]
-   },
-   "fuente": "manual",
-   "merma_pct": 3.0
-  },
-  {
-   "id": "e59208f0-6906-5331-a7eb-bbdaa0a2eb78",
-   "destino_id": "a8745d0d-590c-5f1b-b749-bb96c5be4aac",
-   "distancia_km": 131.0,
-   "tiempo_horas": 2.7,
-   "peajes_cop": 21000,
-   "factor_dificultad": 1.05,
-   "geometria": {
-    "type": "LineString",
-    "coordinates": [
-     [
-      -72.3959,
-      5.3371
-     ],
-     [
-      -72.5471,
-      5.1731
-     ],
-     [
-      -72.8958,
-      4.8766
-     ],
-     [
-      -72.9281,
-      4.6094
-     ]
-    ]
-   },
-   "fuente": "manual",
-   "merma_pct": 3.0
-  },
-  {
-   "id": "5ec2ea46-db9d-525b-8417-462de2b24a6a",
-   "destino_id": "6b8211cf-49f9-5354-925a-ec5edb230ee1",
-   "distancia_km": 266.0,
-   "tiempo_horas": 5.1,
-   "peajes_cop": 85000,
-   "factor_dificultad": 1.1,
-   "geometria": {
-    "type": "LineString",
-    "coordinates": [
-     [
-      -72.3959,
-      5.3371
-     ],
-     [
-      -72.5471,
-      5.1731
-     ],
-     [
-      -72.8958,
-      4.8766
-     ],
-     [
-      -72.9281,
-      4.6094
-     ],
-     [
-      -72.9654,
-      4.5756
-     ],
-     [
-      -73.4868,
-      4.2699
-     ],
-     [
-      -73.6266,
-      4.142
-     ]
-    ]
-   },
-   "fuente": "manual",
-   "merma_pct": 6.5
-  },
-  {
-   "id": "cf10b20d-fd88-529e-a803-62f520737f2e",
-   "destino_id": "d8c5a7c4-888d-56e2-81f2-f8cc588a2834",
-   "distancia_km": 172.0,
-   "tiempo_horas": 4.3,
-   "peajes_cop": 42000,
-   "factor_dificultad": 1.2,
-   "geometria": {
-    "type": "LineString",
-    "coordinates": [
-     [
-      -72.3959,
-      5.3371
-     ],
-     [
-      -72.5471,
-      5.1731
-     ],
-     [
-      -72.7036,
-      5.2934
-     ],
-     [
-      -72.9339,
-      5.7146
-     ]
-    ]
-   },
-   "fuente": "manual",
-   "merma_pct": 5.0
-  },
-  {
-   "id": "48492f5f-f1ef-5799-8dd1-aa2e1598d817",
-   "destino_id": "3878b38f-1764-5e78-88b0-93461cec83ec",
-   "distancia_km": 247.0,
-   "tiempo_horas": 5.9,
-   "peajes_cop": 64000,
-   "factor_dificultad": 1.15,
-   "geometria": {
-    "type": "LineString",
-    "coordinates": [
-     [
-      -72.3959,
-      5.3371
-     ],
-     [
-      -72.5471,
-      5.1731
-     ],
-     [
-      -72.7036,
-      5.2934
-     ],
-     [
-      -72.9339,
-      5.7146
-     ],
-     [
-      -73.0337,
-      5.8267
-     ],
-     [
-      -73.1174,
-      5.7803
-     ],
-     [
-      -73.3678,
-      5.5353
-     ]
-    ]
-   },
-   "fuente": "manual",
-   "merma_pct": 6.5
-  },
-  {
-   "id": "a69ac042-f646-50e2-88bd-b4f76f38c169",
-   "destino_id": "52bbc2f4-901c-5ff0-a08a-5f8f08f91fa1",
-   "distancia_km": 382.0,
-   "tiempo_horas": 8.4,
-   "peajes_cop": 110000,
-   "factor_dificultad": 1.25,
-   "geometria": {
-    "type": "LineString",
-    "coordinates": [
-     [
-      -72.3959,
-      5.3371
-     ],
-     [
-      -72.5471,
-      5.1731
-     ],
-     [
-      -72.8958,
-      4.8766
-     ],
-     [
-      -72.9281,
-      4.6094
-     ],
-     [
-      -72.9654,
-      4.5756
-     ],
-     [
-      -73.4868,
-      4.2699
-     ],
-     [
-      -73.6266,
-      4.142
-     ],
-     [
-      -73.817,
-      4.2175
-     ],
-     [
-      -74.0445,
-      4.4426
-     ],
-     [
-      -74.154,
-      4.587
-     ]
-    ]
-   },
-   "fuente": "manual",
-   "merma_pct": 7.7
-  },
-  {
-   "id": "a94ec479-675c-5807-9e62-d64eda22f8bd",
-   "destino_id": "c1b1b4d6-5649-5406-a30d-e47ea1c9ba12",
-   "distancia_km": 507.0,
-   "tiempo_horas": 11.2,
-   "peajes_cop": 130000,
-   "factor_dificultad": 1.35,
-   "geometria": {
-    "type": "LineString",
-    "coordinates": [
-     [
-      -72.3959,
-      5.3371
-     ],
-     [
-      -72.5471,
-      5.1731
-     ],
-     [
-      -72.7036,
-      5.2934
-     ],
-     [
-      -72.9339,
-      5.7146
-     ],
-     [
-      -73.0337,
-      5.8267
-     ],
-     [
-      -73.1174,
-      5.7803
-     ],
-     [
-      -73.3678,
-      5.5353
-     ],
-     [
-      -73.6153,
-      5.9322
-     ],
-     [
-      -73.134,
-      6.5554
-     ],
-     [
-      -73.156,
-      7.0908
-     ]
-    ]
-   },
-   "fuente": "manual",
-   "merma_pct": 8.5
-  },
-  {
-   "id": "24cc9013-756c-5947-b31d-103ecf0effca",
-   "destino_id": "396e4a75-a43f-5e33-adb3-1d6163e10530",
-   "distancia_km": 603.0,
-   "tiempo_horas": 13.0,
-   "peajes_cop": 150000,
-   "factor_dificultad": 1.35,
-   "geometria": {
-    "type": "LineString",
-    "coordinates": [
-     [
-      -72.3959,
-      5.3371
-     ],
-     [
-      -71.9925,
-      5.7275
-     ],
-     [
-      -71.8918,
-      5.8811
-     ],
-     [
-      -71.7653,
-      6.1547
-     ],
-     [
-      -71.7302,
-      6.4608
-     ],
-     [
-      -71.8747,
-      6.9533
-     ],
-     [
-      -72.648,
-      7.3757
-     ],
-     [
-      -72.5078,
-      7.8939
-     ]
-    ]
-   },
-   "fuente": "manual",
-   "merma_pct": 9.0
-  },
-  {
-   "id": "9e8d2db5-62af-5aff-9e08-4f15f793f377",
-   "destino_id": "15bf935c-dea7-52e8-a312-228463fe5aef",
-   "distancia_km": 791.0,
-   "tiempo_horas": 16.5,
-   "peajes_cop": 210000,
-   "factor_dificultad": 1.4,
-   "geometria": {
-    "type": "LineString",
-    "coordinates": [
-     [
-      -72.3959,
-      5.3371
-     ],
-     [
-      -72.5471,
-      5.1731
-     ],
-     [
-      -72.8958,
-      4.8766
-     ],
-     [
-      -72.9281,
-      4.6094
-     ],
-     [
-      -72.9654,
-      4.5756
-     ],
-     [
-      -73.4868,
-      4.2699
-     ],
-     [
-      -73.6266,
-      4.142
-     ],
-     [
-      -73.817,
-      4.2175
-     ],
-     [
-      -74.0445,
-      4.4426
-     ],
-     [
-      -74.154,
-      4.587
-     ],
-     [
-      -74.4717,
-      5.0127
-     ],
-     [
-      -74.7359,
-      5.208
-     ],
-     [
-      -74.6427,
-      5.8726
-     ],
-     [
-      -75.3737,
-      6.1551
-     ],
-     [
-      -75.5636,
-      6.2518
-     ]
-    ]
-   },
-   "fuente": "manual",
-   "merma_pct": 9.5
-  }
- ],
- "precios": [
-  {
-   "destino_id": "0e6f6c1a-3b0d-5c8e-9f1a-6d2b7c4e8a10",
-   "categoria": "novillo_gordo",
-   "precio_kg_cop": 9850,
-   "fecha": "2026-09-01",
-   "fuente": "Estimación: precio de subasta de Yopal menos 300 COP/kg; el comprador asume el transporte"
-  },
-  {
-   "destino_id": "0e6f6c1a-3b0d-5c8e-9f1a-6d2b7c4e8a10",
-   "categoria": "novillo_gordo",
-   "precio_kg_cop": 9980,
-   "fecha": "2026-09-25",
-   "fuente": "Estimación: precio de subasta de Yopal menos 300 COP/kg; el comprador asume el transporte"
-  },
-  {
-   "destino_id": "0e6f6c1a-3b0d-5c8e-9f1a-6d2b7c4e8a10",
-   "categoria": "novillo_gordo",
-   "precio_kg_cop": 10100,
-   "fecha": "2026-10-09",
-   "fuente": "Estimación: precio de subasta de Yopal menos 300 COP/kg; el comprador asume el transporte"
-  },
-  {
-   "destino_id": "0e6f6c1a-3b0d-5c8e-9f1a-6d2b7c4e8a10",
-   "categoria": "vaca_gorda",
-   "precio_kg_cop": 8440,
-   "fecha": "2026-09-01",
-   "fuente": "Estimación: 86 % del novillo gordo (relación observada en OPCA-Unicórdoba, jun 2026)"
-  },
-  {
-   "destino_id": "0e6f6c1a-3b0d-5c8e-9f1a-6d2b7c4e8a10",
-   "categoria": "vaca_gorda",
-   "precio_kg_cop": 8570,
-   "fecha": "2026-09-25",
-   "fuente": "Estimación: 86 % del novillo gordo (relación observada en OPCA-Unicórdoba, jun 2026)"
-  },
-  {
-   "destino_id": "0e6f6c1a-3b0d-5c8e-9f1a-6d2b7c4e8a10",
-   "categoria": "vaca_gorda",
-   "precio_kg_cop": 8690,
-   "fecha": "2026-10-09",
-   "fuente": "Estimación: 86 % del novillo gordo (relación observada en OPCA-Unicórdoba, jun 2026)"
-  },
-  {
-   "destino_id": "0e6f6c1a-3b0d-5c8e-9f1a-6d2b7c4e8a10",
-   "categoria": "novillo_levante",
-   "precio_kg_cop": 11750,
-   "fecha": "2026-09-01",
-   "fuente": "Entrevista a ganadero de Yopal (29 sep 2026): macho de levante a 12.000 COP/kg en pie"
-  },
-  {
-   "destino_id": "0e6f6c1a-3b0d-5c8e-9f1a-6d2b7c4e8a10",
-   "categoria": "novillo_levante",
-   "precio_kg_cop": 11880,
-   "fecha": "2026-09-25",
-   "fuente": "Entrevista a ganadero de Yopal (29 sep 2026): macho de levante a 12.000 COP/kg en pie"
-  },
-  {
-   "destino_id": "0e6f6c1a-3b0d-5c8e-9f1a-6d2b7c4e8a10",
-   "categoria": "novillo_levante",
-   "precio_kg_cop": 12000,
-   "fecha": "2026-10-09",
-   "fuente": "Entrevista a ganadero de Yopal (29 sep 2026): macho de levante a 12.000 COP/kg en pie"
-  },
-  {
-   "destino_id": "acca0ef8-f855-5505-b81b-25833e792ff1",
-   "categoria": "novillo_gordo",
-   "precio_kg_cop": 10150,
-   "fecha": "2026-09-01",
-   "fuente": "Estimación del equipo calibrada con OPCA-Unicórdoba (jun 2026) y feria de Medellín; pendiente de validar"
-  },
-  {
-   "destino_id": "acca0ef8-f855-5505-b81b-25833e792ff1",
-   "categoria": "novillo_gordo",
-   "precio_kg_cop": 10280,
-   "fecha": "2026-09-25",
-   "fuente": "Estimación del equipo calibrada con OPCA-Unicórdoba (jun 2026) y feria de Medellín; pendiente de validar"
-  },
-  {
-   "destino_id": "acca0ef8-f855-5505-b81b-25833e792ff1",
-   "categoria": "novillo_gordo",
-   "precio_kg_cop": 10400,
-   "fecha": "2026-10-09",
-   "fuente": "Estimación del equipo calibrada con OPCA-Unicórdoba (jun 2026) y feria de Medellín; pendiente de validar"
-  },
-  {
-   "destino_id": "acca0ef8-f855-5505-b81b-25833e792ff1",
-   "categoria": "vaca_gorda",
-   "precio_kg_cop": 8690,
-   "fecha": "2026-09-01",
-   "fuente": "Estimación del equipo calibrada con OPCA-Unicórdoba (jun 2026) y feria de Medellín; pendiente de validar"
-  },
-  {
-   "destino_id": "acca0ef8-f855-5505-b81b-25833e792ff1",
-   "categoria": "vaca_gorda",
-   "precio_kg_cop": 8820,
-   "fecha": "2026-09-25",
-   "fuente": "Estimación del equipo calibrada con OPCA-Unicórdoba (jun 2026) y feria de Medellín; pendiente de validar"
-  },
-  {
-   "destino_id": "acca0ef8-f855-5505-b81b-25833e792ff1",
-   "categoria": "vaca_gorda",
-   "precio_kg_cop": 8940,
-   "fecha": "2026-10-09",
-   "fuente": "Estimación del equipo calibrada con OPCA-Unicórdoba (jun 2026) y feria de Medellín; pendiente de validar"
-  },
-  {
-   "destino_id": "acca0ef8-f855-5505-b81b-25833e792ff1",
-   "categoria": "novillo_levante",
-   "precio_kg_cop": 11950,
-   "fecha": "2026-09-01",
-   "fuente": "Estimación del equipo calibrada con OPCA-Unicórdoba (jun 2026) y feria de Medellín; pendiente de validar"
-  },
-  {
-   "destino_id": "acca0ef8-f855-5505-b81b-25833e792ff1",
-   "categoria": "novillo_levante",
-   "precio_kg_cop": 12080,
-   "fecha": "2026-09-25",
-   "fuente": "Estimación del equipo calibrada con OPCA-Unicórdoba (jun 2026) y feria de Medellín; pendiente de validar"
-  },
-  {
-   "destino_id": "acca0ef8-f855-5505-b81b-25833e792ff1",
-   "categoria": "novillo_levante",
-   "precio_kg_cop": 12200,
-   "fecha": "2026-10-09",
-   "fuente": "Estimación del equipo calibrada con OPCA-Unicórdoba (jun 2026) y feria de Medellín; pendiente de validar"
-  },
-  {
-   "destino_id": "5a11df78-6998-5089-a775-55e35b205cfe",
-   "categoria": "novillo_gordo",
-   "precio_kg_cop": 10000,
-   "fecha": "2026-09-01",
-   "fuente": "Estimación del equipo calibrada con OPCA-Unicórdoba (jun 2026) y feria de Medellín; pendiente de validar"
-  },
-  {
-   "destino_id": "5a11df78-6998-5089-a775-55e35b205cfe",
-   "categoria": "novillo_gordo",
-   "precio_kg_cop": 10130,
-   "fecha": "2026-09-25",
-   "fuente": "Estimación del equipo calibrada con OPCA-Unicórdoba (jun 2026) y feria de Medellín; pendiente de validar"
-  },
-  {
-   "destino_id": "5a11df78-6998-5089-a775-55e35b205cfe",
-   "categoria": "novillo_gordo",
-   "precio_kg_cop": 10250,
-   "fecha": "2026-10-09",
-   "fuente": "Estimación del equipo calibrada con OPCA-Unicórdoba (jun 2026) y feria de Medellín; pendiente de validar"
-  },
-  {
-   "destino_id": "5a11df78-6998-5089-a775-55e35b205cfe",
-   "categoria": "vaca_gorda",
-   "precio_kg_cop": 8570,
-   "fecha": "2026-09-01",
-   "fuente": "Estimación del equipo calibrada con OPCA-Unicórdoba (jun 2026) y feria de Medellín; pendiente de validar"
-  },
-  {
-   "destino_id": "5a11df78-6998-5089-a775-55e35b205cfe",
-   "categoria": "vaca_gorda",
-   "precio_kg_cop": 8700,
-   "fecha": "2026-09-25",
-   "fuente": "Estimación del equipo calibrada con OPCA-Unicórdoba (jun 2026) y feria de Medellín; pendiente de validar"
-  },
-  {
-   "destino_id": "5a11df78-6998-5089-a775-55e35b205cfe",
-   "categoria": "vaca_gorda",
-   "precio_kg_cop": 8820,
-   "fecha": "2026-10-09",
-   "fuente": "Estimación del equipo calibrada con OPCA-Unicórdoba (jun 2026) y feria de Medellín; pendiente de validar"
-  },
-  {
-   "destino_id": "5a11df78-6998-5089-a775-55e35b205cfe",
-   "categoria": "novillo_levante",
-   "precio_kg_cop": 11750,
-   "fecha": "2026-09-01",
-   "fuente": "Estimación del equipo calibrada con OPCA-Unicórdoba (jun 2026) y feria de Medellín; pendiente de validar"
-  },
-  {
-   "destino_id": "5a11df78-6998-5089-a775-55e35b205cfe",
-   "categoria": "novillo_levante",
-   "precio_kg_cop": 11880,
-   "fecha": "2026-09-25",
-   "fuente": "Estimación del equipo calibrada con OPCA-Unicórdoba (jun 2026) y feria de Medellín; pendiente de validar"
-  },
-  {
-   "destino_id": "5a11df78-6998-5089-a775-55e35b205cfe",
-   "categoria": "novillo_levante",
-   "precio_kg_cop": 12000,
-   "fecha": "2026-10-09",
-   "fuente": "Estimación del equipo calibrada con OPCA-Unicórdoba (jun 2026) y feria de Medellín; pendiente de validar"
-  },
-  {
-   "destino_id": "a8745d0d-590c-5f1b-b749-bb96c5be4aac",
-   "categoria": "novillo_gordo",
-   "precio_kg_cop": 10200,
-   "fecha": "2026-09-01",
-   "fuente": "Estimación del equipo calibrada con OPCA-Unicórdoba (jun 2026) y feria de Medellín; pendiente de validar"
-  },
-  {
-   "destino_id": "a8745d0d-590c-5f1b-b749-bb96c5be4aac",
-   "categoria": "novillo_gordo",
-   "precio_kg_cop": 10330,
-   "fecha": "2026-09-25",
-   "fuente": "Estimación del equipo calibrada con OPCA-Unicórdoba (jun 2026) y feria de Medellín; pendiente de validar"
-  },
-  {
-   "destino_id": "a8745d0d-590c-5f1b-b749-bb96c5be4aac",
-   "categoria": "novillo_gordo",
-   "precio_kg_cop": 10450,
-   "fecha": "2026-10-09",
-   "fuente": "Estimación del equipo calibrada con OPCA-Unicórdoba (jun 2026) y feria de Medellín; pendiente de validar"
-  },
-  {
-   "destino_id": "a8745d0d-590c-5f1b-b749-bb96c5be4aac",
-   "categoria": "vaca_gorda",
-   "precio_kg_cop": 8740,
-   "fecha": "2026-09-01",
-   "fuente": "Estimación del equipo calibrada con OPCA-Unicórdoba (jun 2026) y feria de Medellín; pendiente de validar"
-  },
-  {
-   "destino_id": "a8745d0d-590c-5f1b-b749-bb96c5be4aac",
-   "categoria": "vaca_gorda",
-   "precio_kg_cop": 8870,
-   "fecha": "2026-09-25",
-   "fuente": "Estimación del equipo calibrada con OPCA-Unicórdoba (jun 2026) y feria de Medellín; pendiente de validar"
-  },
-  {
-   "destino_id": "a8745d0d-590c-5f1b-b749-bb96c5be4aac",
-   "categoria": "vaca_gorda",
-   "precio_kg_cop": 8990,
-   "fecha": "2026-10-09",
-   "fuente": "Estimación del equipo calibrada con OPCA-Unicórdoba (jun 2026) y feria de Medellín; pendiente de validar"
-  },
-  {
-   "destino_id": "a8745d0d-590c-5f1b-b749-bb96c5be4aac",
-   "categoria": "novillo_levante",
-   "precio_kg_cop": 11850,
-   "fecha": "2026-09-01",
-   "fuente": "Estimación del equipo calibrada con OPCA-Unicórdoba (jun 2026) y feria de Medellín; pendiente de validar"
-  },
-  {
-   "destino_id": "a8745d0d-590c-5f1b-b749-bb96c5be4aac",
-   "categoria": "novillo_levante",
-   "precio_kg_cop": 11980,
-   "fecha": "2026-09-25",
-   "fuente": "Estimación del equipo calibrada con OPCA-Unicórdoba (jun 2026) y feria de Medellín; pendiente de validar"
-  },
-  {
-   "destino_id": "a8745d0d-590c-5f1b-b749-bb96c5be4aac",
-   "categoria": "novillo_levante",
-   "precio_kg_cop": 12100,
-   "fecha": "2026-10-09",
-   "fuente": "Estimación del equipo calibrada con OPCA-Unicórdoba (jun 2026) y feria de Medellín; pendiente de validar"
-  },
-  {
-   "destino_id": "6b8211cf-49f9-5354-925a-ec5edb230ee1",
-   "categoria": "novillo_gordo",
-   "precio_kg_cop": 10350,
-   "fecha": "2026-09-01",
-   "fuente": "Estimación del equipo calibrada con OPCA-Unicórdoba (jun 2026) y feria de Medellín; pendiente de validar"
-  },
-  {
-   "destino_id": "6b8211cf-49f9-5354-925a-ec5edb230ee1",
-   "categoria": "novillo_gordo",
-   "precio_kg_cop": 10480,
-   "fecha": "2026-09-25",
-   "fuente": "Estimación del equipo calibrada con OPCA-Unicórdoba (jun 2026) y feria de Medellín; pendiente de validar"
-  },
-  {
-   "destino_id": "6b8211cf-49f9-5354-925a-ec5edb230ee1",
-   "categoria": "novillo_gordo",
-   "precio_kg_cop": 10600,
-   "fecha": "2026-10-09",
-   "fuente": "Estimación del equipo calibrada con OPCA-Unicórdoba (jun 2026) y feria de Medellín; pendiente de validar"
-  },
-  {
-   "destino_id": "6b8211cf-49f9-5354-925a-ec5edb230ee1",
-   "categoria": "vaca_gorda",
-   "precio_kg_cop": 8870,
-   "fecha": "2026-09-01",
-   "fuente": "Estimación del equipo calibrada con OPCA-Unicórdoba (jun 2026) y feria de Medellín; pendiente de validar"
-  },
-  {
-   "destino_id": "6b8211cf-49f9-5354-925a-ec5edb230ee1",
-   "categoria": "vaca_gorda",
-   "precio_kg_cop": 9000,
-   "fecha": "2026-09-25",
-   "fuente": "Estimación del equipo calibrada con OPCA-Unicórdoba (jun 2026) y feria de Medellín; pendiente de validar"
-  },
-  {
-   "destino_id": "6b8211cf-49f9-5354-925a-ec5edb230ee1",
-   "categoria": "vaca_gorda",
-   "precio_kg_cop": 9120,
-   "fecha": "2026-10-09",
-   "fuente": "Estimación del equipo calibrada con OPCA-Unicórdoba (jun 2026) y feria de Medellín; pendiente de validar"
-  },
-  {
-   "destino_id": "6b8211cf-49f9-5354-925a-ec5edb230ee1",
-   "categoria": "novillo_levante",
-   "precio_kg_cop": 12150,
-   "fecha": "2026-09-01",
-   "fuente": "Estimación del equipo calibrada con OPCA-Unicórdoba (jun 2026) y feria de Medellín; pendiente de validar"
-  },
-  {
-   "destino_id": "6b8211cf-49f9-5354-925a-ec5edb230ee1",
-   "categoria": "novillo_levante",
-   "precio_kg_cop": 12280,
-   "fecha": "2026-09-25",
-   "fuente": "Estimación del equipo calibrada con OPCA-Unicórdoba (jun 2026) y feria de Medellín; pendiente de validar"
-  },
-  {
-   "destino_id": "6b8211cf-49f9-5354-925a-ec5edb230ee1",
-   "categoria": "novillo_levante",
-   "precio_kg_cop": 12400,
-   "fecha": "2026-10-09",
-   "fuente": "Estimación del equipo calibrada con OPCA-Unicórdoba (jun 2026) y feria de Medellín; pendiente de validar"
-  },
-  {
-   "destino_id": "d8c5a7c4-888d-56e2-81f2-f8cc588a2834",
-   "categoria": "novillo_gordo",
-   "precio_kg_cop": 10500,
-   "fecha": "2026-09-01",
-   "fuente": "Estimación del equipo calibrada con OPCA-Unicórdoba (jun 2026) y feria de Medellín; pendiente de validar"
-  },
-  {
-   "destino_id": "d8c5a7c4-888d-56e2-81f2-f8cc588a2834",
-   "categoria": "novillo_gordo",
-   "precio_kg_cop": 10630,
-   "fecha": "2026-09-25",
-   "fuente": "Estimación del equipo calibrada con OPCA-Unicórdoba (jun 2026) y feria de Medellín; pendiente de validar"
-  },
-  {
-   "destino_id": "d8c5a7c4-888d-56e2-81f2-f8cc588a2834",
-   "categoria": "novillo_gordo",
-   "precio_kg_cop": 10750,
-   "fecha": "2026-10-09",
-   "fuente": "Estimación del equipo calibrada con OPCA-Unicórdoba (jun 2026) y feria de Medellín; pendiente de validar"
-  },
-  {
-   "destino_id": "d8c5a7c4-888d-56e2-81f2-f8cc588a2834",
-   "categoria": "vaca_gorda",
-   "precio_kg_cop": 8990,
-   "fecha": "2026-09-01",
-   "fuente": "Estimación del equipo calibrada con OPCA-Unicórdoba (jun 2026) y feria de Medellín; pendiente de validar"
-  },
-  {
-   "destino_id": "d8c5a7c4-888d-56e2-81f2-f8cc588a2834",
-   "categoria": "vaca_gorda",
-   "precio_kg_cop": 9120,
-   "fecha": "2026-09-25",
-   "fuente": "Estimación del equipo calibrada con OPCA-Unicórdoba (jun 2026) y feria de Medellín; pendiente de validar"
-  },
-  {
-   "destino_id": "d8c5a7c4-888d-56e2-81f2-f8cc588a2834",
-   "categoria": "vaca_gorda",
-   "precio_kg_cop": 9240,
-   "fecha": "2026-10-09",
-   "fuente": "Estimación del equipo calibrada con OPCA-Unicórdoba (jun 2026) y feria de Medellín; pendiente de validar"
-  },
-  {
-   "destino_id": "d8c5a7c4-888d-56e2-81f2-f8cc588a2834",
-   "categoria": "novillo_levante",
-   "precio_kg_cop": 12050,
-   "fecha": "2026-09-01",
-   "fuente": "Estimación del equipo calibrada con OPCA-Unicórdoba (jun 2026) y feria de Medellín; pendiente de validar"
-  },
-  {
-   "destino_id": "d8c5a7c4-888d-56e2-81f2-f8cc588a2834",
-   "categoria": "novillo_levante",
-   "precio_kg_cop": 12180,
-   "fecha": "2026-09-25",
-   "fuente": "Estimación del equipo calibrada con OPCA-Unicórdoba (jun 2026) y feria de Medellín; pendiente de validar"
-  },
-  {
-   "destino_id": "d8c5a7c4-888d-56e2-81f2-f8cc588a2834",
-   "categoria": "novillo_levante",
-   "precio_kg_cop": 12300,
-   "fecha": "2026-10-09",
-   "fuente": "Estimación del equipo calibrada con OPCA-Unicórdoba (jun 2026) y feria de Medellín; pendiente de validar"
-  },
-  {
-   "destino_id": "3878b38f-1764-5e78-88b0-93461cec83ec",
-   "categoria": "novillo_gordo",
-   "precio_kg_cop": 10650,
-   "fecha": "2026-09-01",
-   "fuente": "Estimación del equipo calibrada con OPCA-Unicórdoba (jun 2026) y feria de Medellín; pendiente de validar"
-  },
-  {
-   "destino_id": "3878b38f-1764-5e78-88b0-93461cec83ec",
-   "categoria": "novillo_gordo",
-   "precio_kg_cop": 10780,
-   "fecha": "2026-09-25",
-   "fuente": "Estimación del equipo calibrada con OPCA-Unicórdoba (jun 2026) y feria de Medellín; pendiente de validar"
-  },
-  {
-   "destino_id": "3878b38f-1764-5e78-88b0-93461cec83ec",
-   "categoria": "novillo_gordo",
-   "precio_kg_cop": 10900,
-   "fecha": "2026-10-09",
-   "fuente": "Estimación del equipo calibrada con OPCA-Unicórdoba (jun 2026) y feria de Medellín; pendiente de validar"
-  },
-  {
-   "destino_id": "3878b38f-1764-5e78-88b0-93461cec83ec",
-   "categoria": "vaca_gorda",
-   "precio_kg_cop": 9120,
-   "fecha": "2026-09-01",
-   "fuente": "Estimación del equipo calibrada con OPCA-Unicórdoba (jun 2026) y feria de Medellín; pendiente de validar"
-  },
-  {
-   "destino_id": "3878b38f-1764-5e78-88b0-93461cec83ec",
-   "categoria": "vaca_gorda",
-   "precio_kg_cop": 9250,
-   "fecha": "2026-09-25",
-   "fuente": "Estimación del equipo calibrada con OPCA-Unicórdoba (jun 2026) y feria de Medellín; pendiente de validar"
-  },
-  {
-   "destino_id": "3878b38f-1764-5e78-88b0-93461cec83ec",
-   "categoria": "vaca_gorda",
-   "precio_kg_cop": 9370,
-   "fecha": "2026-10-09",
-   "fuente": "Estimación del equipo calibrada con OPCA-Unicórdoba (jun 2026) y feria de Medellín; pendiente de validar"
-  },
-  {
-   "destino_id": "3878b38f-1764-5e78-88b0-93461cec83ec",
-   "categoria": "novillo_levante",
-   "precio_kg_cop": 12100,
-   "fecha": "2026-09-01",
-   "fuente": "Estimación del equipo calibrada con OPCA-Unicórdoba (jun 2026) y feria de Medellín; pendiente de validar"
-  },
-  {
-   "destino_id": "3878b38f-1764-5e78-88b0-93461cec83ec",
-   "categoria": "novillo_levante",
-   "precio_kg_cop": 12230,
-   "fecha": "2026-09-25",
-   "fuente": "Estimación del equipo calibrada con OPCA-Unicórdoba (jun 2026) y feria de Medellín; pendiente de validar"
-  },
-  {
-   "destino_id": "3878b38f-1764-5e78-88b0-93461cec83ec",
-   "categoria": "novillo_levante",
-   "precio_kg_cop": 12350,
-   "fecha": "2026-10-09",
-   "fuente": "Estimación del equipo calibrada con OPCA-Unicórdoba (jun 2026) y feria de Medellín; pendiente de validar"
-  },
-  {
-   "destino_id": "52bbc2f4-901c-5ff0-a08a-5f8f08f91fa1",
-   "categoria": "novillo_gordo",
-   "precio_kg_cop": 11050,
-   "fecha": "2026-09-01",
-   "fuente": "Estimación del equipo calibrada con OPCA-Unicórdoba (jun 2026) y feria de Medellín; pendiente de validar"
-  },
-  {
-   "destino_id": "52bbc2f4-901c-5ff0-a08a-5f8f08f91fa1",
-   "categoria": "novillo_gordo",
-   "precio_kg_cop": 11180,
-   "fecha": "2026-09-25",
-   "fuente": "Estimación del equipo calibrada con OPCA-Unicórdoba (jun 2026) y feria de Medellín; pendiente de validar"
-  },
-  {
-   "destino_id": "52bbc2f4-901c-5ff0-a08a-5f8f08f91fa1",
-   "categoria": "novillo_gordo",
-   "precio_kg_cop": 11300,
-   "fecha": "2026-10-09",
-   "fuente": "Estimación del equipo calibrada con OPCA-Unicórdoba (jun 2026) y feria de Medellín; pendiente de validar"
-  },
-  {
-   "destino_id": "52bbc2f4-901c-5ff0-a08a-5f8f08f91fa1",
-   "categoria": "vaca_gorda",
-   "precio_kg_cop": 9470,
-   "fecha": "2026-09-01",
-   "fuente": "Estimación del equipo calibrada con OPCA-Unicórdoba (jun 2026) y feria de Medellín; pendiente de validar"
-  },
-  {
-   "destino_id": "52bbc2f4-901c-5ff0-a08a-5f8f08f91fa1",
-   "categoria": "vaca_gorda",
-   "precio_kg_cop": 9600,
-   "fecha": "2026-09-25",
-   "fuente": "Estimación del equipo calibrada con OPCA-Unicórdoba (jun 2026) y feria de Medellín; pendiente de validar"
-  },
-  {
-   "destino_id": "52bbc2f4-901c-5ff0-a08a-5f8f08f91fa1",
-   "categoria": "vaca_gorda",
-   "precio_kg_cop": 9720,
-   "fecha": "2026-10-09",
-   "fuente": "Estimación del equipo calibrada con OPCA-Unicórdoba (jun 2026) y feria de Medellín; pendiente de validar"
-  },
-  {
-   "destino_id": "c1b1b4d6-5649-5406-a30d-e47ea1c9ba12",
-   "categoria": "novillo_gordo",
-   "precio_kg_cop": 10850,
-   "fecha": "2026-09-01",
-   "fuente": "Estimación del equipo calibrada con OPCA-Unicórdoba (jun 2026) y feria de Medellín; pendiente de validar"
-  },
-  {
-   "destino_id": "c1b1b4d6-5649-5406-a30d-e47ea1c9ba12",
-   "categoria": "novillo_gordo",
-   "precio_kg_cop": 10980,
-   "fecha": "2026-09-25",
-   "fuente": "Estimación del equipo calibrada con OPCA-Unicórdoba (jun 2026) y feria de Medellín; pendiente de validar"
-  },
-  {
-   "destino_id": "c1b1b4d6-5649-5406-a30d-e47ea1c9ba12",
-   "categoria": "novillo_gordo",
-   "precio_kg_cop": 11100,
-   "fecha": "2026-10-09",
-   "fuente": "Estimación del equipo calibrada con OPCA-Unicórdoba (jun 2026) y feria de Medellín; pendiente de validar"
-  },
-  {
-   "destino_id": "c1b1b4d6-5649-5406-a30d-e47ea1c9ba12",
-   "categoria": "vaca_gorda",
-   "precio_kg_cop": 9300,
-   "fecha": "2026-09-01",
-   "fuente": "Estimación del equipo calibrada con OPCA-Unicórdoba (jun 2026) y feria de Medellín; pendiente de validar"
-  },
-  {
-   "destino_id": "c1b1b4d6-5649-5406-a30d-e47ea1c9ba12",
-   "categoria": "vaca_gorda",
-   "precio_kg_cop": 9430,
-   "fecha": "2026-09-25",
-   "fuente": "Estimación del equipo calibrada con OPCA-Unicórdoba (jun 2026) y feria de Medellín; pendiente de validar"
-  },
-  {
-   "destino_id": "c1b1b4d6-5649-5406-a30d-e47ea1c9ba12",
-   "categoria": "vaca_gorda",
-   "precio_kg_cop": 9550,
-   "fecha": "2026-10-09",
-   "fuente": "Estimación del equipo calibrada con OPCA-Unicórdoba (jun 2026) y feria de Medellín; pendiente de validar"
-  },
-  {
-   "destino_id": "396e4a75-a43f-5e33-adb3-1d6163e10530",
-   "categoria": "novillo_gordo",
-   "precio_kg_cop": 10950,
-   "fecha": "2026-09-01",
-   "fuente": "Estimación del equipo calibrada con OPCA-Unicórdoba (jun 2026) y feria de Medellín; pendiente de validar"
-  },
-  {
-   "destino_id": "396e4a75-a43f-5e33-adb3-1d6163e10530",
-   "categoria": "novillo_gordo",
-   "precio_kg_cop": 11080,
-   "fecha": "2026-09-25",
-   "fuente": "Estimación del equipo calibrada con OPCA-Unicórdoba (jun 2026) y feria de Medellín; pendiente de validar"
-  },
-  {
-   "destino_id": "396e4a75-a43f-5e33-adb3-1d6163e10530",
-   "categoria": "novillo_gordo",
-   "precio_kg_cop": 11200,
-   "fecha": "2026-10-09",
-   "fuente": "Estimación del equipo calibrada con OPCA-Unicórdoba (jun 2026) y feria de Medellín; pendiente de validar"
-  },
-  {
-   "destino_id": "396e4a75-a43f-5e33-adb3-1d6163e10530",
-   "categoria": "vaca_gorda",
-   "precio_kg_cop": 9380,
-   "fecha": "2026-09-01",
-   "fuente": "Estimación del equipo calibrada con OPCA-Unicórdoba (jun 2026) y feria de Medellín; pendiente de validar"
-  },
-  {
-   "destino_id": "396e4a75-a43f-5e33-adb3-1d6163e10530",
-   "categoria": "vaca_gorda",
-   "precio_kg_cop": 9510,
-   "fecha": "2026-09-25",
-   "fuente": "Estimación del equipo calibrada con OPCA-Unicórdoba (jun 2026) y feria de Medellín; pendiente de validar"
-  },
-  {
-   "destino_id": "396e4a75-a43f-5e33-adb3-1d6163e10530",
-   "categoria": "vaca_gorda",
-   "precio_kg_cop": 9630,
-   "fecha": "2026-10-09",
-   "fuente": "Estimación del equipo calibrada con OPCA-Unicórdoba (jun 2026) y feria de Medellín; pendiente de validar"
-  },
-  {
-   "destino_id": "15bf935c-dea7-52e8-a312-228463fe5aef",
-   "categoria": "novillo_gordo",
-   "precio_kg_cop": 11350,
-   "fecha": "2026-09-01",
-   "fuente": "Estimación del equipo calibrada con OPCA-Unicórdoba (jun 2026) y feria de Medellín; pendiente de validar"
-  },
-  {
-   "destino_id": "15bf935c-dea7-52e8-a312-228463fe5aef",
-   "categoria": "novillo_gordo",
-   "precio_kg_cop": 11480,
-   "fecha": "2026-09-25",
-   "fuente": "Estimación del equipo calibrada con OPCA-Unicórdoba (jun 2026) y feria de Medellín; pendiente de validar"
-  },
-  {
-   "destino_id": "15bf935c-dea7-52e8-a312-228463fe5aef",
-   "categoria": "novillo_gordo",
-   "precio_kg_cop": 11600,
-   "fecha": "2026-10-09",
-   "fuente": "Estimación del equipo calibrada con OPCA-Unicórdoba (jun 2026) y feria de Medellín; pendiente de validar"
-  },
-  {
-   "destino_id": "15bf935c-dea7-52e8-a312-228463fe5aef",
-   "categoria": "vaca_gorda",
-   "precio_kg_cop": 9730,
-   "fecha": "2026-09-01",
-   "fuente": "Estimación del equipo calibrada con OPCA-Unicórdoba (jun 2026) y feria de Medellín; pendiente de validar"
-  },
-  {
-   "destino_id": "15bf935c-dea7-52e8-a312-228463fe5aef",
-   "categoria": "vaca_gorda",
-   "precio_kg_cop": 9860,
-   "fecha": "2026-09-25",
-   "fuente": "Estimación del equipo calibrada con OPCA-Unicórdoba (jun 2026) y feria de Medellín; pendiente de validar"
-  },
-  {
-   "destino_id": "15bf935c-dea7-52e8-a312-228463fe5aef",
-   "categoria": "vaca_gorda",
-   "precio_kg_cop": 9980,
-   "fecha": "2026-10-09",
-   "fuente": "Estimación del equipo calibrada con OPCA-Unicórdoba (jun 2026) y feria de Medellín; pendiente de validar"
-  },
-  {
-   "destino_id": "15bf935c-dea7-52e8-a312-228463fe5aef",
-   "categoria": "novillo_levante",
-   "precio_kg_cop": 12350,
-   "fecha": "2026-09-01",
-   "fuente": "Estimación del equipo calibrada con OPCA-Unicórdoba (jun 2026) y feria de Medellín; pendiente de validar"
-  },
-  {
-   "destino_id": "15bf935c-dea7-52e8-a312-228463fe5aef",
-   "categoria": "novillo_levante",
-   "precio_kg_cop": 12480,
-   "fecha": "2026-09-25",
-   "fuente": "Estimación del equipo calibrada con OPCA-Unicórdoba (jun 2026) y feria de Medellín; pendiente de validar"
-  },
-  {
-   "destino_id": "15bf935c-dea7-52e8-a312-228463fe5aef",
-   "categoria": "novillo_levante",
-   "precio_kg_cop": 12600,
-   "fecha": "2026-10-09",
-   "fuente": "Estimación del equipo calibrada con OPCA-Unicórdoba (jun 2026) y feria de Medellín; pendiente de validar"
-  }
- ],
- "lotes": [
-  {
-   "id": "9bad2b17-c8e0-57f7-ac48-2d1cf99ad088",
-   "productor_id": "cd3b83ce-114a-5624-bde0-0c482a535db2",
-   "nombre": "Novillos cebados de septiembre",
-   "cantidad_animales": 30,
-   "peso_promedio_kg": 452.0,
-   "categoria": "novillo_gordo",
-   "raza": "Brahman comercial",
-   "finca": "Finca La Esperanza",
-   "municipio_origen": "Yopal",
-   "estado": "simulado",
-   "creado_en": "2026-09-14T07:30:00-05:00"
-  },
-  {
-   "id": "7461b160-f980-5d27-af1b-7bd4bb9b14f1",
-   "productor_id": "f20f9d5f-85ca-5681-bbf2-6da289276b37",
-   "nombre": "Vacas de descarte primer semestre",
-   "cantidad_animales": 22,
-   "peso_promedio_kg": 420.0,
-   "categoria": "vaca_gorda",
-   "raza": "Brahman x Sanmartinero",
-   "finca": "Hato El Porvenir",
-   "municipio_origen": "Aguazul",
-   "estado": "vendido",
-   "creado_en": "2026-09-15T07:30:00-05:00"
-  },
-  {
-   "id": "bb0ff19b-a1d7-509a-9512-cef23cbde87d",
-   "productor_id": "76f9cfc9-a7d6-5604-afca-f992aff831e2",
-   "nombre": "Novillos de ceba en pradera",
-   "cantidad_animales": 40,
-   "peso_promedio_kg": 470.0,
-   "categoria": "novillo_gordo",
-   "raza": "Brahman rojo",
-   "finca": "Finca Villa Luz",
-   "municipio_origen": "Tauramena",
-   "estado": "simulado",
-   "creado_en": "2026-09-16T07:30:00-05:00"
-  },
-  {
-   "id": "9252d5d1-4051-5095-a93b-ae493636dc2e",
-   "productor_id": "0047a00d-c5eb-501f-94a7-b9076480c1e9",
-   "nombre": "Novillos de sabana inundable",
-   "cantidad_animales": 35,
-   "peso_promedio_kg": 438.0,
-   "categoria": "novillo_gordo",
-   "raza": "Cebú comercial",
-   "finca": "Hato Las Palmeras",
-   "municipio_origen": "Paz de Ariporo",
-   "estado": "simulado",
-   "creado_en": "2026-09-18T07:30:00-05:00"
-  },
-  {
-   "id": "ff58ca0f-4e8c-506e-8288-8ad8f651b1d6",
-   "productor_id": "f20f9d5f-85ca-5681-bbf2-6da289276b37",
-   "nombre": "Vacas gordas para frigorífico",
-   "cantidad_animales": 18,
-   "peso_promedio_kg": 405.0,
-   "categoria": "vaca_gorda",
-   "raza": "Criollo casanareño",
-   "finca": "Finca El Recreo",
-   "municipio_origen": "Maní",
-   "estado": "disponible",
-   "creado_en": "2026-09-21T07:30:00-05:00"
-  },
-  {
-   "id": "d041a25f-0ea4-5ea0-abec-c5c5bdaddb62",
-   "productor_id": "cd3b83ce-114a-5624-bde0-0c482a535db2",
-   "nombre": "Novillos terminados lote 2",
-   "cantidad_animales": 25,
-   "peso_promedio_kg": 462.0,
-   "categoria": "novillo_gordo",
-   "raza": "Gyr x Brahman",
-   "finca": "Finca San José",
-   "municipio_origen": "Nunchía",
-   "estado": "simulado",
-   "creado_en": "2026-09-22T07:30:00-05:00"
-  },
-  {
-   "id": "2e18e5ff-26cc-588b-994b-aee0da7ff865",
-   "productor_id": "0047a00d-c5eb-501f-94a7-b9076480c1e9",
-   "nombre": "Novillos de fin de verano",
-   "cantidad_animales": 45,
-   "peso_promedio_kg": 455.0,
-   "categoria": "novillo_gordo",
-   "raza": "Brahman comercial",
-   "finca": "Hato Santa Rita",
-   "municipio_origen": "Orocué",
-   "estado": "simulado",
-   "creado_en": "2026-09-24T07:30:00-05:00"
-  },
-  {
-   "id": "85c355d5-e5a0-588c-a121-1113771481ce",
-   "productor_id": "76f9cfc9-a7d6-5604-afca-f992aff831e2",
-   "nombre": "Vacas de descarte del hato",
-   "cantidad_animales": 20,
-   "peso_promedio_kg": 432.0,
-   "categoria": "vaca_gorda",
-   "raza": "Brahman x Gyr",
-   "finca": "Finca Los Guaduales",
-   "municipio_origen": "Monterrey",
-   "estado": "disponible",
-   "creado_en": "2026-09-26T07:30:00-05:00"
-  },
-  {
-   "id": "4c1d9e2f-6a7b-5c8d-9e0f-1a2b3c4d5e6f",
-   "productor_id": "cd3b83ce-114a-5624-bde0-0c482a535db2",
-   "nombre": "Machos de levante de octubre",
-   "cantidad_animales": 26,
-   "peso_promedio_kg": 235.0,
-   "categoria": "novillo_levante",
-   "raza": "Brahman comercial",
-   "finca": "Finca La Esperanza",
-   "municipio_origen": "Yopal",
-   "estado": "disponible",
-   "creado_en": "2026-10-05T07:30:00-05:00"
-  }
- ],
- "simulaciones": [
-  {
-   "lote_id": "9bad2b17-c8e0-57f7-ac48-2d1cf99ad088",
-   "flete_km_cop": 6500,
-   "capacidad_camion": 25,
-   "flete_incluye_peajes": false,
-   "destino_ids": [
-    "0e6f6c1a-3b0d-5c8e-9f1a-6d2b7c4e8a10",
-    "acca0ef8-f855-5505-b81b-25833e792ff1",
-    "5a11df78-6998-5089-a775-55e35b205cfe",
-    "a8745d0d-590c-5f1b-b749-bb96c5be4aac",
-    "6b8211cf-49f9-5354-925a-ec5edb230ee1",
-    "d8c5a7c4-888d-56e2-81f2-f8cc588a2834",
-    "3878b38f-1764-5e78-88b0-93461cec83ec",
-    "52bbc2f4-901c-5ff0-a08a-5f8f08f91fa1",
-    "c1b1b4d6-5649-5406-a30d-e47ea1c9ba12",
-    "396e4a75-a43f-5e33-adb3-1d6163e10530",
-    "15bf935c-dea7-52e8-a312-228463fe5aef"
-   ],
-   "creado_en": "2026-09-14T16:20:00-05:00"
-  },
-  {
-   "lote_id": "7461b160-f980-5d27-af1b-7bd4bb9b14f1",
-   "flete_km_cop": 6300,
-   "capacidad_camion": 25,
-   "flete_incluye_peajes": false,
-   "destino_ids": [
-    "0e6f6c1a-3b0d-5c8e-9f1a-6d2b7c4e8a10",
-    "acca0ef8-f855-5505-b81b-25833e792ff1",
-    "a8745d0d-590c-5f1b-b749-bb96c5be4aac",
-    "6b8211cf-49f9-5354-925a-ec5edb230ee1",
-    "d8c5a7c4-888d-56e2-81f2-f8cc588a2834",
-    "52bbc2f4-901c-5ff0-a08a-5f8f08f91fa1"
-   ],
-   "creado_en": "2026-09-15T11:05:00-05:00"
-  },
-  {
-   "lote_id": "bb0ff19b-a1d7-509a-9512-cef23cbde87d",
-   "flete_km_cop": 6800,
-   "capacidad_camion": 25,
-   "flete_incluye_peajes": false,
-   "destino_ids": [
-    "0e6f6c1a-3b0d-5c8e-9f1a-6d2b7c4e8a10",
-    "acca0ef8-f855-5505-b81b-25833e792ff1",
-    "6b8211cf-49f9-5354-925a-ec5edb230ee1",
-    "3878b38f-1764-5e78-88b0-93461cec83ec",
-    "52bbc2f4-901c-5ff0-a08a-5f8f08f91fa1",
-    "c1b1b4d6-5649-5406-a30d-e47ea1c9ba12",
-    "15bf935c-dea7-52e8-a312-228463fe5aef"
-   ],
-   "creado_en": "2026-09-17T09:40:00-05:00"
-  },
-  {
-   "lote_id": "9252d5d1-4051-5095-a93b-ae493636dc2e",
-   "flete_km_cop": 6200,
-   "capacidad_camion": 25,
-   "flete_incluye_peajes": false,
-   "destino_ids": [
-    "0e6f6c1a-3b0d-5c8e-9f1a-6d2b7c4e8a10",
-    "acca0ef8-f855-5505-b81b-25833e792ff1",
-    "5a11df78-6998-5089-a775-55e35b205cfe",
-    "6b8211cf-49f9-5354-925a-ec5edb230ee1",
-    "396e4a75-a43f-5e33-adb3-1d6163e10530"
-   ],
-   "creado_en": "2026-09-18T15:10:00-05:00"
-  },
-  {
-   "lote_id": "9bad2b17-c8e0-57f7-ac48-2d1cf99ad088",
-   "flete_km_cop": 7000,
-   "capacidad_camion": 25,
-   "flete_incluye_peajes": false,
-   "destino_ids": [
-    "0e6f6c1a-3b0d-5c8e-9f1a-6d2b7c4e8a10",
-    "acca0ef8-f855-5505-b81b-25833e792ff1",
-    "6b8211cf-49f9-5354-925a-ec5edb230ee1",
-    "52bbc2f4-901c-5ff0-a08a-5f8f08f91fa1",
-    "15bf935c-dea7-52e8-a312-228463fe5aef"
-   ],
-   "creado_en": "2026-09-19T08:25:00-05:00"
-  },
-  {
-   "lote_id": "d041a25f-0ea4-5ea0-abec-c5c5bdaddb62",
-   "flete_km_cop": 6500,
-   "capacidad_camion": 25,
-   "flete_incluye_peajes": false,
-   "destino_ids": [
-    "0e6f6c1a-3b0d-5c8e-9f1a-6d2b7c4e8a10",
-    "acca0ef8-f855-5505-b81b-25833e792ff1",
-    "d8c5a7c4-888d-56e2-81f2-f8cc588a2834",
-    "3878b38f-1764-5e78-88b0-93461cec83ec",
-    "52bbc2f4-901c-5ff0-a08a-5f8f08f91fa1"
-   ],
-   "creado_en": "2026-09-22T17:45:00-05:00"
-  },
-  {
-   "lote_id": "2e18e5ff-26cc-588b-994b-aee0da7ff865",
-   "flete_km_cop": 6600,
-   "capacidad_camion": 25,
-   "flete_incluye_peajes": false,
-   "destino_ids": [
-    "0e6f6c1a-3b0d-5c8e-9f1a-6d2b7c4e8a10",
-    "acca0ef8-f855-5505-b81b-25833e792ff1",
-    "5a11df78-6998-5089-a775-55e35b205cfe",
-    "a8745d0d-590c-5f1b-b749-bb96c5be4aac",
-    "6b8211cf-49f9-5354-925a-ec5edb230ee1",
-    "d8c5a7c4-888d-56e2-81f2-f8cc588a2834",
-    "3878b38f-1764-5e78-88b0-93461cec83ec",
-    "52bbc2f4-901c-5ff0-a08a-5f8f08f91fa1",
-    "c1b1b4d6-5649-5406-a30d-e47ea1c9ba12",
-    "396e4a75-a43f-5e33-adb3-1d6163e10530",
-    "15bf935c-dea7-52e8-a312-228463fe5aef"
-   ],
-   "creado_en": "2026-09-24T10:30:00-05:00"
-  },
-  {
-   "lote_id": "bb0ff19b-a1d7-509a-9512-cef23cbde87d",
-   "flete_km_cop": 6400,
-   "capacidad_camion": 25,
-   "flete_incluye_peajes": false,
-   "destino_ids": [
-    "6b8211cf-49f9-5354-925a-ec5edb230ee1",
-    "52bbc2f4-901c-5ff0-a08a-5f8f08f91fa1",
-    "15bf935c-dea7-52e8-a312-228463fe5aef"
-   ],
-   "creado_en": "2026-09-25T14:00:00-05:00"
-  },
-  {
-   "lote_id": "85c355d5-e5a0-588c-a121-1113771481ce",
-   "flete_km_cop": 6300,
-   "capacidad_camion": 25,
-   "flete_incluye_peajes": false,
-   "destino_ids": [
-    "0e6f6c1a-3b0d-5c8e-9f1a-6d2b7c4e8a10",
-    "acca0ef8-f855-5505-b81b-25833e792ff1",
-    "a8745d0d-590c-5f1b-b749-bb96c5be4aac",
-    "6b8211cf-49f9-5354-925a-ec5edb230ee1",
-    "52bbc2f4-901c-5ff0-a08a-5f8f08f91fa1"
-   ],
-   "creado_en": "2026-09-27T09:15:00-05:00"
-  },
-  {
-   "lote_id": "4c1d9e2f-6a7b-5c8d-9e0f-1a2b3c4d5e6f",
-   "flete_km_cop": 6500,
-   "capacidad_camion": 25,
-   "flete_incluye_peajes": false,
-   "destino_ids": [
-    "0e6f6c1a-3b0d-5c8e-9f1a-6d2b7c4e8a10",
-    "acca0ef8-f855-5505-b81b-25833e792ff1",
-    "5a11df78-6998-5089-a775-55e35b205cfe",
-    "a8745d0d-590c-5f1b-b749-bb96c5be4aac",
-    "6b8211cf-49f9-5354-925a-ec5edb230ee1"
-   ],
-   "creado_en": "2026-10-06T10:00:00-05:00"
-  }
- ]
+  "descripcion": "Datos de demostración del caso regional (Casanare). Precios estimados calibrados con OPCA-Unicórdoba jun 2026 y la entrevista del 29 sep 2026; merma ajustada según la entrevista (D-13).",
+  "origen": {
+    "nombre": "Yopal (centro de acopio)",
+    "ubicacion": {
+      "type": "Point",
+      "coordinates": [
+        -72.3959,
+        5.3371
+      ]
+    }
+  },
+  "productores": [
+    {
+      "id": "cd3b83ce-114a-5624-bde0-0c482a535db2",
+      "nombre_completo": "Hernando Rincón Barrera",
+      "municipio": "Yopal",
+      "telefono": "3124587710",
+      "correo": "hernando.rincon@correo.co",
+      "tipo_persona": "natural",
+      "tipo_documento": "CC",
+      "numero_documento": "74852369",
+      "representante_legal": null,
+      "departamento": "Casanare",
+      "vereda": "El Charte",
+      "documento_verificado": true
+    },
+    {
+      "id": "f20f9d5f-85ca-5681-bbf2-6da289276b37",
+      "nombre_completo": "Luz Marina Cárdenas Pérez",
+      "municipio": "Aguazul",
+      "telefono": "3208841325",
+      "correo": "luz.cardenas@correo.co",
+      "tipo_persona": "natural",
+      "tipo_documento": "CC",
+      "numero_documento": "47432118",
+      "representante_legal": null,
+      "departamento": "Casanare",
+      "vereda": "Cupiagua",
+      "documento_verificado": true
+    },
+    {
+      "id": "0047a00d-c5eb-501f-94a7-b9076480c1e9",
+      "nombre_completo": "Édgar Alfonso Silva Tumay",
+      "municipio": "Paz de Ariporo",
+      "telefono": "3157702498",
+      "correo": "edgar.silva.tumay@correo.co",
+      "tipo_persona": "natural",
+      "tipo_documento": "CC",
+      "numero_documento": "9654871",
+      "representante_legal": null,
+      "departamento": "Casanare",
+      "vereda": "La Hermosa",
+      "documento_verificado": true
+    },
+    {
+      "id": "76f9cfc9-a7d6-5604-afca-f992aff831e2",
+      "nombre_completo": "Rosalba Guío Vargas",
+      "municipio": "Tauramena",
+      "telefono": "3114409862",
+      "correo": "rosalba.guio@correo.co",
+      "tipo_persona": "natural",
+      "tipo_documento": "CC",
+      "numero_documento": "23687450",
+      "representante_legal": null,
+      "departamento": "Casanare",
+      "vereda": "Iquia",
+      "documento_verificado": true
+    },
+    {
+      "id": "5ef5859d-2b27-51e2-9ad2-6aa6f2b67bee",
+      "nombre_completo": "Agropecuaria La Macolla S.A.S.",
+      "municipio": "Yopal",
+      "telefono": "3208871540",
+      "correo": "contacto@lamacolla.com.co",
+      "tipo_persona": "juridica",
+      "tipo_documento": "NIT",
+      "numero_documento": "900845216-5",
+      "representante_legal": "Camilo Andrés Pérez Niño",
+      "departamento": "Casanare",
+      "vereda": "Morichal",
+      "documento_verificado": false
+    }
+  ],
+  "destinos": [
+    {
+      "id": "0e6f6c1a-3b0d-5c8e-9f1a-6d2b7c4e8a10",
+      "nombre": "Venta en finca (comprador en finca)",
+      "tipo": "finca",
+      "municipio": "Origen del lote",
+      "departamento": "Casanare",
+      "ubicacion": {
+        "type": "Point",
+        "coordinates": [
+          -72.3959,
+          5.3371
+        ]
+      },
+      "comision_pct": 0
+    },
+    {
+      "id": "acca0ef8-f855-5505-b81b-25833e792ff1",
+      "nombre": "Subasta Ganadera de Yopal",
+      "tipo": "subasta",
+      "municipio": "Yopal",
+      "departamento": "Casanare",
+      "ubicacion": {
+        "type": "Point",
+        "coordinates": [
+          -72.4102,
+          5.3265
+        ]
+      },
+      "comision_pct": 3.0
+    },
+    {
+      "id": "5a11df78-6998-5089-a775-55e35b205cfe",
+      "nombre": "Subasta Ganadera de Paz de Ariporo",
+      "tipo": "subasta",
+      "municipio": "Paz de Ariporo",
+      "departamento": "Casanare",
+      "ubicacion": {
+        "type": "Point",
+        "coordinates": [
+          -71.8918,
+          5.8811
+        ]
+      },
+      "comision_pct": 3.0
+    },
+    {
+      "id": "a8745d0d-590c-5f1b-b749-bb96c5be4aac",
+      "nombre": "Subasta Ganadera de Villanueva",
+      "tipo": "subasta",
+      "municipio": "Villanueva",
+      "departamento": "Casanare",
+      "ubicacion": {
+        "type": "Point",
+        "coordinates": [
+          -72.9281,
+          4.6094
+        ]
+      },
+      "comision_pct": 3.0
+    },
+    {
+      "id": "6b8211cf-49f9-5354-925a-ec5edb230ee1",
+      "nombre": "Feria de ganado de Villavicencio",
+      "tipo": "feria",
+      "municipio": "Villavicencio",
+      "departamento": "Meta",
+      "ubicacion": {
+        "type": "Point",
+        "coordinates": [
+          -73.6266,
+          4.142
+        ]
+      },
+      "comision_pct": 0
+    },
+    {
+      "id": "d8c5a7c4-888d-56e2-81f2-f8cc588a2834",
+      "nombre": "Plaza de ferias de Sogamoso",
+      "tipo": "feria",
+      "municipio": "Sogamoso",
+      "departamento": "Boyacá",
+      "ubicacion": {
+        "type": "Point",
+        "coordinates": [
+          -72.9339,
+          5.7146
+        ]
+      },
+      "comision_pct": 0
+    },
+    {
+      "id": "3878b38f-1764-5e78-88b0-93461cec83ec",
+      "nombre": "Plaza de ferias de Tunja",
+      "tipo": "feria",
+      "municipio": "Tunja",
+      "departamento": "Boyacá",
+      "ubicacion": {
+        "type": "Point",
+        "coordinates": [
+          -73.3678,
+          5.5353
+        ]
+      },
+      "comision_pct": 0
+    },
+    {
+      "id": "52bbc2f4-901c-5ff0-a08a-5f8f08f91fa1",
+      "nombre": "Frigorífico Guadalupe",
+      "tipo": "frigorifico",
+      "municipio": "Bogotá",
+      "departamento": "Bogotá D.C.",
+      "ubicacion": {
+        "type": "Point",
+        "coordinates": [
+          -74.154,
+          4.587
+        ]
+      },
+      "comision_pct": 0
+    },
+    {
+      "id": "c1b1b4d6-5649-5406-a30d-e47ea1c9ba12",
+      "nombre": "Frigorífico Vijagual",
+      "tipo": "frigorifico",
+      "municipio": "Bucaramanga",
+      "departamento": "Santander",
+      "ubicacion": {
+        "type": "Point",
+        "coordinates": [
+          -73.156,
+          7.0908
+        ]
+      },
+      "comision_pct": 0
+    },
+    {
+      "id": "396e4a75-a43f-5e33-adb3-1d6163e10530",
+      "nombre": "Planta de beneficio de Cúcuta",
+      "tipo": "planta_beneficio",
+      "municipio": "Cúcuta",
+      "departamento": "Norte de Santander",
+      "ubicacion": {
+        "type": "Point",
+        "coordinates": [
+          -72.5078,
+          7.8939
+        ]
+      },
+      "comision_pct": 0
+    },
+    {
+      "id": "15bf935c-dea7-52e8-a312-228463fe5aef",
+      "nombre": "Central Ganadera de Medellín",
+      "tipo": "feria",
+      "municipio": "Medellín",
+      "departamento": "Antioquia",
+      "ubicacion": {
+        "type": "Point",
+        "coordinates": [
+          -75.5636,
+          6.2518
+        ]
+      },
+      "comision_pct": 0
+    }
+  ],
+  "rutas": [
+    {
+      "id": "7b1e2d3c-4a5b-5c6d-8e7f-9a0b1c2d3e4f",
+      "destino_id": "0e6f6c1a-3b0d-5c8e-9f1a-6d2b7c4e8a10",
+      "distancia_km": 0,
+      "tiempo_horas": 0,
+      "peajes_cop": 0,
+      "factor_dificultad": 1.0,
+      "merma_pct": 0,
+      "geometria": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            -72.3959,
+            5.3371
+          ],
+          [
+            -72.3959,
+            5.3371
+          ]
+        ]
+      },
+      "fuente": "manual"
+    },
+    {
+      "id": "58503f72-33aa-5dc3-a8fa-e39abddb9eea",
+      "destino_id": "acca0ef8-f855-5505-b81b-25833e792ff1",
+      "distancia_km": 9.5,
+      "tiempo_horas": 0.3,
+      "peajes_cop": 0,
+      "factor_dificultad": 1.0,
+      "geometria": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            -72.3959,
+            5.3371
+          ],
+          [
+            -72.4102,
+            5.3265
+          ]
+        ]
+      },
+      "fuente": "manual",
+      "merma_pct": 0.5
+    },
+    {
+      "id": "ae582c3d-af89-5b0d-988d-4ed54fba9b89",
+      "destino_id": "5a11df78-6998-5089-a775-55e35b205cfe",
+      "distancia_km": 128.0,
+      "tiempo_horas": 2.6,
+      "peajes_cop": 19000,
+      "factor_dificultad": 1.05,
+      "geometria": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            -72.3959,
+            5.3371
+          ],
+          [
+            -71.9925,
+            5.7275
+          ],
+          [
+            -71.8918,
+            5.8811
+          ]
+        ]
+      },
+      "fuente": "manual",
+      "merma_pct": 3.0
+    },
+    {
+      "id": "e59208f0-6906-5331-a7eb-bbdaa0a2eb78",
+      "destino_id": "a8745d0d-590c-5f1b-b749-bb96c5be4aac",
+      "distancia_km": 131.0,
+      "tiempo_horas": 2.7,
+      "peajes_cop": 21000,
+      "factor_dificultad": 1.05,
+      "geometria": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            -72.3959,
+            5.3371
+          ],
+          [
+            -72.5471,
+            5.1731
+          ],
+          [
+            -72.8958,
+            4.8766
+          ],
+          [
+            -72.9281,
+            4.6094
+          ]
+        ]
+      },
+      "fuente": "manual",
+      "merma_pct": 3.0
+    },
+    {
+      "id": "5ec2ea46-db9d-525b-8417-462de2b24a6a",
+      "destino_id": "6b8211cf-49f9-5354-925a-ec5edb230ee1",
+      "distancia_km": 266.0,
+      "tiempo_horas": 5.1,
+      "peajes_cop": 85000,
+      "factor_dificultad": 1.1,
+      "geometria": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            -72.3959,
+            5.3371
+          ],
+          [
+            -72.5471,
+            5.1731
+          ],
+          [
+            -72.8958,
+            4.8766
+          ],
+          [
+            -72.9281,
+            4.6094
+          ],
+          [
+            -72.9654,
+            4.5756
+          ],
+          [
+            -73.4868,
+            4.2699
+          ],
+          [
+            -73.6266,
+            4.142
+          ]
+        ]
+      },
+      "fuente": "manual",
+      "merma_pct": 6.5
+    },
+    {
+      "id": "cf10b20d-fd88-529e-a803-62f520737f2e",
+      "destino_id": "d8c5a7c4-888d-56e2-81f2-f8cc588a2834",
+      "distancia_km": 172.0,
+      "tiempo_horas": 4.3,
+      "peajes_cop": 42000,
+      "factor_dificultad": 1.2,
+      "geometria": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            -72.3959,
+            5.3371
+          ],
+          [
+            -72.5471,
+            5.1731
+          ],
+          [
+            -72.7036,
+            5.2934
+          ],
+          [
+            -72.9339,
+            5.7146
+          ]
+        ]
+      },
+      "fuente": "manual",
+      "merma_pct": 5.0
+    },
+    {
+      "id": "48492f5f-f1ef-5799-8dd1-aa2e1598d817",
+      "destino_id": "3878b38f-1764-5e78-88b0-93461cec83ec",
+      "distancia_km": 247.0,
+      "tiempo_horas": 5.9,
+      "peajes_cop": 64000,
+      "factor_dificultad": 1.15,
+      "geometria": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            -72.3959,
+            5.3371
+          ],
+          [
+            -72.5471,
+            5.1731
+          ],
+          [
+            -72.7036,
+            5.2934
+          ],
+          [
+            -72.9339,
+            5.7146
+          ],
+          [
+            -73.0337,
+            5.8267
+          ],
+          [
+            -73.1174,
+            5.7803
+          ],
+          [
+            -73.3678,
+            5.5353
+          ]
+        ]
+      },
+      "fuente": "manual",
+      "merma_pct": 6.5
+    },
+    {
+      "id": "a69ac042-f646-50e2-88bd-b4f76f38c169",
+      "destino_id": "52bbc2f4-901c-5ff0-a08a-5f8f08f91fa1",
+      "distancia_km": 382.0,
+      "tiempo_horas": 8.4,
+      "peajes_cop": 110000,
+      "factor_dificultad": 1.25,
+      "geometria": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            -72.3959,
+            5.3371
+          ],
+          [
+            -72.5471,
+            5.1731
+          ],
+          [
+            -72.8958,
+            4.8766
+          ],
+          [
+            -72.9281,
+            4.6094
+          ],
+          [
+            -72.9654,
+            4.5756
+          ],
+          [
+            -73.4868,
+            4.2699
+          ],
+          [
+            -73.6266,
+            4.142
+          ],
+          [
+            -73.817,
+            4.2175
+          ],
+          [
+            -74.0445,
+            4.4426
+          ],
+          [
+            -74.154,
+            4.587
+          ]
+        ]
+      },
+      "fuente": "manual",
+      "merma_pct": 7.7
+    },
+    {
+      "id": "a94ec479-675c-5807-9e62-d64eda22f8bd",
+      "destino_id": "c1b1b4d6-5649-5406-a30d-e47ea1c9ba12",
+      "distancia_km": 507.0,
+      "tiempo_horas": 11.2,
+      "peajes_cop": 130000,
+      "factor_dificultad": 1.35,
+      "geometria": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            -72.3959,
+            5.3371
+          ],
+          [
+            -72.5471,
+            5.1731
+          ],
+          [
+            -72.7036,
+            5.2934
+          ],
+          [
+            -72.9339,
+            5.7146
+          ],
+          [
+            -73.0337,
+            5.8267
+          ],
+          [
+            -73.1174,
+            5.7803
+          ],
+          [
+            -73.3678,
+            5.5353
+          ],
+          [
+            -73.6153,
+            5.9322
+          ],
+          [
+            -73.134,
+            6.5554
+          ],
+          [
+            -73.156,
+            7.0908
+          ]
+        ]
+      },
+      "fuente": "manual",
+      "merma_pct": 8.5
+    },
+    {
+      "id": "24cc9013-756c-5947-b31d-103ecf0effca",
+      "destino_id": "396e4a75-a43f-5e33-adb3-1d6163e10530",
+      "distancia_km": 603.0,
+      "tiempo_horas": 13.0,
+      "peajes_cop": 150000,
+      "factor_dificultad": 1.35,
+      "geometria": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            -72.3959,
+            5.3371
+          ],
+          [
+            -71.9925,
+            5.7275
+          ],
+          [
+            -71.8918,
+            5.8811
+          ],
+          [
+            -71.7653,
+            6.1547
+          ],
+          [
+            -71.7302,
+            6.4608
+          ],
+          [
+            -71.8747,
+            6.9533
+          ],
+          [
+            -72.648,
+            7.3757
+          ],
+          [
+            -72.5078,
+            7.8939
+          ]
+        ]
+      },
+      "fuente": "manual",
+      "merma_pct": 9.0
+    },
+    {
+      "id": "9e8d2db5-62af-5aff-9e08-4f15f793f377",
+      "destino_id": "15bf935c-dea7-52e8-a312-228463fe5aef",
+      "distancia_km": 791.0,
+      "tiempo_horas": 16.5,
+      "peajes_cop": 210000,
+      "factor_dificultad": 1.4,
+      "geometria": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            -72.3959,
+            5.3371
+          ],
+          [
+            -72.5471,
+            5.1731
+          ],
+          [
+            -72.8958,
+            4.8766
+          ],
+          [
+            -72.9281,
+            4.6094
+          ],
+          [
+            -72.9654,
+            4.5756
+          ],
+          [
+            -73.4868,
+            4.2699
+          ],
+          [
+            -73.6266,
+            4.142
+          ],
+          [
+            -73.817,
+            4.2175
+          ],
+          [
+            -74.0445,
+            4.4426
+          ],
+          [
+            -74.154,
+            4.587
+          ],
+          [
+            -74.4717,
+            5.0127
+          ],
+          [
+            -74.7359,
+            5.208
+          ],
+          [
+            -74.6427,
+            5.8726
+          ],
+          [
+            -75.3737,
+            6.1551
+          ],
+          [
+            -75.5636,
+            6.2518
+          ]
+        ]
+      },
+      "fuente": "manual",
+      "merma_pct": 9.5
+    }
+  ],
+  "precios": [
+    {
+      "destino_id": "0e6f6c1a-3b0d-5c8e-9f1a-6d2b7c4e8a10",
+      "categoria": "novillo_gordo",
+      "precio_kg_cop": 9850,
+      "fecha": "2026-09-01",
+      "fuente": "Estimación: precio de subasta de Yopal menos 300 COP/kg; el comprador asume el transporte"
+    },
+    {
+      "destino_id": "0e6f6c1a-3b0d-5c8e-9f1a-6d2b7c4e8a10",
+      "categoria": "novillo_gordo",
+      "precio_kg_cop": 9980,
+      "fecha": "2026-09-25",
+      "fuente": "Estimación: precio de subasta de Yopal menos 300 COP/kg; el comprador asume el transporte"
+    },
+    {
+      "destino_id": "0e6f6c1a-3b0d-5c8e-9f1a-6d2b7c4e8a10",
+      "categoria": "novillo_gordo",
+      "precio_kg_cop": 10100,
+      "fecha": "2026-10-09",
+      "fuente": "Estimación: precio de subasta de Yopal menos 300 COP/kg; el comprador asume el transporte"
+    },
+    {
+      "destino_id": "0e6f6c1a-3b0d-5c8e-9f1a-6d2b7c4e8a10",
+      "categoria": "vaca_gorda",
+      "precio_kg_cop": 8440,
+      "fecha": "2026-09-01",
+      "fuente": "Estimación: 86 % del novillo gordo (relación observada en OPCA-Unicórdoba, jun 2026)"
+    },
+    {
+      "destino_id": "0e6f6c1a-3b0d-5c8e-9f1a-6d2b7c4e8a10",
+      "categoria": "vaca_gorda",
+      "precio_kg_cop": 8570,
+      "fecha": "2026-09-25",
+      "fuente": "Estimación: 86 % del novillo gordo (relación observada en OPCA-Unicórdoba, jun 2026)"
+    },
+    {
+      "destino_id": "0e6f6c1a-3b0d-5c8e-9f1a-6d2b7c4e8a10",
+      "categoria": "vaca_gorda",
+      "precio_kg_cop": 8690,
+      "fecha": "2026-10-09",
+      "fuente": "Estimación: 86 % del novillo gordo (relación observada en OPCA-Unicórdoba, jun 2026)"
+    },
+    {
+      "destino_id": "0e6f6c1a-3b0d-5c8e-9f1a-6d2b7c4e8a10",
+      "categoria": "novillo_levante",
+      "precio_kg_cop": 11750,
+      "fecha": "2026-09-01",
+      "fuente": "Entrevista a ganadero de Yopal (29 sep 2026): macho de levante a 12.000 COP/kg en pie"
+    },
+    {
+      "destino_id": "0e6f6c1a-3b0d-5c8e-9f1a-6d2b7c4e8a10",
+      "categoria": "novillo_levante",
+      "precio_kg_cop": 11880,
+      "fecha": "2026-09-25",
+      "fuente": "Entrevista a ganadero de Yopal (29 sep 2026): macho de levante a 12.000 COP/kg en pie"
+    },
+    {
+      "destino_id": "0e6f6c1a-3b0d-5c8e-9f1a-6d2b7c4e8a10",
+      "categoria": "novillo_levante",
+      "precio_kg_cop": 12000,
+      "fecha": "2026-10-09",
+      "fuente": "Entrevista a ganadero de Yopal (29 sep 2026): macho de levante a 12.000 COP/kg en pie"
+    },
+    {
+      "destino_id": "acca0ef8-f855-5505-b81b-25833e792ff1",
+      "categoria": "novillo_gordo",
+      "precio_kg_cop": 10150,
+      "fecha": "2026-09-01",
+      "fuente": "Estimación del equipo calibrada con OPCA-Unicórdoba (jun 2026) y feria de Medellín; pendiente de validar"
+    },
+    {
+      "destino_id": "acca0ef8-f855-5505-b81b-25833e792ff1",
+      "categoria": "novillo_gordo",
+      "precio_kg_cop": 10280,
+      "fecha": "2026-09-25",
+      "fuente": "Estimación del equipo calibrada con OPCA-Unicórdoba (jun 2026) y feria de Medellín; pendiente de validar"
+    },
+    {
+      "destino_id": "acca0ef8-f855-5505-b81b-25833e792ff1",
+      "categoria": "novillo_gordo",
+      "precio_kg_cop": 10400,
+      "fecha": "2026-10-09",
+      "fuente": "Estimación del equipo calibrada con OPCA-Unicórdoba (jun 2026) y feria de Medellín; pendiente de validar"
+    },
+    {
+      "destino_id": "acca0ef8-f855-5505-b81b-25833e792ff1",
+      "categoria": "vaca_gorda",
+      "precio_kg_cop": 8690,
+      "fecha": "2026-09-01",
+      "fuente": "Estimación del equipo calibrada con OPCA-Unicórdoba (jun 2026) y feria de Medellín; pendiente de validar"
+    },
+    {
+      "destino_id": "acca0ef8-f855-5505-b81b-25833e792ff1",
+      "categoria": "vaca_gorda",
+      "precio_kg_cop": 8820,
+      "fecha": "2026-09-25",
+      "fuente": "Estimación del equipo calibrada con OPCA-Unicórdoba (jun 2026) y feria de Medellín; pendiente de validar"
+    },
+    {
+      "destino_id": "acca0ef8-f855-5505-b81b-25833e792ff1",
+      "categoria": "vaca_gorda",
+      "precio_kg_cop": 8940,
+      "fecha": "2026-10-09",
+      "fuente": "Estimación del equipo calibrada con OPCA-Unicórdoba (jun 2026) y feria de Medellín; pendiente de validar"
+    },
+    {
+      "destino_id": "acca0ef8-f855-5505-b81b-25833e792ff1",
+      "categoria": "novillo_levante",
+      "precio_kg_cop": 11950,
+      "fecha": "2026-09-01",
+      "fuente": "Estimación del equipo calibrada con OPCA-Unicórdoba (jun 2026) y feria de Medellín; pendiente de validar"
+    },
+    {
+      "destino_id": "acca0ef8-f855-5505-b81b-25833e792ff1",
+      "categoria": "novillo_levante",
+      "precio_kg_cop": 12080,
+      "fecha": "2026-09-25",
+      "fuente": "Estimación del equipo calibrada con OPCA-Unicórdoba (jun 2026) y feria de Medellín; pendiente de validar"
+    },
+    {
+      "destino_id": "acca0ef8-f855-5505-b81b-25833e792ff1",
+      "categoria": "novillo_levante",
+      "precio_kg_cop": 12200,
+      "fecha": "2026-10-09",
+      "fuente": "Estimación del equipo calibrada con OPCA-Unicórdoba (jun 2026) y feria de Medellín; pendiente de validar"
+    },
+    {
+      "destino_id": "5a11df78-6998-5089-a775-55e35b205cfe",
+      "categoria": "novillo_gordo",
+      "precio_kg_cop": 10000,
+      "fecha": "2026-09-01",
+      "fuente": "Estimación del equipo calibrada con OPCA-Unicórdoba (jun 2026) y feria de Medellín; pendiente de validar"
+    },
+    {
+      "destino_id": "5a11df78-6998-5089-a775-55e35b205cfe",
+      "categoria": "novillo_gordo",
+      "precio_kg_cop": 10130,
+      "fecha": "2026-09-25",
+      "fuente": "Estimación del equipo calibrada con OPCA-Unicórdoba (jun 2026) y feria de Medellín; pendiente de validar"
+    },
+    {
+      "destino_id": "5a11df78-6998-5089-a775-55e35b205cfe",
+      "categoria": "novillo_gordo",
+      "precio_kg_cop": 10250,
+      "fecha": "2026-10-09",
+      "fuente": "Estimación del equipo calibrada con OPCA-Unicórdoba (jun 2026) y feria de Medellín; pendiente de validar"
+    },
+    {
+      "destino_id": "5a11df78-6998-5089-a775-55e35b205cfe",
+      "categoria": "vaca_gorda",
+      "precio_kg_cop": 8570,
+      "fecha": "2026-09-01",
+      "fuente": "Estimación del equipo calibrada con OPCA-Unicórdoba (jun 2026) y feria de Medellín; pendiente de validar"
+    },
+    {
+      "destino_id": "5a11df78-6998-5089-a775-55e35b205cfe",
+      "categoria": "vaca_gorda",
+      "precio_kg_cop": 8700,
+      "fecha": "2026-09-25",
+      "fuente": "Estimación del equipo calibrada con OPCA-Unicórdoba (jun 2026) y feria de Medellín; pendiente de validar"
+    },
+    {
+      "destino_id": "5a11df78-6998-5089-a775-55e35b205cfe",
+      "categoria": "vaca_gorda",
+      "precio_kg_cop": 8820,
+      "fecha": "2026-10-09",
+      "fuente": "Estimación del equipo calibrada con OPCA-Unicórdoba (jun 2026) y feria de Medellín; pendiente de validar"
+    },
+    {
+      "destino_id": "5a11df78-6998-5089-a775-55e35b205cfe",
+      "categoria": "novillo_levante",
+      "precio_kg_cop": 11750,
+      "fecha": "2026-09-01",
+      "fuente": "Estimación del equipo calibrada con OPCA-Unicórdoba (jun 2026) y feria de Medellín; pendiente de validar"
+    },
+    {
+      "destino_id": "5a11df78-6998-5089-a775-55e35b205cfe",
+      "categoria": "novillo_levante",
+      "precio_kg_cop": 11880,
+      "fecha": "2026-09-25",
+      "fuente": "Estimación del equipo calibrada con OPCA-Unicórdoba (jun 2026) y feria de Medellín; pendiente de validar"
+    },
+    {
+      "destino_id": "5a11df78-6998-5089-a775-55e35b205cfe",
+      "categoria": "novillo_levante",
+      "precio_kg_cop": 12000,
+      "fecha": "2026-10-09",
+      "fuente": "Estimación del equipo calibrada con OPCA-Unicórdoba (jun 2026) y feria de Medellín; pendiente de validar"
+    },
+    {
+      "destino_id": "a8745d0d-590c-5f1b-b749-bb96c5be4aac",
+      "categoria": "novillo_gordo",
+      "precio_kg_cop": 10200,
+      "fecha": "2026-09-01",
+      "fuente": "Estimación del equipo calibrada con OPCA-Unicórdoba (jun 2026) y feria de Medellín; pendiente de validar"
+    },
+    {
+      "destino_id": "a8745d0d-590c-5f1b-b749-bb96c5be4aac",
+      "categoria": "novillo_gordo",
+      "precio_kg_cop": 10330,
+      "fecha": "2026-09-25",
+      "fuente": "Estimación del equipo calibrada con OPCA-Unicórdoba (jun 2026) y feria de Medellín; pendiente de validar"
+    },
+    {
+      "destino_id": "a8745d0d-590c-5f1b-b749-bb96c5be4aac",
+      "categoria": "novillo_gordo",
+      "precio_kg_cop": 10450,
+      "fecha": "2026-10-09",
+      "fuente": "Estimación del equipo calibrada con OPCA-Unicórdoba (jun 2026) y feria de Medellín; pendiente de validar"
+    },
+    {
+      "destino_id": "a8745d0d-590c-5f1b-b749-bb96c5be4aac",
+      "categoria": "vaca_gorda",
+      "precio_kg_cop": 8740,
+      "fecha": "2026-09-01",
+      "fuente": "Estimación del equipo calibrada con OPCA-Unicórdoba (jun 2026) y feria de Medellín; pendiente de validar"
+    },
+    {
+      "destino_id": "a8745d0d-590c-5f1b-b749-bb96c5be4aac",
+      "categoria": "vaca_gorda",
+      "precio_kg_cop": 8870,
+      "fecha": "2026-09-25",
+      "fuente": "Estimación del equipo calibrada con OPCA-Unicórdoba (jun 2026) y feria de Medellín; pendiente de validar"
+    },
+    {
+      "destino_id": "a8745d0d-590c-5f1b-b749-bb96c5be4aac",
+      "categoria": "vaca_gorda",
+      "precio_kg_cop": 8990,
+      "fecha": "2026-10-09",
+      "fuente": "Estimación del equipo calibrada con OPCA-Unicórdoba (jun 2026) y feria de Medellín; pendiente de validar"
+    },
+    {
+      "destino_id": "a8745d0d-590c-5f1b-b749-bb96c5be4aac",
+      "categoria": "novillo_levante",
+      "precio_kg_cop": 11850,
+      "fecha": "2026-09-01",
+      "fuente": "Estimación del equipo calibrada con OPCA-Unicórdoba (jun 2026) y feria de Medellín; pendiente de validar"
+    },
+    {
+      "destino_id": "a8745d0d-590c-5f1b-b749-bb96c5be4aac",
+      "categoria": "novillo_levante",
+      "precio_kg_cop": 11980,
+      "fecha": "2026-09-25",
+      "fuente": "Estimación del equipo calibrada con OPCA-Unicórdoba (jun 2026) y feria de Medellín; pendiente de validar"
+    },
+    {
+      "destino_id": "a8745d0d-590c-5f1b-b749-bb96c5be4aac",
+      "categoria": "novillo_levante",
+      "precio_kg_cop": 12100,
+      "fecha": "2026-10-09",
+      "fuente": "Estimación del equipo calibrada con OPCA-Unicórdoba (jun 2026) y feria de Medellín; pendiente de validar"
+    },
+    {
+      "destino_id": "6b8211cf-49f9-5354-925a-ec5edb230ee1",
+      "categoria": "novillo_gordo",
+      "precio_kg_cop": 10350,
+      "fecha": "2026-09-01",
+      "fuente": "Estimación del equipo calibrada con OPCA-Unicórdoba (jun 2026) y feria de Medellín; pendiente de validar"
+    },
+    {
+      "destino_id": "6b8211cf-49f9-5354-925a-ec5edb230ee1",
+      "categoria": "novillo_gordo",
+      "precio_kg_cop": 10480,
+      "fecha": "2026-09-25",
+      "fuente": "Estimación del equipo calibrada con OPCA-Unicórdoba (jun 2026) y feria de Medellín; pendiente de validar"
+    },
+    {
+      "destino_id": "6b8211cf-49f9-5354-925a-ec5edb230ee1",
+      "categoria": "novillo_gordo",
+      "precio_kg_cop": 10600,
+      "fecha": "2026-10-09",
+      "fuente": "Estimación del equipo calibrada con OPCA-Unicórdoba (jun 2026) y feria de Medellín; pendiente de validar"
+    },
+    {
+      "destino_id": "6b8211cf-49f9-5354-925a-ec5edb230ee1",
+      "categoria": "vaca_gorda",
+      "precio_kg_cop": 8870,
+      "fecha": "2026-09-01",
+      "fuente": "Estimación del equipo calibrada con OPCA-Unicórdoba (jun 2026) y feria de Medellín; pendiente de validar"
+    },
+    {
+      "destino_id": "6b8211cf-49f9-5354-925a-ec5edb230ee1",
+      "categoria": "vaca_gorda",
+      "precio_kg_cop": 9000,
+      "fecha": "2026-09-25",
+      "fuente": "Estimación del equipo calibrada con OPCA-Unicórdoba (jun 2026) y feria de Medellín; pendiente de validar"
+    },
+    {
+      "destino_id": "6b8211cf-49f9-5354-925a-ec5edb230ee1",
+      "categoria": "vaca_gorda",
+      "precio_kg_cop": 9120,
+      "fecha": "2026-10-09",
+      "fuente": "Estimación del equipo calibrada con OPCA-Unicórdoba (jun 2026) y feria de Medellín; pendiente de validar"
+    },
+    {
+      "destino_id": "6b8211cf-49f9-5354-925a-ec5edb230ee1",
+      "categoria": "novillo_levante",
+      "precio_kg_cop": 12150,
+      "fecha": "2026-09-01",
+      "fuente": "Estimación del equipo calibrada con OPCA-Unicórdoba (jun 2026) y feria de Medellín; pendiente de validar"
+    },
+    {
+      "destino_id": "6b8211cf-49f9-5354-925a-ec5edb230ee1",
+      "categoria": "novillo_levante",
+      "precio_kg_cop": 12280,
+      "fecha": "2026-09-25",
+      "fuente": "Estimación del equipo calibrada con OPCA-Unicórdoba (jun 2026) y feria de Medellín; pendiente de validar"
+    },
+    {
+      "destino_id": "6b8211cf-49f9-5354-925a-ec5edb230ee1",
+      "categoria": "novillo_levante",
+      "precio_kg_cop": 12400,
+      "fecha": "2026-10-09",
+      "fuente": "Estimación del equipo calibrada con OPCA-Unicórdoba (jun 2026) y feria de Medellín; pendiente de validar"
+    },
+    {
+      "destino_id": "d8c5a7c4-888d-56e2-81f2-f8cc588a2834",
+      "categoria": "novillo_gordo",
+      "precio_kg_cop": 10500,
+      "fecha": "2026-09-01",
+      "fuente": "Estimación del equipo calibrada con OPCA-Unicórdoba (jun 2026) y feria de Medellín; pendiente de validar"
+    },
+    {
+      "destino_id": "d8c5a7c4-888d-56e2-81f2-f8cc588a2834",
+      "categoria": "novillo_gordo",
+      "precio_kg_cop": 10630,
+      "fecha": "2026-09-25",
+      "fuente": "Estimación del equipo calibrada con OPCA-Unicórdoba (jun 2026) y feria de Medellín; pendiente de validar"
+    },
+    {
+      "destino_id": "d8c5a7c4-888d-56e2-81f2-f8cc588a2834",
+      "categoria": "novillo_gordo",
+      "precio_kg_cop": 10750,
+      "fecha": "2026-10-09",
+      "fuente": "Estimación del equipo calibrada con OPCA-Unicórdoba (jun 2026) y feria de Medellín; pendiente de validar"
+    },
+    {
+      "destino_id": "d8c5a7c4-888d-56e2-81f2-f8cc588a2834",
+      "categoria": "vaca_gorda",
+      "precio_kg_cop": 8990,
+      "fecha": "2026-09-01",
+      "fuente": "Estimación del equipo calibrada con OPCA-Unicórdoba (jun 2026) y feria de Medellín; pendiente de validar"
+    },
+    {
+      "destino_id": "d8c5a7c4-888d-56e2-81f2-f8cc588a2834",
+      "categoria": "vaca_gorda",
+      "precio_kg_cop": 9120,
+      "fecha": "2026-09-25",
+      "fuente": "Estimación del equipo calibrada con OPCA-Unicórdoba (jun 2026) y feria de Medellín; pendiente de validar"
+    },
+    {
+      "destino_id": "d8c5a7c4-888d-56e2-81f2-f8cc588a2834",
+      "categoria": "vaca_gorda",
+      "precio_kg_cop": 9240,
+      "fecha": "2026-10-09",
+      "fuente": "Estimación del equipo calibrada con OPCA-Unicórdoba (jun 2026) y feria de Medellín; pendiente de validar"
+    },
+    {
+      "destino_id": "d8c5a7c4-888d-56e2-81f2-f8cc588a2834",
+      "categoria": "novillo_levante",
+      "precio_kg_cop": 12050,
+      "fecha": "2026-09-01",
+      "fuente": "Estimación del equipo calibrada con OPCA-Unicórdoba (jun 2026) y feria de Medellín; pendiente de validar"
+    },
+    {
+      "destino_id": "d8c5a7c4-888d-56e2-81f2-f8cc588a2834",
+      "categoria": "novillo_levante",
+      "precio_kg_cop": 12180,
+      "fecha": "2026-09-25",
+      "fuente": "Estimación del equipo calibrada con OPCA-Unicórdoba (jun 2026) y feria de Medellín; pendiente de validar"
+    },
+    {
+      "destino_id": "d8c5a7c4-888d-56e2-81f2-f8cc588a2834",
+      "categoria": "novillo_levante",
+      "precio_kg_cop": 12300,
+      "fecha": "2026-10-09",
+      "fuente": "Estimación del equipo calibrada con OPCA-Unicórdoba (jun 2026) y feria de Medellín; pendiente de validar"
+    },
+    {
+      "destino_id": "3878b38f-1764-5e78-88b0-93461cec83ec",
+      "categoria": "novillo_gordo",
+      "precio_kg_cop": 10650,
+      "fecha": "2026-09-01",
+      "fuente": "Estimación del equipo calibrada con OPCA-Unicórdoba (jun 2026) y feria de Medellín; pendiente de validar"
+    },
+    {
+      "destino_id": "3878b38f-1764-5e78-88b0-93461cec83ec",
+      "categoria": "novillo_gordo",
+      "precio_kg_cop": 10780,
+      "fecha": "2026-09-25",
+      "fuente": "Estimación del equipo calibrada con OPCA-Unicórdoba (jun 2026) y feria de Medellín; pendiente de validar"
+    },
+    {
+      "destino_id": "3878b38f-1764-5e78-88b0-93461cec83ec",
+      "categoria": "novillo_gordo",
+      "precio_kg_cop": 10900,
+      "fecha": "2026-10-09",
+      "fuente": "Estimación del equipo calibrada con OPCA-Unicórdoba (jun 2026) y feria de Medellín; pendiente de validar"
+    },
+    {
+      "destino_id": "3878b38f-1764-5e78-88b0-93461cec83ec",
+      "categoria": "vaca_gorda",
+      "precio_kg_cop": 9120,
+      "fecha": "2026-09-01",
+      "fuente": "Estimación del equipo calibrada con OPCA-Unicórdoba (jun 2026) y feria de Medellín; pendiente de validar"
+    },
+    {
+      "destino_id": "3878b38f-1764-5e78-88b0-93461cec83ec",
+      "categoria": "vaca_gorda",
+      "precio_kg_cop": 9250,
+      "fecha": "2026-09-25",
+      "fuente": "Estimación del equipo calibrada con OPCA-Unicórdoba (jun 2026) y feria de Medellín; pendiente de validar"
+    },
+    {
+      "destino_id": "3878b38f-1764-5e78-88b0-93461cec83ec",
+      "categoria": "vaca_gorda",
+      "precio_kg_cop": 9370,
+      "fecha": "2026-10-09",
+      "fuente": "Estimación del equipo calibrada con OPCA-Unicórdoba (jun 2026) y feria de Medellín; pendiente de validar"
+    },
+    {
+      "destino_id": "3878b38f-1764-5e78-88b0-93461cec83ec",
+      "categoria": "novillo_levante",
+      "precio_kg_cop": 12100,
+      "fecha": "2026-09-01",
+      "fuente": "Estimación del equipo calibrada con OPCA-Unicórdoba (jun 2026) y feria de Medellín; pendiente de validar"
+    },
+    {
+      "destino_id": "3878b38f-1764-5e78-88b0-93461cec83ec",
+      "categoria": "novillo_levante",
+      "precio_kg_cop": 12230,
+      "fecha": "2026-09-25",
+      "fuente": "Estimación del equipo calibrada con OPCA-Unicórdoba (jun 2026) y feria de Medellín; pendiente de validar"
+    },
+    {
+      "destino_id": "3878b38f-1764-5e78-88b0-93461cec83ec",
+      "categoria": "novillo_levante",
+      "precio_kg_cop": 12350,
+      "fecha": "2026-10-09",
+      "fuente": "Estimación del equipo calibrada con OPCA-Unicórdoba (jun 2026) y feria de Medellín; pendiente de validar"
+    },
+    {
+      "destino_id": "52bbc2f4-901c-5ff0-a08a-5f8f08f91fa1",
+      "categoria": "novillo_gordo",
+      "precio_kg_cop": 11050,
+      "fecha": "2026-09-01",
+      "fuente": "Estimación del equipo calibrada con OPCA-Unicórdoba (jun 2026) y feria de Medellín; pendiente de validar"
+    },
+    {
+      "destino_id": "52bbc2f4-901c-5ff0-a08a-5f8f08f91fa1",
+      "categoria": "novillo_gordo",
+      "precio_kg_cop": 11180,
+      "fecha": "2026-09-25",
+      "fuente": "Estimación del equipo calibrada con OPCA-Unicórdoba (jun 2026) y feria de Medellín; pendiente de validar"
+    },
+    {
+      "destino_id": "52bbc2f4-901c-5ff0-a08a-5f8f08f91fa1",
+      "categoria": "novillo_gordo",
+      "precio_kg_cop": 11300,
+      "fecha": "2026-10-09",
+      "fuente": "Estimación del equipo calibrada con OPCA-Unicórdoba (jun 2026) y feria de Medellín; pendiente de validar"
+    },
+    {
+      "destino_id": "52bbc2f4-901c-5ff0-a08a-5f8f08f91fa1",
+      "categoria": "vaca_gorda",
+      "precio_kg_cop": 9470,
+      "fecha": "2026-09-01",
+      "fuente": "Estimación del equipo calibrada con OPCA-Unicórdoba (jun 2026) y feria de Medellín; pendiente de validar"
+    },
+    {
+      "destino_id": "52bbc2f4-901c-5ff0-a08a-5f8f08f91fa1",
+      "categoria": "vaca_gorda",
+      "precio_kg_cop": 9600,
+      "fecha": "2026-09-25",
+      "fuente": "Estimación del equipo calibrada con OPCA-Unicórdoba (jun 2026) y feria de Medellín; pendiente de validar"
+    },
+    {
+      "destino_id": "52bbc2f4-901c-5ff0-a08a-5f8f08f91fa1",
+      "categoria": "vaca_gorda",
+      "precio_kg_cop": 9720,
+      "fecha": "2026-10-09",
+      "fuente": "Estimación del equipo calibrada con OPCA-Unicórdoba (jun 2026) y feria de Medellín; pendiente de validar"
+    },
+    {
+      "destino_id": "c1b1b4d6-5649-5406-a30d-e47ea1c9ba12",
+      "categoria": "novillo_gordo",
+      "precio_kg_cop": 10850,
+      "fecha": "2026-09-01",
+      "fuente": "Estimación del equipo calibrada con OPCA-Unicórdoba (jun 2026) y feria de Medellín; pendiente de validar"
+    },
+    {
+      "destino_id": "c1b1b4d6-5649-5406-a30d-e47ea1c9ba12",
+      "categoria": "novillo_gordo",
+      "precio_kg_cop": 10980,
+      "fecha": "2026-09-25",
+      "fuente": "Estimación del equipo calibrada con OPCA-Unicórdoba (jun 2026) y feria de Medellín; pendiente de validar"
+    },
+    {
+      "destino_id": "c1b1b4d6-5649-5406-a30d-e47ea1c9ba12",
+      "categoria": "novillo_gordo",
+      "precio_kg_cop": 11100,
+      "fecha": "2026-10-09",
+      "fuente": "Estimación del equipo calibrada con OPCA-Unicórdoba (jun 2026) y feria de Medellín; pendiente de validar"
+    },
+    {
+      "destino_id": "c1b1b4d6-5649-5406-a30d-e47ea1c9ba12",
+      "categoria": "vaca_gorda",
+      "precio_kg_cop": 9300,
+      "fecha": "2026-09-01",
+      "fuente": "Estimación del equipo calibrada con OPCA-Unicórdoba (jun 2026) y feria de Medellín; pendiente de validar"
+    },
+    {
+      "destino_id": "c1b1b4d6-5649-5406-a30d-e47ea1c9ba12",
+      "categoria": "vaca_gorda",
+      "precio_kg_cop": 9430,
+      "fecha": "2026-09-25",
+      "fuente": "Estimación del equipo calibrada con OPCA-Unicórdoba (jun 2026) y feria de Medellín; pendiente de validar"
+    },
+    {
+      "destino_id": "c1b1b4d6-5649-5406-a30d-e47ea1c9ba12",
+      "categoria": "vaca_gorda",
+      "precio_kg_cop": 9550,
+      "fecha": "2026-10-09",
+      "fuente": "Estimación del equipo calibrada con OPCA-Unicórdoba (jun 2026) y feria de Medellín; pendiente de validar"
+    },
+    {
+      "destino_id": "396e4a75-a43f-5e33-adb3-1d6163e10530",
+      "categoria": "novillo_gordo",
+      "precio_kg_cop": 10950,
+      "fecha": "2026-09-01",
+      "fuente": "Estimación del equipo calibrada con OPCA-Unicórdoba (jun 2026) y feria de Medellín; pendiente de validar"
+    },
+    {
+      "destino_id": "396e4a75-a43f-5e33-adb3-1d6163e10530",
+      "categoria": "novillo_gordo",
+      "precio_kg_cop": 11080,
+      "fecha": "2026-09-25",
+      "fuente": "Estimación del equipo calibrada con OPCA-Unicórdoba (jun 2026) y feria de Medellín; pendiente de validar"
+    },
+    {
+      "destino_id": "396e4a75-a43f-5e33-adb3-1d6163e10530",
+      "categoria": "novillo_gordo",
+      "precio_kg_cop": 11200,
+      "fecha": "2026-10-09",
+      "fuente": "Estimación del equipo calibrada con OPCA-Unicórdoba (jun 2026) y feria de Medellín; pendiente de validar"
+    },
+    {
+      "destino_id": "396e4a75-a43f-5e33-adb3-1d6163e10530",
+      "categoria": "vaca_gorda",
+      "precio_kg_cop": 9380,
+      "fecha": "2026-09-01",
+      "fuente": "Estimación del equipo calibrada con OPCA-Unicórdoba (jun 2026) y feria de Medellín; pendiente de validar"
+    },
+    {
+      "destino_id": "396e4a75-a43f-5e33-adb3-1d6163e10530",
+      "categoria": "vaca_gorda",
+      "precio_kg_cop": 9510,
+      "fecha": "2026-09-25",
+      "fuente": "Estimación del equipo calibrada con OPCA-Unicórdoba (jun 2026) y feria de Medellín; pendiente de validar"
+    },
+    {
+      "destino_id": "396e4a75-a43f-5e33-adb3-1d6163e10530",
+      "categoria": "vaca_gorda",
+      "precio_kg_cop": 9630,
+      "fecha": "2026-10-09",
+      "fuente": "Estimación del equipo calibrada con OPCA-Unicórdoba (jun 2026) y feria de Medellín; pendiente de validar"
+    },
+    {
+      "destino_id": "15bf935c-dea7-52e8-a312-228463fe5aef",
+      "categoria": "novillo_gordo",
+      "precio_kg_cop": 11350,
+      "fecha": "2026-09-01",
+      "fuente": "Estimación del equipo calibrada con OPCA-Unicórdoba (jun 2026) y feria de Medellín; pendiente de validar"
+    },
+    {
+      "destino_id": "15bf935c-dea7-52e8-a312-228463fe5aef",
+      "categoria": "novillo_gordo",
+      "precio_kg_cop": 11480,
+      "fecha": "2026-09-25",
+      "fuente": "Estimación del equipo calibrada con OPCA-Unicórdoba (jun 2026) y feria de Medellín; pendiente de validar"
+    },
+    {
+      "destino_id": "15bf935c-dea7-52e8-a312-228463fe5aef",
+      "categoria": "novillo_gordo",
+      "precio_kg_cop": 11600,
+      "fecha": "2026-10-09",
+      "fuente": "Estimación del equipo calibrada con OPCA-Unicórdoba (jun 2026) y feria de Medellín; pendiente de validar"
+    },
+    {
+      "destino_id": "15bf935c-dea7-52e8-a312-228463fe5aef",
+      "categoria": "vaca_gorda",
+      "precio_kg_cop": 9730,
+      "fecha": "2026-09-01",
+      "fuente": "Estimación del equipo calibrada con OPCA-Unicórdoba (jun 2026) y feria de Medellín; pendiente de validar"
+    },
+    {
+      "destino_id": "15bf935c-dea7-52e8-a312-228463fe5aef",
+      "categoria": "vaca_gorda",
+      "precio_kg_cop": 9860,
+      "fecha": "2026-09-25",
+      "fuente": "Estimación del equipo calibrada con OPCA-Unicórdoba (jun 2026) y feria de Medellín; pendiente de validar"
+    },
+    {
+      "destino_id": "15bf935c-dea7-52e8-a312-228463fe5aef",
+      "categoria": "vaca_gorda",
+      "precio_kg_cop": 9980,
+      "fecha": "2026-10-09",
+      "fuente": "Estimación del equipo calibrada con OPCA-Unicórdoba (jun 2026) y feria de Medellín; pendiente de validar"
+    },
+    {
+      "destino_id": "15bf935c-dea7-52e8-a312-228463fe5aef",
+      "categoria": "novillo_levante",
+      "precio_kg_cop": 12350,
+      "fecha": "2026-09-01",
+      "fuente": "Estimación del equipo calibrada con OPCA-Unicórdoba (jun 2026) y feria de Medellín; pendiente de validar"
+    },
+    {
+      "destino_id": "15bf935c-dea7-52e8-a312-228463fe5aef",
+      "categoria": "novillo_levante",
+      "precio_kg_cop": 12480,
+      "fecha": "2026-09-25",
+      "fuente": "Estimación del equipo calibrada con OPCA-Unicórdoba (jun 2026) y feria de Medellín; pendiente de validar"
+    },
+    {
+      "destino_id": "15bf935c-dea7-52e8-a312-228463fe5aef",
+      "categoria": "novillo_levante",
+      "precio_kg_cop": 12600,
+      "fecha": "2026-10-09",
+      "fuente": "Estimación del equipo calibrada con OPCA-Unicórdoba (jun 2026) y feria de Medellín; pendiente de validar"
+    }
+  ],
+  "lotes": [
+    {
+      "id": "9bad2b17-c8e0-57f7-ac48-2d1cf99ad088",
+      "productor_id": "cd3b83ce-114a-5624-bde0-0c482a535db2",
+      "nombre": "Novillos cebados de septiembre",
+      "cantidad_animales": 30,
+      "peso_promedio_kg": 452.0,
+      "categoria": "novillo_gordo",
+      "raza": "Brahman comercial",
+      "finca": "Finca La Esperanza",
+      "municipio_origen": "Yopal",
+      "estado": "simulado",
+      "creado_en": "2026-09-14T07:30:00-05:00",
+      "finca_id": "36f4879e-18aa-54a7-bd48-2bf86934920e"
+    },
+    {
+      "id": "7461b160-f980-5d27-af1b-7bd4bb9b14f1",
+      "productor_id": "f20f9d5f-85ca-5681-bbf2-6da289276b37",
+      "nombre": "Vacas de descarte primer semestre",
+      "cantidad_animales": 22,
+      "peso_promedio_kg": 420.0,
+      "categoria": "vaca_gorda",
+      "raza": "Brahman x Sanmartinero",
+      "finca": "Hato El Porvenir",
+      "municipio_origen": "Aguazul",
+      "estado": "vendido",
+      "creado_en": "2026-09-15T07:30:00-05:00",
+      "finca_id": "ecff835a-3d5c-52b1-8647-5c4474a0d2d5"
+    },
+    {
+      "id": "bb0ff19b-a1d7-509a-9512-cef23cbde87d",
+      "productor_id": "76f9cfc9-a7d6-5604-afca-f992aff831e2",
+      "nombre": "Novillos de ceba en pradera",
+      "cantidad_animales": 40,
+      "peso_promedio_kg": 470.0,
+      "categoria": "novillo_gordo",
+      "raza": "Brahman rojo",
+      "finca": "Finca Villa Luz",
+      "municipio_origen": "Tauramena",
+      "estado": "simulado",
+      "creado_en": "2026-09-16T07:30:00-05:00",
+      "finca_id": "293a13e7-5272-5815-9fce-56435ccd5812"
+    },
+    {
+      "id": "9252d5d1-4051-5095-a93b-ae493636dc2e",
+      "productor_id": "0047a00d-c5eb-501f-94a7-b9076480c1e9",
+      "nombre": "Novillos de sabana inundable",
+      "cantidad_animales": 35,
+      "peso_promedio_kg": 438.0,
+      "categoria": "novillo_gordo",
+      "raza": "Cebú comercial",
+      "finca": "Hato Las Palmeras",
+      "municipio_origen": "Paz de Ariporo",
+      "estado": "simulado",
+      "creado_en": "2026-09-18T07:30:00-05:00",
+      "finca_id": "cd5428e1-721a-50f0-ba79-5da945aa3e80"
+    },
+    {
+      "id": "ff58ca0f-4e8c-506e-8288-8ad8f651b1d6",
+      "productor_id": "f20f9d5f-85ca-5681-bbf2-6da289276b37",
+      "nombre": "Vacas gordas para frigorífico",
+      "cantidad_animales": 18,
+      "peso_promedio_kg": 405.0,
+      "categoria": "vaca_gorda",
+      "raza": "Criollo casanareño",
+      "finca": "Finca El Recreo",
+      "municipio_origen": "Maní",
+      "estado": "disponible",
+      "creado_en": "2026-09-21T07:30:00-05:00",
+      "finca_id": "2fc6a176-af0a-589d-b823-daa82b924d5a"
+    },
+    {
+      "id": "d041a25f-0ea4-5ea0-abec-c5c5bdaddb62",
+      "productor_id": "cd3b83ce-114a-5624-bde0-0c482a535db2",
+      "nombre": "Novillos terminados lote 2",
+      "cantidad_animales": 25,
+      "peso_promedio_kg": 462.0,
+      "categoria": "novillo_gordo",
+      "raza": "Gyr x Brahman",
+      "finca": "Finca San José",
+      "municipio_origen": "Nunchía",
+      "estado": "simulado",
+      "creado_en": "2026-09-22T07:30:00-05:00",
+      "finca_id": "bc8632a6-edf5-539e-ad77-3bfafe76297a"
+    },
+    {
+      "id": "2e18e5ff-26cc-588b-994b-aee0da7ff865",
+      "productor_id": "0047a00d-c5eb-501f-94a7-b9076480c1e9",
+      "nombre": "Novillos de fin de verano",
+      "cantidad_animales": 45,
+      "peso_promedio_kg": 455.0,
+      "categoria": "novillo_gordo",
+      "raza": "Brahman comercial",
+      "finca": "Hato Santa Rita",
+      "municipio_origen": "Orocué",
+      "estado": "simulado",
+      "creado_en": "2026-09-24T07:30:00-05:00",
+      "finca_id": "b775a171-658a-5035-9fb8-de198fb188bf"
+    },
+    {
+      "id": "85c355d5-e5a0-588c-a121-1113771481ce",
+      "productor_id": "76f9cfc9-a7d6-5604-afca-f992aff831e2",
+      "nombre": "Vacas de descarte del hato",
+      "cantidad_animales": 20,
+      "peso_promedio_kg": 432.0,
+      "categoria": "vaca_gorda",
+      "raza": "Brahman x Gyr",
+      "finca": "Finca Los Guaduales",
+      "municipio_origen": "Monterrey",
+      "estado": "disponible",
+      "creado_en": "2026-09-26T07:30:00-05:00",
+      "finca_id": "75c2c1e9-637a-5fe9-aeea-33c358937681"
+    },
+    {
+      "id": "4c1d9e2f-6a7b-5c8d-9e0f-1a2b3c4d5e6f",
+      "productor_id": "cd3b83ce-114a-5624-bde0-0c482a535db2",
+      "nombre": "Machos de levante de octubre",
+      "cantidad_animales": 26,
+      "peso_promedio_kg": 235.0,
+      "categoria": "novillo_levante",
+      "raza": "Brahman comercial",
+      "finca": "Finca La Esperanza",
+      "municipio_origen": "Yopal",
+      "estado": "disponible",
+      "creado_en": "2026-10-05T07:30:00-05:00",
+      "finca_id": "36f4879e-18aa-54a7-bd48-2bf86934920e"
+    }
+  ],
+  "simulaciones": [
+    {
+      "lote_id": "9bad2b17-c8e0-57f7-ac48-2d1cf99ad088",
+      "flete_km_cop": 6500,
+      "capacidad_camion": 25,
+      "flete_incluye_peajes": false,
+      "destino_ids": [
+        "0e6f6c1a-3b0d-5c8e-9f1a-6d2b7c4e8a10",
+        "acca0ef8-f855-5505-b81b-25833e792ff1",
+        "5a11df78-6998-5089-a775-55e35b205cfe",
+        "a8745d0d-590c-5f1b-b749-bb96c5be4aac",
+        "6b8211cf-49f9-5354-925a-ec5edb230ee1",
+        "d8c5a7c4-888d-56e2-81f2-f8cc588a2834",
+        "3878b38f-1764-5e78-88b0-93461cec83ec",
+        "52bbc2f4-901c-5ff0-a08a-5f8f08f91fa1",
+        "c1b1b4d6-5649-5406-a30d-e47ea1c9ba12",
+        "396e4a75-a43f-5e33-adb3-1d6163e10530",
+        "15bf935c-dea7-52e8-a312-228463fe5aef"
+      ],
+      "creado_en": "2026-09-14T16:20:00-05:00"
+    },
+    {
+      "lote_id": "7461b160-f980-5d27-af1b-7bd4bb9b14f1",
+      "flete_km_cop": 6300,
+      "capacidad_camion": 25,
+      "flete_incluye_peajes": false,
+      "destino_ids": [
+        "0e6f6c1a-3b0d-5c8e-9f1a-6d2b7c4e8a10",
+        "acca0ef8-f855-5505-b81b-25833e792ff1",
+        "a8745d0d-590c-5f1b-b749-bb96c5be4aac",
+        "6b8211cf-49f9-5354-925a-ec5edb230ee1",
+        "d8c5a7c4-888d-56e2-81f2-f8cc588a2834",
+        "52bbc2f4-901c-5ff0-a08a-5f8f08f91fa1"
+      ],
+      "creado_en": "2026-09-15T11:05:00-05:00"
+    },
+    {
+      "lote_id": "bb0ff19b-a1d7-509a-9512-cef23cbde87d",
+      "flete_km_cop": 6800,
+      "capacidad_camion": 25,
+      "flete_incluye_peajes": false,
+      "destino_ids": [
+        "0e6f6c1a-3b0d-5c8e-9f1a-6d2b7c4e8a10",
+        "acca0ef8-f855-5505-b81b-25833e792ff1",
+        "6b8211cf-49f9-5354-925a-ec5edb230ee1",
+        "3878b38f-1764-5e78-88b0-93461cec83ec",
+        "52bbc2f4-901c-5ff0-a08a-5f8f08f91fa1",
+        "c1b1b4d6-5649-5406-a30d-e47ea1c9ba12",
+        "15bf935c-dea7-52e8-a312-228463fe5aef"
+      ],
+      "creado_en": "2026-09-17T09:40:00-05:00"
+    },
+    {
+      "lote_id": "9252d5d1-4051-5095-a93b-ae493636dc2e",
+      "flete_km_cop": 6200,
+      "capacidad_camion": 25,
+      "flete_incluye_peajes": false,
+      "destino_ids": [
+        "0e6f6c1a-3b0d-5c8e-9f1a-6d2b7c4e8a10",
+        "acca0ef8-f855-5505-b81b-25833e792ff1",
+        "5a11df78-6998-5089-a775-55e35b205cfe",
+        "6b8211cf-49f9-5354-925a-ec5edb230ee1",
+        "396e4a75-a43f-5e33-adb3-1d6163e10530"
+      ],
+      "creado_en": "2026-09-18T15:10:00-05:00"
+    },
+    {
+      "lote_id": "9bad2b17-c8e0-57f7-ac48-2d1cf99ad088",
+      "flete_km_cop": 7000,
+      "capacidad_camion": 25,
+      "flete_incluye_peajes": false,
+      "destino_ids": [
+        "0e6f6c1a-3b0d-5c8e-9f1a-6d2b7c4e8a10",
+        "acca0ef8-f855-5505-b81b-25833e792ff1",
+        "6b8211cf-49f9-5354-925a-ec5edb230ee1",
+        "52bbc2f4-901c-5ff0-a08a-5f8f08f91fa1",
+        "15bf935c-dea7-52e8-a312-228463fe5aef"
+      ],
+      "creado_en": "2026-09-19T08:25:00-05:00"
+    },
+    {
+      "lote_id": "d041a25f-0ea4-5ea0-abec-c5c5bdaddb62",
+      "flete_km_cop": 6500,
+      "capacidad_camion": 25,
+      "flete_incluye_peajes": false,
+      "destino_ids": [
+        "0e6f6c1a-3b0d-5c8e-9f1a-6d2b7c4e8a10",
+        "acca0ef8-f855-5505-b81b-25833e792ff1",
+        "d8c5a7c4-888d-56e2-81f2-f8cc588a2834",
+        "3878b38f-1764-5e78-88b0-93461cec83ec",
+        "52bbc2f4-901c-5ff0-a08a-5f8f08f91fa1"
+      ],
+      "creado_en": "2026-09-22T17:45:00-05:00"
+    },
+    {
+      "lote_id": "2e18e5ff-26cc-588b-994b-aee0da7ff865",
+      "flete_km_cop": 6600,
+      "capacidad_camion": 25,
+      "flete_incluye_peajes": false,
+      "destino_ids": [
+        "0e6f6c1a-3b0d-5c8e-9f1a-6d2b7c4e8a10",
+        "acca0ef8-f855-5505-b81b-25833e792ff1",
+        "5a11df78-6998-5089-a775-55e35b205cfe",
+        "a8745d0d-590c-5f1b-b749-bb96c5be4aac",
+        "6b8211cf-49f9-5354-925a-ec5edb230ee1",
+        "d8c5a7c4-888d-56e2-81f2-f8cc588a2834",
+        "3878b38f-1764-5e78-88b0-93461cec83ec",
+        "52bbc2f4-901c-5ff0-a08a-5f8f08f91fa1",
+        "c1b1b4d6-5649-5406-a30d-e47ea1c9ba12",
+        "396e4a75-a43f-5e33-adb3-1d6163e10530",
+        "15bf935c-dea7-52e8-a312-228463fe5aef"
+      ],
+      "creado_en": "2026-09-24T10:30:00-05:00"
+    },
+    {
+      "lote_id": "bb0ff19b-a1d7-509a-9512-cef23cbde87d",
+      "flete_km_cop": 6400,
+      "capacidad_camion": 25,
+      "flete_incluye_peajes": false,
+      "destino_ids": [
+        "6b8211cf-49f9-5354-925a-ec5edb230ee1",
+        "52bbc2f4-901c-5ff0-a08a-5f8f08f91fa1",
+        "15bf935c-dea7-52e8-a312-228463fe5aef"
+      ],
+      "creado_en": "2026-09-25T14:00:00-05:00"
+    },
+    {
+      "lote_id": "85c355d5-e5a0-588c-a121-1113771481ce",
+      "flete_km_cop": 6300,
+      "capacidad_camion": 25,
+      "flete_incluye_peajes": false,
+      "destino_ids": [
+        "0e6f6c1a-3b0d-5c8e-9f1a-6d2b7c4e8a10",
+        "acca0ef8-f855-5505-b81b-25833e792ff1",
+        "a8745d0d-590c-5f1b-b749-bb96c5be4aac",
+        "6b8211cf-49f9-5354-925a-ec5edb230ee1",
+        "52bbc2f4-901c-5ff0-a08a-5f8f08f91fa1"
+      ],
+      "creado_en": "2026-09-27T09:15:00-05:00"
+    },
+    {
+      "lote_id": "4c1d9e2f-6a7b-5c8d-9e0f-1a2b3c4d5e6f",
+      "flete_km_cop": 6500,
+      "capacidad_camion": 25,
+      "flete_incluye_peajes": false,
+      "destino_ids": [
+        "0e6f6c1a-3b0d-5c8e-9f1a-6d2b7c4e8a10",
+        "acca0ef8-f855-5505-b81b-25833e792ff1",
+        "5a11df78-6998-5089-a775-55e35b205cfe",
+        "a8745d0d-590c-5f1b-b749-bb96c5be4aac",
+        "6b8211cf-49f9-5354-925a-ec5edb230ee1"
+      ],
+      "creado_en": "2026-10-06T10:00:00-05:00"
+    }
+  ],
+  "fincas": [
+    {
+      "id": "36f4879e-18aa-54a7-bd48-2bf86934920e",
+      "productor_id": "cd3b83ce-114a-5624-bde0-0c482a535db2",
+      "nombre": "Finca La Esperanza",
+      "departamento": "Casanare",
+      "municipio": "Yopal",
+      "vereda": null,
+      "ubicacion": {
+        "type": "Point",
+        "coordinates": [
+          -72.33,
+          5.29
+        ]
+      },
+      "area_ha": 420
+    },
+    {
+      "id": "ecff835a-3d5c-52b1-8647-5c4474a0d2d5",
+      "productor_id": "f20f9d5f-85ca-5681-bbf2-6da289276b37",
+      "nombre": "Hato El Porvenir",
+      "departamento": "Casanare",
+      "municipio": "Aguazul",
+      "vereda": null,
+      "ubicacion": {
+        "type": "Point",
+        "coordinates": [
+          -72.5,
+          5.13
+        ]
+      },
+      "area_ha": 180
+    },
+    {
+      "id": "293a13e7-5272-5815-9fce-56435ccd5812",
+      "productor_id": "76f9cfc9-a7d6-5604-afca-f992aff831e2",
+      "nombre": "Finca Villa Luz",
+      "departamento": "Casanare",
+      "municipio": "Tauramena",
+      "vereda": null,
+      "ubicacion": {
+        "type": "Point",
+        "coordinates": [
+          -72.7,
+          4.98
+        ]
+      },
+      "area_ha": 95
+    },
+    {
+      "id": "cd5428e1-721a-50f0-ba79-5da945aa3e80",
+      "productor_id": "0047a00d-c5eb-501f-94a7-b9076480c1e9",
+      "nombre": "Hato Las Palmeras",
+      "departamento": "Casanare",
+      "municipio": "Paz de Ariporo",
+      "vereda": null,
+      "ubicacion": {
+        "type": "Point",
+        "coordinates": [
+          -71.85,
+          5.84
+        ]
+      },
+      "area_ha": 1250
+    },
+    {
+      "id": "2fc6a176-af0a-589d-b823-daa82b924d5a",
+      "productor_id": "f20f9d5f-85ca-5681-bbf2-6da289276b37",
+      "nombre": "Finca El Recreo",
+      "departamento": "Casanare",
+      "municipio": "Maní",
+      "vereda": null,
+      "ubicacion": {
+        "type": "Point",
+        "coordinates": [
+          -72.24,
+          4.78
+        ]
+      },
+      "area_ha": 60
+    },
+    {
+      "id": "bc8632a6-edf5-539e-ad77-3bfafe76297a",
+      "productor_id": "cd3b83ce-114a-5624-bde0-0c482a535db2",
+      "nombre": "Finca San José",
+      "departamento": "Casanare",
+      "municipio": "Nunchía",
+      "vereda": null,
+      "ubicacion": {
+        "type": "Point",
+        "coordinates": [
+          -72.15,
+          5.6
+        ]
+      },
+      "area_ha": 210
+    },
+    {
+      "id": "b775a171-658a-5035-9fb8-de198fb188bf",
+      "productor_id": "0047a00d-c5eb-501f-94a7-b9076480c1e9",
+      "nombre": "Hato Santa Rita",
+      "departamento": "Casanare",
+      "municipio": "Orocué",
+      "vereda": null,
+      "ubicacion": {
+        "type": "Point",
+        "coordinates": [
+          -71.38,
+          4.83
+        ]
+      },
+      "area_ha": 2300
+    },
+    {
+      "id": "75c2c1e9-637a-5fe9-aeea-33c358937681",
+      "productor_id": "76f9cfc9-a7d6-5604-afca-f992aff831e2",
+      "nombre": "Finca Los Guaduales",
+      "departamento": "Casanare",
+      "municipio": "Monterrey",
+      "vereda": null,
+      "ubicacion": {
+        "type": "Point",
+        "coordinates": [
+          -72.85,
+          4.85
+        ]
+      },
+      "area_ha": 140
+    },
+    {
+      "id": "cceade28-0eb9-5387-b341-24caab9a638d",
+      "productor_id": "5ef5859d-2b27-51e2-9ad2-6aa6f2b67bee",
+      "nombre": "Hato La Macolla",
+      "departamento": "Casanare",
+      "municipio": "Yopal",
+      "vereda": "Morichal",
+      "ubicacion": {
+        "type": "Point",
+        "coordinates": [
+          -72.22,
+          5.25
+        ]
+      },
+      "area_ha": 3800
+    }
+  ]
 }

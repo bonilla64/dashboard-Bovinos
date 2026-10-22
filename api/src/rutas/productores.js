@@ -1,67 +1,74 @@
-import { COL_PRODUCTOR, actualizarFila, paginar } from '../consultas.js';
-import { exigirDueno } from '../auth.js';
-import { conflicto, noEncontrado } from '../errores.js';
+import { enTransaccion } from '../bd.js';
+import { COL_PRODUCTOR, paginar } from '../consultas.js';
+import { esAdmin, exigirDueno } from '../auth.js';
+import { anotar, camposCambiados } from '../bitacora.js';
+import { buscarProductor, guardarFicha, insertarFicha, prepararFicha } from '../fichas.js';
+import { conflicto } from '../errores.js';
 
-const EDITABLES = ['nombre_completo', 'municipio', 'telefono', 'correo'];
+export default ({ pool }) => ({
+  async listarProductores(peticion) {
+    const q = peticion.query;
+    const { pagina, porPagina, limite, desplazamiento } = paginar(q);
+    const texto = q.q ? `%${q.q.trim()}%` : null;
+    const { rows } = await pool.query(
+      `SELECT ${COL_PRODUCTOR}, count(*) OVER () AS total FROM productor
+       WHERE ($1::text IS NULL OR municipio ILIKE $1)
+         AND ($2::text IS NULL OR nombre_completo ILIKE $2 OR numero_documento ILIKE $2)
+         AND ($3::tipo_persona IS NULL OR tipo_persona = $3)
+         AND ($4::boolean IS NULL OR documento_verificado = $4)
+       ORDER BY nombre_completo LIMIT $5 OFFSET $6`,
+      [q.municipio ?? null, texto, q.tipo_persona ?? null, q.verificado ?? null, limite, desplazamiento]);
+    const total = rows[0]?.total ?? 0;
+    rows.forEach((r) => delete r.total);
+    return { datos: rows, pagina, por_pagina: porPagina, total };
+  },
 
-export default ({ pool }) => {
-  async function buscar(id) {
-    const { rows } = await pool.query(`SELECT ${COL_PRODUCTOR} FROM productor WHERE id = $1`, [id]);
-    if (!rows[0]) throw noEncontrado('No existe ese productor.');
-    return rows[0];
-  }
-  async function correoLibre(correo, excepto = null) {
-    if (!correo) return;
-    const { rowCount } = await pool.query(
-      'SELECT 1 FROM productor WHERE lower(correo) = lower($1) AND id IS DISTINCT FROM $2', [correo, excepto]);
-    if (rowCount) throw conflicto('Ya hay un productor con ese correo.', [{ campo: 'correo', problema: 'Correo repetido.' }]);
-  }
+  async crearProductor(peticion, respuesta) {
+    const fila = await enTransaccion(pool, async (bd) => {
+      const f = await insertarFicha(bd, await prepararFicha(bd, null, peticion.body, { admin: true }));
+      await anotar(bd, peticion.user, 'crear', 'productor', f.id, { nombre: f.nombre_completo });
+      return f;
+    });
+    respuesta.code(201).header('Location', `/api/v1/productores/${fila.id}`);
+    return fila;
+  },
 
-  return {
-    async listarProductores(peticion) {
-      const { pagina, porPagina, limite, desplazamiento } = paginar(peticion.query);
-      const filtro = peticion.query.municipio ?? null;
-      const { rows } = await pool.query(
-        `SELECT ${COL_PRODUCTOR}, count(*) OVER () AS total FROM productor
-         WHERE ($1::text IS NULL OR municipio ILIKE $1) ORDER BY nombre_completo LIMIT $2 OFFSET $3`,
-        [filtro, limite, desplazamiento]);
-      const total = rows[0]?.total ?? 0;
-      rows.forEach((r) => delete r.total);
-      return { datos: rows, pagina, por_pagina: porPagina, total };
-    },
+  async obtenerProductor(peticion) {
+    const productor = await buscarProductor(pool, peticion.params.productor_id);
+    exigirDueno(peticion.user, productor.id, 'este productor');
+    return productor;
+  },
 
-    async crearProductor(peticion, respuesta) {
-      const { nombre_completo, municipio, telefono = null, correo = null } = peticion.body;
-      await correoLibre(correo);
-      const { rows } = await pool.query(
-        `INSERT INTO productor (nombre_completo, municipio, telefono, correo) VALUES ($1,$2,$3,$4) RETURNING ${COL_PRODUCTOR}`,
-        [nombre_completo, municipio, telefono, correo]);
-      respuesta.code(201).header('Location', `/api/v1/productores/${rows[0].id}`);
-      return rows[0];
-    },
+  async actualizarProductor(peticion) {
+    const admin = esAdmin(peticion.user);
+    return enTransaccion(pool, async (bd) => {
+      const actual = await buscarProductor(bd, peticion.params.productor_id);
+      exigirDueno(peticion.user, actual.id, 'este productor');
+      const { rowCount: conCuenta } = await bd.query('SELECT 1 FROM usuario WHERE productor_id = $1', [actual.id]);
+      const sets = await prepararFicha(bd, actual, peticion.body, { admin, conCuenta: conCuenta > 0 });
+      const fila = await guardarFicha(bd, actual.id, sets);
+      if (admin) {
+        const b = peticion.body;
+        if ('documento_verificado' in b && b.documento_verificado !== actual.documento_verificado) {
+          await anotar(bd, peticion.user, b.documento_verificado ? 'verificar_documento' : 'quitar_verificacion', 'productor', actual.id,
+            { documento: `${fila.tipo_documento ?? ''} ${fila.numero_documento ?? ''}`.trim() });
+        }
+        const otros = camposCambiados(b).filter((c) => c !== 'documento_verificado');
+        if (otros.length) await anotar(bd, peticion.user, 'actualizar', 'productor', actual.id, { campos: otros });
+      }
+      return fila;
+    });
+  },
 
-    async obtenerProductor(peticion) {
-      const productor = await buscar(peticion.params.productor_id);
-      exigirDueno(peticion.user, productor.id, 'este productor');
-      return productor;
-    },
-
-    async actualizarProductor(peticion) {
-      const productor = await buscar(peticion.params.productor_id);
-      exigirDueno(peticion.user, productor.id, 'este productor');
-      if ('correo' in peticion.body) await correoLibre(peticion.body.correo, productor.id);
-      return actualizarFila(pool, 'productor', productor.id, peticion.body, EDITABLES, COL_PRODUCTOR);
-    },
-
-    async eliminarProductor(peticion, respuesta) {
-      const productor = await buscar(peticion.params.productor_id);
-      const { rows } = await pool.query(
-        `SELECT (SELECT count(*) FROM lote WHERE productor_id = $1) AS lotes,
-                (SELECT count(*) FROM usuario WHERE productor_id = $1) AS cuentas`, [productor.id]);
-      if (rows[0].lotes > 0) throw conflicto(`El productor tiene ${rows[0].lotes} lotes registrados. Elimínelos primero.`);
-      if (rows[0].cuentas > 0) throw conflicto('El productor tiene una cuenta de usuario activa.');
-      await pool.query('DELETE FROM productor WHERE id = $1', [productor.id]);
-      return respuesta.code(204).send();
-    },
-  };
-};
+  async eliminarProductor(peticion, respuesta) {
+    const productor = await buscarProductor(pool, peticion.params.productor_id);
+    const { rows } = await pool.query(
+      `SELECT (SELECT count(*) FROM lote WHERE productor_id = $1) AS lotes,
+              (SELECT count(*) FROM usuario WHERE productor_id = $1) AS cuentas`, [productor.id]);
+    if (rows[0].lotes > 0) throw conflicto(`El productor tiene ${rows[0].lotes} lotes registrados. Elimínelos primero.`);
+    if (rows[0].cuentas > 0) throw conflicto('El productor tiene una cuenta de usuario. Adminístrela desde Usuarios.');
+    await pool.query('DELETE FROM productor WHERE id = $1', [productor.id]);
+    await anotar(pool, peticion.user, 'eliminar', 'productor', productor.id, { nombre: productor.nombre_completo });
+    return respuesta.code(204).send();
+  },
+});

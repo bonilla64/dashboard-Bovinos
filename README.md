@@ -128,9 +128,10 @@ git --version
 
    | Correo | Rol | Qué puede hacer |
    |---|---|---|
-   | `admin@simulador-ganadero.co` | Administrador | Todo, incluido crear destinos y registrar precios |
-   | `hernando.rincon@correo.co` | Productor | Sus lotes y simulaciones (tiene 3 lotes) |
-   | `luz.cardenas@correo.co` | Productor | Sus lotes y simulaciones |
+   | `admin@simulador-ganadero.co` | Administrador | Todo: pantalla **Administración** (cuentas, productores, destinos, bitácora) y carga de precios |
+   | `hernando.rincon@correo.co` | Productor (persona, CC verificada) | Sus fincas, lotes y simulaciones (tiene 3 lotes) |
+   | `luz.cardenas@correo.co` | Productor (persona) | Sus fincas, lotes y simulaciones |
+   | `contacto@lamacolla.com.co` | Productor (empresa, NIT sin verificar) | Igual que un productor; sirve para mostrar la verificación de documentos |
 
    También puede crear su propia cuenta de productor desde la pantalla **Ingresar** (sección 3.1).
 
@@ -205,18 +206,29 @@ Ingrese como `admin@simulador-ganadero.co` y siga la sección 3.6. Desde ese mom
 
 ## 3. Cómo usarla paso a paso
 
-La aplicación tiene cinco pantallas. Desde el menú de arriba se llega a **Tablero**, **Registrar lote**, **Historial** y **Precios**; arriba a la derecha está su nombre y el botón **Salir**.
+Desde el menú de arriba se llega a **Tablero**, **Registrar lote**, **Mis lotes**, **Historial** y **Precios** (y **Administración**, solo para administradores). Arriba a la derecha está su nombre, que lleva a **Mi cuenta**, y el botón **Salir**.
 
 ### 3.1 Ingresar o crear su cuenta
 
 La primera vez que abra el tablero lo lleva a **Ingresar**.
 
 - **Si ya tiene cuenta**, escriba su correo y contraseña y oprima **Ingresar**. Con la instalación de la sección 2 ya existen cuentas de demostración (tabla del paso 6 de la sección 2.2).
-- **Si no tiene cuenta**, llene **Crear una cuenta de productor**: nombre completo, correo, una contraseña de **10 caracteres o más**, municipio y, si quiere, su celular (10 dígitos, empieza por 3). Al crearla queda adentro de una vez.
+- **Si no tiene cuenta**, llene **Crear una cuenta de productor**. Primero elija **Como persona** (se identifica con cédula de ciudadanía o de extranjería) o **Como empresa** (NIT con su dígito de verificación, por ejemplo `900123456-7`, y el nombre del representante legal). Luego el nombre o razón social, correo, una contraseña de **10 caracteres o más**, su municipio de Casanare, la vereda y el celular (opcionales), y marque la autorización de tratamiento de datos (Ley 1581 de 2012). Si el NIT está mal digitado, el formulario le dice cuál debería ser el dígito de verificación. Un documento o un correo que ya está registrado no se acepta. Al crear la cuenta queda adentro y lo lleva a **Mi cuenta** para registrar su finca.
 
 La sesión dura 8 horas. Cuando vence, la aplicación le pide ingresar de nuevo y lo devuelve a la pantalla donde estaba; nada de lo guardado se pierde.
 
-Cada productor ve **solo sus lotes y sus simulaciones**. El administrador ve todo y es el único que puede cargar precios.
+Cada productor ve **solo sus fincas, sus lotes y sus simulaciones**. El administrador ve todo y es el único que puede cargar precios y administrar cuentas.
+
+Si el administrador **suspende** su cuenta, deja de funcionar de inmediato, aunque tenga la sesión abierta. Si le asigna una **contraseña temporal**, al ingresar la aplicación lo lleva a cambiarla antes de dejarlo seguir.
+
+### 3.1.1 Mi cuenta y sus fincas
+
+Toque su nombre (arriba a la derecha) para abrir **Mi cuenta**:
+
+- **Datos de la cuenta:** corrija su nombre, correo, celular, municipio o vereda. El nombre y el correo cambian a la vez en su cuenta y en su ficha de productor. Cuando el administrador **verifica** su documento, ya no lo puede cambiar usted.
+- **Mis fincas:** registre cada finca o hato con su municipio, vereda, área y su ubicación (toque el mapa donde queda, o escriba las coordenadas; debe quedar a menos de 120 km de la cabecera del municipio). Una finca con lotes no se puede eliminar: se **desactiva** y deja de ofrecerse para lotes nuevos. Si cambia el municipio de una finca, sus lotes pasan a salir de ese municipio.
+- **Cambiar contraseña:** pide la actual y la nueva dos veces.
+- **Eliminar mi cuenta:** pide su contraseña. Si no tiene lotes, se borra todo; si tiene lotes, su cuenta se borra y su ficha queda anónima (sin nombre, correo, celular ni documento); los lotes y simulaciones se conservan sin datos que lo identifiquen. El único administrador no puede eliminarse.
 
 ### 3.2 Registrar su lote y calcular
 
@@ -231,7 +243,7 @@ Entre a **Registrar lote** y llene el formulario:
 | Raza o cruce (opcional) | La raza, si la quiere anotar | Brahman comercial |
 | Cantidad de animales | Entre 1 y 200 | 30 |
 | Peso promedio por animal | En kilos, entre 80 y 900, con máximo un decimal. Si pesó todo el lote, divida el peso total entre el número de animales | 452 |
-| Finca o hato (opcional) | Dónde están los animales | Finca La Esperanza |
+| Finca de donde sale | Una de sus fincas (las registra en **Mi cuenta**). El municipio de origen se llena solo con el de la finca. Si elige **Otra**, escriba el nombre y elija el municipio | Finca La Esperanza (Yopal) |
 | Municipio de origen | De dónde sale el camión. **Las distancias, el flete, los peajes y la merma se calculan desde aquí**; la lista de destinos muestra la distancia desde ese municipio | Yopal |
 | Flete por kilómetro | Lo que cobra el transportador por kilómetro, por camión | 6500 |
 | Animales por camión | Cuántos lleva cada camión (de 24 a 27 es lo usual) | 25 |
@@ -290,6 +302,32 @@ En **Historial** están todas sus comparaciones guardadas en el servidor, de la 
 - La primera parada de Tab es **Saltar al contenido**, que lleva directo a la información.
 - El mapa no es necesario para usar la aplicación: la tabla y el gráfico tienen la misma información y los lectores de pantalla los leen.
 
+### 3.5.1 Mis lotes
+
+**Mis lotes** muestra todos sus lotes con su finca, municipio de origen, peso total, estado y cuántas veces se compararon. Desde ahí puede:
+
+- **Nuevo lote:** registrarlo sin compararlo todavía.
+- **Editar:** corregir nombre, finca, categoría, cantidad, peso, raza o estado.
+- **Marcar vendido / Volver a disponible.**
+- **Comparar:** abre **Registrar lote** con ese lote cargado.
+- **Eliminar:** solo aparece si el lote nunca se comparó. Un lote con simulaciones no se borra, porque su historial se conserva: márquelo como vendido.
+
+El administrador ve los lotes de todos los productores y puede filtrarlos por productor.
+
+### 3.5.2 Administración (solo administradores)
+
+La pantalla **Administración** tiene cinco pestañas:
+
+| Pestaña | Qué se hace |
+|---|---|
+| Resumen | Cifras de cuentas, productores (personas y empresas, verificados, sin documento), fincas, lotes, simulaciones, destinos y precios vencidos; destinos que más salen como mejor opción |
+| Usuarios | Buscar por nombre, correo o documento; **Nueva cuenta** (productor o administrador, con contraseña inicial que deberá cambiar); **Editar** nombre, correo y rol; **Suspender / Reactivar**; **Contraseña temporal** (se muestra una sola vez); **Eliminar** (solo cuentas sin lotes) |
+| Productores | Filtrar personas o empresas y documentos sin verificar; **Verificar documento**; **Editar** la ficha; **Nuevo productor sin cuenta**; ver sus lotes; eliminar (solo sin lotes ni cuenta) |
+| Destinos y rutas | **Nuevo destino**; **Editar** nombre, tipo, ubicación y comisión; **Corregir ruta** desde Yopal (distancia, tiempo, peajes, merma); **Desactivar** (un destino usado en simulaciones no se borra) |
+| Bitácora | Quién hizo qué y cuándo: registros, cambios de rol, suspensiones, verificaciones, cargas de precios… |
+
+Reglas que la aplicación hace cumplir: siempre queda al menos un administrador activo; nadie se quita el rol ni se suspende a sí mismo; lo que tiene historia no se borra, se desactiva; un cambio de rol o una suspensión aplican al instante.
+
 ### 3.6 Precios: ver de dónde salen y cargar los de Fedegán
 
 La pantalla **Precios** la puede ver cualquiera. Muestra, para cada destino y categoría, el precio más reciente con su **fecha**, su **fuente** y su estado:
@@ -307,6 +345,8 @@ La pantalla **Precios** la puede ver cualquiera. Muestra, para cada destino y ca
 2. Oprima **Descargar la hoja con los precios actuales**. Se descarga un CSV que se abre en Excel o Google Sheets.
 3. En cada fila cambie `precio_kg_cop` por el precio del reporte (solo el número, en pesos por kilo), `fecha` por la fecha del reporte (`AAAA-MM-DD` o `DD/MM/AAAA`) y `fuente` por algo como *Fedegán – precios semanales, semana del 6 al 10 de octubre*. La columna `referencia` dice qué plaza del reporte corresponde a cada destino; no cambie la columna `destino`.
 4. Guarde como **CSV** y súbalo en **Cargar precios de Fedegán**.
+
+Un precio suelto se corrige o se elimina con los botones **Corregir** y **Eliminar** de su fila (solo administrador).
 
 Si alguna fila tiene un error, **no se guarda ninguna** y la pantalla dice qué fila y qué columna corregir (por ejemplo *«fila 3.destino: No existe un destino llamado…»*). Si todo está bien, muestra cuántos precios quedaron nuevos, cuántos cambiaron y cuántos quedaron iguales, y las comparaciones siguientes ya los usan. Las comparaciones guardadas antes no cambian: conservan el precio con que se hicieron. En **Últimas cargas** queda registro de cada carga.
 
@@ -432,7 +472,7 @@ Navegador ──► web/ (nginx, :8080)            Tablero: HTML, CSS, JS y Leaf
 ├── .env.example             Variables necesarias, sin valores reales
 ├── .github/workflows/       Pages, validación del contrato, pruebas e imagen de la API
 ├── api/
-│   ├── openapi.yaml         Contrato OpenAPI 3.1 (6 recursos + autenticación)
+│   ├── openapi.yaml         Contrato OpenAPI 3.1 (8 recursos + autenticación y administración)
 │   ├── Dockerfile           Imagen multietapa, corre sin privilegios
 │   ├── src/                 app.js, contrato.js, auth.js, calculo.js, errores.js, rutas/
 │   ├── src/geo/origenes.js  Rutas desde el municipio del lote (OSRM o estimación)
@@ -441,8 +481,8 @@ Navegador ──► web/ (nginx, :8080)            Tablero: HTML, CSS, JS y Leaf
 │   ├── scripts/             migrar, sembrar, exportar-prototipo
 │   └── test/                Pruebas unitarias, de integración y de contrato
 ├── docs/                    Modelo de datos, decisiones, wireframes y evidencias
-└── web/                     Tablero: ingreso, tablero, registrar lote, historial y precios
-    └── js/                  config.js (dirección de la API publicada), api.js (cliente), app.js (pantallas)
+└── web/                     Tablero: ingreso, tablero, registrar lote, mis lotes, historial, precios, mi cuenta y administración
+    └── js/                  config.js (dirección de la API), api.js (cliente), app.js (pantallas del cálculo), cuentas.js (cuentas, fincas, lotes y administración)
 ```
 
 ### Operaciones de la API
@@ -451,8 +491,11 @@ Base: `http://localhost:3000/api/v1`. 🔒 = requiere `Authorization: Bearer <to
 
 | Recurso | Operaciones |
 |---|---|
-| Autenticación | `POST /auth/registro`, `POST /auth/ingreso`, 🔒 `GET /auth/yo` |
+| Autenticación | `POST /auth/registro`, `POST /auth/ingreso`, 🔒 `GET`, `PATCH`, `DELETE /auth/yo` (mi cuenta), 🔒 `POST /auth/contrasena` |
+| Usuarios | 👑 `GET`, `POST /usuarios` · 👑 `GET`, `PATCH`, `DELETE /usuarios/{id}` · 👑 `POST /usuarios/{id}/contrasena-temporal` |
 | Productores | 👑 `GET`, 👑 `POST /productores` · 🔒 `GET`, 🔒 `PATCH`, 👑 `DELETE /productores/{id}` |
+| Fincas | 🔒 `GET`, `POST /fincas` · 🔒 `GET`, `PATCH`, `DELETE /fincas/{id}` |
+| Administración | 👑 `GET /admin/resumen`, 👑 `GET /bitacora` |
 | Lotes | 🔒 `GET`, `POST /lotes` · 🔒 `GET`, `PATCH`, `DELETE /lotes/{id}` |
 | Destinos | `GET /destinos` (con filtro espacial `cerca_lat`, `cerca_lon`, `radio_km`), 👑 `POST` · `GET`, 👑 `PATCH`, 👑 `DELETE /destinos/{id}` |
 | Precios | `GET`, 👑 `POST /destinos/{id}/precios` · 👑 `PATCH`, 👑 `DELETE /precios/{id}` · 👑 `POST /precios/importacion` (CSV), 👑 `GET /precios/importaciones` |
@@ -477,7 +520,7 @@ npm run dev                           # http://localhost:3000, se reinicia al gu
 
 ### Pruebas automáticas
 
-81 pruebas de la API: cálculo, rutas desde otros municipios, vigencia e importación de precios, autenticación, autorización, validación, filtro espacial, CRUD de todos los recursos, coherencia contrato ↔ base de datos y validación de **cada respuesta contra el contrato**. Usan una base aparte, que se borra en cada ejecución: si `DATABASE_URL_PRUEBAS` falta o es igual a `DATABASE_URL`, las pruebas se niegan a correr para no borrar los precios reales.
+118 pruebas de la API: tipos de cuenta y documentos (dígito de verificación del NIT), Mi cuenta, administración de usuarios, suspensión y cambio de rol inmediatos, nunca sin administrador, fincas y su relación con los lotes, derecho de supresión, cálculo, rutas desde otros municipios, vigencia e importación de precios, autenticación, autorización, validación, filtro espacial, CRUD de todos los recursos, coherencia contrato ↔ base de datos y validación de **cada respuesta contra el contrato**. Usan una base aparte, que se borra en cada ejecución: si `DATABASE_URL_PRUEBAS` falta o es igual a `DATABASE_URL`, las pruebas se niegan a correr para no borrar los precios reales.
 
 ```bash
 cd api
@@ -555,7 +598,7 @@ Los roles rotan al menos una vez en el semestre; el cambio se registra en esta t
 |---|---|---|---|
 | 1 · Anteproyecto | 17 sep 2026 | Entregada | Problema, ruta H, wireframes en texto, plan de trabajo |
 | 2 · Prototipo y contrato | 1 oct 2026 | Entregada (`v0.2.0`) | Prototipo navegable de 3 pantallas con estados, contrato OpenAPI 3.1 con 6 recursos, modelo de datos |
-| 3 · MVP del backend | 15 oct 2026 | **En curso** (`v0.3.0`) | API REST con CRUD de 6 recursos, autenticación JWT + bcrypt, autorización por rol y por dueño, validación desde el contrato, errores centralizados, PostgreSQL + PostGIS, Swagger en `/docs`, Docker Compose y Codespaces, precios de Fedegán con vigencia y carga por CSV desde el tablero, tablero conectado a la API (ingreso, registro, cálculo en el servidor, historial y precios), rutas desde el municipio del lote, precios en kg y arroba, publicación en internet (Render + Neon + Pages), 81 pruebas en CI, ajustes de la entrevista |
+| 3 · MVP del backend | 15 oct 2026 | Entregada (`v0.4.0`, con ajustes del 19 oct: cuentas de persona y empresa, fincas, Mi cuenta, Mis lotes y Administración desde el tablero) | API REST con CRUD de 8 recursos (usuarios y fincas incluidos), cuentas de persona o empresa con documento verificable, Mi cuenta, Mis lotes y Administración desde el tablero, bitácora, autenticación JWT + bcrypt, autorización por rol y por dueño con estado de la cuenta revisado en cada petición, validación desde el contrato, errores centralizados, PostgreSQL + PostGIS, Swagger en `/docs`, Docker Compose y Codespaces, precios de Fedegán con vigencia y carga por CSV desde el tablero, tablero conectado a la API (ingreso, registro, cálculo en el servidor, historial y precios), rutas desde el municipio del lote, precios en kg y arroba, publicación en internet (Render + Neon + Pages), 118 pruebas en CI, ajustes de la entrevista |
 | 4 · Mapa desplegado con HTTPS | 12 nov 2026 | Pendiente | |
 | 5 · Visualizaciones y accesibilidad | 26 nov 2026 | Pendiente | |
 | EXIS | 4 dic 2026 | Pendiente | |

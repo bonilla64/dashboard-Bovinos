@@ -71,8 +71,17 @@ describe('Simulación desde otro municipio', () => {
     assert.deepEqual(otra.resultados.map((r) => r.ruta_id).sort(), sim.resultados.map((r) => r.ruta_id).sort(), 'reutiliza las rutas guardadas');
   });
 
-  test('un municipio fuera de Casanare usa las rutas medidas desde Yopal', async () => {
-    const lote = cumpleContrato('crearLote', await pedir('POST', '/lotes', { nombre: 'Lote de Boyacá', cantidad_animales: 10, peso_promedio_kg: 430, categoria: 'novillo_gordo', municipio_origen: 'Sogamoso' }));
+  test('la API solo acepta municipios de Casanare como origen', async () => {
+    const r = await pedir('POST', '/lotes', { nombre: 'Lote de Boyacá', cantidad_animales: 10, peso_promedio_kg: 430, categoria: 'novillo_gordo', municipio_origen: 'Sogamoso' });
+    cumpleContrato('crearLote', r);
+    assert.equal(r.statusCode, 422);
+  });
+
+  test('un lote antiguo con municipio fuera de Casanare usa las rutas medidas desde Yopal', async () => {
+    // Datos registrados antes de que el municipio fuera una lista cerrada.
+    const { rows: [lote] } = await pool.query(
+      `INSERT INTO lote (productor_id, nombre, cantidad_animales, peso_promedio_kg, categoria, municipio_origen)
+       SELECT productor_id, 'Lote de Boyacá', 10, 430, 'novillo_gordo', 'Sogamoso' FROM lote WHERE id = $1 RETURNING id`, [IDS.loteHernando]);
     const sim = cumpleContrato('crearSimulacion', await pedir('POST', '/simulaciones', { lote_id: lote.id, flete_km_cop: 7000, destino_ids: [IDS.yopal, IDS.guadalupe] }));
     const { rows } = await pool.query('SELECT DISTINCT origen_nombre FROM ruta WHERE id = ANY($1)', [sim.resultados.map((r) => r.ruta_id)]);
     assert.deepEqual(rows.map((r) => r.origen_nombre), [ORIGEN_YOPAL]);

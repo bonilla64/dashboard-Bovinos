@@ -1,6 +1,7 @@
 import { COL_DESTINO, COL_IMPORTACION, COL_PRECIO, COL_RUTA, actualizarFila, paginar } from '../consultas.js';
 import { importarPrecios, leerCsv } from '../precios/importar.js';
 import { conflicto, noEncontrado, validacion } from '../errores.js';
+import { anotar, camposCambiados } from '../bitacora.js';
 
 const EDITABLES_DESTINO = ['nombre', 'tipo', 'municipio', 'departamento', 'ubicacion', 'comision_pct', 'activo'];
 const EDITABLES_PRECIO = ['precio_kg_cop', 'fecha', 'fuente', 'referencia'];
@@ -61,6 +62,7 @@ export default ({ pool }) => {
         `INSERT INTO destino (nombre, tipo, municipio, departamento, ubicacion, comision_pct, activo)
          VALUES ($1,$2,$3,$4, ST_SetSRID(ST_GeomFromGeoJSON($5), 4326), $6, $7) RETURNING ${COL_DESTINO}`,
         [b.nombre, b.tipo, b.municipio, b.departamento, JSON.stringify(b.ubicacion), b.comision_pct ?? 0, b.activo ?? true]);
+      await anotar(pool, peticion.user, 'crear', 'destino', rows[0].id, { nombre: b.nombre });
       respuesta.code(201).header('Location', `/api/v1/destinos/${rows[0].id}`);
       return rows[0];
     },
@@ -72,7 +74,11 @@ export default ({ pool }) => {
     async actualizarDestino(peticion) {
       const destino = await destinoExiste(peticion.params.destino_id);
       if (peticion.body.nombre) await nombreLibre(peticion.body.nombre, destino.id);
-      return actualizarFila(pool, 'destino', destino.id, peticion.body, EDITABLES_DESTINO, COL_DESTINO);
+      const fila = await actualizarFila(pool, 'destino', destino.id, peticion.body, EDITABLES_DESTINO, COL_DESTINO);
+      const accion = peticion.body.activo === false && destino.activo ? 'desactivar'
+        : (peticion.body.activo === true && !destino.activo ? 'reactivar' : 'actualizar');
+      await anotar(pool, peticion.user, accion, 'destino', destino.id, { nombre: fila.nombre, campos: camposCambiados(peticion.body) });
+      return fila;
     },
 
     async eliminarDestino(peticion, respuesta) {
@@ -82,6 +88,7 @@ export default ({ pool }) => {
         throw conflicto(`El destino aparece en ${usos} resultados de simulaciones guardadas. Desactívelo (activo = false) en lugar de eliminarlo.`);
       }
       await pool.query('DELETE FROM destino WHERE id = $1', [destino.id]);
+      await anotar(pool, peticion.user, 'eliminar', 'destino', destino.id, { nombre: destino.nombre });
       return respuesta.code(204).send();
     },
 
@@ -111,6 +118,7 @@ export default ({ pool }) => {
         `INSERT INTO precio_mercado (destino_id, categoria, precio_kg_cop, fecha, fuente, referencia)
          VALUES ($1,$2,$3,$4,$5,$6) RETURNING ${COL_PRECIO}`,
         [destino.id, b.categoria, b.precio_kg_cop, b.fecha, b.fuente, b.referencia ?? null]);
+      await anotar(pool, peticion.user, 'crear', 'precio', rows[0].id, { destino: destino.nombre, categoria: b.categoria, fecha: b.fecha, precio_kg_cop: b.precio_kg_cop });
       respuesta.code(201).header('Location', `/api/v1/precios/${rows[0].id}`);
       return rows[0];
     },
@@ -126,18 +134,24 @@ export default ({ pool }) => {
           [destino_id, categoria, peticion.body.fecha, id]);
         if (choque.rowCount) throw conflicto('Ya hay otro precio de esa categoría para ese destino en esa fecha.');
       }
-      return actualizarFila(pool, 'precio_mercado', id, peticion.body, EDITABLES_PRECIO, COL_PRECIO);
+      const fila = await actualizarFila(pool, 'precio_mercado', id, peticion.body, EDITABLES_PRECIO, COL_PRECIO);
+      await anotar(pool, peticion.user, 'actualizar', 'precio', id, { cambios: peticion.body });
+      return fila;
     },
 
     async eliminarPrecio(peticion, respuesta) {
-      const { rowCount } = await pool.query('DELETE FROM precio_mercado WHERE id = $1', [peticion.params.precio_id]);
-      if (!rowCount) throw noEncontrado('No existe ese precio.');
+      const { rows: [borrado] } = await pool.query(
+        `DELETE FROM precio_mercado WHERE id = $1 RETURNING categoria, to_char(fecha, 'YYYY-MM-DD') AS fecha, precio_kg_cop`, [peticion.params.precio_id]);
+      if (!borrado) throw noEncontrado('No existe ese precio.');
+      await anotar(pool, peticion.user, 'eliminar', 'precio', peticion.params.precio_id, borrado);
       return respuesta.code(204).send();
     },
 
     async importarPrecios(peticion, respuesta) {
       const filas = leerCsv(peticion.body);
       const resultado = await importarPrecios(pool, filas, { origen: 'manual', usuarioId: peticion.user.sub });
+      await anotar(pool, peticion.user, 'importar', 'precio', resultado.id,
+        { filas: resultado.filas, insertados: resultado.insertados, actualizados: resultado.actualizados });
       respuesta.code(201);
       return resultado;
     },
@@ -172,6 +186,7 @@ export default ({ pool }) => {
          RETURNING ${COL_RUTA}`,
         [b.destino_id, origenNombre, JSON.stringify(origen), b.distancia_km, b.tiempo_horas, b.peajes_cop ?? 0,
           b.factor_dificultad ?? 1, b.merma_pct ?? 0, JSON.stringify(b.geometria), b.fuente ?? 'manual']);
+      await anotar(pool, peticion.user, 'crear', 'ruta', rows[0].id, { origen: origenNombre });
       respuesta.code(201).header('Location', `/api/v1/rutas/${rows[0].id}`);
       return rows[0];
     },
@@ -185,6 +200,7 @@ export default ({ pool }) => {
     async actualizarRuta(peticion) {
       const fila = await actualizarFila(pool, 'ruta', peticion.params.ruta_id, peticion.body, EDITABLES_RUTA, COL_RUTA);
       if (!fila) throw noEncontrado('No existe esa ruta.');
+      await anotar(pool, peticion.user, 'actualizar', 'ruta', fila.id, { campos: camposCambiados(peticion.body) });
       return fila;
     },
 
@@ -195,6 +211,7 @@ export default ({ pool }) => {
       const usos = await usadoEnSimulaciones('ruta_id', id);
       if (usos > 0) throw conflicto(`La ruta aparece en ${usos} resultados de simulaciones guardadas; corríjala con PATCH en lugar de eliminarla.`);
       await pool.query('DELETE FROM ruta WHERE id = $1', [id]);
+      await anotar(pool, peticion.user, 'eliminar', 'ruta', id);
       return respuesta.code(204).send();
     },
   };

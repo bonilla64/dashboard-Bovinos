@@ -554,3 +554,68 @@ td.izq small { display: block; font-size: 0.8rem; color: var(--tinta-suave); }
 .aviso .boton--peq { margin-left: var(--e-2); }
 .insignia { white-space: nowrap; margin: 2px 0; }
 .aviso--flotante { position: fixed; left: 50%; bottom: var(--e-4); transform: translateX(-50%); z-index: 1000; max-width: min(90vw, 36rem); box-shadow: 0 4px 16px rgba(0, 0, 0, 0.2); margin: 0; }
+
+/* ---------- Entrega 3: cuentas, fincas, lotes y administración ---------- */
+
+.formulario fieldset.campo { border: 0; padding: 0; margin: 0; background: transparent; }
+.formulario fieldset.campo legend { font-size: var(--t-1); padding: 0; margin-bottom: var(--e-1); }
+#campos-registro { display: grid; gap: var(--e-4); }
+.campo textarea { font: inherit; width: 100%; min-height: 6rem; padding: var(--e-2) var(--e-3); border: 2px solid #7a8a80; border-radius: var(--radio); }
+.campo select:disabled, .campo input:disabled { background: var(--fondo); color: var(--tinta-suave); }
+
+.boton--peligro { background: var(--perdida); border-color: var(--perdida); }
+.boton--peligro:hover { background: #7c211a; border-color: #7c211a; }
+.boton:disabled { opacity: 0.6; cursor: progress; }
+.acciones-fila { display: flex; flex-wrap: wrap; gap: var(--e-1) var(--e-2); }
+td.acciones-fila { display: table-cell; }
+td.acciones-fila .boton { margin: 2px 0; }
+th.izq small { display: block; font-weight: 400; font-size: 0.8rem; color: var(--tinta-suave); }
+
+.aviso--ok { background: var(--morichal-claro); border-color: var(--morichal); }
+.aviso--alerta { background: var(--perdida-claro); border-color: var(--perdida); }
+.aviso:focus { outline: 3px solid var(--foco); outline-offset: 2px; }
+
+.sesion__nombre { color: #fff; text-decoration: underline; text-underline-offset: 3px; }
+.sesion__nombre:hover { text-decoration-thickness: 2px; }
+
+.zona-peligro summary { cursor: pointer; font-weight: 700; color: var(--perdida); }
+.zona-peligro[open] { border-color: var(--perdida); }
+
+.dialogo {
+  border: 0;
+  border-radius: var(--radio);
+  padding: 0;
+  width: min(44rem, calc(100vw - 2rem));
+  max-height: calc(100vh - 2rem);
+  overflow: auto;
+  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.25);
+}
+.dialogo::backdrop { background: rgba(20, 35, 29, 0.55); }
+.dialogo > form { padding: var(--e-5); max-width: none; }
+.dialogo h2 { font-size: var(--t-3); }
+.dialogo .acciones { position: sticky; bottom: 0; background: var(--papel); padding-top: var(--e-3); margin-top: var(--e-4); }
+.dialogo__cuerpo > .campos + .ayuda, .dialogo__cuerpo > p { margin-top: var(--e-3); }
+.clave-temporal code { font-size: var(--t-4); letter-spacing: 0.08em; padding: var(--e-2) var(--e-3); background: var(--fondo); border-radius: var(--radio); display: inline-block; user-select: all; }
+.mapa--finca { height: 260px; margin-top: var(--e-2); }
+
+.pestanas { display: flex; flex-wrap: wrap; gap: var(--e-1); border-bottom: 2px solid var(--linea); margin-bottom: var(--e-5); }
+.pestanas [role="tab"] {
+  font: inherit; font-weight: 700; color: var(--morichal); background: transparent; cursor: pointer;
+  border: 2px solid transparent; border-bottom: 0; border-radius: var(--radio) var(--radio) 0 0;
+  padding: var(--e-2) var(--e-4); min-height: 44px; margin-bottom: -2px;
+}
+.pestanas [role="tab"][aria-selected="true"] { background: var(--papel); border-color: var(--linea); border-bottom: 2px solid var(--papel); color: var(--tinta); }
+.pestanas [role="tab"]:focus-visible { outline: 3px solid var(--foco); outline-offset: 2px; }
+.tarjetas { display: grid; gap: var(--e-4); grid-template-columns: repeat(auto-fill, minmax(15rem, 1fr)); margin-bottom: var(--e-5); }
+.tarjeta { background: var(--papel); border: 1px solid var(--linea); border-radius: var(--radio); padding: var(--e-4); }
+.tarjeta h2 { font-size: var(--t-1); color: var(--tinta-suave); margin-bottom: var(--e-1); }
+.tarjeta__cifra { font-size: var(--t-4); font-weight: 700; margin: 0 0 var(--e-1); }
+.tarjeta p { margin: 0 0 var(--e-1); }
+.barra-herramientas { display: flex; flex-wrap: wrap; align-items: end; gap: var(--e-3) var(--e-4); }
+.barra-herramientas .campo { min-width: 12rem; }
+.barra-herramientas .acciones { margin-top: 0; margin-left: auto; }
+@media (max-width: 760px) { .campos { grid-template-columns: minmax(0, 1fr); } .barra-herramientas .acciones { margin-left: 0; } }
+.campo input[type="radio"], .campo input[type="checkbox"] { width: 1.15rem; height: 1.15rem; min-height: 0; padding: 0; flex: none; accent-color: var(--morichal); }
+.campo .opcion { font-weight: 400; }
+.campo .opcion span { font-weight: 400; }
+.sesion__nombre { display: inline-block; max-width: 14rem; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; vertical-align: middle; }

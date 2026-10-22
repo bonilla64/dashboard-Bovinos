@@ -16,6 +16,9 @@ import productores from './rutas/productores.js';
 import lotes from './rutas/lotes.js';
 import destinos from './rutas/destinos.js';
 import simulaciones from './rutas/simulaciones.js';
+import usuarios from './rutas/usuarios.js';
+import fincas from './rutas/fincas.js';
+import administracion from './rutas/administracion.js';
 
 export const PREFIJO = '/api/v1';
 
@@ -27,7 +30,7 @@ export async function construirApp({ config, pool, limiteIngreso = 10, registrar
     logger: registrar && {
       level: config.nivelLog,
       // Nunca se escriben en el log tokens ni contraseñas.
-      redact: ['req.headers.authorization', 'req.body.contrasena'],
+      redact: ['req.headers.authorization', 'req.body.contrasena', 'req.body.contrasena_actual', 'req.body.contrasena_nueva'],
     },
     ajv: { customOptions: { allErrors: true, removeAdditional: false, useDefaults: true, coerceTypes: 'array' } },
   });
@@ -54,6 +57,7 @@ export async function construirApp({ config, pool, limiteIngreso = 10, registrar
   const manejadores = {
     ...sistema(dependencias), ...autenticacion(dependencias), ...productores(dependencias),
     ...lotes(dependencias), ...destinos(dependencias), ...simulaciones(dependencias),
+    ...usuarios(dependencias), ...fincas(dependencias), ...administracion(dependencias),
   };
 
   await app.register(async (api) => {
@@ -68,7 +72,7 @@ export async function construirApp({ config, pool, limiteIngreso = 10, registrar
         url: op.ruta,
         schema: op.esquema,
         config: limitar ? { rateLimit: { max: limiteIngreso, timeWindow: '1 minute' } } : {},
-        preHandler: op.requiereSesion ? exigirSesion(op.roles) : undefined,
+        preHandler: op.requiereSesion ? exigirSesion(pool, op.roles, op.operationId) : undefined,
         handler: manejador,
       });
     }

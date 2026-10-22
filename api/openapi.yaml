@@ -1,7 +1,7 @@
 openapi: 3.1.0
 info:
   title: API del Simulador de Destinos Ganaderos desde Yopal
-  version: 0.3.0
+  version: 0.4.0
   summary: Compara destinos de venta de un lote de ganado combinando precio por kilo, ruta, flete, peajes, comisión y merma.
   description: |
     Contrato de la API del proyecto (Entrega 3, Tecnologías Web 2026-B, Unitrópico).
@@ -17,7 +17,12 @@ info:
     - Todo error, sin excepción, responde con el esquema `Error`.
     - Las operaciones marcadas con candado exigen `Authorization: Bearer <token>`, obtenido en `POST /auth/ingreso`.
       La extensión `x-roles` indica qué roles pueden usarlas; si no aparece, basta con haber iniciado sesión.
-    - Un productor solo ve y modifica sus propios lotes y simulaciones (autorización por objeto).
+    - Un productor solo ve y modifica sus propios lotes, fincas y simulaciones (autorización por objeto).
+    - Cada petición con token vuelve a consultar la cuenta: si fue suspendida o eliminada responde 401 aunque el
+      token no haya vencido, y si cambió de rol se aplica el rol nuevo. Una cuenta con contraseña temporal solo
+      puede usar `GET /auth/yo` y `POST /auth/contrasena` hasta cambiarla (403).
+    - Integridad: lo que tiene datos asociados no se borra sino que se desactiva (cuentas suspendidas, destinos y
+      fincas inactivos, lotes vendidos), y siempre queda al menos un administrador activo.
     - Vigencia de precios: cada resultado indica la fecha y la antigüedad del precio usado. Con más de 7 días
       se agrega una advertencia; con más de 30 días el destino no se compara (422). Los precios se cargan
       desde los reportes de Fedegán con `POST /precios/importacion`.
@@ -46,8 +51,12 @@ security: []
 tags:
   - name: Autenticación
     description: Registro, inicio de sesión y usuario actual.
+  - name: Usuarios
+    description: Administración de cuentas (solo administradores).
   - name: Productores
-    description: Personas que registran lotes para vender.
+    description: Personas naturales o empresas que registran lotes para vender.
+  - name: Fincas
+    description: Predios de cada productor, con municipio, vereda y ubicación.
   - name: Lotes
     description: Grupos de animales que se quieren comercializar.
   - name: Destinos
@@ -58,6 +67,8 @@ tags:
     description: Trayecto vial desde el origen (Yopal) hasta cada destino, con su geometría.
   - name: Simulaciones
     description: Cálculo comparativo de utilidad de un lote en varios destinos.
+  - name: Administración
+    description: Resumen del sistema y bitácora de cambios (solo administradores).
   - name: Sistema
     description: Estado del servicio.
 
@@ -80,19 +91,28 @@ paths:
     post:
       tags: [Autenticación]
       operationId: registrarUsuario
-      summary: Crea una cuenta de productor
-      description: Crea en una sola transacción el usuario (rol `productor`) y su ficha de productor. La contraseña se guarda cifrada con bcrypt.
+      summary: Crea una cuenta de productor (persona o empresa)
+      description: |
+        Crea en una sola transacción el usuario (rol `productor`) y su ficha de productor. Una persona se identifica
+        con CC o CE; una empresa con NIT (se comprueba el dígito de verificación) y debe indicar su representante
+        legal. El documento y el correo no se pueden repetir. Exige aceptar el tratamiento de datos personales
+        (Ley 1581 de 2012). La contraseña se guarda cifrada con bcrypt.
       requestBody:
         required: true
         content:
           application/json:
             schema: { $ref: "#/components/schemas/RegistroEntrada" }
             example:
+              tipo_persona: natural
+              tipo_documento: CC
+              numero_documento: "1118556432"
               nombre_completo: Rosalba Guío Vargas
               correo: rosalba.guio@correo.co
               contrasena: sabana-tauramena-2026
               municipio: Tauramena
+              vereda: Cusiana
               telefono: "3114409862"
+              acepta_tratamiento_datos: true
       responses:
         "201":
           description: Cuenta creada; ya puede iniciar sesión
@@ -101,7 +121,7 @@ paths:
               schema: { $ref: "#/components/schemas/Sesion" }
         "400": { $ref: "#/components/responses/PeticionInvalida" }
         "409":
-          description: Ya existe una cuenta con ese correo
+          description: Ya existe una cuenta con ese correo o ese documento
           content:
             application/json:
               schema: { $ref: "#/components/schemas/Error" }
@@ -118,7 +138,9 @@ paths:
       tags: [Autenticación]
       operationId: iniciarSesion
       summary: Inicia sesión y entrega un token
-      description: Limitado a 10 intentos por minuto por dirección IP.
+      description: |
+        Limitado a 10 intentos por minuto por dirección IP. Una cuenta suspendida recibe 403. Si la respuesta trae
+        `usuario.debe_cambiar_contrasena: true`, la cuenta debe cambiar su contraseña antes de seguir.
       requestBody:
         required: true
         content:
@@ -143,6 +165,9 @@ paths:
                   correo: hernando.rincon@correo.co
                   rol: productor
                   productor_id: cd3b83ce-114a-5624-bde0-0c482a535db2
+                  activo: true
+                  debe_cambiar_contrasena: false
+                  ultimo_ingreso: "2026-10-18T07:40:00-05:00"
                   creado_en: "2026-09-10T09:00:00-05:00"
                   actualizado_en: "2026-09-10T09:00:00-05:00"
         "400": { $ref: "#/components/responses/PeticionInvalida" }
@@ -155,6 +180,11 @@ paths:
                 codigo: NO_AUTENTICADO
                 mensaje: Correo o contraseña incorrectos.
                 detalles: []
+        "403":
+          description: Cuenta suspendida
+          content:
+            application/json:
+              schema: { $ref: "#/components/schemas/Error" }
         "422": { $ref: "#/components/responses/ValidacionFallida" }
         "429": { $ref: "#/components/responses/DemasiadasSolicitudes" }
 
@@ -162,15 +192,378 @@ paths:
     get:
       tags: [Autenticación]
       operationId: obtenerUsuarioActual
-      summary: Datos del usuario de la sesión
+      summary: Datos del usuario de la sesión, con su ficha de productor
       security: [{ bearer: [] }]
       responses:
         "200":
           description: Usuario actual
           content:
             application/json:
-              schema: { $ref: "#/components/schemas/Usuario" }
+              schema: { $ref: "#/components/schemas/UsuarioDetalle" }
         "401": { $ref: "#/components/responses/NoAutenticado" }
+    patch:
+      tags: [Autenticación]
+      operationId: actualizarPerfil
+      summary: Actualiza los datos de la propia cuenta y su ficha de productor
+      description: |
+        El nombre y el correo se cambian a la vez en la cuenta y en la ficha. El documento solo se puede cambiar
+        mientras el administrador no lo haya marcado como verificado.
+      security: [{ bearer: [] }]
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema: { $ref: "#/components/schemas/PerfilCambios" }
+            example: { telefono: "3124587799", vereda: El Charte }
+      responses:
+        "200":
+          description: Perfil actualizado
+          content:
+            application/json:
+              schema: { $ref: "#/components/schemas/UsuarioDetalle" }
+        "400": { $ref: "#/components/responses/PeticionInvalida" }
+        "401": { $ref: "#/components/responses/NoAutenticado" }
+        "409": { $ref: "#/components/responses/Conflicto" }
+        "422": { $ref: "#/components/responses/ValidacionFallida" }
+    delete:
+      tags: [Autenticación]
+      operationId: eliminarCuenta
+      summary: Elimina la propia cuenta (derecho de supresión, Ley 1581 de 2012)
+      description: |
+        Exige la contraseña. La cuenta se borra. Si el productor no tiene lotes, también se borran su ficha y sus
+        fincas; si tiene lotes, la ficha queda anónima (sin nombre, correo, celular, documento ni vereda) y los lotes
+        y simulaciones se conservan como historia del mercado. El único administrador activo no puede eliminarse (409).
+      security: [{ bearer: [] }]
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema: { $ref: "#/components/schemas/ConfirmarContrasena" }
+      responses:
+        "204": { description: Cuenta eliminada o anonimizada }
+        "400": { $ref: "#/components/responses/PeticionInvalida" }
+        "401": { $ref: "#/components/responses/NoAutenticado" }
+        "409": { $ref: "#/components/responses/Conflicto" }
+        "422": { $ref: "#/components/responses/ValidacionFallida" }
+
+  /auth/contrasena:
+    post:
+      tags: [Autenticación]
+      operationId: cambiarContrasena
+      summary: Cambia la contraseña de la cuenta de la sesión
+      description: Exige la contraseña actual. Si la cuenta tenía una contraseña temporal, deja de pedir el cambio.
+      security: [{ bearer: [] }]
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema: { $ref: "#/components/schemas/CambioContrasena" }
+      responses:
+        "204": { description: Contraseña cambiada }
+        "400": { $ref: "#/components/responses/PeticionInvalida" }
+        "401": { $ref: "#/components/responses/NoAutenticado" }
+        "422": { $ref: "#/components/responses/ValidacionFallida" }
+
+  /usuarios:
+    get:
+      tags: [Usuarios]
+      operationId: listarUsuarios
+      summary: Lista las cuentas, con su ficha de productor
+      security: [{ bearer: [] }]
+      x-roles: [administrador]
+      parameters:
+        - $ref: "#/components/parameters/Pagina"
+        - $ref: "#/components/parameters/PorPagina"
+        - name: q
+          in: query
+          description: Busca en nombre, correo y número de documento.
+          schema: { type: string, minLength: 1, maxLength: 80 }
+        - name: rol
+          in: query
+          schema: { $ref: "#/components/schemas/Rol" }
+        - name: activo
+          in: query
+          schema: { type: boolean }
+      responses:
+        "200":
+          description: Página de usuarios
+          content:
+            application/json:
+              schema: { $ref: "#/components/schemas/ListaUsuarios" }
+        "400": { $ref: "#/components/responses/PeticionInvalida" }
+        "401": { $ref: "#/components/responses/NoAutenticado" }
+        "403": { $ref: "#/components/responses/Prohibido" }
+    post:
+      tags: [Usuarios]
+      operationId: crearUsuario
+      summary: Crea una cuenta (productor o administrador)
+      description: |
+        Una cuenta de productor exige los mismos datos de identidad que el registro y crea también su ficha.
+        La cuenta nueva debe cambiar la contraseña la primera vez que ingrese.
+      security: [{ bearer: [] }]
+      x-roles: [administrador]
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema: { $ref: "#/components/schemas/UsuarioEntrada" }
+            example:
+              rol: productor
+              nombre_completo: Wilson Pérez Daza
+              correo: wilson.perez@correo.co
+              contrasena: temporal-2026-wp
+              tipo_persona: natural
+              tipo_documento: CC
+              numero_documento: "1118456789"
+              municipio: Trinidad
+      responses:
+        "201":
+          description: Cuenta creada
+          headers:
+            Location: { $ref: "#/components/headers/Location" }
+          content:
+            application/json:
+              schema: { $ref: "#/components/schemas/UsuarioDetalle" }
+        "400": { $ref: "#/components/responses/PeticionInvalida" }
+        "401": { $ref: "#/components/responses/NoAutenticado" }
+        "403": { $ref: "#/components/responses/Prohibido" }
+        "409": { $ref: "#/components/responses/Conflicto" }
+        "422": { $ref: "#/components/responses/ValidacionFallida" }
+
+  /usuarios/{usuario_id}:
+    parameters:
+      - $ref: "#/components/parameters/UsuarioId"
+    get:
+      tags: [Usuarios]
+      operationId: obtenerUsuario
+      summary: Obtiene una cuenta con su ficha de productor
+      security: [{ bearer: [] }]
+      x-roles: [administrador]
+      responses:
+        "200":
+          description: Cuenta encontrada
+          content:
+            application/json:
+              schema: { $ref: "#/components/schemas/UsuarioDetalle" }
+        "400": { $ref: "#/components/responses/PeticionInvalida" }
+        "401": { $ref: "#/components/responses/NoAutenticado" }
+        "403": { $ref: "#/components/responses/Prohibido" }
+        "404": { $ref: "#/components/responses/NoEncontrado" }
+    patch:
+      tags: [Usuarios]
+      operationId: actualizarUsuario
+      summary: Cambia nombre, correo, rol o estado de una cuenta
+      description: |
+        `activo: false` suspende la cuenta: deja de poder ingresar y su sesión abierta deja de servir al instante.
+        Un administrador no puede quitarse su propio rol ni suspenderse, y siempre debe quedar al menos un administrador activo.
+      security: [{ bearer: [] }]
+      x-roles: [administrador]
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema: { $ref: "#/components/schemas/UsuarioCambios" }
+            example: { activo: false }
+      responses:
+        "200":
+          description: Cuenta actualizada
+          content:
+            application/json:
+              schema: { $ref: "#/components/schemas/UsuarioDetalle" }
+        "400": { $ref: "#/components/responses/PeticionInvalida" }
+        "401": { $ref: "#/components/responses/NoAutenticado" }
+        "403": { $ref: "#/components/responses/Prohibido" }
+        "404": { $ref: "#/components/responses/NoEncontrado" }
+        "409": { $ref: "#/components/responses/Conflicto" }
+        "422": { $ref: "#/components/responses/ValidacionFallida" }
+    delete:
+      tags: [Usuarios]
+      operationId: eliminarUsuario
+      summary: Elimina una cuenta sin datos
+      description: Si el productor ya tiene lotes, responde 409 y se debe suspender en su lugar, para no romper el historial.
+      security: [{ bearer: [] }]
+      x-roles: [administrador]
+      responses:
+        "204": { description: Cuenta eliminada con su ficha y sus fincas }
+        "400": { $ref: "#/components/responses/PeticionInvalida" }
+        "401": { $ref: "#/components/responses/NoAutenticado" }
+        "403": { $ref: "#/components/responses/Prohibido" }
+        "404": { $ref: "#/components/responses/NoEncontrado" }
+        "409": { $ref: "#/components/responses/Conflicto" }
+
+  /usuarios/{usuario_id}/contrasena-temporal:
+    parameters:
+      - $ref: "#/components/parameters/UsuarioId"
+    post:
+      tags: [Usuarios]
+      operationId: restablecerContrasena
+      summary: Genera una contraseña temporal
+      description: La contraseña se muestra una sola vez. La cuenta debe cambiarla al ingresar.
+      security: [{ bearer: [] }]
+      x-roles: [administrador]
+      responses:
+        "200":
+          description: Contraseña temporal generada
+          content:
+            application/json:
+              schema: { $ref: "#/components/schemas/ContrasenaTemporal" }
+        "400": { $ref: "#/components/responses/PeticionInvalida" }
+        "401": { $ref: "#/components/responses/NoAutenticado" }
+        "403": { $ref: "#/components/responses/Prohibido" }
+        "404": { $ref: "#/components/responses/NoEncontrado" }
+
+  /fincas:
+    get:
+      tags: [Fincas]
+      operationId: listarFincas
+      summary: Lista las fincas del productor de la sesión (todas, si es administrador)
+      security: [{ bearer: [] }]
+      parameters:
+        - $ref: "#/components/parameters/Pagina"
+        - $ref: "#/components/parameters/PorPagina"
+        - name: productor_id
+          in: query
+          description: Solo para administradores; un productor siempre ve las suyas.
+          schema: { type: string, format: uuid }
+        - name: activo
+          in: query
+          schema: { type: boolean }
+      responses:
+        "200":
+          description: Página de fincas
+          content:
+            application/json:
+              schema: { $ref: "#/components/schemas/ListaFincas" }
+        "400": { $ref: "#/components/responses/PeticionInvalida" }
+        "401": { $ref: "#/components/responses/NoAutenticado" }
+    post:
+      tags: [Fincas]
+      operationId: crearFinca
+      summary: Registra una finca
+      description: |
+        Un productor puede omitir `productor_id`; un administrador debe enviarlo. El nombre no se repite entre las
+        fincas del mismo productor. Si se envía `ubicacion`, debe quedar a menos de 120 km de la cabecera del municipio.
+      security: [{ bearer: [] }]
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema: { $ref: "#/components/schemas/FincaEntrada" }
+            example:
+              nombre: Finca La Esperanza
+              municipio: Yopal
+              vereda: El Charte
+              ubicacion: { type: Point, coordinates: [-72.33, 5.29] }
+              area_ha: 420
+      responses:
+        "201":
+          description: Finca creada
+          headers:
+            Location: { $ref: "#/components/headers/Location" }
+          content:
+            application/json:
+              schema: { $ref: "#/components/schemas/Finca" }
+        "400": { $ref: "#/components/responses/PeticionInvalida" }
+        "401": { $ref: "#/components/responses/NoAutenticado" }
+        "403": { $ref: "#/components/responses/Prohibido" }
+        "409": { $ref: "#/components/responses/Conflicto" }
+        "422": { $ref: "#/components/responses/ValidacionFallida" }
+
+  /fincas/{finca_id}:
+    parameters:
+      - $ref: "#/components/parameters/FincaId"
+    get:
+      tags: [Fincas]
+      operationId: obtenerFinca
+      summary: Obtiene una finca propia
+      security: [{ bearer: [] }]
+      responses:
+        "200":
+          description: Finca encontrada
+          content:
+            application/json:
+              schema: { $ref: "#/components/schemas/Finca" }
+        "400": { $ref: "#/components/responses/PeticionInvalida" }
+        "401": { $ref: "#/components/responses/NoAutenticado" }
+        "403": { $ref: "#/components/responses/Prohibido" }
+        "404": { $ref: "#/components/responses/NoEncontrado" }
+    patch:
+      tags: [Fincas]
+      operationId: actualizarFinca
+      summary: Modifica una finca propia
+      description: Si cambia el nombre o el municipio, se actualizan también los lotes de esa finca.
+      security: [{ bearer: [] }]
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema: { $ref: "#/components/schemas/FincaCambios" }
+            example: { area_ha: 450 }
+      responses:
+        "200":
+          description: Finca actualizada
+          content:
+            application/json:
+              schema: { $ref: "#/components/schemas/Finca" }
+        "400": { $ref: "#/components/responses/PeticionInvalida" }
+        "401": { $ref: "#/components/responses/NoAutenticado" }
+        "403": { $ref: "#/components/responses/Prohibido" }
+        "404": { $ref: "#/components/responses/NoEncontrado" }
+        "409": { $ref: "#/components/responses/Conflicto" }
+        "422": { $ref: "#/components/responses/ValidacionFallida" }
+    delete:
+      tags: [Fincas]
+      operationId: eliminarFinca
+      summary: Elimina una finca sin lotes
+      description: Si la finca tiene lotes responde 409; se puede desactivar con `activo = false`.
+      security: [{ bearer: [] }]
+      responses:
+        "204": { description: Finca eliminada }
+        "400": { $ref: "#/components/responses/PeticionInvalida" }
+        "401": { $ref: "#/components/responses/NoAutenticado" }
+        "403": { $ref: "#/components/responses/Prohibido" }
+        "404": { $ref: "#/components/responses/NoEncontrado" }
+        "409": { $ref: "#/components/responses/Conflicto" }
+
+  /admin/resumen:
+    get:
+      tags: [Administración]
+      operationId: obtenerResumen
+      summary: Cifras generales del sistema
+      security: [{ bearer: [] }]
+      x-roles: [administrador]
+      responses:
+        "200":
+          description: Resumen
+          content:
+            application/json:
+              schema: { $ref: "#/components/schemas/Resumen" }
+        "401": { $ref: "#/components/responses/NoAutenticado" }
+        "403": { $ref: "#/components/responses/Prohibido" }
+
+  /bitacora:
+    get:
+      tags: [Administración]
+      operationId: listarBitacora
+      summary: Registro de cambios hechos por usuarios y administradores
+      security: [{ bearer: [] }]
+      x-roles: [administrador]
+      parameters:
+        - $ref: "#/components/parameters/Pagina"
+        - $ref: "#/components/parameters/PorPagina"
+        - name: recurso
+          in: query
+          schema: { type: string, maxLength: 40 }
+      responses:
+        "200":
+          description: Página de la bitácora, de lo más reciente a lo más antiguo
+          content:
+            application/json:
+              schema: { $ref: "#/components/schemas/ListaBitacora" }
+        "400": { $ref: "#/components/responses/PeticionInvalida" }
+        "401": { $ref: "#/components/responses/NoAutenticado" }
+        "403": { $ref: "#/components/responses/Prohibido" }
+
 
   /productores:
     get:
@@ -187,6 +580,17 @@ paths:
           description: Filtra por municipio de residencia.
           schema: { type: string, maxLength: 60 }
           example: Yopal
+        - name: q
+          in: query
+          description: Busca en nombre y número de documento.
+          schema: { type: string, minLength: 1, maxLength: 80 }
+        - name: tipo_persona
+          in: query
+          schema: { $ref: "#/components/schemas/TipoPersona" }
+        - name: verificado
+          in: query
+          description: Filtra por documento verificado por un administrador.
+          schema: { type: boolean }
       responses:
         "200":
           description: Página de productores
@@ -209,6 +613,9 @@ paths:
           application/json:
             schema: { $ref: "#/components/schemas/ProductorEntrada" }
             example:
+              tipo_persona: natural
+              tipo_documento: CC
+              numero_documento: "40215873"
               nombre_completo: Luz Marina Cárdenas Pérez
               municipio: Aguazul
               telefono: "3208841325"
@@ -243,10 +650,18 @@ paths:
               schema: { $ref: "#/components/schemas/Productor" }
               example:
                 id: cd3b83ce-114a-5624-bde0-0c482a535db2
+                tipo_persona: natural
+                tipo_documento: CC
+                numero_documento: "74852369"
+                representante_legal: null
                 nombre_completo: Hernando Rincón Barrera
+                departamento: Casanare
                 municipio: Yopal
+                vereda: La Guafilla
                 telefono: "3124587710"
                 correo: hernando.rincon@correo.co
+                documento_verificado: true
+                acepta_datos_en: "2026-09-10T09:00:00-05:00"
                 creado_en: "2026-09-10T09:00:00-05:00"
                 actualizado_en: "2026-09-10T09:00:00-05:00"
         "400": { $ref: "#/components/responses/PeticionInvalida" }
@@ -257,6 +672,9 @@ paths:
       tags: [Productores]
       operationId: actualizarProductor
       summary: Modifica datos de un productor (el propio, o cualquiera si es administrador)
+      description: |
+        Solo un administrador puede marcar `documento_verificado`. Un documento verificado ya no lo puede cambiar
+        el productor. Si el productor tiene cuenta, el nombre y el correo se actualizan también en la cuenta.
       security: [{ bearer: [] }]
       requestBody:
         required: true
@@ -279,7 +697,7 @@ paths:
     delete:
       tags: [Productores]
       operationId: eliminarProductor
-      summary: Elimina un productor que no tiene lotes
+      summary: Elimina un productor que no tiene lotes ni cuenta
       security: [{ bearer: [] }]
       x-roles: [administrador]
       responses:
@@ -302,6 +720,10 @@ paths:
         - name: productor_id
           in: query
           description: Solo para administradores; un productor siempre ve los suyos.
+          schema: { type: string, format: uuid }
+        - name: finca_id
+          in: query
+          description: Solo los lotes de esa finca.
           schema: { type: string, format: uuid }
         - name: estado
           in: query
@@ -342,13 +764,12 @@ paths:
           application/json:
             schema: { $ref: "#/components/schemas/LoteEntrada" }
             example:
+              finca_id: 36f4879e-18aa-54a7-bd48-2bf86934920e
               nombre: Novillos cebados de octubre
               cantidad_animales: 30
               peso_promedio_kg: 452.0
               categoria: novillo_gordo
               raza: Brahman comercial
-              finca: Finca La Esperanza
-              municipio_origen: Yopal
       responses:
         "201":
           description: Lote creado
@@ -841,7 +1262,6 @@ paths:
         in: path
         required: true
         schema: { type: string, format: uuid }
-        example: 5ec2ea46-db9d-525b-8417-462de2b24a6a
     get:
       tags: [Rutas]
       operationId: obtenerRuta
@@ -1039,19 +1459,26 @@ components:
       in: path
       required: true
       schema: { type: string, format: uuid }
-      example: cd3b83ce-114a-5624-bde0-0c482a535db2
     LoteId:
       name: lote_id
       in: path
       required: true
       schema: { type: string, format: uuid }
-      example: 9bad2b17-c8e0-57f7-ac48-2d1cf99ad088
     DestinoId:
       name: destino_id
       in: path
       required: true
       schema: { type: string, format: uuid }
-      example: 52bbc2f4-901c-5ff0-a08a-5f8f08f91fa1
+    UsuarioId:
+      name: usuario_id
+      in: path
+      required: true
+      schema: { type: string, format: uuid }
+    FincaId:
+      name: finca_id
+      in: path
+      required: true
+      schema: { type: string, format: uuid }
 
   headers:
     Location:
@@ -1142,6 +1569,7 @@ components:
       value:
         id: 9bad2b17-c8e0-57f7-ac48-2d1cf99ad088
         productor_id: cd3b83ce-114a-5624-bde0-0c482a535db2
+        finca_id: 36f4879e-18aa-54a7-bd48-2bf86934920e
         nombre: Novillos cebados de septiembre
         cantidad_animales: 30
         peso_promedio_kg: 452.0
@@ -1151,6 +1579,7 @@ components:
         finca: Finca La Esperanza
         municipio_origen: Yopal
         estado: disponible
+        simulaciones: 0
         creado_en: "2026-09-14T07:30:00-05:00"
         actualizado_en: "2026-09-14T07:30:00-05:00"
     RutaVillavicencio:
@@ -1349,9 +1778,25 @@ components:
     # ---------- Autenticación ----------
     RegistroEntrada:
       type: object
-      required: [nombre_completo, correo, contrasena, municipio]
+      required: [tipo_persona, tipo_documento, numero_documento, nombre_completo, correo, contrasena, municipio, acepta_tratamiento_datos]
       properties:
-        nombre_completo: { type: string, minLength: 3, maxLength: 120 }
+        tipo_persona: { $ref: "#/components/schemas/TipoPersona" }
+        tipo_documento: { $ref: "#/components/schemas/TipoDocumento" }
+        numero_documento:
+          type: string
+          minLength: 5
+          maxLength: 15
+          description: "Sin puntos. NIT con su dígito de verificación: 900123456-7."
+        nombre_completo:
+          type: string
+          minLength: 3
+          maxLength: 120
+          description: Nombre de la persona o razón social de la empresa.
+        representante_legal:
+          type: [string, "null"]
+          minLength: 3
+          maxLength: 120
+          description: Obligatorio para empresas.
         correo: { type: string, format: email, maxLength: 120 }
         contrasena:
           type: string
@@ -1359,10 +1804,13 @@ components:
           maxLength: 72
           writeOnly: true
           description: Mínimo 10 caracteres. Se guarda cifrada con bcrypt; nunca se devuelve.
-        municipio: { type: string, minLength: 2, maxLength: 60 }
-        telefono:
-          type: [string, "null"]
-          pattern: "^3[0-9]{9}$"
+        municipio: { $ref: "#/components/schemas/MunicipioCasanare" }
+        vereda: { type: [string, "null"], maxLength: 80 }
+        telefono: { $ref: "#/components/schemas/Telefono" }
+        acepta_tratamiento_datos:
+          type: boolean
+          const: true
+          description: Autorización de tratamiento de datos personales (Ley 1581 de 2012).
     IngresoEntrada:
       type: object
       required: [correo, contrasena]
@@ -1371,7 +1819,7 @@ components:
         contrasena: { type: string, minLength: 1, maxLength: 72, writeOnly: true }
     Usuario:
       type: object
-      required: [id, nombre_completo, correo, rol, productor_id, creado_en, actualizado_en]
+      required: [id, nombre_completo, correo, rol, productor_id, activo, debe_cambiar_contrasena, ultimo_ingreso, creado_en, actualizado_en]
       properties:
         id: { type: string, format: uuid }
         nombre_completo: { type: string }
@@ -1381,6 +1829,9 @@ components:
           type: [string, "null"]
           format: uuid
           description: Ficha de productor asociada. Nula para administradores.
+        activo: { type: boolean, description: "false = cuenta suspendida; no puede iniciar sesión." }
+        debe_cambiar_contrasena: { type: boolean, description: La cuenta tiene una contraseña temporal. }
+        ultimo_ingreso: { type: [string, "null"], format: date-time }
         creado_en: { type: string, format: date-time }
         actualizado_en: { type: string, format: date-time }
     Sesion:
@@ -1395,14 +1846,16 @@ components:
     # ---------- Productor ----------
     ProductorEntrada:
       type: object
-      required: [nombre_completo, municipio]
+      required: [tipo_persona, tipo_documento, numero_documento, nombre_completo, municipio]
       properties:
+        tipo_persona: { $ref: "#/components/schemas/TipoPersona" }
+        tipo_documento: { $ref: "#/components/schemas/TipoDocumento" }
+        numero_documento: { type: string, minLength: 5, maxLength: 15 }
+        representante_legal: { type: [string, "null"], minLength: 3, maxLength: 120 }
         nombre_completo: { type: string, minLength: 3, maxLength: 120 }
-        municipio: { type: string, minLength: 2, maxLength: 60 }
-        telefono:
-          type: [string, "null"]
-          pattern: "^3[0-9]{9}$"
-          description: Celular colombiano de 10 dígitos.
+        municipio: { $ref: "#/components/schemas/MunicipioCasanare" }
+        vereda: { type: [string, "null"], maxLength: 80 }
+        telefono: { $ref: "#/components/schemas/Telefono" }
         correo:
           type: [string, "null"]
           format: email
@@ -1411,18 +1864,39 @@ components:
       type: object
       minProperties: 1
       properties:
+        tipo_persona: { $ref: "#/components/schemas/TipoPersona" }
+        tipo_documento: { $ref: "#/components/schemas/TipoDocumento" }
+        numero_documento: { type: string, minLength: 5, maxLength: 15 }
+        representante_legal: { type: [string, "null"], minLength: 3, maxLength: 120 }
         nombre_completo: { type: string, minLength: 3, maxLength: 120 }
-        municipio: { type: string, minLength: 2, maxLength: 60 }
-        telefono: { type: [string, "null"], pattern: "^3[0-9]{9}$" }
+        municipio: { $ref: "#/components/schemas/MunicipioCasanare" }
+        vereda: { type: [string, "null"], maxLength: 80 }
+        telefono: { $ref: "#/components/schemas/Telefono" }
         correo: { type: [string, "null"], format: email, maxLength: 120 }
+        documento_verificado: { type: boolean, description: Solo administradores. }
     Productor:
-      allOf:
-        - type: object
-          required: [id]
-          properties:
-            id: { type: string, format: uuid, readOnly: true }
-        - $ref: "#/components/schemas/ProductorEntrada"
-        - $ref: "#/components/schemas/Marcas"
+      type: object
+      required: [id, tipo_persona, tipo_documento, numero_documento, representante_legal, nombre_completo, departamento, municipio, vereda, telefono, correo, documento_verificado, acepta_datos_en, creado_en, actualizado_en]
+      properties:
+        id: { type: string, format: uuid, readOnly: true }
+        tipo_persona: { $ref: "#/components/schemas/TipoPersona" }
+        tipo_documento:
+          oneOf:
+            - { $ref: "#/components/schemas/TipoDocumento" }
+            - { type: "null" }
+          description: Nulo en fichas antiguas que aún no completan el documento.
+        numero_documento: { type: [string, "null"] }
+        representante_legal: { type: [string, "null"] }
+        nombre_completo: { type: string }
+        departamento: { type: string }
+        municipio: { type: string }
+        vereda: { type: [string, "null"] }
+        telefono: { type: [string, "null"] }
+        correo: { type: [string, "null"], format: email }
+        documento_verificado: { type: boolean, readOnly: true }
+        acepta_datos_en: { type: [string, "null"], format: date-time, readOnly: true, description: Momento en que aceptó el tratamiento de datos. }
+        creado_en: { type: string, format: date-time, readOnly: true }
+        actualizado_en: { type: string, format: date-time, readOnly: true }
     ListaProductores:
       allOf:
         - $ref: "#/components/schemas/Paginacion"
@@ -1436,37 +1910,41 @@ components:
     # ---------- Lote ----------
     LoteEntrada:
       type: object
-      required: [nombre, cantidad_animales, peso_promedio_kg, categoria, municipio_origen]
+      required: [nombre, cantidad_animales, peso_promedio_kg, categoria]
+      description: Indique `finca_id` (recomendado; el municipio de origen sale de la finca) o `municipio_origen`.
       properties:
         productor_id:
           type: string
           format: uuid
           description: Obligatorio para administradores; un productor puede omitirlo.
+        finca_id: { type: [string, "null"], format: uuid, description: Finca activa del mismo productor. }
         nombre: { type: string, minLength: 3, maxLength: 80 }
         cantidad_animales: { type: integer, minimum: 1, maximum: 200 }
         peso_promedio_kg: { type: number, minimum: 80, maximum: 900, multipleOf: 0.1 }
         categoria: { $ref: "#/components/schemas/Categoria" }
         raza: { type: [string, "null"], maxLength: 40 }
-        finca: { type: [string, "null"], maxLength: 80 }
-        municipio_origen: { type: string, minLength: 2, maxLength: 60 }
+        finca: { type: [string, "null"], maxLength: 80, description: Nombre libre; se ignora si se envía `finca_id`. }
+        municipio_origen: { $ref: "#/components/schemas/MunicipioCasanare" }
     LoteCambios:
       type: object
       minProperties: 1
       properties:
+        finca_id: { type: [string, "null"], format: uuid }
         nombre: { type: string, minLength: 3, maxLength: 80 }
         cantidad_animales: { type: integer, minimum: 1, maximum: 200 }
         peso_promedio_kg: { type: number, minimum: 80, maximum: 900, multipleOf: 0.1 }
         categoria: { $ref: "#/components/schemas/Categoria" }
         raza: { type: [string, "null"], maxLength: 40 }
         finca: { type: [string, "null"], maxLength: 80 }
-        municipio_origen: { type: string, minLength: 2, maxLength: 60 }
+        municipio_origen: { $ref: "#/components/schemas/MunicipioCasanare" }
         estado: { $ref: "#/components/schemas/EstadoLote" }
     Lote:
       type: object
-      required: [id, productor_id, nombre, cantidad_animales, peso_promedio_kg, peso_total_kg, categoria, raza, finca, municipio_origen, estado, creado_en, actualizado_en]
+      required: [id, productor_id, finca_id, nombre, cantidad_animales, peso_promedio_kg, peso_total_kg, categoria, raza, finca, municipio_origen, estado, simulaciones, creado_en, actualizado_en]
       properties:
         id: { type: string, format: uuid, readOnly: true }
         productor_id: { type: string, format: uuid }
+        finca_id: { type: [string, "null"], format: uuid }
         nombre: { type: string }
         cantidad_animales: { type: integer, minimum: 1, maximum: 200 }
         peso_promedio_kg: { type: number }
@@ -1479,6 +1957,7 @@ components:
         finca: { type: [string, "null"] }
         municipio_origen: { type: string }
         estado: { $ref: "#/components/schemas/EstadoLote" }
+        simulaciones: { type: integer, minimum: 0, readOnly: true, description: Simulaciones hechas con el lote; si es mayor que 0 no se puede eliminar. }
         creado_en: { type: string, format: date-time, readOnly: true }
         actualizado_en: { type: string, format: date-time, readOnly: true }
     ListaLotes:
@@ -1490,6 +1969,229 @@ components:
             datos:
               type: array
               items: { $ref: "#/components/schemas/Lote" }
+
+    MunicipioCasanare:
+      type: string
+      description: Municipio de Casanare (lista cerrada; de aquí salen las rutas).
+      enum: [Yopal, Aguazul, Chámeza, Hato Corozal, La Salina, Maní, Monterrey, Nunchía, Orocué, Paz de Ariporo, Pore, Recetor, Sabanalarga, Sácama, San Luis de Palenque, Támara, Tauramena, Trinidad, Villanueva]
+    TipoPersona:
+      type: string
+      description: "`natural` = persona individual (cédula); `juridica` = empresa (NIT y representante legal)."
+      enum: [natural, juridica]
+    TipoDocumento:
+      type: string
+      description: "CC = cédula de ciudadanía, CE = cédula de extranjería, NIT = empresa (con dígito de verificación)."
+      enum: [CC, CE, NIT]
+    Telefono:
+      type: [string, "null"]
+      pattern: "^3[0-9]{9}$"
+      description: Celular colombiano de 10 dígitos.
+    PuntoOpcional:
+      oneOf:
+        - { $ref: "#/components/schemas/PuntoGeoJSON" }
+        - { type: "null" }
+
+    UsuarioDetalle:
+      allOf:
+        - $ref: "#/components/schemas/Usuario"
+        - type: object
+          required: [productor]
+          properties:
+            productor:
+              oneOf:
+                - { $ref: "#/components/schemas/Productor" }
+                - { type: "null" }
+              description: Ficha del productor; nula para administradores sin ficha.
+    ListaUsuarios:
+      allOf:
+        - $ref: "#/components/schemas/Paginacion"
+        - type: object
+          required: [datos]
+          properties:
+            datos:
+              type: array
+              items: { $ref: "#/components/schemas/UsuarioDetalle" }
+    UsuarioEntrada:
+      type: object
+      required: [rol, nombre_completo, correo, contrasena]
+      description: Si `rol` es `productor`, también son obligatorios `tipo_persona`, `tipo_documento`, `numero_documento` y `municipio`.
+      properties:
+        rol: { $ref: "#/components/schemas/Rol" }
+        nombre_completo: { type: string, minLength: 3, maxLength: 120 }
+        correo: { type: string, format: email, maxLength: 120 }
+        contrasena: { type: string, minLength: 10, maxLength: 72, writeOnly: true, description: Contraseña inicial; la cuenta deberá cambiarla al ingresar. }
+        tipo_persona: { $ref: "#/components/schemas/TipoPersona" }
+        tipo_documento: { $ref: "#/components/schemas/TipoDocumento" }
+        numero_documento: { type: string, minLength: 5, maxLength: 15 }
+        representante_legal: { type: [string, "null"], minLength: 3, maxLength: 120 }
+        municipio: { $ref: "#/components/schemas/MunicipioCasanare" }
+        vereda: { type: [string, "null"], maxLength: 80 }
+        telefono: { $ref: "#/components/schemas/Telefono" }
+    UsuarioCambios:
+      type: object
+      minProperties: 1
+      properties:
+        nombre_completo: { type: string, minLength: 3, maxLength: 120 }
+        correo: { type: string, format: email, maxLength: 120 }
+        rol: { $ref: "#/components/schemas/Rol" }
+        activo: { type: boolean, description: "false = cuenta suspendida." }
+    ContrasenaTemporal:
+      type: object
+      required: [contrasena_temporal]
+      properties:
+        contrasena_temporal: { type: string, description: Se muestra una sola vez; entréguela al usuario por un medio seguro. }
+    PerfilCambios:
+      type: object
+      minProperties: 1
+      properties:
+        nombre_completo: { type: string, minLength: 3, maxLength: 120 }
+        correo: { type: string, format: email, maxLength: 120 }
+        telefono: { $ref: "#/components/schemas/Telefono" }
+        municipio: { $ref: "#/components/schemas/MunicipioCasanare" }
+        vereda: { type: [string, "null"], maxLength: 80 }
+        tipo_persona: { $ref: "#/components/schemas/TipoPersona" }
+        tipo_documento: { $ref: "#/components/schemas/TipoDocumento" }
+        numero_documento: { type: string, minLength: 5, maxLength: 15 }
+        representante_legal: { type: [string, "null"], minLength: 3, maxLength: 120 }
+    CambioContrasena:
+      type: object
+      required: [contrasena_actual, contrasena_nueva]
+      properties:
+        contrasena_actual: { type: string, minLength: 1, maxLength: 72, writeOnly: true }
+        contrasena_nueva: { type: string, minLength: 10, maxLength: 72, writeOnly: true }
+    ConfirmarContrasena:
+      type: object
+      required: [contrasena]
+      properties:
+        contrasena: { type: string, minLength: 1, maxLength: 72, writeOnly: true }
+
+    FincaEntrada:
+      type: object
+      required: [nombre, municipio]
+      properties:
+        productor_id: { type: string, format: uuid, description: Obligatorio para administradores. }
+        nombre: { type: string, minLength: 3, maxLength: 80 }
+        municipio: { $ref: "#/components/schemas/MunicipioCasanare" }
+        vereda: { type: [string, "null"], maxLength: 80 }
+        ubicacion: { $ref: "#/components/schemas/PuntoOpcional" }
+        area_ha: { type: [number, "null"], exclusiveMinimum: 0, maximum: 100000, description: Área en hectáreas. }
+    FincaCambios:
+      type: object
+      minProperties: 1
+      properties:
+        nombre: { type: string, minLength: 3, maxLength: 80 }
+        municipio: { $ref: "#/components/schemas/MunicipioCasanare" }
+        vereda: { type: [string, "null"], maxLength: 80 }
+        ubicacion: { $ref: "#/components/schemas/PuntoOpcional" }
+        area_ha: { type: [number, "null"], exclusiveMinimum: 0, maximum: 100000 }
+        activo: { type: boolean }
+    Finca:
+      type: object
+      required: [id, productor_id, nombre, departamento, municipio, vereda, ubicacion, area_ha, activo, lotes, creado_en, actualizado_en]
+      properties:
+        id: { type: string, format: uuid, readOnly: true }
+        productor_id: { type: string, format: uuid }
+        nombre: { type: string }
+        departamento: { type: string }
+        municipio: { type: string }
+        vereda: { type: [string, "null"] }
+        ubicacion: { $ref: "#/components/schemas/PuntoOpcional" }
+        area_ha: { type: [number, "null"] }
+        activo: { type: boolean }
+        lotes: { type: integer, minimum: 0, readOnly: true, description: Cantidad de lotes registrados en la finca. }
+        creado_en: { type: string, format: date-time, readOnly: true }
+        actualizado_en: { type: string, format: date-time, readOnly: true }
+    ListaFincas:
+      allOf:
+        - $ref: "#/components/schemas/Paginacion"
+        - type: object
+          required: [datos]
+          properties:
+            datos:
+              type: array
+              items: { $ref: "#/components/schemas/Finca" }
+
+    Resumen:
+      type: object
+      required: [usuarios, productores, fincas, lotes, simulaciones, destinos, precios, destinos_mas_elegidos]
+      properties:
+        usuarios:
+          type: object
+          required: [total, activos, suspendidos, administradores, deben_cambiar_contrasena]
+          properties:
+            total: { type: integer }
+            activos: { type: integer }
+            suspendidos: { type: integer }
+            administradores: { type: integer }
+            deben_cambiar_contrasena: { type: integer }
+        productores:
+          type: object
+          required: [total, personas, empresas, verificados, sin_documento]
+          properties:
+            total: { type: integer }
+            personas: { type: integer }
+            empresas: { type: integer }
+            verificados: { type: integer }
+            sin_documento: { type: integer }
+        fincas: { type: integer }
+        lotes:
+          type: object
+          required: [total, disponibles, simulados, vendidos]
+          properties:
+            total: { type: integer }
+            disponibles: { type: integer }
+            simulados: { type: integer }
+            vendidos: { type: integer }
+        simulaciones:
+          type: object
+          required: [total, ultimos_7_dias]
+          properties:
+            total: { type: integer }
+            ultimos_7_dias: { type: integer }
+        destinos:
+          type: object
+          required: [activos, inactivos]
+          properties:
+            activos: { type: integer }
+            inactivos: { type: integer }
+        precios:
+          type: object
+          required: [ultima_fecha, con_advertencia, vencidos]
+          properties:
+            ultima_fecha: { type: [string, "null"], format: date }
+            con_advertencia: { type: integer, description: Combinaciones destino-categoría cuyo último precio tiene más de 7 días. }
+            vencidos: { type: integer, description: Combinaciones cuyo último precio tiene más de 30 días. }
+        destinos_mas_elegidos:
+          type: array
+          items:
+            type: object
+            required: [destino_id, nombre, veces]
+            properties:
+              destino_id: { type: string, format: uuid }
+              nombre: { type: string }
+              veces: { type: integer }
+
+    EntradaBitacora:
+      type: object
+      required: [id, usuario_id, usuario_nombre, accion, recurso, recurso_id, detalle, creado_en]
+      properties:
+        id: { type: integer }
+        usuario_id: { type: [string, "null"], format: uuid }
+        usuario_nombre: { type: [string, "null"] }
+        accion: { type: string, examples: [crear, actualizar, eliminar, suspender, reactivar, cambiar_rol, restablecer_contrasena, verificar_documento, importar, registrar, anonimizar] }
+        recurso: { type: string, examples: [usuario, productor, destino, precio, finca] }
+        recurso_id: { type: [string, "null"] }
+        detalle: { type: object }
+        creado_en: { type: string, format: date-time }
+    ListaBitacora:
+      allOf:
+        - $ref: "#/components/schemas/Paginacion"
+        - type: object
+          required: [datos]
+          properties:
+            datos:
+              type: array
+              items: { $ref: "#/components/schemas/EntradaBitacora" }
 
     # ---------- Destino ----------
     DestinoEntrada:

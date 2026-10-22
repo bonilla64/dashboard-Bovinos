@@ -21,7 +21,9 @@ const propiedades = (nombre) => {
 const CORRESPONDENCIA = {
   Productor: ['productor', []],
   Usuario: ['usuario', []],
-  Lote: ['lote', []],
+  Lote: ['lote', ['simulaciones']],
+  Finca: ['finca', ['lotes']],
+  EntradaBitacora: ['bitacora', []],
   Destino: ['destino', ['distancia_lineal_km']],
   PrecioMercado: ['precio_mercado', ['antiguedad_dias']],
   ImportacionPrecios: ['importacion_precio', []],
