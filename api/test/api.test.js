@@ -8,6 +8,7 @@ import { config } from './ayuda.js';
 
 const HOY = new Date(Date.now() - 5 * 3600 * 1000).toISOString().slice(0, 10);
 let app; let pool; let cerrar; let tAdmin; let tHernando; let tLuz;
+const CC = (numero) => ({ tipo_persona: 'natural', tipo_documento: 'CC', numero_documento: numero });
 const auth = (t) => ({ authorization: `Bearer ${t}` });
 const pedir = (method, ruta, { t, payload, headers } = {}) =>
   app.inject({ method, url: `${PREFIJO}${ruta}`, payload, headers: { ...(t ? auth(t) : {}), ...headers } });
@@ -47,7 +48,7 @@ describe('Sistema y documentación', () => {
 
 describe('Autenticación', () => {
   test('registro crea usuario y productor, y devuelve un token', async () => {
-    const r = await pedir('POST', '/auth/registro', { payload: { nombre_completo: 'Pedro Pablo Ojeda', correo: 'pedro.ojeda@correo.co', contrasena: 'pradera-maní-2026', municipio: 'Maní' } });
+    const r = await pedir('POST', '/auth/registro', { payload: { ...CC('1118540321'), nombre_completo: 'Pedro Pablo Ojeda', correo: 'pedro.ojeda@correo.co', contrasena: 'pradera-maní-2026', municipio: 'Maní', acepta_tratamiento_datos: true } });
     const cuerpo = cumpleContrato('registrarUsuario', r);
     assert.equal(r.statusCode, 201);
     assert.equal(cuerpo.usuario.rol, 'productor');
@@ -60,12 +61,12 @@ describe('Autenticación', () => {
     assert.ok(!rows[0].contrasena_hash.includes('pradera'));
   });
   test('correo repetido responde 409', async () => {
-    const r = await pedir('POST', '/auth/registro', { payload: { nombre_completo: 'Otro', correo: 'HERNANDO.RINCON@correo.co', contrasena: 'una-clave-larga-1', municipio: 'Yopal' } });
+    const r = await pedir('POST', '/auth/registro', { payload: { ...CC('1118540399'), nombre_completo: 'Otro', correo: 'HERNANDO.RINCON@correo.co', contrasena: 'una-clave-larga-1', municipio: 'Yopal', acepta_tratamiento_datos: true } });
     cumpleContrato('registrarUsuario', r);
     assert.equal(r.statusCode, 409);
   });
   test('contraseña corta y correo inválido responden 422 con un detalle por campo', async () => {
-    const r = await pedir('POST', '/auth/registro', { payload: { nombre_completo: 'Ana', correo: 'no-es-correo', contrasena: 'corta', municipio: 'Yopal' } });
+    const r = await pedir('POST', '/auth/registro', { payload: { ...CC('1118540388'), nombre_completo: 'Ana', correo: 'no-es-correo', contrasena: 'corta', municipio: 'Yopal', acepta_tratamiento_datos: true } });
     const cuerpo = cumpleContrato('registrarUsuario', r);
     assert.equal(r.statusCode, 422);
     const campos = cuerpo.detalles.map((d) => d.campo).sort();
@@ -126,7 +127,7 @@ describe('Productores', () => {
     assert.equal(r.statusCode, 422);
   });
   test('el administrador crea y elimina un productor sin lotes; con lotes responde 409', async () => {
-    const creado = cumpleContrato('crearProductor', await pedir('POST', '/productores', { t: tAdmin, payload: { nombre_completo: 'Wilson Pérez Daza', municipio: 'Trinidad' } }));
+    const creado = cumpleContrato('crearProductor', await pedir('POST', '/productores', { t: tAdmin, payload: { ...CC('86045123'), nombre_completo: 'Wilson Pérez Daza', municipio: 'Trinidad' } }));
     const borrar = await pedir('DELETE', `/productores/${creado.id}`, { t: tAdmin });
     cumpleContrato('eliminarProductor', borrar);
     assert.equal(borrar.statusCode, 204);
@@ -151,7 +152,7 @@ describe('Lotes', () => {
     const r = await pedir('POST', '/lotes', { t: tHernando, payload: {} });
     const cuerpo = cumpleContrato('crearLote', r);
     assert.equal(r.statusCode, 422);
-    assert.deepEqual(cuerpo.detalles.map((d) => d.campo).sort(), ['cantidad_animales', 'categoria', 'municipio_origen', 'nombre', 'peso_promedio_kg']);
+    assert.deepEqual(cuerpo.detalles.map((d) => d.campo).sort(), ['cantidad_animales', 'categoria', 'nombre', 'peso_promedio_kg']);
   });
   test('valores fuera de rango responden 422 con el mensaje en español', async () => {
     const r = await pedir('POST', '/lotes', { t: tHernando, payload: { nombre: 'Lote', cantidad_animales: 300, peso_promedio_kg: 50, categoria: 'caballo', municipio_origen: 'Yopal' } });

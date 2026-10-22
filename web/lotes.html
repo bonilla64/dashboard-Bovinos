@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="es-CO">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Mis lotes · Simulador de Destinos Ganaderos</title>
+  <meta name="description" content="Lotes registrados: crear, corregir, marcar como vendidos y eliminar.">
+  <meta name="theme-color" content="#143e2e">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='6' fill='%23143e2e'/%3E%3Cpath d='M9 22 L16 10 L24 14' stroke='%23e3b23c' stroke-width='3' fill='none' stroke-linecap='round'/%3E%3Ccircle cx='9' cy='22' r='3.5' fill='%23fff'/%3E%3C/svg%3E">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:wght@400;700&display=swap">
+  <link rel="stylesheet" href="css/estilos.css">
+</head>
+<body data-pagina="lotes">
+  <a class="saltar" href="#contenido">Saltar al contenido</a>
+
+  <header class="cabecera">
+    <div class="cabecera__dentro">
+      <a class="marca" href="index.html">
+        <svg width="36" height="36" viewBox="0 0 32 32" aria-hidden="true" focusable="false"><rect width="32" height="32" rx="6" fill="#1f5c45"/><path d="M9 22 L16 10 L24 14" stroke="#e3b23c" stroke-width="3" fill="none" stroke-linecap="round"/><circle cx="9" cy="22" r="3.5" fill="#fff"/></svg>
+        <span>Destinos ganaderos<small>Ganado de Casanare</small></span>
+      </a>
+      <nav class="nav" aria-label="Principal">
+        <ul>
+          <li><a href="index.html">Tablero</a></li>
+          <li><a href="detalle.html">Registrar lote</a></li>
+          <li><a href="lotes.html" aria-current="page">Mis lotes</a></li>
+          <li><a href="historial.html">Historial</a></li>
+          <li><a href="precios.html">Precios</a></li>
+        </ul>
+      </nav>
+      <div class="sesion" id="sesion" aria-live="polite"></div>
+    </div>
+  </header>
+
+  <main id="contenido" tabindex="-1">
+    <h1 id="t-lotes">Mis lotes</h1>
+    <p id="intro-lotes">Sus lotes de ganado. Un lote que ya se comparó no se puede borrar, porque sus simulaciones quedan en el historial: márquelo como vendido.</p>
+    <div id="aviso-lotes" class="aviso" role="status" tabindex="-1" hidden></div>
+
+    <section id="estado-cargando" class="estado" aria-busy="true" aria-labelledby="t-cargando">
+      <h2 id="t-cargando"><span class="girador" aria-hidden="true"></span>Cargando los lotes</h2>
+      <div class="cargando__barra" aria-hidden="true"></div>
+    </section>
+
+    <section id="estado-error" class="estado estado--error" role="alert" aria-labelledby="t-error" hidden>
+      <h2 id="t-error">No se pudo cargar esta página</h2>
+      <p id="error-detalle">El servidor no respondió.</p>
+      <div class="acciones"><button type="button" class="boton" id="btn-reintentar">Volver a intentar</button></div>
+    </section>
+
+    <div id="con-datos" hidden>
+      <form class="filtros barra-herramientas" id="filtros-lotes" role="search" aria-label="Filtrar lotes">
+        <div class="campo" id="filtro-productor-campo" hidden>
+          <label for="filtro-productor">Productor</label>
+          <select id="filtro-productor"><option value="">Todos</option></select>
+        </div>
+        <div class="campo">
+          <label for="filtro-finca">Finca</label>
+          <select id="filtro-finca"><option value="">Todas</option></select>
+        </div>
+        <div class="campo">
+          <label for="filtro-estado">Estado</label>
+          <select id="filtro-estado"><option value="">Todos</option><option value="disponible">Disponible</option><option value="simulado">Comparado</option><option value="vendido">Vendido</option></select>
+        </div>
+        <div class="acciones"><button type="button" class="boton" id="btn-nuevo-lote">Nuevo lote</button></div>
+      </form>
+      <p class="conteo" id="conteo-lotes" role="status"></p>
+      <div class="tabla-envoltura" tabindex="0" role="region" aria-labelledby="t-lotes">
+        <table>
+          <caption class="sr-only">Lotes registrados</caption>
+          <thead><tr id="cabeza-lotes"></tr></thead>
+          <tbody id="tabla-lotes"></tbody>
+        </table>
+      </div>
+    </div>
+  </main>
+
+  <footer class="pie">
+    <div class="pie__dentro">
+      <div>
+        <p>Simulador de Destinos Ganaderos · Tecnologías Web 2026-B · Unitrópico, Yopal.</p>
+        <p>Los resultados se calculan en el servidor con los precios cargados desde Fedegán. Cada precio muestra su fecha y su fuente.</p>
+      </div>
+      <nav aria-label="Estados de la interfaz">
+        <p>Ver estados de la interfaz:</p>
+        <ul>
+          <li><a href="index.html?demo=cargando">Cargando</a></li>
+          <li><a href="index.html?demo=vacio">Sin resultados</a></li>
+          <li><a href="index.html?demo=error">Error de conexión</a></li>
+        </ul>
+      </nav>
+    </div>
+  </footer>
+
+  <script src="js/config.js" defer></script>
+  <script src="js/api.js" defer></script>
+  <script src="js/app.js" defer></script>
+  <script src="js/cuentas.js" defer></script>
+</body>
+</html>

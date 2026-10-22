@@ -1,10 +1,19 @@
 // Columnas que devuelve cada recurso, ya con la forma del contrato (GeoJSON incluido).
 import { HOY_COLOMBIA } from './bd.js';
 
-export const COL_PRODUCTOR = 'id, nombre_completo, municipio, telefono, correo, creado_en, actualizado_en';
-export const COL_USUARIO = 'id, nombre_completo, correo, rol, productor_id, creado_en, actualizado_en';
-export const COL_LOTE = `id, productor_id, nombre, cantidad_animales, peso_promedio_kg, peso_total_kg, categoria,
-  raza, finca, municipio_origen, estado, creado_en, actualizado_en`;
+export const COL_PRODUCTOR = `id, tipo_persona, tipo_documento, numero_documento, representante_legal, nombre_completo,
+  departamento, municipio, vereda, telefono, correo, documento_verificado, acepta_datos_en, creado_en, actualizado_en`;
+export const COL_USUARIO = `id, nombre_completo, correo, rol, productor_id, activo, debe_cambiar_contrasena, ultimo_ingreso,
+  creado_en, actualizado_en`;
+/** Usuario con su ficha de productor anidada (esquema UsuarioDetalle). Se usa con «FROM usuario u». */
+export const COL_USUARIO_DETALLE = `u.id, u.nombre_completo, u.correo, u.rol, u.productor_id, u.activo,
+  u.debe_cambiar_contrasena, u.ultimo_ingreso, u.creado_en, u.actualizado_en,
+  (SELECT to_jsonb(p) FROM (SELECT ${COL_PRODUCTOR} FROM productor WHERE productor.id = u.productor_id) p) AS productor`;
+export const COL_LOTE = `id, productor_id, finca_id, nombre, cantidad_animales, peso_promedio_kg, peso_total_kg, categoria,
+  raza, finca, municipio_origen, estado, (SELECT count(*) FROM simulacion s WHERE s.lote_id = lote.id) AS simulaciones,
+  creado_en, actualizado_en`;
+export const COL_FINCA = `id, productor_id, nombre, departamento, municipio, vereda, ST_AsGeoJSON(ubicacion, 6)::json AS ubicacion,
+  area_ha, activo, (SELECT count(*) FROM lote l WHERE l.finca_id = finca.id) AS lotes, creado_en, actualizado_en`;
 export const COL_DESTINO = `id, nombre, tipo, municipio, departamento, ST_AsGeoJSON(ubicacion, 6)::json AS ubicacion,
   comision_pct, activo, creado_en, actualizado_en`;
 export const COL_PRECIO = `id, destino_id, categoria, precio_kg_cop, to_char(fecha, 'YYYY-MM-DD') AS fecha, fuente,
@@ -31,6 +40,7 @@ export async function actualizarFila(bd, tabla, id, cambios, permitidos, columna
   const valores = [];
   for (const campo of permitidos) {
     if (!(campo in cambios)) continue;
+    if (GEOMETRIAS.has(campo) && cambios[campo] === null) { sets.push(`${campo} = NULL`); continue; }
     valores.push(GEOMETRIAS.has(campo) ? JSON.stringify(cambios[campo]) : cambios[campo]);
     sets.push(GEOMETRIAS.has(campo)
       ? `${campo} = ST_SetSRID(ST_GeomFromGeoJSON($${valores.length}), 4326)`

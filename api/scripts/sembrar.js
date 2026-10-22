@@ -44,14 +44,18 @@ export async function sembrar(url, contrasena, { forzar = false, costoBcrypt = 1
     }
     const hash = await cifrarContrasena(contrasena, costoBcrypt);
     await enTransaccion(pool, async (bd) => {
-      await bd.query('TRUNCATE resultado_simulacion, simulacion, lote, importacion_precio, usuario, productor, precio_mercado, ruta, destino RESTART IDENTITY CASCADE');
+      await bd.query('TRUNCATE bitacora, resultado_simulacion, simulacion, lote, finca, importacion_precio, usuario, productor, precio_mercado, ruta, destino RESTART IDENTITY CASCADE');
 
       await bd.query(
         `INSERT INTO usuario (nombre_completo, correo, contrasena_hash, rol) VALUES ('Administración del simulador', $1, $2, 'administrador')`,
         [CORREO_ADMIN_DEMO, hash]);
       for (const p of datos.productores) {
-        await bd.query('INSERT INTO productor (id, nombre_completo, municipio, telefono, correo) VALUES ($1,$2,$3,$4,$5)',
-          [p.id, p.nombre_completo, p.municipio, p.telefono, p.correo]);
+        await bd.query(
+          `INSERT INTO productor (id, nombre_completo, municipio, telefono, correo, tipo_persona, tipo_documento, numero_documento,
+             representante_legal, departamento, vereda, documento_verificado, acepta_datos_en)
+           VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12, now())`,
+          [p.id, p.nombre_completo, p.municipio, p.telefono, p.correo, p.tipo_persona, p.tipo_documento, p.numero_documento,
+            p.representante_legal, p.departamento, p.vereda, p.documento_verificado]);
         await bd.query(`INSERT INTO usuario (nombre_completo, correo, contrasena_hash, rol, productor_id) VALUES ($1,$2,$3,'productor',$4)`,
           [p.nombre_completo, p.correo, hash, p.id]);
       }
@@ -73,11 +77,17 @@ export async function sembrar(url, contrasena, { forzar = false, costoBcrypt = 1
         await bd.query('INSERT INTO precio_mercado (destino_id, categoria, precio_kg_cop, fecha, fuente, referencia) VALUES ($1,$2,$3,$4,$5,$6)',
           [p.destino_id, p.categoria, p.precio_kg_cop, p.fecha, p.fuente, p.referencia ?? null]);
       }
+      for (const f of datos.fincas) {
+        await bd.query(
+          `INSERT INTO finca (id, productor_id, nombre, departamento, municipio, vereda, ubicacion, area_ha)
+           VALUES ($1,$2,$3,$4,$5,$6, ST_SetSRID(ST_GeomFromGeoJSON($7),4326), $8)`,
+          [f.id, f.productor_id, f.nombre, f.departamento, f.municipio, f.vereda, JSON.stringify(f.ubicacion), f.area_ha]);
+      }
       for (const l of datos.lotes) {
         await bd.query(
-          `INSERT INTO lote (id, productor_id, nombre, cantidad_animales, peso_promedio_kg, categoria, raza, finca, municipio_origen, creado_en, actualizado_en)
-           VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$10)`,
-          [l.id, l.productor_id, l.nombre, l.cantidad_animales, l.peso_promedio_kg, l.categoria, l.raza, l.finca, l.municipio_origen, l.creado_en]);
+          `INSERT INTO lote (id, productor_id, finca_id, nombre, cantidad_animales, peso_promedio_kg, categoria, raza, finca, municipio_origen, creado_en, actualizado_en)
+           VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$11)`,
+          [l.id, l.productor_id, l.finca_id, l.nombre, l.cantidad_animales, l.peso_promedio_kg, l.categoria, l.raza, l.finca, l.municipio_origen, l.creado_en]);
       }
       for (const s of datos.simulaciones) {
         const { rows: [lote] } = await bd.query(`SELECT ${COL_LOTE} FROM lote WHERE id = $1`, [s.lote_id]);
@@ -87,7 +97,7 @@ export async function sembrar(url, contrasena, { forzar = false, costoBcrypt = 1
         await bd.query(`UPDATE lote SET estado = 'vendido' WHERE id = $1`, [l.id]);
       }
     });
-    log(`✔ Datos de demostración cargados: ${datos.productores.length} productores, ${datos.destinos.length} destinos, `
+    log(`✔ Datos de demostración cargados: ${datos.productores.length} productores, ${datos.fincas.length} fincas, ${datos.destinos.length} destinos, `
       + `${datos.precios.length} precios, ${datos.lotes.length} lotes y ${datos.simulaciones.length} simulaciones.`);
     log(`  Cuentas: ${CORREO_ADMIN_DEMO} (administrador) y ${datos.productores.map((p) => p.correo).join(', ')} (productores).`);
     log('  Contraseña de todas: la que puso en CONTRASENA_DEMO.');

@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="es-CO">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Mi cuenta · Simulador de Destinos Ganaderos</title>
+  <meta name="description" content="Datos de su cuenta, sus fincas y su contraseña.">
+  <meta name="theme-color" content="#143e2e">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='6' fill='%23143e2e'/%3E%3Cpath d='M9 22 L16 10 L24 14' stroke='%23e3b23c' stroke-width='3' fill='none' stroke-linecap='round'/%3E%3Ccircle cx='9' cy='22' r='3.5' fill='%23fff'/%3E%3C/svg%3E">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:wght@400;700&display=swap">
+  <link rel="stylesheet" href="vendor/leaflet/leaflet.css">
+  <link rel="stylesheet" href="css/estilos.css">
+</head>
+<body data-pagina="cuenta">
+  <a class="saltar" href="#contenido">Saltar al contenido</a>
+
+  <header class="cabecera">
+    <div class="cabecera__dentro">
+      <a class="marca" href="index.html">
+        <svg width="36" height="36" viewBox="0 0 32 32" aria-hidden="true" focusable="false"><rect width="32" height="32" rx="6" fill="#1f5c45"/><path d="M9 22 L16 10 L24 14" stroke="#e3b23c" stroke-width="3" fill="none" stroke-linecap="round"/><circle cx="9" cy="22" r="3.5" fill="#fff"/></svg>
+        <span>Destinos ganaderos<small>Ganado de Casanare</small></span>
+      </a>
+      <nav class="nav" aria-label="Principal">
+        <ul>
+          <li><a href="index.html">Tablero</a></li>
+          <li><a href="detalle.html">Registrar lote</a></li>
+          <li><a href="lotes.html">Mis lotes</a></li>
+          <li><a href="historial.html">Historial</a></li>
+          <li><a href="precios.html">Precios</a></li>
+        </ul>
+      </nav>
+      <div class="sesion" id="sesion" aria-live="polite"></div>
+    </div>
+  </header>
+
+  <main id="contenido" tabindex="-1">
+    <h1>Mi cuenta</h1>
+    <p>Sus datos como productor, las fincas de donde salen sus lotes y la seguridad de su cuenta.</p>
+    <div id="aviso-cuenta" class="aviso" role="status" tabindex="-1" hidden></div>
+
+    <section id="estado-cargando" class="estado" aria-busy="true" aria-labelledby="t-cargando">
+      <h2 id="t-cargando"><span class="girador" aria-hidden="true"></span>Cargando su cuenta</h2>
+      <div class="cargando__barra" aria-hidden="true"></div>
+    </section>
+
+    <section id="estado-error" class="estado estado--error" role="alert" aria-labelledby="t-error" hidden>
+      <h2 id="t-error">No se pudo cargar esta página</h2>
+      <p id="error-detalle">El servidor no respondió.</p>
+      <div class="acciones"><button type="button" class="boton" id="btn-reintentar">Volver a intentar</button></div>
+    </section>
+
+    <div id="con-datos" hidden>
+      <section class="bloque" aria-labelledby="t-perfil" id="perfil">
+        <h2 id="t-perfil">Datos de la cuenta</h2>
+        <p id="estado-documento"></p>
+        <div id="errores-perfil" class="resumen-errores" role="alert" tabindex="-1" hidden></div>
+        <form id="form-perfil" class="formulario" novalidate>
+          <div id="campos-perfil" class="campos"></div>
+          <div class="acciones"><button type="submit" class="boton">Guardar cambios</button></div>
+        </form>
+      </section>
+
+      <section class="bloque" aria-labelledby="t-fincas" id="fincas" hidden>
+        <h2 id="t-fincas">Mis fincas</h2>
+        <p>Cada lote sale de una de sus fincas; de ella se toma el municipio desde donde se calculan las rutas. Una finca con lotes no se borra: se desactiva.</p>
+        <div class="tabla-envoltura" tabindex="0" role="region" aria-labelledby="t-fincas">
+          <table>
+            <caption>Fincas registradas a su nombre</caption>
+            <thead><tr><th scope="col" class="izq">Finca</th><th scope="col" class="izq">Ubicación</th><th scope="col">Área</th><th scope="col">Lotes</th><th scope="col" class="izq">Estado</th><th scope="col" class="izq">Acciones</th></tr></thead>
+            <tbody id="tabla-fincas"></tbody>
+          </table>
+        </div>
+        <div class="acciones"><button type="button" class="boton boton--secundario" id="btn-nueva-finca">Registrar una finca</button></div>
+      </section>
+
+      <section class="bloque" aria-labelledby="t-contrasena" id="contrasena">
+        <h2 id="t-contrasena">Cambiar contraseña</h2>
+        <div id="errores-contrasena" class="resumen-errores" role="alert" tabindex="-1" hidden></div>
+        <form id="form-contrasena" class="formulario" novalidate>
+          <div class="campos">
+            <div class="campo">
+              <label for="contrasena_actual">Contraseña actual</label>
+              <input type="password" id="contrasena_actual" name="contrasena_actual" required maxlength="72" autocomplete="current-password" aria-describedby="contrasena_actual-error">
+              <p class="error-campo" id="contrasena_actual-error"></p>
+            </div>
+            <div class="campo">
+              <label for="contrasena_nueva">Contraseña nueva</label>
+              <p class="ayuda" id="contrasena_nueva-ayuda">Mínimo 10 caracteres.</p>
+              <input type="password" id="contrasena_nueva" name="contrasena_nueva" required minlength="10" maxlength="72" autocomplete="new-password" aria-describedby="contrasena_nueva-ayuda contrasena_nueva-error">
+              <p class="error-campo" id="contrasena_nueva-error"></p>
+            </div>
+            <div class="campo">
+              <label for="contrasena_repetir">Repita la contraseña nueva</label>
+              <input type="password" id="contrasena_repetir" name="contrasena_repetir" required maxlength="72" autocomplete="new-password" aria-describedby="contrasena_repetir-error">
+              <p class="error-campo" id="contrasena_repetir-error"></p>
+            </div>
+          </div>
+          <div class="acciones"><button type="submit" class="boton">Cambiar contraseña</button></div>
+        </form>
+      </section>
+
+      <details class="bloque zona-peligro" id="eliminar">
+        <summary>Eliminar mi cuenta</summary>
+        <p>Puede pedir que se borren sus datos personales (Ley 1581 de 2012). Si no tiene lotes, se borran su cuenta, su ficha y sus fincas. Si ya tiene lotes, su cuenta se borra y su ficha queda anónima: sin nombre, correo, celular ni documento; los lotes y simulaciones se conservan sin datos que lo identifiquen.</p>
+        <div id="errores-eliminar" class="resumen-errores" role="alert" tabindex="-1" hidden></div>
+        <form id="form-eliminar" class="formulario" novalidate>
+          <div class="campo">
+            <label for="eliminar-contrasena">Escriba su contraseña para confirmar</label>
+            <input type="password" id="eliminar-contrasena" name="contrasena" required maxlength="72" autocomplete="current-password" aria-describedby="contrasena-error">
+            <p class="error-campo" id="contrasena-error"></p>
+          </div>
+          <label class="opcion"><input type="checkbox" id="eliminar-entiendo" required> <span>Entiendo que esto no se puede deshacer.</span></label>
+          <div class="acciones"><button type="submit" class="boton boton--peligro">Eliminar mi cuenta</button></div>
+        </form>
+      </details>
+    </div>
+  </main>
+
+  <footer class="pie">
+    <div class="pie__dentro">
+      <div>
+        <p>Simulador de Destinos Ganaderos · Tecnologías Web 2026-B · Unitrópico, Yopal.</p>
+        <p>Los resultados se calculan en el servidor con los precios cargados desde Fedegán. Cada precio muestra su fecha y su fuente.</p>
+      </div>
+      <nav aria-label="Estados de la interfaz">
+        <p>Ver estados de la interfaz:</p>
+        <ul>
+          <li><a href="index.html?demo=cargando">Cargando</a></li>
+          <li><a href="index.html?demo=vacio">Sin resultados</a></li>
+          <li><a href="index.html?demo=error">Error de conexión</a></li>
+        </ul>
+      </nav>
+    </div>
+  </footer>
+
+  <script src="vendor/leaflet/leaflet.js" defer></script>
+  <script src="js/config.js" defer></script>
+  <script src="js/api.js" defer></script>
+  <script src="js/app.js" defer></script>
+  <script src="js/cuentas.js" defer></script>
+</body>
+</html>

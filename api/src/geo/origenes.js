@@ -156,15 +156,17 @@ export async function consultarOsrm(base, origen, destino, espera = 5000) {
 
 /**
  * Busca la ruta desde el municipio del lote hacia el destino; si no existe, la calcula y la guarda.
- * Si el municipio no es de Casanare, usa la ruta desde Yopal (comportamiento anterior).
+ * Si el municipio no es de Casanare, usa la ruta desde Yopal.
  */
 export async function rutaDesde(bd, municipioTexto, destino, { osrmBaseUrl = '' } = {}) {
   const COLS = 'id, distancia_km, tiempo_horas, peajes_cop, factor_dificultad, merma_pct, fuente, origen_nombre';
-  const municipio = municipioCasanare(municipioTexto);
-  const nombre = municipio ? nombreOrigen(municipio) : ORIGEN_YOPAL;
+  // Un municipio que no es de Casanare (datos antiguos) sale desde Yopal.
+  const municipio = municipioCasanare(municipioTexto) ?? 'Yopal';
+  const nombre = nombreOrigen(municipio);
   const { rows: [existente] } = await bd.query(`SELECT ${COLS} FROM ruta WHERE destino_id = $1 AND origen_nombre = $2`, [destino.id, nombre]);
   if (existente) return existente;
-  if (!municipio || municipio === 'Yopal') return null;
+  // Si no existe (un municipio nuevo para ese destino, o un destino recién creado por el administrador
+  // que aún no tiene ruta desde Yopal), se estima y se guarda; el administrador puede corregirla después.
 
   const { rows: rutasYopal } = await bd.query('SELECT destino_id, distancia_km, tiempo_horas, peajes_cop, merma_pct, factor_dificultad FROM ruta WHERE origen_nombre = $1', [ORIGEN_YOPAL]);
   const rutaYopal = rutasYopal.find((r) => r.destino_id === destino.id);

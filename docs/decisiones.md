@@ -261,3 +261,17 @@ Las pruebas validan cada respuesta contra el contrato: si la API devuelve un cam
 - El plan gratuito de Render apaga la API tras 15 minutos sin uso; el tablero avisa «El servidor se está despertando» si una consulta tarda más de 4 segundos.
 
 **Alternativas.** Railway o Fly.io (ya no tienen plan gratuito permanente); un VPS propio (costo mensual y mantenimiento). Se reevalúa en la Entrega 4 si el tiempo de arranque molesta en las pruebas con ganaderos.
+
+## D-25 · Tipos de cuenta, fincas, administración desde el tablero e integridad
+
+**Contexto.** El docente pidió demostrar el CRUD, la validación y los roles desde la propia página, no desde Swagger, y que las cuentas se comporten como en un producto real.
+
+**Decisión.**
+- **Persona o empresa.** El registro pide tipo de persona; una persona se identifica con CC o CE, una empresa con NIT (se comprueba el dígito de verificación de la DIAN) y representante legal. El documento es obligatorio y único. El municipio es la lista cerrada de los 19 de Casanare, con vereda opcional. El registro exige autorizar el tratamiento de datos (Ley 1581 de 2012) y guarda cuándo.
+- **Fincas.** Recurso propio: cada productor registra sus fincas con municipio, vereda, área y punto en el mapa (a menos de 120 km de la cabecera). El lote elige su finca y de ella toma el municipio de origen; si la finca cambia de municipio, sus lotes no vendidos la siguen.
+- **Mi cuenta.** Cada usuario edita sus datos (nombre y correo iguales en cuenta y ficha), cambia su contraseña dando la actual y puede eliminar su cuenta: sin lotes se borra todo; con lotes la ficha queda anónima y la historia se conserva.
+- **Administración** (solo administradores): resumen, cuentas (crear con contraseña inicial, cambiar rol, suspender, reactivar, contraseña temporal, eliminar), productores (editar, verificar documento), destinos y rutas (crear, corregir, desactivar), precios (carga CSV y corrección de uno), lotes de todos y bitácora.
+- **Reglas de integridad**: lo que tiene datos no se borra sino que se desactiva (cuentas suspendidas, fincas y destinos inactivos, lotes vendidos); nunca queda el sistema sin un administrador activo y nadie se quita el rol ni se suspende a sí mismo; cada petición con token vuelve a leer la cuenta, así que una suspensión o un cambio de rol aplican de inmediato; una cuenta con contraseña temporal solo puede cambiarla; un documento verificado solo lo cambia el administrador.
+- Toda acción de administración queda en la tabla `bitacora`.
+
+**Alternativas.** Administrar desde la consola de Neon o desde Swagger (no demuestra el producto ni sus reglas); borrar en cascada (pierde la historia de simulaciones); revocar tokens con una lista negra (más complejo que leer la cuenta en cada petición, que cuesta una consulta por índice).

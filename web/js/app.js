@@ -173,6 +173,7 @@ function iniciarIngreso() {
     sesion: "Inicie sesión para continuar.",
     vencida: "Su sesión venció. Vuelva a ingresar; lo que tenía guardado sigue en el servidor.",
     salida: "Cerró la sesión.",
+    suspendida: "Su cuenta está suspendida. Comuníquese con el administrador.",
   };
   if (motivos[params.get("motivo")]) avisar(motivos[params.get("motivo")]);
   const s = Api.sesion();
@@ -226,45 +227,7 @@ function iniciarIngreso() {
     }
   });
 
-  // Registro
-  const formRegistro = $("#form-registro");
-  const errRegistro = $("#errores-registro");
-  const CAMPOS = { nombre_completo: "registro-nombre", correo: "registro-correo", contrasena: "registro-contrasena", municipio: "registro-municipio", telefono: "registro-telefono" };
-  const reglas = {
-    nombre_completo: (v) => (v.length < 3 ? "Escriba su nombre completo (al menos 3 letras)." : ""),
-    correo: (v) => (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v) ? "Escriba un correo válido, por ejemplo nombre@correo.co." : ""),
-    contrasena: (v) => (v.length < 10 ? "La contraseña debe tener al menos 10 caracteres." : ""),
-    municipio: (v) => (v.length < 2 ? "Escriba su municipio." : ""),
-    telefono: (v) => (v && !/^3\d{9}$/.test(v) ? "El celular debe tener 10 dígitos y empezar por 3." : ""),
-  };
-  const ponerError = (campo, msg) => {
-    const id = CAMPOS[campo];
-    if (!id) return false;
-    $(`#${id}-error`).textContent = msg;
-    $(`#${id}`).setAttribute("aria-invalid", msg ? "true" : "false");
-    return true;
-  };
-  formRegistro.addEventListener("submit", async (ev) => {
-    ev.preventDefault();
-    const datos = {};
-    Object.entries(CAMPOS).forEach(([campo, id]) => { datos[campo] = campo === "contrasena" ? $(`#${id}`).value : $(`#${id}`).value.trim(); });
-    const errores = Object.keys(reglas).map((c) => { const m = reglas[c](datos[c]); ponerError(c, m); return m; }).filter(Boolean);
-    if (errores.length) { mostrarResumen(errRegistro, errores); return; }
-    errRegistro.hidden = true;
-    if (!datos.telefono) datos.telefono = null;
-    const boton = formRegistro.querySelector("button");
-    boton.disabled = true;
-    try {
-      await Api.registrar(datos);
-      window.location.href = "detalle.html";
-    } catch (e) {
-      const sueltos = [];
-      e.detalles.forEach((d) => { if (!ponerError(d.campo, d.problema)) sueltos.push(`${d.campo}: ${d.problema}`); });
-      if (e.codigo === "CONFLICTO") ponerError("correo", e.message);
-      mostrarResumen(errRegistro, [e.message, ...sueltos]);
-      boton.disabled = false;
-    }
-  });
+  // El registro (persona o empresa) está en js/cuentas.js: conectarRegistro().
 }
 
 function mostrarResumen(caja, mensajes, titulo = "Revise lo siguiente") {
@@ -660,7 +623,7 @@ function marcarSeleccion(moverMapa) {
 /* Pantalla de formulario: registrar lote y calcular                    */
 /* ------------------------------------------------------------------ */
 
-const formulario = { lotes: new Map(), destinos: [], rutas: new Map(), intentoEnvio: false, listo: false };
+const formulario = { lotes: new Map(), fincas: new Map(), destinos: [], rutas: new Map(), intentoEnvio: false, listo: false };
 
 const CAMPOS_LOTE = ["nombre", "categoria", "raza", "cantidad_animales", "peso_promedio_kg", "finca", "municipio_origen"];
 
@@ -707,7 +670,7 @@ const REGLAS = {
 
 const ETIQUETAS = {
   productor_id: "Productor", nombre: "Nombre del lote", categoria: "Categoría", raza: "Raza",
-  cantidad_animales: "Cantidad de animales", peso_promedio_kg: "Peso promedio por animal", finca: "Finca",
+  cantidad_animales: "Cantidad de animales", peso_promedio_kg: "Peso promedio por animal", finca: "Finca", finca_id: "Finca",
   municipio_origen: "Municipio de origen", flete_km_cop: "Flete por kilómetro", capacidad_camion: "Animales por camión",
   destino_ids: "Destinos a comparar", lote_id: "Lote",
 };
@@ -718,23 +681,25 @@ async function iniciarFormulario() {
   let datos;
   try {
     datos = await cargar(async () => {
-      const [lotes, destinos, rutas, productores] = await Promise.all([
+      const [lotes, destinos, rutas, productores, fincas] = await Promise.all([
         todos("/lotes"),
         todos("/destinos"),
         Api.get(`/rutas?origen=${encodeURIComponent(ORIGEN_YOPAL)}`),
         esAdmin() ? todos("/productores") : Promise.resolve([]),
+        Api.modoDemo() ? Promise.resolve([]) : todos("/fincas"),
       ]);
-      return { lotes, destinos, rutas, productores };
+      return { lotes, destinos, rutas, productores, fincas };
     });
   } catch (e) {
     mostrarError(e);
     return;
   }
   formulario.lotes = porId(datos.lotes);
+  formulario.fincas = porId(datos.fincas);
   formulario.rutas = new Map(datos.rutas.map((r) => [r.destino_id, r]));
-  // Solo se ofrecen destinos que tienen ruta (sin ruta el servidor no puede calcular).
-  formulario.destinos = datos.destinos.filter((d) => formulario.rutas.has(d.id))
-    .sort((a, b) => formulario.rutas.get(a.id).distancia_km - formulario.rutas.get(b.id).distancia_km);
+  // Los destinos sin ruta medida (por ejemplo, uno recién creado) también se ofrecen: el servidor estima la ruta.
+  const km = (d) => (d.tipo === "finca" ? 0 : formulario.rutas.get(d.id)?.distancia_km ?? Infinity);
+  formulario.destinos = [...datos.destinos].sort((a, b) => km(a) - km(b));
   mostrarEstado("datos");
 
   if (esAdmin()) {
@@ -753,11 +718,42 @@ async function iniciarFormulario() {
     const ruta = formulario.rutas.get(d.id);
     const comision = d.comision_pct ? `, comisión ${fmt.pct(d.comision_pct)}` : "";
     return `<label class="opcion"><input type="checkbox" name="destino_ids" value="${d.id}" checked>
-      <span>${escapar(d.nombre)} <small>(${TIPOS[d.tipo]}, <span data-km="${d.id}">${d.tipo === "finca" ? "sin viaje" : `${fmt.km(ruta.distancia_km)} desde Yopal`}</span>${comision})</small></span></label>`;
+      <span>${escapar(d.nombre)} <small>(${TIPOS[d.tipo]}, <span data-km="${d.id}">${d.tipo === "finca" ? "sin viaje" : (ruta ? `${fmt.km(ruta.distancia_km)} desde Yopal` : "distancia: se calcula al comparar")}</span>${comision})</small></span></label>`;
   }).join("");
 
+  pintarFincasFormulario();
   if (!formulario.listo) conectarFormulario();
   precargarFormulario();
+}
+
+/** Lista de fincas del productor del lote (el de la sesión, o el elegido por el administrador). */
+function pintarFincasFormulario(seleccionada = "") {
+  const sel = $("#finca_id");
+  if (!sel) return;
+  const loteId = $("#lote_existente").value;
+  const productor = loteId ? formulario.lotes.get(loteId)?.productor_id : (esAdmin() ? $("#productor_id").value : Api.sesion()?.usuario.productor_id);
+  const fincas = [...formulario.fincas.values()].filter((f) => f.productor_id === productor && (f.activo || f.id === seleccionada));
+  sel.innerHTML = `<option value="">${fincas.length ? "Otra (escribir nombre y municipio)" : "Sin fincas registradas (escribir nombre y municipio)"}</option>`
+    + fincas.map((f) => `<option value="${f.id}">${escapar(f.nombre)} (${escapar(f.municipio)})${f.activo ? "" : " · inactiva"}</option>`).join("");
+  sel.value = fincas.some((f) => f.id === seleccionada) ? seleccionada : (fincas.length && !loteId ? fincas[0].id : "");
+  aplicarFinca();
+}
+
+/** Con una finca elegida, el municipio de origen y el nombre salen de ella. */
+function aplicarFinca() {
+  const finca = formulario.fincas.get($("#finca_id")?.value);
+  $("#bloque-finca-texto").hidden = Boolean(finca);
+  const mun = $("#municipio_origen");
+  if (finca) {
+    if (![...mun.options].some((o) => o.value === finca.municipio)) mun.add(new Option(finca.municipio, finca.municipio));
+    mun.value = finca.municipio;
+    $("#finca").value = finca.nombre;
+  }
+  mun.disabled = Boolean(finca);
+  $("#municipio_origen-ayuda").textContent = finca
+    ? `Sale de ${finca.nombre}, en ${finca.municipio}. Para cambiarlo, cambie la finca o edítela en Mi cuenta.`
+    : "Las distancias, el flete y la merma se calculan desde aquí.";
+  distanciasDesdeOrigen();
 }
 
 function conectarFormulario() {
@@ -767,6 +763,8 @@ function conectarFormulario() {
   $("#lote_existente").addEventListener("change", (ev) => llenarLote(formulario.lotes.get(ev.target.value)));
   $("#categoria").addEventListener("change", sugerirDestinos);
   $("#municipio_origen").addEventListener("change", distanciasDesdeOrigen);
+  $("#finca_id").addEventListener("change", aplicarFinca);
+  $("#productor_id").addEventListener("change", () => pintarFincasFormulario());
 
   Object.keys(REGLAS).forEach((campo) => {
     const el = campo === "destino_ids" ? $("#lista-destinos") : $("#" + campo);
@@ -838,6 +836,7 @@ function llenarLote(lote) {
     // El productor de un lote existente no cambia.
     $("#bloque-productor").hidden = true;
   }
+  pintarFincasFormulario(lote?.finca_id || "");
   sugerirDestinos();
   distanciasDesdeOrigen();
   actualizarPesoTotal();
@@ -916,9 +915,15 @@ async function guardarYSimular() {
     peso_promedio_kg: Number(f.peso_promedio_kg.value),
     categoria: f.categoria.value,
     raza: f.raza.value.trim() || null,
-    finca: f.finca.value.trim() || null,
-    municipio_origen: f.municipio_origen.value,
   };
+  const fincaId = f.finca_id.value;
+  if (fincaId) {
+    cuerpoLote.finca_id = fincaId;
+  } else {
+    if (loteId) cuerpoLote.finca_id = null;
+    cuerpoLote.finca = f.finca.value.trim() || null;
+    cuerpoLote.municipio_origen = f.municipio_origen.value;
+  }
   const destinoIds = $$("#lista-destinos input:checked").map((c) => c.value);
   boton.disabled = true;
   boton.textContent = "Guardando el lote…";
@@ -1003,6 +1008,9 @@ async function iniciarHistorial() {
       if (boton) eliminarSimulacion(boton.dataset.eliminar, boton);
     });
   }
+  // Desde «Mis lotes»: historial.html?lote=<id> muestra solo las simulaciones de ese lote.
+  const loteFiltro = historial.lotes.get(params.get("lote"));
+  if (loteFiltro && !$("#buscar").value) $("#buscar").value = loteFiltro.nombre;
   renderHistorial();
 }
 
@@ -1161,8 +1169,9 @@ function pintarPrecios() {
       <td>${fmt.dia(p.fecha)}<small class="dato-fecha">hace ${p.antiguedad_dias} ${p.antiguedad_dias === 1 ? "día" : "días"}</small></td>
       <td class="izq"><span class="insignia insignia--${clase}">${texto}</span>${marca}</td>
       <td class="izq">${escapar(p.fuente)}${ref}</td>
+      ${esAdmin() ? `<td class="izq acciones-fila"><button type="button" class="boton boton--peq boton--secundario" data-accion="editar-precio" data-id="${p.id}">Corregir</button> <button type="button" class="boton boton--peq boton--secundario" data-accion="eliminar-precio" data-id="${p.id}">Eliminar</button></td>` : ""}
     </tr>`;
-  }).join("") || '<tr><td colspan="6" class="izq">Todavía no hay precios cargados.</td></tr>';
+  }).join("") || '<tr><td colspan="7" class="izq">Todavía no hay precios cargados.</td></tr>';
   const ultima = filas.reduce((m, p) => (p.fecha > m ? p.fecha : m), "");
   $("#resumen-precios").textContent = filas.length
     ? `${filas.length} precios vigentes: ${cuenta.ok} al día, ${cuenta.aviso} con advertencia y ${cuenta.vencido} vencidos. El más reciente es del ${fmt.dia(ultima)}.` +
