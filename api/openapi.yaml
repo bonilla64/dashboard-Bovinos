@@ -1,7 +1,7 @@
 openapi: 3.1.0
 info:
   title: API del Simulador de Destinos Ganaderos desde Yopal
-  version: 0.4.0
+  version: 0.4.1
   summary: Compara destinos de venta de un lote de ganado combinando precio por kilo, ruta, flete, peajes, comisión y merma.
   description: |
     Contrato de la API del proyecto (Entrega 3, Tecnologías Web 2026-B, Unitrópico).
@@ -246,6 +246,32 @@ paths:
         "409": { $ref: "#/components/responses/Conflicto" }
         "422": { $ref: "#/components/responses/ValidacionFallida" }
 
+  /auth/recuperacion:
+    post:
+      tags: [Autenticación]
+      operationId: solicitarRecuperacion
+      summary: Pide al administrador una contraseña nueva («¿Olvidó su contraseña?»)
+      description: |
+        No necesita sesión. Si el correo y el número de documento corresponden a una cuenta de productor, queda una
+        solicitud pendiente para los administradores (una sola por cuenta). La respuesta es siempre la misma, exista o
+        no la cuenta, para no revelar qué correos están registrados. Limitado a 10 intentos por minuto por IP.
+        Un administrador que olvidó su contraseña la pide a otro administrador.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema: { $ref: "#/components/schemas/RecuperacionEntrada" }
+            example: { correo: hernando.rincon@correo.co, numero_documento: "74852369" }
+      responses:
+        "202":
+          description: Solicitud recibida (o descartada en silencio si los datos no corresponden)
+          content:
+            application/json:
+              schema: { $ref: "#/components/schemas/Aviso" }
+        "400": { $ref: "#/components/responses/PeticionInvalida" }
+        "422": { $ref: "#/components/responses/ValidacionFallida" }
+        "429": { $ref: "#/components/responses/DemasiadasSolicitudes" }
+
   /auth/contrasena:
     post:
       tags: [Autenticación]
@@ -411,6 +437,69 @@ paths:
         "401": { $ref: "#/components/responses/NoAutenticado" }
         "403": { $ref: "#/components/responses/Prohibido" }
         "404": { $ref: "#/components/responses/NoEncontrado" }
+
+  /solicitudes-contrasena:
+    get:
+      tags: [Usuarios]
+      operationId: listarSolicitudesContrasena
+      summary: Solicitudes de contraseña nueva hechas desde «¿Olvidó su contraseña?»
+      security: [{ bearer: [] }]
+      x-roles: [administrador]
+      parameters:
+        - $ref: "#/components/parameters/Pagina"
+        - $ref: "#/components/parameters/PorPagina"
+        - name: estado
+          in: query
+          description: Sin este parámetro se listan todas, de la más reciente a la más antigua.
+          schema: { $ref: "#/components/schemas/EstadoSolicitud" }
+      responses:
+        "200":
+          description: Página de solicitudes
+          content:
+            application/json:
+              schema: { $ref: "#/components/schemas/ListaSolicitudes" }
+        "400": { $ref: "#/components/responses/PeticionInvalida" }
+        "401": { $ref: "#/components/responses/NoAutenticado" }
+        "403": { $ref: "#/components/responses/Prohibido" }
+
+  /solicitudes-contrasena/{solicitud_id}/atender:
+    parameters:
+      - $ref: "#/components/parameters/SolicitudId"
+    post:
+      tags: [Usuarios]
+      operationId: atenderSolicitudContrasena
+      summary: Atiende una solicitud generando una contraseña temporal
+      description: La cuenta deberá cambiarla al ingresar. La contraseña se muestra una sola vez.
+      security: [{ bearer: [] }]
+      x-roles: [administrador]
+      responses:
+        "200":
+          description: Contraseña temporal generada
+          content:
+            application/json:
+              schema: { $ref: "#/components/schemas/ContrasenaTemporal" }
+        "400": { $ref: "#/components/responses/PeticionInvalida" }
+        "401": { $ref: "#/components/responses/NoAutenticado" }
+        "403": { $ref: "#/components/responses/Prohibido" }
+        "404": { $ref: "#/components/responses/NoEncontrado" }
+        "409": { $ref: "#/components/responses/Conflicto" }
+
+  /solicitudes-contrasena/{solicitud_id}/descartar:
+    parameters:
+      - $ref: "#/components/parameters/SolicitudId"
+    post:
+      tags: [Usuarios]
+      operationId: descartarSolicitudContrasena
+      summary: Descarta una solicitud (por ejemplo, si no la hizo el titular)
+      security: [{ bearer: [] }]
+      x-roles: [administrador]
+      responses:
+        "204": { description: Solicitud descartada }
+        "400": { $ref: "#/components/responses/PeticionInvalida" }
+        "401": { $ref: "#/components/responses/NoAutenticado" }
+        "403": { $ref: "#/components/responses/Prohibido" }
+        "404": { $ref: "#/components/responses/NoEncontrado" }
+        "409": { $ref: "#/components/responses/Conflicto" }
 
   /fincas:
     get:
@@ -1474,6 +1563,11 @@ components:
       in: path
       required: true
       schema: { type: string, format: uuid }
+    SolicitudId:
+      name: solicitud_id
+      in: path
+      required: true
+      schema: { type: string, format: uuid }
     FincaId:
       name: finca_id
       in: path
@@ -2053,6 +2147,50 @@ components:
         tipo_documento: { $ref: "#/components/schemas/TipoDocumento" }
         numero_documento: { type: string, minLength: 5, maxLength: 15 }
         representante_legal: { type: [string, "null"], minLength: 3, maxLength: 120 }
+    RecuperacionEntrada:
+      type: object
+      required: [correo, numero_documento]
+      properties:
+        correo: { type: string, format: email, maxLength: 120 }
+        numero_documento: { type: string, minLength: 5, maxLength: 15, description: "Cédula o NIT con el que se registró (sin puntos)." }
+    Aviso:
+      type: object
+      required: [mensaje]
+      properties:
+        mensaje: { type: string }
+    EstadoSolicitud:
+      type: string
+      enum: [pendiente, atendida, descartada]
+    SolicitudContrasena:
+      type: object
+      required: [id, usuario_id, estado, atendida_por, atendida_en, usuario, creado_en, actualizado_en]
+      properties:
+        id: { type: string, format: uuid }
+        usuario_id: { type: string, format: uuid }
+        estado: { $ref: "#/components/schemas/EstadoSolicitud" }
+        atendida_por: { type: [string, "null"], format: uuid }
+        atendida_en: { type: [string, "null"], format: date-time }
+        usuario:
+          type: object
+          description: Datos de la cuenta que pidió la contraseña, para que el administrador la reconozca.
+          required: [nombre_completo, correo, activo, tipo_documento, numero_documento]
+          properties:
+            nombre_completo: { type: string }
+            correo: { type: string, format: email }
+            activo: { type: boolean }
+            tipo_documento: { type: [string, "null"] }
+            numero_documento: { type: [string, "null"] }
+        creado_en: { type: string, format: date-time }
+        actualizado_en: { type: string, format: date-time }
+    ListaSolicitudes:
+      allOf:
+        - $ref: "#/components/schemas/Paginacion"
+        - type: object
+          required: [datos]
+          properties:
+            datos:
+              type: array
+              items: { $ref: "#/components/schemas/SolicitudContrasena" }
     CambioContrasena:
       type: object
       required: [contrasena_actual, contrasena_nueva]
@@ -2117,8 +2255,9 @@ components:
       properties:
         usuarios:
           type: object
-          required: [total, activos, suspendidos, administradores, deben_cambiar_contrasena]
+          required: [total, activos, suspendidos, administradores, deben_cambiar_contrasena, solicitudes_pendientes]
           properties:
+            solicitudes_pendientes: { type: integer, description: Solicitudes de contraseña sin atender. }
             total: { type: integer }
             activos: { type: integer }
             suspendidos: { type: integer }

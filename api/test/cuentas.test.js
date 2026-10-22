@@ -278,3 +278,43 @@ describe('Derecho de supresión con historia', () => {
     assert.equal((await ingresar(CORREOS.luz)).statusCode, 401);
   });
 });
+
+describe('¿Olvidó su contraseña? (solicitud al administrador)', () => {
+  const pedirRecuperacion = (correo, numero) => pedir('POST', '/auth/recuperacion', { payload: { correo, numero_documento: numero } });
+  test('responde igual exista o no la cuenta, y solo crea la solicitud si correo y documento coinciden', async () => {
+    const bien = await pedirRecuperacion(CORREOS.hernando, '74.852.369');
+    const mal = await pedirRecuperacion(CORREOS.hernando, '11111111');
+    const nadie = await pedirRecuperacion('nadie@correo.co', '74852369');
+    for (const r of [bien, mal, nadie]) { cumpleContrato('solicitarRecuperacion', r); assert.equal(r.statusCode, 202); }
+    assert.equal(bien.json().mensaje, nadie.json().mensaje);
+    const { rows } = await pool.query("SELECT count(*) AS n FROM solicitud_contrasena WHERE estado = 'pendiente'");
+    assert.equal(rows[0].n, 1);
+    await pedirRecuperacion(CORREOS.hernando, '74852369');
+    const otra = await pool.query("SELECT count(*) AS n FROM solicitud_contrasena WHERE estado = 'pendiente'");
+    assert.equal(otra.rows[0].n, 1, 'una sola pendiente por cuenta');
+  });
+  test('el productor no ve las solicitudes; el administrador las atiende y la temporal funciona', async () => {
+    assert.equal((await pedir('GET', '/solicitudes-contrasena', { t: tHernando })).statusCode, 403); // Luz ya eliminó su cuenta más arriba
+    const lista = cumpleContrato('listarSolicitudesContrasena', await pedir('GET', '/solicitudes-contrasena?estado=pendiente', { t: tAdmin }));
+    assert.equal(lista.datos[0].usuario.correo, CORREOS.hernando);
+    const resumen = cumpleContrato('obtenerResumen', await pedir('GET', '/admin/resumen', { t: tAdmin }));
+    assert.equal(resumen.usuarios.solicitudes_pendientes, 1);
+    const r = cumpleContrato('atenderSolicitudContrasena', await pedir('POST', `/solicitudes-contrasena/${lista.datos[0].id}/atender`, { t: tAdmin }));
+    const ingreso = cumpleContrato('iniciarSesion', await ingresar(CORREOS.hernando, r.contrasena_temporal));
+    assert.equal(ingreso.usuario.debe_cambiar_contrasena, true);
+    const otraVez = await pedir('POST', `/solicitudes-contrasena/${lista.datos[0].id}/atender`, { t: tAdmin });
+    cumpleContrato('atenderSolicitudContrasena', otraVez);
+    assert.equal(otraVez.statusCode, 409);
+  });
+  test('una solicitud se puede descartar', async () => {
+    await pool.query("UPDATE usuario SET debe_cambiar_contrasena = false WHERE productor_id = $1", [IDS.hernando]);
+    await pedirRecuperacion(CORREOS.hernando, '74852369');
+    const { rows: [s] } = await pool.query("SELECT id FROM solicitud_contrasena WHERE estado = 'pendiente'");
+    const r = await pedir('POST', `/solicitudes-contrasena/${s.id}/descartar`, { t: tAdmin });
+    cumpleContrato('descartarSolicitudContrasena', r);
+    assert.equal(r.statusCode, 204);
+    const b = cumpleContrato('listarBitacora', await pedir('GET', '/bitacora?por_pagina=100', { t: tAdmin }));
+    assert.ok(b.datos.some((e) => e.accion === 'solicitar_contrasena'));
+    assert.ok(b.datos.some((e) => e.accion === 'descartar_solicitud'));
+  });
+});

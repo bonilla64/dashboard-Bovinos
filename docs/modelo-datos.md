@@ -107,6 +107,19 @@ Registro de cambios: acciones de administración, registros de cuentas y cuentas
 | `detalle` | jsonb | no | campos cambiados u otros datos (sin valores sensibles) |
 | `creado_en` | timestamptz | no | |
 
+### solicitud_contrasena
+
+Pedido de «¿Olvidó su contraseña?» que atiende un administrador.
+
+| Campo | Tipo | Nulo | Restricciones |
+|---|---|---|---|
+| `id` | uuid | no | PK |
+| `usuario_id` | uuid | no | FK → `usuario.id`, `ON DELETE CASCADE`; una sola solicitud `pendiente` por cuenta |
+| `estado` | estado_solicitud | no | `pendiente`, `atendida`, `descartada` |
+| `atendida_por` | uuid | sí | FK → `usuario.id` (el administrador), `ON DELETE SET NULL` |
+| `atendida_en` | timestamptz | sí | nulo solo mientras está pendiente |
+| `creado_en`, `actualizado_en` | timestamptz | no | |
+
 ### lote
 
 Grupo de animales de una misma categoría que el productor quiere comercializar.
@@ -320,6 +333,6 @@ Campos del contrato que no son columnas, y dónde viven:
 
 ## Implementación
 
-El esquema real está en [`api/db/migraciones/`](../api/db/migraciones/) (`001_esquema_inicial.sql`, `002_vigencia_e_importacion_precios.sql` y `003_cuentas_fincas_bitacora.sql`) y se aplica con `npm run migrar` (o solo, al arrancar `docker compose up`). Todo cambio futuro va en un archivo nuevo `004_…sql`, nunca editando uno ya aplicado.
+El esquema real está en [`api/db/migraciones/`](../api/db/migraciones/) (`001_esquema_inicial.sql`, `002_vigencia_e_importacion_precios.sql` `003_cuentas_fincas_bitacora.sql` y `004_solicitudes_contrasena.sql`) y se aplica con `npm run migrar` (o solo, al arrancar `docker compose up`). Todo cambio futuro va en un archivo nuevo `005_…sql`, nunca editando uno ya aplicado.
 
 Los datos de demostración están en [`api/db/semilla/datos.json`](../api/db/semilla/datos.json) y se cargan con `npm run sembrar`.

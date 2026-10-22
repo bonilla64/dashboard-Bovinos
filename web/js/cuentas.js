@@ -31,6 +31,7 @@ const ACCIONES = {
   reactivar: "Reactivó", cambiar_rol: "Cambió el rol", restablecer_contrasena: "Restableció la contraseña",
   verificar_documento: "Verificó el documento", quitar_verificacion: "Quitó la verificación", importar: "Importó",
   anonimizar: "Anonimizó", desactivar: "Desactivó", cambiar_contrasena: "Cambió su contraseña",
+  solicitar_contrasena: "Pidió una contraseña nueva", descartar_solicitud: "Descartó la solicitud de contraseña de",
 };
 const RECURSOS = { usuario: "cuenta", cuenta: "cuenta", perfil: "su perfil", productor: "productor", finca: "finca", destino: "destino", ruta: "ruta", precio: "precio" };
 
@@ -342,6 +343,29 @@ function conectarRegistro() {
       boton.disabled = false;
     }
   });
+}
+
+/** «¿Olvidó su contraseña?»: la solicitud le llega a los administradores (no hay envío de correos). */
+async function olvidoContrasena() {
+  const correoEscrito = $("#ingreso-correo")?.value.trim() || "";
+  const r = await abrirFormulario({
+    titulo: "¿Olvidó su contraseña?",
+    html: `<p>Escriba el correo y el documento con que se registró. Un administrador revisará la solicitud y le entregará una contraseña temporal, que deberá cambiar al ingresar.</p>
+      <div class="campos">
+        ${campo({ prefijo: "olvido-", nombre: "correo", etiqueta: "Correo", tipo: "email", valor: correoEscrito, atributos: 'required maxlength="120" autocomplete="username"' })}
+        ${campo({ prefijo: "olvido-", nombre: "numero_documento", etiqueta: "Cédula o NIT", ayuda: "Sin puntos.", atributos: 'required maxlength="15" inputmode="numeric" autocomplete="off"' })}
+      </div>`,
+    boton: "Enviar solicitud",
+    validar: (d) => {
+      const e = [];
+      if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(d.correo || "")) e.push(["correo", "Escriba el correo con que se registró."]);
+      const n = String(d.numero_documento || "").replace(/[.\s]/g, "");
+      if (!/^\d{5,10}(-?\d)?$/.test(n)) e.push(["numero_documento", "Escriba su cédula o NIT, solo números."]);
+      return e;
+    },
+    alEnviar: (d) => Api.post("/auth/recuperacion", { correo: d.correo, numero_documento: d.numero_documento.replace(/[.\s]/g, "") }, { publica: true, redirigir: false }),
+  });
+  if (r) avisar("#aviso-ingreso", `<strong>Solicitud enviada.</strong> ${escapar(r.mensaje)}`, "ok");
 }
 
 /* ------------------------------------------------------------------ */
@@ -835,6 +859,7 @@ async function iniciarAdmin() {
       editar: editarUsuario, suspender: (id) => activarUsuario(id, false), reactivar: (id) => activarUsuario(id, true),
       temporal: restablecerContrasena, eliminar: eliminarUsuario,
     });
+    delegarAcciones($("#tabla-solicitudes"), { atender: atenderSolicitud, descartar: descartarSolicitud });
     delegarAcciones($("#tabla-productores"), {
       editar: (id) => editarProductor(adm.productores.find((p) => p.id === id)),
       verificar: (id) => verificarProductor(id, true), desverificar: (id) => verificarProductor(id, false),
@@ -884,7 +909,7 @@ async function pintarResumen() {
   const tarjeta = (titulo, cifra, detalle, enlace) => `<div class="tarjeta">
     <h2>${escapar(titulo)}</h2><p class="tarjeta__cifra">${cifra}</p><p>${detalle}</p>${enlace ? `<p><a href="${enlace[0]}">${escapar(enlace[1])}</a></p>` : ""}</div>`;
   $("#tarjetas-resumen").innerHTML = [
-    tarjeta("Cuentas", r.usuarios.total, `${r.usuarios.activos} activas, ${r.usuarios.suspendidas ?? r.usuarios.suspendidos} suspendidas, ${r.usuarios.administradores} administradores.${r.usuarios.deben_cambiar_contrasena ? ` ${r.usuarios.deben_cambiar_contrasena} con contraseña temporal.` : ""}`, ["#usuarios", "Administrar cuentas"]),
+    tarjeta("Cuentas", r.usuarios.total, `${r.usuarios.activos} activas, ${r.usuarios.suspendidos} suspendidas, ${r.usuarios.administradores} administradores.${r.usuarios.deben_cambiar_contrasena ? ` ${r.usuarios.deben_cambiar_contrasena} con contraseña temporal.` : ""}${r.usuarios.solicitudes_pendientes ? ` <strong>${r.usuarios.solicitudes_pendientes} ${r.usuarios.solicitudes_pendientes === 1 ? "solicitud" : "solicitudes"} de contraseña por atender.</strong>` : ""}`, ["#usuarios", r.usuarios.solicitudes_pendientes ? "Atender solicitudes" : "Administrar cuentas"]),
     tarjeta("Productores", r.productores.total, `${r.productores.personas} personas y ${r.productores.empresas} empresas. ${r.productores.verificados} verificados; ${r.productores.sin_documento} sin documento.`, ["#productores", "Revisar productores"]),
     tarjeta("Fincas y lotes", `${r.fincas} · ${r.lotes.total}`, `${r.fincas} fincas. Lotes: ${r.lotes.disponibles} disponibles, ${r.lotes.simulados} comparados, ${r.lotes.vendidos} vendidos.`, ["lotes.html", "Ver todos los lotes"]),
     tarjeta("Simulaciones", r.simulaciones.total, `${r.simulaciones.ultimos_7_dias} en los últimos 7 días.`, ["historial.html", "Ver historial"]),
@@ -894,6 +919,7 @@ async function pintarResumen() {
   ].join("");
   $("#lista-mas-elegidos").innerHTML = r.destinos_mas_elegidos.map((d) => `<li>${escapar(d.nombre)}: ${d.veces} ${d.veces === 1 ? "vez" : "veces"}</li>`).join("")
     || "<li>Todavía no hay simulaciones.</li>";
+  marcarSolicitudes(r.usuarios.solicitudes_pendientes);
   $$("#tarjetas-resumen a[href^='#']").forEach((a) => a.addEventListener("click", (ev) => { ev.preventDefault(); mostrarPestana(a.getAttribute("href").slice(1)); }));
 }
 
@@ -904,8 +930,55 @@ async function cargarUsuarios() {
   if ($("#u-q").value.trim()) q.set("q", $("#u-q").value.trim());
   if ($("#u-rol").value) q.set("rol", $("#u-rol").value);
   if ($("#u-activo").value) q.set("activo", $("#u-activo").value);
-  adm.usuarios = await todos(`/usuarios?${q}`);
+  const [usuarios, solicitudes] = await Promise.all([todos(`/usuarios?${q}`), todos("/solicitudes-contrasena?estado=pendiente")]);
+  adm.usuarios = usuarios;
+  adm.solicitudes = solicitudes;
   pintarUsuarios();
+  pintarSolicitudes();
+}
+
+/** El número de solicitudes pendientes se ve en la pestaña Usuarios. */
+function marcarSolicitudes(n) {
+  const tab = $("#tab-usuarios");
+  if (tab) tab.innerHTML = n ? `Usuarios <span class="insignia insignia--aviso">${n}<span class="sr-only"> solicitudes de contraseña</span></span>` : "Usuarios";
+}
+
+function pintarSolicitudes() {
+  const lista = adm.solicitudes || [];
+  $("#bloque-solicitudes").hidden = !lista.length;
+  marcarSolicitudes(lista.length);
+  $("#tabla-solicitudes").innerHTML = lista.map((s) => `<tr>
+    <th scope="row" class="izq">${escapar(s.usuario.nombre_completo)}<small>${escapar(s.usuario.correo)}${s.usuario.activo ? "" : " · cuenta suspendida"}</small></th>
+    <td class="izq">${escapar(s.usuario.numero_documento ? `${s.usuario.tipo_documento} ${s.usuario.numero_documento}` : "—")}</td>
+    <td class="izq">${fmt.fechaHora(s.creado_en)}</td>
+    <td class="izq acciones-fila">${botonAccion("atender", s.id, "Atender: dar contraseña temporal")} ${botonAccion("descartar", s.id, "Descartar")}</td>
+  </tr>`).join("");
+}
+
+async function atenderSolicitud(id) {
+  const s = adm.solicitudes.find((x) => x.id === id);
+  if (!(await confirmar(`¿Dar una contraseña temporal a ${s.usuario.nombre_completo}?`,
+    "Antes, confirme con la persona (por ejemplo, llamándola) que ella hizo la solicitud. Su contraseña actual dejará de servir.", "Generar contraseña", false))) return;
+  try {
+    const r = await Api.post(`/solicitudes-contrasena/${id}/atender`);
+    await cargarUsuarios();
+    await abrirFormulario({
+      titulo: "Contraseña temporal",
+      html: `<p>Entregue esta contraseña a <strong>${escapar(s.usuario.nombre_completo)}</strong> por un medio seguro. No se volverá a mostrar.</p>
+        <p class="clave-temporal"><code>${escapar(r.contrasena_temporal)}</code></p>`,
+      boton: "Listo",
+    });
+  } catch (e) { avisar("#aviso-admin", escapar(e.message), "alerta"); }
+}
+
+async function descartarSolicitud(id) {
+  const s = adm.solicitudes.find((x) => x.id === id);
+  if (!(await confirmar(`¿Descartar la solicitud de ${s.usuario.nombre_completo}?`, "Su contraseña no cambia. Úselo si la solicitud no la hizo el titular de la cuenta.", "Descartar"))) return;
+  try {
+    await Api.post(`/solicitudes-contrasena/${id}/descartar`);
+    await cargarUsuarios();
+    avisar("#aviso-admin", `Solicitud de ${escapar(s.usuario.nombre_completo)} descartada.`, "ok");
+  } catch (e) { avisar("#aviso-admin", escapar(e.message), "alerta"); }
 }
 
 function pintarUsuarios() {
@@ -1315,6 +1388,7 @@ document.addEventListener("DOMContentLoaded", () => {
   sesionAlDia();
   if (pagina === "ingreso") {
     conectarRegistro();
+    $("#btn-olvido")?.addEventListener("click", olvidoContrasena);
     if (params.get("motivo") === "eliminada") avisar("#aviso-ingreso", "Su cuenta fue eliminada y sus datos personales borrados.");
   }
   if (pagina === "precios") {

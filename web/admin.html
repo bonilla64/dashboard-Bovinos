@@ -68,6 +68,16 @@
       </section>
 
       <section id="panel-usuarios" role="tabpanel" aria-labelledby="tab-usuarios" class="panel" hidden>
+        <div class="bloque" id="bloque-solicitudes" hidden>
+          <h2 id="t-solicitudes">Solicitudes de contraseña</h2>
+          <p>Personas que usaron «¿Olvidó su contraseña?» con su correo y su documento. Al atender una, se genera una contraseña temporal para entregarle por un medio seguro (llamada, en persona); deberá cambiarla al ingresar. Si no la hizo el titular, descártela.</p>
+          <div class="tabla-envoltura" tabindex="0" role="region" aria-labelledby="t-solicitudes">
+            <table>
+              <thead><tr><th scope="col" class="izq">Cuenta</th><th scope="col" class="izq">Documento</th><th scope="col" class="izq">Pedida</th><th scope="col" class="izq">Acciones</th></tr></thead>
+              <tbody id="tabla-solicitudes"></tbody>
+            </table>
+          </div>
+        </div>
         <form class="filtros barra-herramientas" id="filtros-usuarios" role="search" aria-label="Buscar cuentas">
           <div class="campo"><label for="u-q">Buscar</label><input type="search" id="u-q" placeholder="Nombre, correo o documento" maxlength="80"></div>
           <div class="campo"><label for="u-rol">Rol</label><select id="u-rol"><option value="">Todos</option><option value="productor">Productor</option><option value="administrador">Administrador</option></select></div>

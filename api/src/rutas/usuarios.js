@@ -13,7 +13,34 @@ import { otrosAdministradores, usuarioDetalle } from './autenticacion.js';
 const CAMPOS_FICHA = ['nombre_completo', 'correo', 'telefono', 'municipio', 'vereda', 'tipo_persona', 'tipo_documento',
   'numero_documento', 'representante_legal'];
 
+const COL_SOLICITUD = `s.id, s.usuario_id, s.estado, s.atendida_por, s.atendida_en, s.creado_en, s.actualizado_en,
+  json_build_object('nombre_completo', u.nombre_completo, 'correo', u.correo, 'activo', u.activo,
+    'tipo_documento', p.tipo_documento, 'numero_documento', p.numero_documento) AS usuario`;
+
 export default ({ pool, config }) => {
+  /**
+   * Pone una contraseña temporal a la cuenta y cierra sus solicitudes pendientes.
+   * La usan «Contraseña temporal» (Usuarios) y «Atender» (solicitudes de «¿Olvidó su contraseña?»).
+   */
+  async function darTemporal(bd, usuario, admin, detalle = {}) {
+    const temporal = generarContrasenaTemporal();
+    const hash = await cifrarContrasena(temporal, config.costoBcrypt);
+    await bd.query('UPDATE usuario SET contrasena_hash = $1, debe_cambiar_contrasena = true WHERE id = $2', [hash, usuario.id]);
+    await bd.query(
+      `UPDATE solicitud_contrasena SET estado = 'atendida', atendida_por = $2, atendida_en = now()
+       WHERE usuario_id = $1 AND estado = 'pendiente'`, [usuario.id, admin.sub]);
+    await anotar(bd, admin, 'restablecer_contrasena', 'usuario', usuario.id, { correo: usuario.correo, ...detalle });
+    return { contrasena_temporal: temporal };
+  }
+  async function solicitudPendiente(bd, id) {
+    const { rows: [s] } = await bd.query(
+      `SELECT ${COL_SOLICITUD} FROM solicitud_contrasena s JOIN usuario u ON u.id = s.usuario_id
+       LEFT JOIN productor p ON p.id = u.productor_id WHERE s.id = $1 FOR UPDATE OF s`, [id]);
+    if (!s) throw noEncontrado('No existe esa solicitud.');
+    if (s.estado !== 'pendiente') throw conflicto(`La solicitud ya fue ${s.estado}.`);
+    return s;
+  }
+
   async function buscar(bd, id) {
     const u = await usuarioDetalle(bd, id);
     if (!u) throw noEncontrado('No existe esa cuenta.');
@@ -132,11 +159,41 @@ export default ({ pool, config }) => {
     async restablecerContrasena(peticion) {
       const u = await buscar(pool, peticion.params.usuario_id);
       if (u.id === peticion.user.sub) throw conflicto('Para su propia cuenta use «Cambiar contraseña» en Mi cuenta.');
-      const temporal = generarContrasenaTemporal();
-      const hash = await cifrarContrasena(temporal, config.costoBcrypt);
-      await pool.query('UPDATE usuario SET contrasena_hash = $1, debe_cambiar_contrasena = true WHERE id = $2', [hash, u.id]);
-      await anotar(pool, peticion.user, 'restablecer_contrasena', 'usuario', u.id, { correo: u.correo });
-      return { contrasena_temporal: temporal };
+      return enTransaccion(pool, (bd) => darTemporal(bd, u, peticion.user));
+    },
+
+    // ---------- Solicitudes de «¿Olvidó su contraseña?» ----------
+    async listarSolicitudesContrasena(peticion) {
+      const q = peticion.query;
+      const { pagina, porPagina, limite, desplazamiento } = paginar(q);
+      const { rows } = await pool.query(
+        `SELECT ${COL_SOLICITUD}, count(*) OVER () AS total
+         FROM solicitud_contrasena s JOIN usuario u ON u.id = s.usuario_id LEFT JOIN productor p ON p.id = u.productor_id
+         WHERE ($1::estado_solicitud IS NULL OR s.estado = $1)
+         ORDER BY (s.estado = 'pendiente') DESC, s.creado_en DESC LIMIT $2 OFFSET $3`,
+        [q.estado ?? null, limite, desplazamiento]);
+      const total = rows[0]?.total ?? 0;
+      rows.forEach((r) => delete r.total);
+      return { datos: rows, pagina, por_pagina: porPagina, total };
+    },
+
+    async atenderSolicitudContrasena(peticion) {
+      return enTransaccion(pool, async (bd) => {
+        const s = await solicitudPendiente(bd, peticion.params.solicitud_id);
+        if (s.usuario_id === peticion.user.sub) throw conflicto('Para su propia cuenta use «Cambiar contraseña» en Mi cuenta.');
+        return darTemporal(bd, { id: s.usuario_id, correo: s.usuario.correo }, peticion.user, { solicitud: s.id });
+      });
+    },
+
+    async descartarSolicitudContrasena(peticion, respuesta) {
+      await enTransaccion(pool, async (bd) => {
+        const s = await solicitudPendiente(bd, peticion.params.solicitud_id);
+        await bd.query(
+          "UPDATE solicitud_contrasena SET estado = 'descartada', atendida_por = $2, atendida_en = now() WHERE id = $1",
+          [s.id, peticion.user.sub]);
+        await anotar(bd, peticion.user, 'descartar_solicitud', 'usuario', s.usuario_id, { correo: s.usuario.correo });
+      });
+      return respuesta.code(204).send();
     },
   };
 };

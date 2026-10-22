@@ -44,7 +44,7 @@ export async function sembrar(url, contrasena, { forzar = false, costoBcrypt = 1
     }
     const hash = await cifrarContrasena(contrasena, costoBcrypt);
     await enTransaccion(pool, async (bd) => {
-      await bd.query('TRUNCATE bitacora, resultado_simulacion, simulacion, lote, finca, importacion_precio, usuario, productor, precio_mercado, ruta, destino RESTART IDENTITY CASCADE');
+      await bd.query('TRUNCATE solicitud_contrasena, bitacora, resultado_simulacion, simulacion, lote, finca, importacion_precio, usuario, productor, precio_mercado, ruta, destino RESTART IDENTITY CASCADE');
 
       await bd.query(
         `INSERT INTO usuario (nombre_completo, correo, contrasena_hash, rol) VALUES ('Administración del simulador', $1, $2, 'administrador')`,

@@ -215,6 +215,8 @@ La primera vez que abra el tablero lo lleva a **Ingresar**.
 - **Si ya tiene cuenta**, escriba su correo y contraseña y oprima **Ingresar**. Con la instalación de la sección 2 ya existen cuentas de demostración (tabla del paso 6 de la sección 2.2).
 - **Si no tiene cuenta**, llene **Crear una cuenta de productor**. Primero elija **Como persona** (se identifica con cédula de ciudadanía o de extranjería) o **Como empresa** (NIT con su dígito de verificación, por ejemplo `900123456-7`, y el nombre del representante legal). Luego el nombre o razón social, correo, una contraseña de **10 caracteres o más**, su municipio de Casanare, la vereda y el celular (opcionales), y marque la autorización de tratamiento de datos (Ley 1581 de 2012). Si el NIT está mal digitado, el formulario le dice cuál debería ser el dígito de verificación. Un documento o un correo que ya está registrado no se acepta. Al crear la cuenta queda adentro y lo lleva a **Mi cuenta** para registrar su finca.
 
+- **Si olvidó su contraseña**, toque **¿Olvidó su contraseña?** debajo del botón Ingresar y escriba su correo y su cédula o NIT. La solicitud le llega al administrador (la aplicación no envía correos). Él confirma con usted que la hizo, genera una **contraseña temporal** y se la entrega; al ingresar con ella, la aplicación le pide cambiarla. Por seguridad, la página responde lo mismo aunque el correo no esté registrado.
+
 La sesión dura 8 horas. Cuando vence, la aplicación le pide ingresar de nuevo y lo devuelve a la pantalla donde estaba; nada de lo guardado se pierde.
 
 Cada productor ve **solo sus fincas, sus lotes y sus simulaciones**. El administrador ve todo y es el único que puede cargar precios y administrar cuentas.
@@ -321,7 +323,7 @@ La pantalla **Administración** tiene cinco pestañas:
 | Pestaña | Qué se hace |
 |---|---|
 | Resumen | Cifras de cuentas, productores (personas y empresas, verificados, sin documento), fincas, lotes, simulaciones, destinos y precios vencidos; destinos que más salen como mejor opción |
-| Usuarios | Buscar por nombre, correo o documento; **Nueva cuenta** (productor o administrador, con contraseña inicial que deberá cambiar); **Editar** nombre, correo y rol; **Suspender / Reactivar**; **Contraseña temporal** (se muestra una sola vez); **Eliminar** (solo cuentas sin lotes) |
+| Usuarios | **Solicitudes de contraseña** pendientes (de «¿Olvidó su contraseña?»): **Atender** genera la contraseña temporal y **Descartar** la cierra sin cambios; la pestaña muestra cuántas hay. Buscar por nombre, correo o documento; **Nueva cuenta** (productor o administrador, con contraseña inicial que deberá cambiar); **Editar** nombre, correo y rol; **Suspender / Reactivar**; **Contraseña temporal** (se muestra una sola vez); **Eliminar** (solo cuentas sin lotes) |
 | Productores | Filtrar personas o empresas y documentos sin verificar; **Verificar documento**; **Editar** la ficha; **Nuevo productor sin cuenta**; ver sus lotes; eliminar (solo sin lotes ni cuenta) |
 | Destinos y rutas | **Nuevo destino**; **Editar** nombre, tipo, ubicación y comisión; **Corregir ruta** desde Yopal (distancia, tiempo, peajes, merma); **Desactivar** (un destino usado en simulaciones no se borra) |
 | Bitácora | Quién hizo qué y cuándo: registros, cambios de rol, suspensiones, verificaciones, cargas de precios… |
@@ -491,8 +493,8 @@ Base: `http://localhost:3000/api/v1`. 🔒 = requiere `Authorization: Bearer <to
 
 | Recurso | Operaciones |
 |---|---|
-| Autenticación | `POST /auth/registro`, `POST /auth/ingreso`, 🔒 `GET`, `PATCH`, `DELETE /auth/yo` (mi cuenta), 🔒 `POST /auth/contrasena` |
-| Usuarios | 👑 `GET`, `POST /usuarios` · 👑 `GET`, `PATCH`, `DELETE /usuarios/{id}` · 👑 `POST /usuarios/{id}/contrasena-temporal` |
+| Autenticación | `POST /auth/registro`, `POST /auth/ingreso`, 🔒 `GET`, `PATCH`, `DELETE /auth/yo` (mi cuenta), 🔒 `POST /auth/contrasena`, `POST /auth/recuperacion` (¿olvidó su contraseña?) |
+| Usuarios | 👑 `GET`, `POST /usuarios` · 👑 `GET`, `PATCH`, `DELETE /usuarios/{id}` · 👑 `POST /usuarios/{id}/contrasena-temporal` · 👑 `GET /solicitudes-contrasena`, 👑 `POST /solicitudes-contrasena/{id}/atender` y `/descartar` |
 | Productores | 👑 `GET`, 👑 `POST /productores` · 🔒 `GET`, 🔒 `PATCH`, 👑 `DELETE /productores/{id}` |
 | Fincas | 🔒 `GET`, `POST /fincas` · 🔒 `GET`, `PATCH`, `DELETE /fincas/{id}` |
 | Administración | 👑 `GET /admin/resumen`, 👑 `GET /bitacora` |
@@ -520,7 +522,7 @@ npm run dev                           # http://localhost:3000, se reinicia al gu
 
 ### Pruebas automáticas
 
-118 pruebas de la API: tipos de cuenta y documentos (dígito de verificación del NIT), Mi cuenta, administración de usuarios, suspensión y cambio de rol inmediatos, nunca sin administrador, fincas y su relación con los lotes, derecho de supresión, cálculo, rutas desde otros municipios, vigencia e importación de precios, autenticación, autorización, validación, filtro espacial, CRUD de todos los recursos, coherencia contrato ↔ base de datos y validación de **cada respuesta contra el contrato**. Usan una base aparte, que se borra en cada ejecución: si `DATABASE_URL_PRUEBAS` falta o es igual a `DATABASE_URL`, las pruebas se niegan a correr para no borrar los precios reales.
+122 pruebas de la API: tipos de cuenta y documentos (dígito de verificación del NIT), Mi cuenta, recuperación de contraseña por solicitud al administrador, administración de usuarios, suspensión y cambio de rol inmediatos, nunca sin administrador, fincas y su relación con los lotes, derecho de supresión, cálculo, rutas desde otros municipios, vigencia e importación de precios, autenticación, autorización, validación, filtro espacial, CRUD de todos los recursos, coherencia contrato ↔ base de datos y validación de **cada respuesta contra el contrato**. Usan una base aparte, que se borra en cada ejecución: si `DATABASE_URL_PRUEBAS` falta o es igual a `DATABASE_URL`, las pruebas se niegan a correr para no borrar los precios reales.
 
 ```bash
 cd api
@@ -598,7 +600,7 @@ Los roles rotan al menos una vez en el semestre; el cambio se registra en esta t
 |---|---|---|---|
 | 1 · Anteproyecto | 17 sep 2026 | Entregada | Problema, ruta H, wireframes en texto, plan de trabajo |
 | 2 · Prototipo y contrato | 1 oct 2026 | Entregada (`v0.2.0`) | Prototipo navegable de 3 pantallas con estados, contrato OpenAPI 3.1 con 6 recursos, modelo de datos |
-| 3 · MVP del backend | 15 oct 2026 | Entregada (`v0.4.0`, con ajustes del 19 oct: cuentas de persona y empresa, fincas, Mi cuenta, Mis lotes y Administración desde el tablero) | API REST con CRUD de 8 recursos (usuarios y fincas incluidos), cuentas de persona o empresa con documento verificable, Mi cuenta, Mis lotes y Administración desde el tablero, bitácora, autenticación JWT + bcrypt, autorización por rol y por dueño con estado de la cuenta revisado en cada petición, validación desde el contrato, errores centralizados, PostgreSQL + PostGIS, Swagger en `/docs`, Docker Compose y Codespaces, precios de Fedegán con vigencia y carga por CSV desde el tablero, tablero conectado a la API (ingreso, registro, cálculo en el servidor, historial y precios), rutas desde el municipio del lote, precios en kg y arroba, publicación en internet (Render + Neon + Pages), 118 pruebas en CI, ajustes de la entrevista |
+| 3 · MVP del backend | 15 oct 2026 | Entregada (`v0.4.0`, con ajustes del 19 oct: cuentas de persona y empresa, fincas, Mi cuenta, Mis lotes y Administración desde el tablero) | API REST con CRUD de 8 recursos (usuarios y fincas incluidos), cuentas de persona o empresa con documento verificable, Mi cuenta, Mis lotes y Administración desde el tablero, bitácora, autenticación JWT + bcrypt, autorización por rol y por dueño con estado de la cuenta revisado en cada petición, validación desde el contrato, errores centralizados, PostgreSQL + PostGIS, Swagger en `/docs`, Docker Compose y Codespaces, precios de Fedegán con vigencia y carga por CSV desde el tablero, tablero conectado a la API (ingreso, registro, cálculo en el servidor, historial y precios), rutas desde el municipio del lote, precios en kg y arroba, publicación en internet (Render + Neon + Pages), 122 pruebas en CI, ajustes de la entrevista |
 | 4 · Mapa desplegado con HTTPS | 12 nov 2026 | Pendiente | |
 | 5 · Visualizaciones y accesibilidad | 26 nov 2026 | Pendiente | |
 | EXIS | 4 dic 2026 | Pendiente | |

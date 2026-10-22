@@ -24,6 +24,7 @@ const CORRESPONDENCIA = {
   Lote: ['lote', ['simulaciones']],
   Finca: ['finca', ['lotes']],
   EntradaBitacora: ['bitacora', []],
+  SolicitudContrasena: ['solicitud_contrasena', ['usuario']],
   Destino: ['destino', ['distancia_lineal_km']],
   PrecioMercado: ['precio_mercado', ['antiguedad_dias']],
   ImportacionPrecios: ['importacion_precio', []],
