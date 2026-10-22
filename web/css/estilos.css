@@ -619,3 +619,8 @@ th.izq small { display: block; font-weight: 400; font-size: 0.8rem; color: var(-
 .campo .opcion { font-weight: 400; }
 .campo .opcion span { font-weight: 400; }
 .sesion__nombre { display: inline-block; max-width: 14rem; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; vertical-align: middle; }
+.olvido { margin: var(--e-3) 0 0; }
+.enlace-boton { font: inherit; background: none; border: 0; padding: var(--e-1) 0; color: var(--morichal); text-decoration: underline; text-underline-offset: 3px; cursor: pointer; min-height: 44px; }
+.enlace-boton:hover { color: var(--morichal-oscuro); text-decoration-thickness: 2px; }
+.enlace-boton:focus-visible { outline: 3px solid var(--foco); outline-offset: 2px; }
+.pestanas .insignia { margin-left: var(--e-1); }

@@ -66,7 +66,7 @@ export async function construirApp({ config, pool, limiteIngreso = 10, registrar
       const manejador = manejadores[op.operationId];
       // Si el contrato declara una operación que nadie implementó, la API no arranca.
       if (!manejador) throw new Error(`Falta implementar la operación ${op.operationId} (${op.metodo} ${op.ruta}).`);
-      const limitar = ['iniciarSesion', 'registrarUsuario'].includes(op.operationId);
+      const limitar = ['iniciarSesion', 'registrarUsuario', 'solicitarRecuperacion'].includes(op.operationId);
       api.route({
         method: op.metodo,
         url: op.ruta,

@@ -13,6 +13,7 @@ export default ({ pool, config }) => {
            (SELECT count(*) FROM usuario WHERE NOT activo) AS u_suspendidos,
            (SELECT count(*) FROM usuario WHERE rol = 'administrador' AND activo) AS u_admins,
            (SELECT count(*) FROM usuario WHERE debe_cambiar_contrasena) AS u_temporal,
+           (SELECT count(*) FROM solicitud_contrasena WHERE estado = 'pendiente') AS u_solicitudes,
            (SELECT count(*) FROM productor) AS p_total,
            (SELECT count(*) FROM productor WHERE tipo_persona = 'natural') AS p_personas,
            (SELECT count(*) FROM productor WHERE tipo_persona = 'juridica') AS p_empresas,
@@ -41,7 +42,7 @@ export default ({ pool, config }) => {
          FROM simulacion s JOIN destino d ON d.id = s.mejor_destino_id
          GROUP BY d.id, d.nombre ORDER BY veces DESC, d.nombre LIMIT 5`);
       return {
-        usuarios: { total: r.u_total, activos: r.u_activos, suspendidos: r.u_suspendidos, administradores: r.u_admins, deben_cambiar_contrasena: r.u_temporal },
+        usuarios: { total: r.u_total, activos: r.u_activos, suspendidos: r.u_suspendidos, administradores: r.u_admins, deben_cambiar_contrasena: r.u_temporal, solicitudes_pendientes: r.u_solicitudes },
         productores: { total: r.p_total, personas: r.p_personas, empresas: r.p_empresas, verificados: r.p_verificados, sin_documento: r.p_sin_doc },
         fincas: r.fincas,
         lotes: { total: r.l_total, disponibles: r.l_disp, simulados: r.l_sim, vendidos: r.l_vend },

@@ -50,7 +50,7 @@ test('el contrato cubre CRUD completo de al menos cuatro recursos', () => {
   assert.ok(completos.length >= 4, `recursos con CRUD: ${completos.join(', ')}`);
 });
 
-test('toda operación que modifica datos exige sesión, salvo registro e ingreso', () => {
+test('toda operación que modifica datos exige sesión, salvo registro, ingreso y solicitud de recuperación', () => {
   const abiertas = operaciones(contrato).filter((o) => o.metodo !== 'GET' && !o.requiereSesion).map((o) => o.operationId);
-  assert.deepEqual(abiertas.sort(), ['iniciarSesion', 'registrarUsuario']);
+  assert.deepEqual(abiertas.sort(), ['iniciarSesion', 'registrarUsuario', 'solicitarRecuperacion']);
 });

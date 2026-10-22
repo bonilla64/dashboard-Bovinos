@@ -275,3 +275,11 @@ Las pruebas validan cada respuesta contra el contrato: si la API devuelve un cam
 - Toda acción de administración queda en la tabla `bitacora`.
 
 **Alternativas.** Administrar desde la consola de Neon o desde Swagger (no demuestra el producto ni sus reglas); borrar en cascada (pierde la historia de simulaciones); revocar tokens con una lista negra (más complejo que leer la cuenta en cada petición, que cuesta una consulta por índice).
+
+## D-26 · Recuperación de contraseña por solicitud al administrador
+
+**Contexto.** Hacía falta el «¿Olvidó su contraseña?» en la pantalla de ingreso. La aplicación no tiene servicio de envío de correos.
+
+**Decisión.** La persona escribe su correo y su documento; si corresponden a una cuenta de productor queda una solicitud pendiente (una sola por cuenta) en Administración → Usuarios. El administrador confirma con la persona por otro medio y la atiende: se genera una contraseña temporal de un solo uso que la cuenta debe cambiar al ingresar. La respuesta es la misma exista o no la cuenta, para no revelar qué correos están registrados, y el pedido tiene el mismo límite de 10 intentos por minuto del ingreso. Un administrador que olvide su contraseña la pide a otro administrador.
+
+**Alternativas.** Enlace por correo con un token que vence (requiere un servicio de correo como Brevo o Resend y su clave en Render; se puede agregar después sin cambiar la tabla de usuarios); preguntas de seguridad (débiles y fáciles de adivinar).

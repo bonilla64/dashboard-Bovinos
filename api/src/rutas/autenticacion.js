@@ -72,6 +72,26 @@ export default ({ pool, config, app }) => {
       return sesionPara(u);
     },
 
+    async solicitarRecuperacion(peticion, respuesta) {
+      const { correo, numero_documento: numero } = peticion.body;
+      const soloDigitos = String(numero).replace(/\D/g, '');
+      // Solo cuentas de productor: el documento es la segunda prueba de que la pide el titular.
+      const { rows: [u] } = await pool.query(
+        `SELECT u.id, u.nombre_completo FROM usuario u JOIN productor p ON p.id = u.productor_id
+         WHERE lower(u.correo) = lower($1) AND p.numero_documento IS NOT NULL
+           AND regexp_replace(p.numero_documento, '\\D', '', 'g') = $2`, [correo, soloDigitos]);
+      if (u) {
+        const { rowCount } = await pool.query(
+          'INSERT INTO solicitud_contrasena (usuario_id) VALUES ($1) ON CONFLICT DO NOTHING', [u.id]);
+        if (rowCount) await anotar(pool, { sub: u.id, nombre: u.nombre_completo }, 'solicitar_contrasena', 'usuario', u.id);
+      }
+      // Misma respuesta siempre, para no revelar si el correo está registrado.
+      respuesta.code(202);
+      return {
+        mensaje: 'Si el correo y el documento corresponden a una cuenta, un administrador recibirá su solicitud y le entregará una contraseña temporal. Al ingresar con ella deberá cambiarla.',
+      };
+    },
+
     async obtenerUsuarioActual(peticion) {
       const u = await usuarioDetalle(pool, peticion.user.sub);
       if (!u) throw noAutenticado('La cuenta de esta sesión ya no existe.');
