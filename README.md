@@ -1,4 +1,4 @@
-# Simulador de Destinos Ganaderos desde Yopal
+# Simulador de Destinos Ganaderos desde Yopal entrega 4
 
 Esta aplicación web le dice a un ganadero de Casanare si le conviene vender su lote de ganado en la finca o llevarlo a una subasta, feria o frigorífico. Para cada destino tiene en cuenta el precio por kilo, el flete, los peajes, la comisión y el peso que pierden los animales en el viaje.
 
