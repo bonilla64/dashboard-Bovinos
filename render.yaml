@@ -10,7 +10,7 @@ services:
     rootDir: api
     dockerfilePath: ./Dockerfile
     healthCheckPath: /api/v1/salud
-    autoDeploy: true
+    autoDeployTrigger: checksPass
     envVars:
       - key: DATABASE_URL          # cadena de conexión de Neon, termina en ?sslmode=require
         sync: false
