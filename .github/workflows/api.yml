@@ -3,10 +3,10 @@ name: API · pruebas e imagen
 
 on:
   pull_request:
-    paths: ["api/**", "docker-compose.yml", ".github/workflows/api.yml"]
+    paths: ["api/**", "docker-compose.yml", ".github/workflows/api.yml", "render.yaml"]
   push:
     branches: [main]
-    paths: ["api/**", "docker-compose.yml", ".github/workflows/api.yml"]
+    paths: ["api/**", "docker-compose.yml", ".github/workflows/api.yml", "render.yaml"]
 
 jobs:
   pruebas:

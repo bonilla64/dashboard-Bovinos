@@ -1,7 +1,7 @@
 openapi: 3.1.0
 info:
   title: API del Simulador de Destinos Ganaderos desde Yopal
-  version: 0.4.1
+  version: 0.5.0
   summary: Compara destinos de venta de un lote de ganado combinando precio por kilo, ruta, flete, peajes, comisión y merma.
   description: |
     Contrato de la API del proyecto (Entrega 3, Tecnologías Web 2026-B, Unitrópico).
