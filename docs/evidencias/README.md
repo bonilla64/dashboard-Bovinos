@@ -39,3 +39,8 @@ Guárdelas en `docs/evidencias/entrega3/` con estos nombres. **Las 6 mínimas**,
 | `19-render-live.png` | Panel de Render con el servicio `simulador-ganadero-api` en **Live** (sin mostrar las variables secretas) |
 | `20-producto-publicado-celular.png` | https://bonilla64.github.io/dashboard-Bovinos/ abierto en un celular, con sesión iniciada y un resultado calculado |
 | `21-rutas-desde-municipio.png` | Tablero de un lote de Paz de Ariporo: «Rutas desde Paz de Ariporo», la subasta local a pocos km y los precios en arroba |
+
+
+## Entrega 4 · Despliegue contenerizado
+
+Las evidencias, con las capturas a la vista, están en [`entrega4/README.md`](entrega4/README.md).
