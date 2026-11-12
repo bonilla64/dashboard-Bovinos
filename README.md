@@ -6,7 +6,7 @@ Esta aplicación web le dice a un ganadero de Casanare si le conviene vender su 
 
 Funciona en el celular, la tableta o el computador, en cualquier navegador actual (Chrome, Edge, Firefox o Safari).
 
-> **Versión 0.3.0 (Entrega 3).** El tablero está conectado a la API: usted inicia sesión, registra su lote, el **servidor** calcula y guarda la comparación, y el historial queda en la base de datos.
+> **Versión 0.5.0 (Entrega 4).** La API corre en un contenedor Docker en Render y la página en GitHub Pages, las dos con HTTPS. Cada cambio que entra a `main` pasa las pruebas en GitHub Actions y, si salen en verde, Render lo publica solo. Ver [`docs/despliegue.md`](docs/despliegue.md), [`docs/informe-rendimiento.md`](docs/informe-rendimiento.md) y las [evidencias de la Entrega 4](docs/evidencias/entrega4/README.md).
 >
 > **Sobre los precios:** la página **Precios** muestra de dónde sale cada uno. Los que vienen con la instalación son estimaciones del equipo y aparecen marcados como *«Estimado, no es de Fedegán»* hasta que el administrador cargue el reporte semanal de Fedegán (sección 3.6). Revise esa página antes de tomar una decisión de venta.
 
@@ -464,6 +464,24 @@ Navegador ──► web/ (nginx, :8080)            Tablero: HTML, CSS, JS y Leaf
               db (PostgreSQL 16 + PostGIS 3)  Datos, geometrías y consultas espaciales
 ```
 
+### Despliegue
+
+| Pieza | Dónde corre | URL |
+|---|---|---|
+| Página web | GitHub Pages | https://bonilla64.github.io/dashboard-Bovinos/ |
+| API (contenedor Docker desde `api/Dockerfile`) | Render | https://simulador-ganadero-api.onrender.com |
+| Base de datos (PostgreSQL + PostGIS) | Neon | solo la API se conecta, con TLS |
+
+Flujo de CI/CD:
+
+1. Se hace un Pull Request hacia `main`.
+2. Corren **API · pruebas e imagen** y **Validar contrato OpenAPI**.
+3. Se hace el merge.
+4. Render, con `autoDeployTrigger: checksPass` en `render.yaml`, construye y publica el contenedor solo si los checks salieron en verde.
+5. **Publicar en GitHub Pages** despliega `web/`.
+
+El diagrama está en [`docs/despliegue.md`](docs/despliegue.md) y el informe de Lighthouse en [`docs/informe-rendimiento.md`](docs/informe-rendimiento.md).
+
 ### Estructura del proyecto
 
 ```
@@ -601,7 +619,7 @@ Los roles rotan al menos una vez en el semestre; el cambio se registra en esta t
 | 1 · Anteproyecto | 17 sep 2026 | Entregada | Problema, ruta H, wireframes en texto, plan de trabajo |
 | 2 · Prototipo y contrato | 1 oct 2026 | Entregada (`v0.2.0`) | Prototipo navegable de 3 pantallas con estados, contrato OpenAPI 3.1 con 6 recursos, modelo de datos |
 | 3 · MVP del backend | 15 oct 2026 | Entregada (`v0.4.0`, con ajustes del 19 oct: cuentas de persona y empresa, fincas, Mi cuenta, Mis lotes y Administración desde el tablero) | API REST con CRUD de 8 recursos (usuarios y fincas incluidos), cuentas de persona o empresa con documento verificable, Mi cuenta, Mis lotes y Administración desde el tablero, bitácora, autenticación JWT + bcrypt, autorización por rol y por dueño con estado de la cuenta revisado en cada petición, validación desde el contrato, errores centralizados, PostgreSQL + PostGIS, Swagger en `/docs`, Docker Compose y Codespaces, precios de Fedegán con vigencia y carga por CSV desde el tablero, tablero conectado a la API (ingreso, registro, cálculo en el servidor, historial y precios), rutas desde el municipio del lote, precios en kg y arroba, publicación en internet (Render + Neon + Pages), 122 pruebas en CI, ajustes de la entrevista |
-| 4 · Mapa desplegado con HTTPS | 12 nov 2026 | Pendiente | |
+| 4 · Despliegue contenerizado | 12 nov 2026 | Entregada (`v0.5.0`) | API en contenedor Docker en Render y página en GitHub Pages, ambas con HTTPS válido; CI/CD que despliega solo desde `main` cuando las pruebas pasan (Auto-Deploy *After CI Checks Pass*, PR #31 → commit `756364e` en producción); diagrama de arquitectura de despliegue; informe comparativo de Lighthouse en 7 páginas, móvil y escritorio (Performance promedio 89,3 y 85,4; Accesibilidad, Buenas prácticas y SEO en 100). [Evidencias](docs/evidencias/entrega4/README.md) |
 | 5 · Visualizaciones y accesibilidad | 26 nov 2026 | Pendiente | |
 | EXIS | 4 dic 2026 | Pendiente | |
 
@@ -611,6 +629,8 @@ Los roles rotan al menos una vez en el semestre; el cambio se registra en esta t
 |---|---|---|
 | Claude (Anthropic) | Borrador del contrato OpenAPI, del modelo de datos, del prototipo HTML/CSS/JS y de la documentación, a partir del anteproyecto y de la versión de escritorio del equipo (`core.py`). También como guía paso a paso para organizar el repositorio, publicar en GitHub Pages y tomar las evidencias | El equipo definió el problema, los usuarios, la ruta H, los roles y el modelo de cálculo base. Revisó el contenido generado, ajustó los roles al formato de conformación, reorganizó el repositorio, corrigió los enlaces, validó el contrato con Swagger Editor y Prism y auditó la accesibilidad con Lighthouse. Los precios, peajes y porcentajes de merma son estimaciones pendientes de validar con ganaderos |
 | Claude (Anthropic), Entrega 3 | Borrador del código de la API (Fastify, autenticación, validación, errores, migraciones, pruebas), de la conexión del tablero con la API (`web/js/api.js`, `web/js/app.js`, pantallas de ingreso y precios), del Dockerfile, del docker compose, de la configuración de Codespaces y Render, de las rutas desde cada municipio, del workflow de CI y de esta documentación, a partir del contrato y del modelo de la Entrega 2 y de la entrevista al ganadero | El equipo decidió el alcance, los roles de usuario y los ajustes de la entrevista, y debe poder explicar cada archivo en la sustentación. COMPLETAR: qué cambió el equipo en esta entrega |
+
+| Claude (Anthropic), Entrega 4 | Guía paso a paso para configurar el Auto-Deploy de Render tras CI y tomar las evidencias; borrador de `docs/despliegue.md` (diagrama Mermaid), del informe de Lighthouse a partir de los puntajes que midió el equipo, del cambio de versión a 0.5.0 y de esta documentación | El equipo configuró Render y GitHub, hizo los PR y los merge, corrió Lighthouse en cada página y tomó las capturas. COMPLETAR: qué revisó o cambió el equipo |
 
 ### Licencia
 
